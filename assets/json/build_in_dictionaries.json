@@ -1,0 +1,2126 @@
+[
+    {
+        "name": "Rest and Leisure",
+        "origin": {
+            "code": "en",
+            "name": "English",
+            "native": "English"
+        },
+        "translation": {
+            "code": "uk",
+            "name": "Ukrainian",
+            "native": "Українська"
+        },
+        "words": [
+            {
+                "origin": "holiday",
+                "translation": "свято"
+            },
+            {
+                "origin": "leisure",
+                "translation": "дозвілля"
+            },
+            {
+                "origin": "rest",
+                "translation": "відпочинок"
+            },
+            {
+                "origin": "vacation",
+                "translation": "відпустка"
+            },
+            {
+                "origin": "day off",
+                "translation": "вихідний"
+            },
+            {
+                "origin": "weekend",
+                "translation": "вихідні"
+            },
+            {
+                "origin": "resort",
+                "translation": "курорт"
+            },
+            {
+                "origin": "spa",
+                "translation": "спа"
+            },
+            {
+                "origin": "sanatorium",
+                "translation": "санаторій"
+            },
+            {
+                "origin": "boarding house",
+                "translation": "пансіон"
+            },
+            {
+                "origin": "camping site",
+                "translation": "кемпінг"
+            },
+            {
+                "origin": "travel agency",
+                "translation": "тур-агенція"
+            },
+            {
+                "origin": "tourist agency",
+                "translation": "туристичне агентство"
+            },
+            {
+                "origin": "tourist centre",
+                "translation": "туристичний центр"
+            },
+            {
+                "origin": "tent",
+                "translation": "намет"
+            },
+            {
+                "origin": "holiday voucher",
+                "translation": "ваучер на відпочинок"
+            },
+            {
+                "origin": "excursion",
+                "translation": "екскурсія"
+            },
+            {
+                "origin": "guide",
+                "translation": "гід"
+            },
+            {
+                "origin": "guidebook",
+                "translation": "путівник"
+            },
+            {
+                "origin": "hiking",
+                "translation": "піші прогулянки"
+            },
+            {
+                "origin": "trip",
+                "translation": "подорож"
+            },
+            {
+                "origin": "cycling",
+                "translation": "їзда на велосипеді"
+            },
+            {
+                "origin": "walk",
+                "translation": "ходити"
+            },
+            {
+                "origin": "picnic",
+                "translation": "пікнік"
+            },
+            {
+                "origin": "tour",
+                "translation": "тур"
+            },
+            {
+                "origin": "walking tour",
+                "translation": "пішохідна екскурсія"
+            },
+            {
+                "origin": "tourism",
+                "translation": "туризм"
+            },
+            {
+                "origin": "visit",
+                "translation": "відвідати"
+            },
+            {
+                "origin": "travel",
+                "translation": "подорожі"
+            },
+            {
+                "origin": "beach",
+                "translation": "пляж"
+            },
+            {
+                "origin": "boat",
+                "translation": "човен"
+            },
+            {
+                "origin": "tan",
+                "translation": "засмагати"
+            },
+            {
+                "origin": "sunbathe",
+                "translation": "засмагати"
+            },
+            {
+                "origin": "dacha",
+                "translation": "дача"
+            },
+            {
+                "origin": "hotel",
+                "translation": "готель"
+            },
+            {
+                "origin": "room",
+                "translation": "кімната"
+            },
+            {
+                "origin": "luggage",
+                "translation": "багаж"
+            },
+            {
+                "origin": "safe",
+                "translation": "сейф"
+            },
+            {
+                "origin": "suitcase",
+                "translation": "валіза"
+            },
+            {
+                "origin": "bag",
+                "translation": "сумка"
+            },
+            {
+                "origin": "rucksack",
+                "translation": "рюкзак"
+            },
+            {
+                "origin": "departure",
+                "translation": "від'їзд"
+            },
+            {
+                "origin": "arrival",
+                "translation": "прибуття"
+            },
+            {
+                "origin": "alarm clock",
+                "translation": "будильник"
+            },
+            {
+                "origin": "tablets",
+                "translation": "таблетки"
+            },
+            {
+                "origin": "binoculars",
+                "translation": "бінокль"
+            },
+            {
+                "origin": "dictionary",
+                "translation": "словник"
+            },
+            {
+                "origin": "camera",
+                "translation": "камера"
+            },
+            {
+                "origin": "first aid kit",
+                "translation": "аптечка першої допомоги"
+            },
+            {
+                "origin": "map",
+                "translation": "карта"
+            },
+            {
+                "origin": "money belt",
+                "translation": "поясний гаманець"
+            },
+            {
+                "origin": "notebook",
+                "translation": "зошит"
+            },
+            {
+                "origin": "soap",
+                "translation": "мило"
+            },
+            {
+                "origin": "souvenirs",
+                "translation": "сувеніри"
+            },
+            {
+                "origin": "sun hat",
+                "translation": "сонцезахисний капелюх"
+            },
+            {
+                "origin": "travel guide",
+                "translation": "Путівник"
+            },
+            {
+                "origin": "umbrella",
+                "translation": "парасольку"
+            },
+            {
+                "origin": "walking boots",
+                "translation": "прогулянкові чоботи"
+            },
+            {
+                "origin": "waterproof clothes",
+                "translation": "водонепроникний одяг"
+            }
+        ]
+    },
+    {
+        "name": "Human body",
+        "origin": {
+            "code": "en",
+            "name": "English",
+            "native": "English"
+        },
+        "translation": {
+            "code": "uk",
+            "name": "Ukrainian",
+            "native": "Українська"
+        },
+        "words": [
+            {
+                "origin": "body",
+                "translation": "тіло"
+            },
+            {
+                "origin": "organ",
+                "translation": "орган"
+            },
+            {
+                "origin": "head",
+                "translation": "голова"
+            },
+            {
+                "origin": "back of the head",
+                "translation": "потилиця"
+            },
+            {
+                "origin": "temple",
+                "translation": "скроня"
+            },
+            {
+                "origin": "face",
+                "translation": "обличчя"
+            },
+            {
+                "origin": "forehead",
+                "translation": "лоб"
+            },
+            {
+                "origin": "eye",
+                "translation": "око"
+            },
+            {
+                "origin": "nose",
+                "translation": "ніс"
+            },
+            {
+                "origin": "mouth",
+                "translation": "рот"
+            },
+            {
+                "origin": "tongue",
+                "translation": "язик"
+            },
+            {
+                "origin": "lip",
+                "translation": "губа"
+            },
+            {
+                "origin": "tooth",
+                "translation": "зуб"
+            },
+            {
+                "origin": "false teeth",
+                "translation": "вставні зуби"
+            },
+            {
+                "origin": "chin",
+                "translation": "підборіддя"
+            },
+            {
+                "origin": "cheek",
+                "translation": "щока"
+            },
+            {
+                "origin": "ear",
+                "translation": "вухо"
+            },
+            {
+                "origin": "throat",
+                "translation": "горло"
+            },
+            {
+                "origin": "cheekbones",
+                "translation": "вилиці"
+            },
+            {
+                "origin": "jaw",
+                "translation": "щелепа"
+            },
+            {
+                "origin": "hair",
+                "translation": "волосся"
+            },
+            {
+                "origin": "beard",
+                "translation": "борода"
+            },
+            {
+                "origin": "moustaches",
+                "translation": "вуса"
+            },
+            {
+                "origin": "brow",
+                "translation": "брови"
+            },
+            {
+                "origin": "lashes",
+                "translation": "вії"
+            },
+            {
+                "origin": "chest",
+                "translation": "грудна клітка"
+            },
+            {
+                "origin": "breast",
+                "translation": "жіночі груди"
+            },
+            {
+                "origin": "back",
+                "translation": "спина"
+            },
+            {
+                "origin": "stomach",
+                "translation": "шлунок"
+            },
+            {
+                "origin": "small of the back",
+                "translation": "поясниця"
+            },
+            {
+                "origin": "side",
+                "translation": "сторона, бік"
+            },
+            {
+                "origin": "shoulder",
+                "translation": "плече"
+            },
+            {
+                "origin": "armpit",
+                "translation": "пахви"
+            },
+            {
+                "origin": "elbow",
+                "translation": "лікоть"
+            },
+            {
+                "origin": "arm",
+                "translation": "плече та передпліччя"
+            },
+            {
+                "origin": "hand",
+                "translation": "кисть"
+            },
+            {
+                "origin": "palm",
+                "translation": "долоня"
+            },
+            {
+                "origin": "finger",
+                "translation": "палець"
+            },
+            {
+                "origin": "toe",
+                "translation": "палець ноги"
+            },
+            {
+                "origin": "little finger",
+                "translation": "мізинець на руці"
+            },
+            {
+                "origin": "little toe",
+                "translation": "мізинець на нозі"
+            },
+            {
+                "origin": "fingerprint",
+                "translation": "відбиток пальця"
+            },
+            {
+                "origin": "fist",
+                "translation": "кулак"
+            },
+            {
+                "origin": "thumb",
+                "translation": "великий палець руки"
+            },
+            {
+                "origin": "big toe",
+                "translation": "великий палець ноги"
+            },
+            {
+                "origin": "forefinger",
+                "translation": "вказівний палець"
+            },
+            {
+                "origin": "leg",
+                "translation": "нога"
+            },
+            {
+                "origin": "foot",
+                "translation": "стопа"
+            },
+            {
+                "origin": "footprint",
+                "translation": "слід"
+            },
+            {
+                "origin": "knee",
+                "translation": "коліно"
+            },
+            {
+                "origin": "heel",
+                "translation": "п'ятка"
+            },
+            {
+                "origin": "nail",
+                "translation": "ніготь"
+            },
+            {
+                "origin": "skeleton",
+                "translation": "скелет"
+            },
+            {
+                "origin": "bone",
+                "translation": "кістка"
+            },
+            {
+                "origin": "skull",
+                "translation": "череп"
+            },
+            {
+                "origin": "spine",
+                "translation": "хребет"
+            },
+            {
+                "origin": "collar-bone",
+                "translation": "ключиця"
+            },
+            {
+                "origin": "shoulder blade",
+                "translation": "лопатка"
+            },
+            {
+                "origin": "rib",
+                "translation": "ребро"
+            },
+            {
+                "origin": "joint",
+                "translation": "суглоб"
+            },
+            {
+                "origin": "skin",
+                "translation": "шкіра"
+            },
+            {
+                "origin": "muscles",
+                "translation": "м'язи"
+            },
+            {
+                "origin": "tendon",
+                "translation": "сухожилля"
+            },
+            {
+                "origin": "heel tendon",
+                "translation": "Ахіллове (п'яткове) сухожилля"
+            },
+            {
+                "origin": "ligament",
+                "translation": "зв'язка"
+            },
+            {
+                "origin": "brain",
+                "translation": "мозок"
+            },
+            {
+                "origin": "nerves",
+                "translation": "нерви"
+            },
+            {
+                "origin": "nervous system",
+                "translation": "нервова система"
+            },
+            {
+                "origin": "excite",
+                "translation": "збуджувати"
+            },
+            {
+                "origin": "stimulate",
+                "translation": "стимулювати"
+            },
+            {
+                "origin": "heart",
+                "translation": "серце"
+            },
+            {
+                "origin": "blood vessels",
+                "translation": "кровоносні судини"
+            },
+            {
+                "origin": "artery",
+                "translation": "артерія"
+            },
+            {
+                "origin": "vein",
+                "translation": "вена"
+            },
+            {
+                "origin": "blood",
+                "translation": "кров"
+            },
+            {
+                "origin": "blood pressure",
+                "translation": "кров’яний тиск"
+            },
+            {
+                "origin": "blood circulation",
+                "translation": "кровообіг"
+            },
+            {
+                "origin": "pulse",
+                "translation": "пульс"
+            },
+            {
+                "origin": "lung",
+                "translation": "легеня"
+            },
+            {
+                "origin": "bronchial tube",
+                "translation": "бронхи"
+            },
+            {
+                "origin": "breath",
+                "translation": "дихання"
+            },
+            {
+                "origin": "inhale",
+                "translation": "вдихати"
+            },
+            {
+                "origin": "exhale",
+                "translation": "видихати"
+            },
+            {
+                "origin": "choke",
+                "translation": "задихатись"
+            },
+            {
+                "origin": "saliva",
+                "translation": "слина"
+            },
+            {
+                "origin": "liver",
+                "translation": "печінка"
+            },
+            {
+                "origin": "kidney",
+                "translation": "нирки"
+            },
+            {
+                "origin": "bladder",
+                "translation": "сечовий міхур"
+            },
+            {
+                "origin": "bowels",
+                "translation": "кишечник"
+            },
+            {
+                "origin": "gut",
+                "translation": "кишка"
+            },
+            {
+                "origin": "genitals",
+                "translation": "статеві органи"
+            }
+        ]
+    },
+    {
+        "name": "Appearance",
+        "origin": {
+            "code": "en",
+            "name": "English",
+            "native": "English"
+        },
+        "translation": {
+            "code": "uk",
+            "name": "Ukrainian",
+            "native": "Українська"
+        },
+        "words": [
+            {
+                "origin": "appearance",
+                "translation": "зовнішній вигляд"
+            },
+            {
+                "origin": "nice",
+                "translation": "милий"
+            },
+            {
+                "origin": "pretty",
+                "translation": "гарненька (гарненький)"
+            },
+            {
+                "origin": "beautiful",
+                "translation": "вродлива (про дівчину)"
+            },
+            {
+                "origin": "handsome",
+                "translation": "вродливий (про хлопця)"
+            },
+            {
+                "origin": "charming",
+                "translation": "чарівний"
+            },
+            {
+                "origin": "good-looking",
+                "translation": "приємна зовнішність"
+            },
+            {
+                "origin": "plain",
+                "translation": "звичайний (не примітної зовнішності)"
+            },
+            {
+                "origin": "ugly",
+                "translation": "потворний"
+            },
+            {
+                "origin": "height",
+                "translation": "зріст"
+            },
+            {
+                "origin": "tall (height)",
+                "translation": "високий"
+            },
+            {
+                "origin": "short (height)",
+                "translation": "невеликий"
+            },
+            {
+                "origin": "middle sized (height)",
+                "translation": "середній"
+            },
+            {
+                "origin": "build",
+                "translation": "тілобудова"
+            },
+            {
+                "origin": "thin (build)",
+                "translation": "худий"
+            },
+            {
+                "origin": "fat (build)",
+                "translation": "повний"
+            },
+            {
+                "origin": "slim (build)",
+                "translation": "струнка (про дівчину)"
+            },
+            {
+                "origin": "athletic (build)",
+                "translation": "атлетичний, спортивний"
+            },
+            {
+                "origin": "hair color",
+                "translation": "колір волосся"
+            },
+            {
+                "origin": "fair (hair color)",
+                "translation": "світлий"
+            },
+            {
+                "origin": "dark (hair color)",
+                "translation": "темний"
+            },
+            {
+                "origin": "black (hair color)",
+                "translation": "чорний"
+            },
+            {
+                "origin": "brown (hair color)",
+                "translation": "каштановий"
+            },
+            {
+                "origin": "red (hair color)",
+                "translation": "рудий"
+            },
+            {
+                "origin": "blond (hair color)",
+                "translation": "русявий"
+            },
+            {
+                "origin": "hair",
+                "translation": "волосся"
+            },
+            {
+                "origin": "short (hair)",
+                "translation": "коротке"
+            },
+            {
+                "origin": "long (hair)",
+                "translation": "довге"
+            },
+            {
+                "origin": "straight (hair)",
+                "translation": "пряме"
+            },
+            {
+                "origin": "wavy (hair)",
+                "translation": "хвилясте"
+            },
+            {
+                "origin": "curly (hair)",
+                "translation": "кучеряве"
+            },
+            {
+                "origin": "thick (hair)",
+                "translation": "густе"
+            },
+            {
+                "origin": "thin (hair)",
+                "translation": "тонке"
+            },
+            {
+                "origin": "eyes",
+                "translation": "очі"
+            },
+            {
+                "origin": "big (eyes)",
+                "translation": "великі"
+            },
+            {
+                "origin": "little (eyes)",
+                "translation": "маленькі"
+            },
+            {
+                "origin": "green (eyes)",
+                "translation": "зелені"
+            },
+            {
+                "origin": "blue (eyes)",
+                "translation": "блакитні"
+            },
+            {
+                "origin": "brown (eyes)",
+                "translation": "карі"
+            },
+            {
+                "origin": "face",
+                "translation": "обличчя"
+            },
+            {
+                "origin": "round (face)",
+                "translation": "кругле"
+            },
+            {
+                "origin": "oval (face)",
+                "translation": "овальне"
+            }
+        ]
+    },
+    {
+        "name": "Family",
+        "origin": {
+            "code": "en",
+            "name": "English",
+            "native": "English"
+        },
+        "translation": {
+            "code": "uk",
+            "name": "Ukrainian",
+            "native": "Українська"
+        },
+        "words": [
+            {
+                "origin": "mother",
+                "translation": "мати"
+            },
+            {
+                "origin": "father",
+                "translation": "батько"
+            },
+            {
+                "origin": "daughter",
+                "translation": "дочка"
+            },
+            {
+                "origin": "son",
+                "translation": "син"
+            },
+            {
+                "origin": "sister",
+                "translation": "сестра"
+            },
+            {
+                "origin": "brother",
+                "translation": "брат"
+            },
+            {
+                "origin": "grandfather",
+                "translation": "дідусь"
+            },
+            {
+                "origin": "grandmother",
+                "translation": "бабуся"
+            },
+            {
+                "origin": "aunt",
+                "translation": "тітка"
+            },
+            {
+                "origin": "uncle",
+                "translation": "дядько"
+            },
+            {
+                "origin": "niece",
+                "translation": "племінниця"
+            },
+            {
+                "origin": "nephew",
+                "translation": "племінник"
+            },
+            {
+                "origin": "parents",
+                "translation": "батьки"
+            },
+            {
+                "origin": "children",
+                "translation": "діти"
+            },
+            {
+                "origin": "grandparents",
+                "translation": "бабуся і дідусь"
+            },
+            {
+                "origin": "grandson",
+                "translation": "онук"
+            },
+            {
+                "origin": "granddaughter",
+                "translation": "внучка"
+            },
+            {
+                "origin": "great-grandchild",
+                "translation": "правнук"
+            },
+            {
+                "origin": "twins",
+                "translation": "близнюки"
+            },
+            {
+                "origin": "twin-brother",
+                "translation": "брат-близнюк"
+            },
+            {
+                "origin": "twin-sister",
+                "translation": "сестра-близнюк"
+            },
+            {
+                "origin": "cousin",
+                "translation": "двоюрідний брат"
+            },
+            {
+                "origin": "step-father",
+                "translation": "вітчим"
+            },
+            {
+                "origin": "step-mother",
+                "translation": "мачуха"
+            },
+            {
+                "origin": "step-son",
+                "translation": "пасинок"
+            },
+            {
+                "origin": "step-daughter",
+                "translation": "падчерка"
+            },
+            {
+                "origin": "wife",
+                "translation": "дружина"
+            },
+            {
+                "origin": "husband",
+                "translation": "чоловік"
+            },
+            {
+                "origin": "widow",
+                "translation": "вдова"
+            },
+            {
+                "origin": "widower",
+                "translation": "вдівець"
+            },
+            {
+                "origin": "father-in-law",
+                "translation": "тесть"
+            },
+            {
+                "origin": "mother-in-law",
+                "translation": "свекруха"
+            },
+            {
+                "origin": "son-in-law",
+                "translation": "зять"
+            },
+            {
+                "origin": "daughter-in-law",
+                "translation": "невістка"
+            },
+            {
+                "origin": "brother-in-law",
+                "translation": "шурин"
+            },
+            {
+                "origin": "sister-in-law",
+                "translation": "невістка"
+            },
+            {
+                "origin": "family",
+                "translation": "сім'я"
+            },
+            {
+                "origin": "marriage",
+                "translation": "шлюб"
+            },
+            {
+                "origin": "marry",
+                "translation": "вийти заміж"
+            },
+            {
+                "origin": "be married",
+                "translation": "бути одруженим"
+            },
+            {
+                "origin": "proposal",
+                "translation": "пропозиція"
+            },
+            {
+                "origin": "engagement",
+                "translation": "заручини"
+            },
+            {
+                "origin": "fiance",
+                "translation": "наречений"
+            },
+            {
+                "origin": "bride",
+                "translation": "наречена"
+            },
+            {
+                "origin": "wedding",
+                "translation": "весілля"
+            },
+            {
+                "origin": "spouse",
+                "translation": "подружжя"
+            },
+            {
+                "origin": "married",
+                "translation": "одружений"
+            },
+            {
+                "origin": "single",
+                "translation": "холостяк"
+            },
+            {
+                "origin": "get divorced",
+                "translation": "розлучаються"
+            },
+            {
+                "origin": "divorce",
+                "translation": "розлучення"
+            },
+            {
+                "origin": "relative",
+                "translation": "родич"
+            },
+            {
+                "origin": "daddy",
+                "translation": "татусь"
+            },
+            {
+                "origin": "mummy",
+                "translation": "мама"
+            },
+            {
+                "origin": "orphan",
+                "translation": "сирота"
+            },
+            {
+                "origin": "ancestor",
+                "translation": "предок"
+            },
+            {
+                "origin": "descendant",
+                "translation": "нащадок"
+            },
+            {
+                "origin": "offspring",
+                "translation": "потомство"
+            },
+            {
+                "origin": "parental",
+                "translation": "батьківський"
+            },
+            {
+                "origin": "young",
+                "translation": "молодий"
+            },
+            {
+                "origin": "younger",
+                "translation": "молодший"
+            },
+            {
+                "origin": "old",
+                "translation": "старий"
+            },
+            {
+                "origin": "elder",
+                "translation": "старший"
+            },
+            {
+                "origin": "friendly",
+                "translation": "дружній"
+            },
+            {
+                "origin": "favourite",
+                "translation": "улюблений"
+            },
+            {
+                "origin": "take care of",
+                "translation": "піклуватися про"
+            }
+        ]
+    },
+    {
+        "name": "Weather",
+        "origin": {
+            "code": "en",
+            "name": "English",
+            "native": "English"
+        },
+        "translation": {
+            "code": "uk",
+            "name": "Ukrainian",
+            "native": "Українська"
+        },
+        "words": [
+            {
+                "origin": "weather",
+                "translation": "погода"
+            },
+            {
+                "origin": "fine",
+                "translation": "добре"
+            },
+            {
+                "origin": "terrible",
+                "translation": "жахливий"
+            },
+            {
+                "origin": "cold",
+                "translation": "холодний"
+            },
+            {
+                "origin": "hot",
+                "translation": "гарячий"
+            },
+            {
+                "origin": "warm",
+                "translation": "теплий"
+            },
+            {
+                "origin": "the sky",
+                "translation": "небо"
+            },
+            {
+                "origin": "the sun",
+                "translation": "сонце"
+            },
+            {
+                "origin": "rain",
+                "translation": "дощ"
+            },
+            {
+                "origin": "wind",
+                "translation": "вітер"
+            },
+            {
+                "origin": "cloud",
+                "translation": "хмара"
+            },
+            {
+                "origin": "snow",
+                "translation": "сніг"
+            },
+            {
+                "origin": "sunny",
+                "translation": "сонячний"
+            },
+            {
+                "origin": "rainy",
+                "translation": "дощовий"
+            },
+            {
+                "origin": "windy",
+                "translation": "вітряно"
+            },
+            {
+                "origin": "cloudy",
+                "translation": "хмарно"
+            },
+            {
+                "origin": "bright",
+                "translation": "яскравий"
+            },
+            {
+                "origin": "snowy",
+                "translation": "сніжний"
+            },
+            {
+                "origin": "to rain",
+                "translation": "дощити (іде дощ)"
+            },
+            {
+                "origin": "to snow",
+                "translation": "сніжить (іде сніг)"
+            },
+            {
+                "origin": "to blow",
+                "translation": "дути"
+            },
+            {
+                "origin": "to shine",
+                "translation": "світити"
+            },
+            {
+                "origin": "to get warmer",
+                "translation": "теплішає"
+            },
+            {
+                "origin": "to get colder",
+                "translation": "холоднішає"
+            },
+            {
+                "origin": "to change",
+                "translation": "змінювати"
+            }
+        ]
+    },
+    {
+        "name": "Character",
+        "origin": {
+            "code": "en",
+            "name": "English",
+            "native": "English"
+        },
+        "translation": {
+            "code": "uk",
+            "name": "Ukrainian",
+            "native": "Українська"
+        },
+        "words": [
+            {
+                "origin": "main characterictic",
+                "translation": "головна риса характеру"
+            },
+            {
+                "origin": "be like",
+                "translation": "являти собою"
+            },
+            {
+                "origin": "get on well with",
+                "translation": "хороші відносини з"
+            },
+            {
+                "origin": "typical",
+                "translation": "типовий"
+            },
+            {
+                "origin": "close",
+                "translation": "близький"
+            },
+            {
+                "origin": "loving",
+                "translation": "люблячий"
+            },
+            {
+                "origin": "friendly",
+                "translation": "дружній"
+            },
+            {
+                "origin": "caring",
+                "translation": "турботливий"
+            },
+            {
+                "origin": "independent",
+                "translation": "незалежний"
+            },
+            {
+                "origin": "smart",
+                "translation": "кмітливий, винахідливий"
+            },
+            {
+                "origin": "clever",
+                "translation": "розумний"
+            },
+            {
+                "origin": "serious",
+                "translation": "серйозний"
+            },
+            {
+                "origin": "kind",
+                "translation": "добрий"
+            },
+            {
+                "origin": "lazy",
+                "translation": "ледачий"
+            },
+            {
+                "origin": "busy",
+                "translation": "діловий"
+            },
+            {
+                "origin": "bossy",
+                "translation": "люблячий командувати"
+            },
+            {
+                "origin": "naughty",
+                "translation": "неслухняний"
+            },
+            {
+                "origin": "noisy",
+                "translation": "галасливий"
+            },
+            {
+                "origin": "creative",
+                "translation": "креативний"
+            },
+            {
+                "origin": "strong",
+                "translation": "сильний"
+            },
+            {
+                "origin": "brave",
+                "translation": "хоробрий"
+            },
+            {
+                "origin": "active",
+                "translation": "активний"
+            },
+            {
+                "origin": "quiet",
+                "translation": "тихий"
+            },
+            {
+                "origin": "angry",
+                "translation": "злий, сердитий"
+            },
+            {
+                "origin": "talkative",
+                "translation": "балакучий"
+            },
+            {
+                "origin": "helpful",
+                "translation": "корисний, готовий допомагати"
+            },
+            {
+                "origin": "tidy",
+                "translation": "акуратний"
+            },
+            {
+                "origin": "polite",
+                "translation": "ввічливий"
+            },
+            {
+                "origin": "silly",
+                "translation": "дурний"
+            },
+            {
+                "origin": "honest",
+                "translation": "чесний"
+            },
+            {
+                "origin": "curious",
+                "translation": "допитливий"
+            },
+            {
+                "origin": "shy",
+                "translation": "сором'язливий"
+            },
+            {
+                "origin": "sociable",
+                "translation": "товариський"
+            }
+        ]
+    },
+    {
+        "name": "Feelings and Mood",
+        "origin": {
+            "code": "en",
+            "name": "English",
+            "native": "English"
+        },
+        "translation": {
+            "code": "uk",
+            "name": "Ukrainian",
+            "native": "Українська"
+        },
+        "words": [
+            {
+                "origin": "feeling",
+                "translation": "почуття"
+            },
+            {
+                "origin": "mood",
+                "translation": "настрій"
+            },
+            {
+                "origin": "glad",
+                "translation": "радісний"
+            },
+            {
+                "origin": "sad",
+                "translation": "сумний"
+            },
+            {
+                "origin": "upset",
+                "translation": "засмучений"
+            },
+            {
+                "origin": "happy",
+                "translation": "щасливий"
+            },
+            {
+                "origin": "unhappy",
+                "translation": "нещасний"
+            },
+            {
+                "origin": "angry",
+                "translation": "сердитий"
+            },
+            {
+                "origin": "enetgetic",
+                "translation": "енергійний"
+            },
+            {
+                "origin": "excited",
+                "translation": "схвильований"
+            },
+            {
+                "origin": "bored",
+                "translation": "нудьгуючий"
+            },
+            {
+                "origin": "tired",
+                "translation": "втомлений (стан)"
+            },
+            {
+                "origin": "scared",
+                "translation": "переляканий (стан)"
+            },
+            {
+                "origin": "worried",
+                "translation": "схвильований (стурбований)"
+            },
+            {
+                "origin": "puzzled",
+                "translation": "розгублений, спантеличений"
+            },
+            {
+                "origin": "interested",
+                "translation": "зацікавлений"
+            }
+        ]
+    },
+    {
+        "name": "Clothes",
+        "origin": {
+            "code": "en",
+            "name": "English",
+            "native": "English"
+        },
+        "translation": {
+            "code": "uk",
+            "name": "Ukrainian",
+            "native": "Українська"
+        },
+        "words": [
+            {
+                "origin": "clothes",
+                "translation": "одяг"
+            },
+            {
+                "origin": "jeans",
+                "translation": "джинси"
+            },
+            {
+                "origin": "trousers",
+                "translation": "штани"
+            },
+            {
+                "origin": "shorts",
+                "translation": "шорти"
+            },
+            {
+                "origin": "dress",
+                "translation": "сукня"
+            },
+            {
+                "origin": "jacket",
+                "translation": "куртка, піджак"
+            },
+            {
+                "origin": "coat",
+                "translation": "пальто"
+            },
+            {
+                "origin": "T-shirt",
+                "translation": "футболка"
+            },
+            {
+                "origin": "shirt",
+                "translation": "сорочка"
+            },
+            {
+                "origin": "skirt",
+                "translation": "спідниця"
+            },
+            {
+                "origin": "blouse",
+                "translation": "блузка"
+            },
+            {
+                "origin": "sweater",
+                "translation": "светр"
+            },
+            {
+                "origin": "cap",
+                "translation": "шапка"
+            },
+            {
+                "origin": "scarf",
+                "translation": "шарф"
+            },
+            {
+                "origin": "shoes",
+                "translation": "взуття"
+            },
+            {
+                "origin": "boots",
+                "translation": "чоботи"
+            },
+            {
+                "origin": "overall",
+                "translation": "комбінезон"
+            },
+            {
+                "origin": "laces",
+                "translation": "шнурки"
+            },
+            {
+                "origin": "belt",
+                "translation": "ремінь, пояс"
+            },
+            {
+                "origin": "button",
+                "translation": "гудзик"
+            },
+            {
+                "origin": "hat",
+                "translation": "капелюх"
+            },
+            {
+                "origin": "socks",
+                "translation": "шкарпетки"
+            },
+            {
+                "origin": "sandals",
+                "translation": "сандалі"
+            },
+            {
+                "origin": "wear",
+                "translation": "носити"
+            },
+            {
+                "origin": "put on",
+                "translation": "одягнути"
+            },
+            {
+                "origin": "take off",
+                "translation": "зняти"
+            }
+        ]
+    },
+    {
+        "name": "My Hobby and Free time",
+        "origin": {
+            "code": "en",
+            "name": "English",
+            "native": "English"
+        },
+        "translation": {
+            "code": "uk",
+            "name": "Ukrainian",
+            "native": "Українська"
+        },
+        "words": [
+            {
+                "origin": "collect",
+                "translation": "збирати"
+            },
+            {
+                "origin": "collecting",
+                "translation": "колекціонування"
+            },
+            {
+                "origin": "collection",
+                "translation": "колекція"
+            },
+            {
+                "origin": "stamp collection",
+                "translation": "колекція марок"
+            },
+            {
+                "origin": "consist of",
+                "translation": "складатися з"
+            },
+            {
+                "origin": "be fond of",
+                "translation": "захоплюватися"
+            },
+            {
+                "origin": "be proud of",
+                "translation": "пишатися"
+            },
+            {
+                "origin": "be interested in",
+                "translation": "цікавитися"
+            },
+            {
+                "origin": "be good at",
+                "translation": "добре виходить"
+            },
+            {
+                "origin": "be keen on",
+                "translation": "сильно захоплюватися"
+            },
+            {
+                "origin": "be crazy about",
+                "translation": "обожнювати"
+            },
+            {
+                "origin": "have fun",
+                "translation": "розважатися"
+            },
+            {
+                "origin": "have a good time",
+                "translation": "гарно проводити час"
+            },
+            {
+                "origin": "be popular with",
+                "translation": "бути популярним у"
+            },
+            {
+                "origin": "exciting",
+                "translation": "захоплюючий"
+            },
+            {
+                "origin": "expensive",
+                "translation": "дорогий"
+            },
+            {
+                "origin": "do nothing",
+                "translation": "нічого не робити"
+            },
+            {
+                "origin": "go out",
+                "translation": "проводити час поза домом"
+            },
+            {
+                "origin": "stay at home",
+                "translation": "залишатися вдома"
+            },
+            {
+                "origin": "surf the Internet",
+                "translation": "сидіти в інтернеті"
+            },
+            {
+                "origin": "rest/ have a rest",
+                "translation": "відпочивати"
+            },
+            {
+                "origin": "get bored",
+                "translation": "нудьгувати"
+            },
+            {
+                "origin": "share (pictures / photos)",
+                "translation": "ділитися фотографіями"
+            },
+            {
+                "origin": "play table games (chess, cards, etc.)",
+                "translation": "грати в настільні ігри (шахи, карти тощо)"
+            },
+            {
+                "origin": "arrange a party",
+                "translation": "влаштувати вечірку"
+            },
+            {
+                "origin": "take up",
+                "translation": "зайнятися"
+            },
+            {
+                "origin": "give up",
+                "translation": "кинути"
+            },
+            {
+                "origin": "reading books",
+                "translation": "читання книг"
+            },
+            {
+                "origin": "photography",
+                "translation": "фотографування"
+            },
+            {
+                "origin": "dancing",
+                "translation": "танці"
+            },
+            {
+                "origin": "singing",
+                "translation": "співи"
+            },
+            {
+                "origin": "playing the guitar",
+                "translation": "гра на гітарі"
+            },
+            {
+                "origin": "drawing / painting",
+                "translation": "малювання (живопис)"
+            },
+            {
+                "origin": "playing computer games",
+                "translation": "грати в комп'ютерні ігри"
+            },
+            {
+                "origin": "collecting",
+                "translation": "колекціонування"
+            },
+            {
+                "origin": "stamps",
+                "translation": "марки"
+            },
+            {
+                "origin": "badges",
+                "translation": "значки"
+            },
+            {
+                "origin": "coins",
+                "translation": "монети"
+            },
+            {
+                "origin": "cards",
+                "translation": "карти"
+            },
+            {
+                "origin": "pictures",
+                "translation": "малюнки"
+            },
+            {
+                "origin": "statuettes",
+                "translation": "статуетки"
+            },
+            {
+                "origin": "dolls",
+                "translation": "ляльки"
+            },
+            {
+                "origin": "toys",
+                "translation": "іграшки"
+            },
+            {
+                "origin": "toy soldiers",
+                "translation": "іграшкові солдатики"
+            },
+            {
+                "origin": "toy cars",
+                "translation": "іграшкові машинки"
+            },
+            {
+                "origin": "velvet toys",
+                "translation": "м'які іграшки"
+            },
+            {
+                "origin": "discs",
+                "translation": "диски"
+            },
+            {
+                "origin": "records",
+                "translation": "записи"
+            }
+        ]
+    },
+    {
+        "name": "Nature",
+        "origin": {
+            "code": "en",
+            "name": "English",
+            "native": "English"
+        },
+        "translation": {
+            "code": "uk",
+            "name": "Ukrainian",
+            "native": "Українська"
+        },
+        "words": [
+            {
+                "origin": "nature",
+                "translation": "природа"
+            },
+            {
+                "origin": "the sun",
+                "translation": "сонце"
+            },
+            {
+                "origin": "sunset",
+                "translation": "захід сонця"
+            },
+            {
+                "origin": "sunrise",
+                "translation": "світанок"
+            },
+            {
+                "origin": "the stars",
+                "translation": "зірки"
+            },
+            {
+                "origin": "the moon",
+                "translation": "місяць"
+            },
+            {
+                "origin": "the sky",
+                "translation": "небо"
+            },
+            {
+                "origin": "cloud",
+                "translation": "хмара"
+            },
+            {
+                "origin": "ground",
+                "translation": "землі"
+            },
+            {
+                "origin": "road",
+                "translation": "дорога"
+            },
+            {
+                "origin": "river",
+                "translation": "річка"
+            },
+            {
+                "origin": "bank",
+                "translation": "берег"
+            },
+            {
+                "origin": "lake",
+                "translation": "озеро"
+            },
+            {
+                "origin": "sea",
+                "translation": "море"
+            },
+            {
+                "origin": "beach",
+                "translation": "пляж"
+            },
+            {
+                "origin": "seaside",
+                "translation": "узбережжя"
+            },
+            {
+                "origin": "ocean",
+                "translation": "океан"
+            },
+            {
+                "origin": "water",
+                "translation": "вода"
+            },
+            {
+                "origin": "air",
+                "translation": "повітря"
+            },
+            {
+                "origin": "wind",
+                "translation": "вітер"
+            },
+            {
+                "origin": "hill",
+                "translation": "пагорб"
+            },
+            {
+                "origin": "mountain",
+                "translation": "гора"
+            },
+            {
+                "origin": "stone",
+                "translation": "камінь"
+            },
+            {
+                "origin": "field",
+                "translation": "поле"
+            },
+            {
+                "origin": "grass",
+                "translation": "трава"
+            },
+            {
+                "origin": "flower",
+                "translation": "квітка"
+            },
+            {
+                "origin": "forest",
+                "translation": "ліс"
+            },
+            {
+                "origin": "garden",
+                "translation": "сад"
+            },
+            {
+                "origin": "tree",
+                "translation": "дерево"
+            },
+            {
+                "origin": "plant",
+                "translation": "рослина"
+            },
+            {
+                "origin": "leaf",
+                "translation": "лист"
+            },
+            {
+                "origin": "leaves",
+                "translation": "листя"
+            }
+        ]
+    },
+    {
+        "name": "Home",
+        "origin": {
+            "code": "en",
+            "name": "English",
+            "native": "English"
+        },
+        "translation": {
+            "code": "uk",
+            "name": "Ukrainian",
+            "native": "Українська"
+        },
+        "words": [
+            {
+                "origin": "home",
+                "translation": "дім"
+            },
+            {
+                "origin": "house",
+                "translation": "будинок"
+            },
+            {
+                "origin": "country house",
+                "translation": "заміський будинок"
+            },
+            {
+                "origin": "in the country",
+                "translation": "за містом"
+            },
+            {
+                "origin": "flat",
+                "translation": "квартира"
+            },
+            {
+                "origin": "in the city",
+                "translation": "в місті"
+            },
+            {
+                "origin": "room",
+                "translation": "кімната"
+            },
+            {
+                "origin": "the walls",
+                "translation": "стіни"
+            },
+            {
+                "origin": "the floor",
+                "translation": "підлога"
+            },
+            {
+                "origin": "the ceiling",
+                "translation": "стеля"
+            },
+            {
+                "origin": "door",
+                "translation": "двері"
+            },
+            {
+                "origin": "window",
+                "translation": "вікно"
+            },
+            {
+                "origin": "corner",
+                "translation": "кут"
+            },
+            {
+                "origin": "hall",
+                "translation": "хол"
+            },
+            {
+                "origin": "living room",
+                "translation": "вітальня"
+            },
+            {
+                "origin": "dining room",
+                "translation": "їдальня"
+            },
+            {
+                "origin": "bedroom",
+                "translation": "спальня"
+            },
+            {
+                "origin": "bathroom",
+                "translation": "ванна кімната"
+            },
+            {
+                "origin": "kitchen",
+                "translation": "кухня"
+            },
+            {
+                "origin": "toilet",
+                "translation": "туалет"
+            },
+            {
+                "origin": "closet",
+                "translation": "комора"
+            }
+        ]
+    },
+    {
+        "name": "Top English words",
+        "origin": {
+            "code": "en",
+            "name": "English",
+            "native": "English"
+        },
+        "translation": {
+            "code": "uk",
+            "name": "Ukrainian",
+            "native": "Українська"
+        },
+        "words": [
+            {
+                "origin": "opinion",
+                "translation": "погляд"
+            },
+            {
+                "origin": "refuse",
+                "translation": "відмовитися"
+            },
+            {
+                "origin": "strength",
+                "translation": "сила"
+            },
+            {
+                "origin": "stairs",
+                "translation": "сходи"
+            },
+            {
+                "origin": "seem",
+                "translation": "здаватися"
+            },
+            {
+                "origin": "maintly",
+                "translation": "в основному"
+            },
+            {
+                "origin": "grant",
+                "translation": "задовольнити"
+            },
+            {
+                "origin": "fit",
+                "translation": "здоровий, у формі"
+            },
+            {
+                "origin": "feasible",
+                "translation": "здійсненний"
+            },
+            {
+                "origin": "consist",
+                "translation": "складатися з чого"
+            },
+            {
+                "origin": "decide",
+                "translation": "вирішити"
+            },
+            {
+                "origin": "complain",
+                "translation": "скаржитися"
+            },
+            {
+                "origin": "mean",
+                "translation": "означати"
+            },
+            {
+                "origin": "insist",
+                "translation": "наполягати"
+            },
+            {
+                "origin": "suggest",
+                "translation": "запропонувати"
+            },
+            {
+                "origin": "realise",
+                "translation": "усвідомити"
+            },
+            {
+                "origin": "adjust",
+                "translation": "налаштувати"
+            },
+            {
+                "origin": "quiet",
+                "translation": "тихий"
+            },
+            {
+                "origin": "agree",
+                "translation": "погоджуватися"
+            },
+            {
+                "origin": "afford",
+                "translation": "дозволити собі"
+            },
+            {
+                "origin": "belong",
+                "translation": "належати"
+            },
+            {
+                "origin": "give",
+                "translation": "дати"
+            },
+            {
+                "origin": "suppose",
+                "translation": "припускати"
+            },
+            {
+                "origin": "advice",
+                "translation": "порада"
+            },
+            {
+                "origin": "consider",
+                "translation": "обдумати"
+            },
+            {
+                "origin": "prefer",
+                "translation": "віддати перевагу"
+            },
+            {
+                "origin": "bother",
+                "translation": "турбувати"
+            },
+            {
+                "origin": "eventually",
+                "translation": "нарешті"
+            }
+        ]
+    }
+]
