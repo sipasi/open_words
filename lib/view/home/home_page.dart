@@ -14,23 +14,21 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: getPageBy(pageIndex),
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: pageIndex,
-          onDestinationSelected: onDestinationSelected,
-          destinations: const [
-            NavigationDestination(
-              icon: Icon(Icons.book_outlined),
-              label: "Dictionaries",
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.settings_outlined),
-              label: "Settings",
-            ),
-          ],
-        ),
+    return Scaffold(
+      body: SafeArea(child: getPageBy(pageIndex)),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: pageIndex,
+        onDestinationSelected: onDestinationSelected,
+        destinations: const [
+          NavigationDestination(
+            icon: Icon(Icons.book_outlined),
+            label: "Dictionaries",
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.settings_outlined),
+            label: "Settings",
+          ),
+        ],
       ),
     );
   }
