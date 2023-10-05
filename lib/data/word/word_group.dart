@@ -35,4 +35,26 @@ class WordGroup {
   factory WordGroup.fromJson(Map<String, dynamic> json) => _$WordGroupFromJson(json);
 
   Map<String, dynamic> toJson() => _$WordGroupToJson(this);
+
+  WordGroup copyWith({
+    String? id,
+    DateTime? created,
+    DateTime? modified,
+    String? name,
+    LanguageInfo? origin,
+    LanguageInfo? translation,
+    List<Word>? words,
+    int? index,
+  }) {
+    return WordGroup(
+      id: id ?? this.id,
+      created: created ?? this.created,
+      modified: modified ?? this.modified,
+      name: name ?? this.name,
+      origin: origin ?? this.origin,
+      translation: translation ?? this.translation,
+      words: words ?? this.words,
+      index: index ?? this.index,
+    );
+  }
 }
