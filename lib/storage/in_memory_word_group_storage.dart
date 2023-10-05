@@ -4,11 +4,11 @@ import 'package:flutter/services.dart' show rootBundle;
 
 import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/storage/in_memory_storage.dart';
-import 'package:open_words/storage/work_group_storage.dart';
+import 'package:open_words/storage/word_group_storage.dart';
 import 'package:uuid/uuid.dart';
 
 class InMemoryWordGroupStorage extends InMemoryStorage<WordGroup>
-    implements WorkGroupStorage {
+    implements WordGroupStorage {
   static Future<InMemoryWordGroupStorage> fromBuiltIn() async {
     final buildInLoader = BuildInLoader();
 
