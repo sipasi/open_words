@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:open_words/data/language_info.dart';
 import 'package:open_words/data/word/word_group.dart';
+import 'package:open_words/service/language/language_info_service.dart';
+import 'package:uuid/uuid.dart';
 
 import 'word_group_edit_create_body.dart';
 
-class WordGroupEditPage extends StatefulWidget {
-  final WordGroup group;
-
-  const WordGroupEditPage({super.key, required this.group});
+class WordGroupCreatePage extends StatefulWidget {
+  const WordGroupCreatePage({super.key});
 
   @override
-  State<WordGroupEditPage> createState() => _WordGroupEditPageState();
+  State<WordGroupCreatePage> createState() => _WordGroupCreatePageState();
 }
 
-class _WordGroupEditPageState extends State<WordGroupEditPage> {
+class _WordGroupCreatePageState extends State<WordGroupCreatePage> {
   late final TextEditingController _nameController;
 
-  late LanguageInfo origin;
-  late LanguageInfo translation;
+  late final LanguageInfo origin;
+  late final LanguageInfo translation;
 
   @override
   void initState() {
     super.initState();
 
-    final group = widget.group;
+    final service = GetIt.I.get<LanguageInfoService>();
 
-    _nameController = TextEditingController(text: group.name);
-
-    origin = group.origin;
-    translation = group.translation;
+    _nameController = TextEditingController();
+    origin = service.getByCode('en');
+    translation = service.getByCode('uk');
   }
 
   @override
@@ -46,11 +46,15 @@ class _WordGroupEditPageState extends State<WordGroupEditPage> {
 
         final now = DateTime.now();
 
-        final group = widget.group.copyWith(
+        final group = WordGroup(
+          id: const Uuid().v4(),
+          created: now,
           modified: now,
           name: name,
           origin: origin,
           translation: translation,
+          words: [],
+          index: 0,
         );
 
         Navigator.pop(context, group);
