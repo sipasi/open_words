@@ -14,23 +14,23 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: getPageBy(pageIndex),
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: pageIndex,
-        onDestinationSelected: onDestinationSelected,
-        destinations: const [
-          NavigationDestination(
-            icon: Icon(Icons.book_outlined),
-            label: "Dictionaries",
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.settings_outlined),
-            label: "Settings",
-          ),
-        ],
+    return SafeArea(
+      child: Scaffold(
+        body: getPageBy(pageIndex),
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: pageIndex,
+          onDestinationSelected: onDestinationSelected,
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.book_outlined),
+              label: "Dictionaries",
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.settings_outlined),
+              label: "Settings",
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -44,6 +44,6 @@ class _HomePageState extends State<HomePage> {
   Widget getPageBy(int index) => switch (index) {
         0 => const WordGroupListPage(),
         1 => const SettingsPage(),
-        _ => const WordGroupListPage()
+        _ => const WordGroupListPage(),
       };
 }

@@ -29,7 +29,7 @@ class SettingsPageState extends State<SettingsPage> {
         const Divider(),
         ListTile(
           leading: const Icon(Icons.file_download_outlined),
-          title: OutlinedButton(child: Text('Import'), onPressed: () {}),
+          title: OutlinedButton(child: const Text('Import'), onPressed: () {}),
         ),
         ListTile(
           leading: const Icon(Icons.file_upload_outlined),

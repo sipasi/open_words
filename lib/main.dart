@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:open_words/service/language/language_info_service.dart';
 import 'package:open_words/storage/in_memory_word_group_storage.dart';
-import 'package:open_words/storage/work_group_storage.dart';
+import 'package:open_words/storage/word_group_storage.dart';
 import 'package:open_words/theme/app_theme.dart';
 import 'package:open_words/theme/theme_storage.dart';
 import 'package:open_words/theme/theme_switcher.dart';
@@ -15,7 +15,7 @@ void main() async {
 
   final storage = await InMemoryWordGroupStorage.fromBuiltIn();
 
-  GetIt.I.registerSingleton<WorkGroupStorage>(storage);
+  GetIt.I.registerSingleton<WordGroupStorage>(storage);
   GetIt.I.registerSingleton<LanguageInfoService>(LanguageInfoService());
 
   await ThemeStorage.init();
