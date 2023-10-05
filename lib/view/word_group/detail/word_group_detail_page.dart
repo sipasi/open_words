@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:open_words/data/language_info.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/storage/word_group_storage.dart';
 import 'package:open_words/view/shared/tile/custom_tile.dart';
 import 'package:open_words/view/word/detail/word_detail_page.dart';
 import 'package:open_words/view/word_group/edit/word_group_edit_page.dart';
+
+import '../../shared/dialog/word_create_dialog.dart';
 
 class WordGroupDetailPage extends StatefulWidget {
   final WordGroup group;
@@ -17,19 +20,25 @@ class WordGroupDetailPage extends StatefulWidget {
 }
 
 class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
-  WordGroup? modified;
+  late WordGroup modified;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final group = widget.group;
+
+    modified = group.copyWith(words: group.words.toList());
+  }
 
   @override
   Widget build(BuildContext context) {
-    final group = modified ?? widget.group;
-    final words = group.words;
-
     return Scaffold(
       appBar: AppBar(
-        title: Text(group.name),
+        title: Text(modified.name),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context, group),
+          onPressed: () => Navigator.pop(context, modified),
         ),
         actions: [
           IconButton(
@@ -38,7 +47,7 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
               final result = await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (builder) => WordGroupEditPage(group: group),
+                  builder: (builder) => WordGroupEditPage(group: modified),
                 ),
               );
 
@@ -58,7 +67,23 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
           ),
         ],
       ),
-      body: _justGrid(context, words),
+      body: _justGrid(context, modified.words),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () async {
+          final created = await WordCreateDialog.show(context: context, parent: modified);
+
+          if (created.isEmpty) {
+            return;
+          }
+
+          setState(() {
+            modified.words.addAll(created);
+          });
+
+          await GetIt.I.get<WordGroupStorage>().set(modified.id, modified);
+        },
+      ),
     );
   }
 
@@ -77,8 +102,8 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
             MaterialPageRoute(
               builder: (builder) => WordDetailPage(
                 word: words[index],
-                originLanguage: widget.group.origin,
-                translationLanguage: widget.group.translation,
+                originLanguage: modified.origin,
+                translationLanguage: modified.translation,
               ),
             ),
           ),

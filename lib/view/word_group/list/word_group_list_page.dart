@@ -64,7 +64,7 @@ class _WordGroupListPageState extends FutureState<WordGroupListPage, List<WordGr
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () async {
-          WordGroup? group = await Navigator.push(
+          WordGroup? group = await Navigator.push<WordGroup>(
             context,
             MaterialPageRoute(builder: (builder) => const WordGroupCreatePage()),
           );
