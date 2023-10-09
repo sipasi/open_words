@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:open_words/service/clipboard_service.dart';
 import 'package:open_words/service/language/language_info_service.dart';
+import 'package:open_words/service/text_to_speech_service.dart';
 import 'package:open_words/storage/in_memory_word_group_storage.dart';
 import 'package:open_words/storage/word_group_storage.dart';
 import 'package:open_words/theme/app_theme.dart';
@@ -13,16 +15,24 @@ import 'package:open_words/view/home/home_page.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final storage = await InMemoryWordGroupStorage.fromBuiltIn();
-
-  GetIt.I.registerSingleton<WordGroupStorage>(storage);
-  GetIt.I.registerSingleton<LanguageInfoService>(LanguageInfoService());
+  await setDependencies();
 
   await ThemeStorage.init();
 
   AppTheme theme = ThemeStorage.get();
 
   runApp(ThemeSwitcherWidget(initialTheme: theme, child: const MyApp()));
+}
+
+Future setDependencies() async {
+  final instance = GetIt.I;
+
+  final storage = await InMemoryWordGroupStorage.fromBuiltIn();
+
+  instance.registerSingleton<WordGroupStorage>(storage);
+  instance.registerSingleton<LanguageInfoService>(LanguageInfoService());
+  instance.registerSingleton<TextToSpeechService>(TextToSpeechService());
+  instance.registerSingleton<ClipboardService>(ClipboardService());
 }
 
 class MyApp extends StatefulWidget {
