@@ -89,7 +89,7 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
   Widget _justGrid(BuildContext context, List<Word> words) {
     return GridView.count(
       crossAxisCount: 2,
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsets.only(bottom: 120),
       childAspectRatio: 2.3,
       children: List.generate(
         words.length,

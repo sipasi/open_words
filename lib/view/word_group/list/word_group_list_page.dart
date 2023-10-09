@@ -31,7 +31,7 @@ class _WordGroupListPageState extends FutureState<WordGroupListPage, List<WordGr
     return Scaffold(
       body: GridView.count(
         crossAxisCount: 2,
-        padding: EdgeInsets.zero,
+        padding: const EdgeInsets.only(bottom: 120),
         childAspectRatio: 2.3,
         children: List.generate(
           data.length,
