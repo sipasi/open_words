@@ -44,6 +44,7 @@ dependencies:
   uuid: ^4.1.0
   flutter_tts: ^3.8.3
   url_launcher: ^6.1.14
+  sqflite: ^2.3.0
 
 dev_dependencies:
   flutter_test:
