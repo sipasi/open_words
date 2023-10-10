@@ -50,10 +50,7 @@ class _WordCreateDialogState extends State<WordCreateDialog> {
                     color: Theme.of(context).colorScheme.secondary,
                     fontWeight: FontWeight.bold,
                   )),
-              IconButton(
-                icon: const Icon(Icons.cancel),
-                onPressed: () => Navigator.pop(context, created),
-              ),
+              TextButton(onPressed: () => Navigator.pop(context, created), child: const Text('Done')),
             ],
           ),
           TextField(
