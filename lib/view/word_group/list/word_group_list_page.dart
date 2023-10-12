@@ -16,10 +16,12 @@ class WordGroupListPage extends StatefulWidget {
 
 class _WordGroupListPageState extends FutureState<WordGroupListPage, List<WordGroup>> {
   @override
-  Future<List<WordGroup>> getFuture() {
+  Future<List<WordGroup>> getFuture() async {
     final storage = GetIt.I.get<WordGroupStorage>();
 
-    return storage.getAll();
+    final all = await storage.getAll();
+
+    return all;
   }
 
   @override
