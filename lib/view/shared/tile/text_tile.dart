@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:open_words/theme/theme_switcher.dart';
 
-class CustomTile extends StatelessWidget {
+class TextTile extends StatelessWidget {
   final String title;
   final String subtitle;
 
@@ -9,7 +9,7 @@ class CustomTile extends StatelessWidget {
 
   final EdgeInsetsGeometry margin;
 
-  const CustomTile({
+  const TextTile({
     super.key,
     required this.title,
     required this.subtitle,

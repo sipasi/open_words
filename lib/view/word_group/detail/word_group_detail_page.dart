@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/storage/word_group_storage.dart';
-import 'package:open_words/view/shared/tile/custom_tile.dart';
+import 'package:open_words/view/shared/tile/text_tile.dart';
 import 'package:open_words/view/word/detail/word_detail_page.dart';
 import 'package:open_words/view/word_group/edit/word_group_edit_page.dart';
 
@@ -93,7 +93,7 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
       childAspectRatio: 2.3,
       children: List.generate(
         words.length,
-        (index) => CustomTile(
+        (index) => TextTile(
           title: words[index].origin,
           subtitle: words[index].translation,
           onTap: () => Navigator.push(

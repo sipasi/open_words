@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/storage/word_group_storage.dart';
 import 'package:open_words/view/shared/future_state.dart';
-import 'package:open_words/view/shared/tile/custom_tile.dart';
+import 'package:open_words/view/shared/tile/text_tile.dart';
 import 'package:open_words/view/word_group/detail/word_group_detail_page.dart';
 import 'package:open_words/view/word_group/edit/word_group_create_page.dart';
 
@@ -37,7 +37,7 @@ class _WordGroupListPageState extends FutureState<WordGroupListPage, List<WordGr
         childAspectRatio: 2.3,
         children: List.generate(
           data.length,
-          (index) => CustomTile(
+          (index) => TextTile(
             title: data[index].name,
             subtitle: data[index].words.length.toString(),
             onTap: () async {
