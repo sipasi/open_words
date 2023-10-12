@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'definition.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Definition {
   final String value;
   final String? example;

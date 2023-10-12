@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'word.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Word {
   final String origin;
   final String translation;

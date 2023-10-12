@@ -21,6 +21,6 @@ Map<String, dynamic> _$WordMetadataToJson(WordMetadata instance) =>
     <String, dynamic>{
       'id': instance.id,
       'word': instance.word,
-      'phonetics': instance.phonetics,
-      'meanings': instance.meanings,
+      'phonetics': instance.phonetics.map((e) => e.toJson()).toList(),
+      'meanings': instance.meanings.map((e) => e.toJson()).toList(),
     };

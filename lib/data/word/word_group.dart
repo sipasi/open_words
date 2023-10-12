@@ -5,7 +5,7 @@ import 'word.dart';
 
 part 'word_group.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class WordGroup {
   final String id;
 

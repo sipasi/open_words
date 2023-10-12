@@ -5,7 +5,7 @@ import 'phonetic.dart';
 
 part 'word_metadata.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class WordMetadata {
   final String id;
 

@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'language_info.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class LanguageInfo {
   final String code;
   final String name;

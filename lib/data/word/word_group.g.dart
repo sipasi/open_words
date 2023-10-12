@@ -25,8 +25,8 @@ Map<String, dynamic> _$WordGroupToJson(WordGroup instance) => <String, dynamic>{
       'created': instance.created.toIso8601String(),
       'modified': instance.modified.toIso8601String(),
       'name': instance.name,
-      'origin': instance.origin,
-      'translation': instance.translation,
-      'words': instance.words,
+      'origin': instance.origin.toJson(),
+      'translation': instance.translation.toJson(),
+      'words': instance.words.map((e) => e.toJson()).toList(),
       'index': instance.index,
     };

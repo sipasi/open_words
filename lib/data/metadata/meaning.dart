@@ -4,7 +4,7 @@ import 'package:open_words/data/metadata/definition.dart';
 
 part 'meaning.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Meaning {
   final String partOfSpeech;
 

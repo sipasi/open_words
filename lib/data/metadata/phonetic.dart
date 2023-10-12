@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'phonetic.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class Phonetic {
   final String value;
   final String? audio;
