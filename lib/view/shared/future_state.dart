@@ -1,23 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:open_words/view/shared/future_base_state.dart';
 
-abstract class FutureState<T extends StatefulWidget, TData> extends State<T> {
-  Future<TData>? _future;
-
-  TData? cache;
-
-  @override
-  void initState() {
-    super.initState();
-
-    onInitState();
-
-    loadFuture();
-  }
-
+abstract class FutureState<T extends StatefulWidget, TData> extends FutureBaseState<T, TData> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<TData>(
-      future: _future,
+      future: future,
       builder: (context, AsyncSnapshot<TData> snapshot) {
         if (snapshot.hasError) {
           return Text('$runtimeType: has error');
@@ -33,23 +21,4 @@ abstract class FutureState<T extends StatefulWidget, TData> extends State<T> {
       },
     );
   }
-
-  @protected
-  void onInitState() {}
-
-  @protected
-  Future<TData> getFuture();
-
-  @protected
-  void loadFuture() {
-    _future = getFuture();
-  }
-
-  @protected
-  Widget loadingBuild(BuildContext context) {
-    return const CircularProgressIndicator();
-  }
-
-  @protected
-  Widget successBuild(BuildContext context, TData data);
 }
