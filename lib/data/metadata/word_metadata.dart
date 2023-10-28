@@ -22,8 +22,7 @@ class WordMetadata {
     required this.meanings,
   });
 
-  factory WordMetadata.fromJson(Map<String, dynamic> json) =>
-      _$WordMetadataFromJson(json);
+  factory WordMetadata.fromJson(Map<String, dynamic> json) => _$WordMetadataFromJson(json);
 
   Map<String, dynamic> toJson() => _$WordMetadataToJson(this);
 }
