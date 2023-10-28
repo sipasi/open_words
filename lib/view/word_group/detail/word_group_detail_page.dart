@@ -3,16 +3,18 @@ import 'package:get_it/get_it.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/storage/word_group_storage.dart';
+import 'package:open_words/view/game/game_list_page.dart';
+import 'package:open_words/view/shared/dialog/word_create_dialog.dart';
 import 'package:open_words/view/shared/tile/text_tile.dart';
 import 'package:open_words/view/word/detail/word_detail_page.dart';
 import 'package:open_words/view/word_group/edit/word_group_edit_page.dart';
 
-import '../../shared/dialog/word_create_dialog.dart';
-
 class WordGroupDetailPage extends StatefulWidget {
   final WordGroup group;
 
-  const WordGroupDetailPage({super.key, required this.group});
+  final int heroIndex;
+
+  const WordGroupDetailPage({super.key, required this.group, required this.heroIndex});
 
   @override
   State<WordGroupDetailPage> createState() => _WordGroupDetailPageState();
@@ -34,7 +36,13 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(modified.name),
+        title: Hero(
+          tag: 'WordGroupDetailTitle ${widget.heroIndex}',
+          child: Text(
+            modified.name,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context, modified),
@@ -62,7 +70,12 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
           ),
           IconButton(
             icon: const Icon(Icons.games_outlined),
-            onPressed: () {},
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (builder) => GameListPage(group: modified),
+              ),
+            ),
           ),
         ],
       ),
