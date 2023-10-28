@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:open_words/view/shared/tile/tile_style.dart';
 
-class TextTile extends StatelessWidget {
-  final String title;
-  final String subtitle;
+class ExpandedTile extends StatelessWidget {
+  final Widget title;
+  final int titleFlext;
+
+  final Widget subtitle;
+  final int subtitleFlext;
 
   final void Function() onTap;
 
   final EdgeInsetsGeometry margin;
 
-  const TextTile({
+  const ExpandedTile({
     super.key,
     required this.title,
     required this.subtitle,
     required this.onTap,
+    this.titleFlext = 2,
+    this.subtitleFlext = 1,
     this.margin = const EdgeInsets.all(14.0),
   });
 
@@ -26,17 +30,8 @@ class TextTile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              title,
-              overflow: TextOverflow.ellipsis,
-              style: TileStyle.title(context),
-            ),
-            const Spacer(),
-            Text(
-              subtitle,
-              overflow: TextOverflow.ellipsis,
-              style: TileStyle.subtitle(context),
-            ),
+            Expanded(flex: titleFlext, child: title),
+            Expanded(flex: subtitleFlext, child: subtitle),
           ],
         ),
       ),
