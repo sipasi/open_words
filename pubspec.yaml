@@ -46,6 +46,8 @@ dependencies:
   url_launcher: ^6.1.14 
   sembast: ^3.5.0+1
   path_provider: ^2.1.1
+  http: ^1.1.0
+  logger: ^2.0.2+1
 
 dev_dependencies:
   flutter_test:
