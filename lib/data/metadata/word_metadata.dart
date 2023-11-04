@@ -7,7 +7,7 @@ part 'word_metadata.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class WordMetadata {
-  final String id;
+  final String? id;
 
   final String word;
 
@@ -16,7 +16,7 @@ class WordMetadata {
   final List<Meaning> meanings;
 
   WordMetadata({
-    required this.id,
+    this.id,
     required this.word,
     required this.phonetics,
     required this.meanings,

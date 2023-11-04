@@ -12,8 +12,7 @@ class Phonetic {
     this.audio,
   });
 
-  factory Phonetic.fromJson(Map<String, dynamic> json) =>
-      _$PhoneticFromJson(json);
+  factory Phonetic.fromJson(Map<String, dynamic> json) => _$PhoneticFromJson(json);
 
   Map<String, dynamic> toJson() => _$PhoneticToJson(this);
 }

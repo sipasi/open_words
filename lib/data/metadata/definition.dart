@@ -12,8 +12,7 @@ class Definition {
     this.example,
   });
 
-  factory Definition.fromJson(Map<String, dynamic> json) =>
-      _$DefinitionFromJson(json);
+  factory Definition.fromJson(Map<String, dynamic> json) => _$DefinitionFromJson(json);
 
   Map<String, dynamic> toJson() => _$DefinitionToJson(this);
 }
