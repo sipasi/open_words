@@ -67,38 +67,41 @@ class MeaningView extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10),
-        SynonymAntonymView(
-          groupName: 'Synonym',
-          values: meaning.synonyms,
-          firstStyle: first,
-          otherStyle: otherUnderline,
-          onTap: onSynonymTap,
-          onLongPress: onSynonymLongPress,
-        ),
-        const SizedBox(height: 10),
-        SynonymAntonymView(
-          groupName: 'Antonym',
-          values: meaning.antonyms,
-          firstStyle: first,
-          otherStyle: otherUnderline,
-          onTap: onAntonymTap,
-          onLongPress: onAntonymLongPress,
-        ),
-        const SizedBox(height: 10),
-        ...meaning.definitions.map(
-          (definition) => Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: DefinitionView(
-              definition: definition,
-              firstStyle: first,
-              otherStyle: other,
-              onDefinitionTap: onDefinitionTap,
-              onDefinitionLongPress: onDefinitionLongPress,
-              onExampleTap: onExampleTap,
-              onExampleLongPress: onExampleLongPress,
+        if (meaning.synonyms.isNotEmpty)
+          SynonymAntonymView(
+            groupName: 'Synonym',
+            values: meaning.synonyms,
+            firstStyle: first,
+            otherStyle: otherUnderline,
+            onTap: onSynonymTap,
+            onLongPress: onSynonymLongPress,
+          ),
+        if (meaning.synonyms.isNotEmpty) const SizedBox(height: 10),
+        if (meaning.antonyms.isNotEmpty)
+          SynonymAntonymView(
+            groupName: 'Antonym',
+            values: meaning.antonyms,
+            firstStyle: first,
+            otherStyle: otherUnderline,
+            onTap: onAntonymTap,
+            onLongPress: onAntonymLongPress,
+          ),
+        if (meaning.antonyms.isNotEmpty) const SizedBox(height: 10),
+        if (meaning.definitions.isNotEmpty)
+          ...meaning.definitions.map(
+            (definition) => Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: DefinitionView(
+                definition: definition,
+                firstStyle: first,
+                otherStyle: other,
+                onDefinitionTap: onDefinitionTap,
+                onDefinitionLongPress: onDefinitionLongPress,
+                onExampleTap: onExampleTap,
+                onExampleLongPress: onExampleLongPress,
+              ),
             ),
           ),
-        ),
       ],
     );
   }
