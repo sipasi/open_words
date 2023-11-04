@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:open_words/data/word/word_group.dart';
-import 'package:open_words/view/game/origin_to_translation_page.dart';
+import 'package:open_words/view/game/word_compare/origin_to_translation_page.dart';
+import 'package:open_words/view/game/word_compare/translation_to_origin_page.dart';
 
 class GameListPage extends StatelessWidget {
   final WordGroup group;
@@ -19,12 +20,23 @@ class GameListPage extends StatelessWidget {
             title: const Text('Origin to translation'),
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (builder) => OriginToTranslationPage()),
+              MaterialPageRoute(
+                builder: (builder) => OriginToTranslationPage(
+                  group: group,
+                ),
+              ),
             ),
           ),
           ListTile(
             title: const Text('Translation to origin'),
-            onTap: () {},
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (builder) => TranslationToOriginPage(
+                  group: group,
+                ),
+              ),
+            ),
           ),
           ListTile(
             title: const Text('Translation to origin'),
