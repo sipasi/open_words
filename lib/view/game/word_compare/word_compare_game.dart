@@ -11,15 +11,10 @@ class WordCompareGame extends StatefulWidget {
   final List<Word> words;
   final Map<Word, WordMetadata> metadatas;
 
-  final String Function(Word word) questionText;
-  final String Function(Word word) answerText;
-
   const WordCompareGame({
     super.key,
     required this.words,
     required this.metadatas,
-    required this.questionText,
-    required this.answerText,
   });
 
   @override
