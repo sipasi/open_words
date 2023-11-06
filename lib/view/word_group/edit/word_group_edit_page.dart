@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:open_words/data/language_info.dart';
 import 'package:open_words/data/word/word_group.dart';
+import 'package:open_words/service/navigation/material_navigator.dart';
 
 import 'word_group_edit_create_body.dart';
 
@@ -53,7 +54,7 @@ class _WordGroupEditPageState extends State<WordGroupEditPage> {
           translation: translation,
         );
 
-        Navigator.pop(context, group);
+        MaterialNavigator.popWith(context, Result.modify(group));
       },
       onOriginSelect: (origin) {
         setState(() {

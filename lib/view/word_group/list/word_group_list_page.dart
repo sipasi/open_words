@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_words/data/word/word_group.dart';
+import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/storage/word_group_storage.dart';
 import 'package:open_words/view/shared/future_state.dart';
 import 'package:open_words/view/shared/tile/hero_text_tile.dart';
@@ -43,27 +44,27 @@ class _WordGroupListPageState extends FutureState<WordGroupListPage, List<WordGr
             titleTag: 'WordGroupDetailTitle $index',
             subtitleTag: 'WordGroupDetailSubtitle $index',
             onTap: () async {
-              WordGroup? group = await Navigator.push(
+              final result = await MaterialNavigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (builder) => WordGroupDetailPage(
-                    group: data[index],
-                    heroIndex: index,
-                  ),
+                (builder) => WordGroupDetailPage(
+                  group: data[index],
+                  heroIndex: index,
                 ),
               );
 
-              if (group == null) {
-                return;
-              }
+              result.deleted<WordGroup>((value) {
+                setState(() {
+                  cache?.removeWhere((element) => element.id == value.id);
+                });
+              });
 
-              for (var i = 0; i < cache!.length; i++) {
-                if (group.id == cache![i].id) {
-                  setState(() {
-                    cache![i] = group;
-                  });
-                }
-              }
+              result.modified<WordGroup>((value) {
+                final index = cache!.indexWhere((element) => element.id == value.id);
+
+                setState(() {
+                  cache![index] = value;
+                });
+              });
             },
           ),
         ),
@@ -71,21 +72,19 @@ class _WordGroupListPageState extends FutureState<WordGroupListPage, List<WordGr
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () async {
-          WordGroup? group = await Navigator.push<WordGroup>(
+          final result = await MaterialNavigator.push(
             context,
-            MaterialPageRoute(builder: (builder) => const WordGroupCreatePage()),
+            (builder) => const WordGroupCreatePage(),
           );
 
-          if (group == null || cache == null) {
-            return;
-          }
+          result.created<WordGroup>((value) async {
+            final updated = value.copyWith(index: cache!.length);
 
-          final updated = group.copyWith(index: cache!.length);
+            await GetIt.I.get<WordGroupStorage>().set(updated.id, updated);
 
-          await GetIt.I.get<WordGroupStorage>().set(updated.id, updated);
-
-          setState(() {
-            cache!.add(updated);
+            setState(() {
+              cache!.add(updated);
+            });
           });
         },
       ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/data/word/word_group.dart';
+import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/storage/word_group_storage.dart';
 import 'package:open_words/view/game/game_list_page.dart';
 import 'package:open_words/view/shared/dialog/word_create_dialog.dart';
@@ -45,36 +46,42 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context, modified),
+          onPressed: () => MaterialNavigator.popWith(
+            context,
+            Result.modify(modified),
+          ),
         ),
         actions: [
           IconButton(
+            icon: const Icon(Icons.delete_forever_outlined),
+            onPressed: () async {
+              await GetIt.I.get<WordGroupStorage>().delete(modified.id);
+
+              MaterialNavigator.popWith(context, Result.delete(modified));
+            },
+          ),
+          IconButton(
             icon: const Icon(Icons.edit_note_outlined),
             onPressed: () async {
-              final result = await Navigator.push(
+              final result = await MaterialNavigator.push<WordGroup>(
                 context,
-                MaterialPageRoute(
-                  builder: (builder) => WordGroupEditPage(group: modified),
-                ),
+                (builder) => WordGroupEditPage(group: modified),
               );
 
-              if (result == null) {
-                return;
-              }
-              setState(() {
-                modified = result;
-              });
+              result.modified<WordGroup>((value) async {
+                setState(() {
+                  modified = value;
+                });
 
-              await GetIt.I.get<WordGroupStorage>().set(result.id, result);
+                await GetIt.I.get<WordGroupStorage>().set(value.id, value);
+              });
             },
           ),
           IconButton(
             icon: const Icon(Icons.games_outlined),
-            onPressed: () => Navigator.push(
+            onPressed: () => MaterialNavigator.push(
               context,
-              MaterialPageRoute(
-                builder: (builder) => GameListPage(group: modified),
-              ),
+              (buider) => GameListPage(group: modified),
             ),
           ),
         ],
@@ -109,14 +116,12 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
         (index) => TextTile(
           title: words[index].origin,
           subtitle: words[index].translation,
-          onTap: () => Navigator.push(
+          onTap: () => MaterialNavigator.push(
             context,
-            MaterialPageRoute(
-              builder: (builder) => WordDetailPage(
-                word: words[index],
-                originLanguage: modified.origin,
-                translationLanguage: modified.translation,
-              ),
+            (builder) => WordDetailPage(
+              word: words[index],
+              originLanguage: modified.origin,
+              translationLanguage: modified.translation,
             ),
           ),
         ),

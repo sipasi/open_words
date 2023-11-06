@@ -27,12 +27,6 @@ class WordGroupEditCreateBody extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(name.text),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.save_outlined),
-            onPressed: onSave,
-          )
-        ],
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 20),
@@ -60,6 +54,11 @@ class WordGroupEditCreateBody extends StatelessWidget {
           ),
           const SizedBox(height: 10),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text('Save'),
+        icon: const Icon(Icons.save),
+        onPressed: onSave,
       ),
     );
   }
