@@ -1,14 +1,18 @@
 import 'package:open_words/data/word/word.dart';
 
 abstract class WordTextGetter {
-  static final WordTextGetter origin = _OriginTextGetter();
-  static final WordTextGetter translation = _TranslationTextGetter();
+  static const WordTextGetter origin = _OriginTextGetter();
+  static const WordTextGetter translation = _TranslationTextGetter();
+
+  const WordTextGetter();
 
   String question(Word word);
   String answer(Word word);
 }
 
 class _OriginTextGetter extends WordTextGetter {
+  const _OriginTextGetter();
+
   @override
   String question(Word word) => word.origin;
   @override
@@ -16,6 +20,8 @@ class _OriginTextGetter extends WordTextGetter {
 }
 
 class _TranslationTextGetter extends WordTextGetter {
+  const _TranslationTextGetter();
+
   @override
   String question(Word word) => word.translation;
   @override

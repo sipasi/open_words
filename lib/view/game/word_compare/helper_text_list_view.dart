@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:open_words/view/game/word_compare/compare_game.dart';
+import 'package:open_words/view/game/word_compare/helper_text.dart';
 
-class WordCompareHelpers extends StatelessWidget {
-  final List<String> helpers;
+class HelperTextListView extends StatelessWidget {
+  final ReadonlyList<HelperText> helpers;
 
-  final int visibleDefinitions;
+  final bool canRequest;
+
   final void Function() onHelpTap;
 
-  const WordCompareHelpers({
+  const HelperTextListView({
     super.key,
     required this.helpers,
-    required this.visibleDefinitions,
+    required this.canRequest,
     required this.onHelpTap,
   });
 
@@ -20,21 +23,9 @@ class WordCompareHelpers extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
-          child: ListView.separated(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            itemCount: visibleDefinitions,
-            separatorBuilder: (context, index) => const Divider(),
-            itemBuilder: (context, index) {
-              final definition = helpers[index];
-
-              return Text(
-                definition,
-                style: TextStyle(color: Theme.of(context).colorScheme.secondary),
-              );
-            },
-          ),
+          child: _listView(),
         ),
-        if (canLoad())
+        if (canRequest)
           Align(
             alignment: Alignment.centerRight,
             child: TextButton(
@@ -53,7 +44,19 @@ class WordCompareHelpers extends StatelessWidget {
     );
   }
 
-  bool canLoad() {
-    return visibleDefinitions != helpers.length;
+  Widget _listView() {
+    return ListView.separated(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      itemCount: helpers.length,
+      separatorBuilder: (context, index) => const Divider(),
+      itemBuilder: (context, index) {
+        final helper = helpers[index];
+
+        return Text(
+          helper.toString(),
+          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+        );
+      },
+    );
   }
 }

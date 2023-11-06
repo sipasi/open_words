@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class WordCompareScore extends StatelessWidget {
+class CompareScoreView extends StatelessWidget {
   final int correct;
   final int wrong;
   final int total;
   final int answered;
 
-  const WordCompareScore({
+  const CompareScoreView({
     super.key,
     required this.correct,
     required this.wrong,

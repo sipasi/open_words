@@ -1,9 +1,8 @@
 import 'package:open_words/data/metadata/word_metadata.dart';
-import 'package:open_words/data/word/word.dart';
-import 'package:open_words/view/game/word_list_random_extension.dart';
+import 'package:open_words/view/game/word_compare/helper_text.dart';
 
 class WordCompareTool {
-  static List<String> helpersFrom(
+  static List<HelperText> helpersFrom(
     WordMetadata? metadata, {
     int definitionCount = 2,
     int synonymsCount = 2,
@@ -14,15 +13,26 @@ class WordCompareTool {
     }
 
     final definitions = metadata.meanings
-        .expand((element) => element.definitions.map((e) => e.value))
+        .expand((element) => element.definitions.map((e) => HelperText(
+              prefix: 'definition',
+              text: e.value,
+            )))
         .toList(growable: false)
       ..shuffle();
 
-    final synonyms = metadata.meanings.expand((element) => element.synonyms).toList(growable: false)..shuffle();
+    final synonyms = metadata.meanings
+        .expand((element) => element.synonyms)
+        .map((e) => HelperText(prefix: 'synonym', text: e))
+        .toList(growable: false)
+      ..shuffle();
 
-    final antonyms = metadata.meanings.expand((element) => element.antonyms).toList(growable: false)..shuffle();
+    final antonyms = metadata.meanings
+        .expand((element) => element.antonyms)
+        .map((e) => HelperText(prefix: 'antonym', text: e))
+        .toList(growable: false)
+      ..shuffle();
 
-    final helpers = <String>[];
+    final helpers = <HelperText>[];
 
     helpers.addAll(definitions.take(definitionCount));
     helpers.addAll(synonyms.take(synonymsCount));

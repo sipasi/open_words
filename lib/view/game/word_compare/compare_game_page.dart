@@ -4,27 +4,26 @@ import 'package:open_words/data/metadata/word_metadata.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/storage/metadata_storage.dart';
+import 'package:open_words/view/game/word_compare/compare_game_view.dart';
 import 'package:open_words/view/game/word_compare/game_score_data.dart';
-import 'package:open_words/view/game/word_compare/word_compare_game.dart';
+import 'package:open_words/view/game/word_compare/word_text_getter.dart';
 import 'package:open_words/view/shared/future_scaffold_state.dart';
 
-class WordCompareGamePage extends StatefulWidget {
+class CompareGamePage extends StatefulWidget {
   final WordGroup group;
-  final String Function(Word word) questionText;
-  final String Function(Word word) answerText;
+  final WordTextGetter textGetter;
 
-  const WordCompareGamePage({
+  const CompareGamePage({
     super.key,
     required this.group,
-    required this.questionText,
-    required this.answerText,
+    required this.textGetter,
   });
 
   @override
-  State<WordCompareGamePage> createState() => _WordCompareGamePageState();
+  State<CompareGamePage> createState() => _CompareGamePageState();
 }
 
-class _WordCompareGamePageState extends FutureScaffoldState<WordCompareGamePage, GameScoreData> {
+class _CompareGamePageState extends FutureScaffoldState<CompareGamePage, GameScoreData> {
   @override
   Future<GameScoreData> getFuture() async {
     final words = widget.group.words.toList(growable: false)..shuffle();
@@ -55,17 +54,19 @@ class _WordCompareGamePageState extends FutureScaffoldState<WordCompareGamePage,
   Widget successBuild(BuildContext context, GameScoreData data) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: WordCompareGame(
+      child: CompareGameView(
         words: data.words,
-        metadatas: data.metadatas,
-        questionText: widget.questionText,
-        answerText: widget.answerText,
+        map: data.metadatas,
+        textGetter: widget.textGetter,
       ),
     );
   }
 
   @override
   AppBar appbarBuild(BuildContext context, ConnectionState state) {
-    return AppBar();
+    return AppBar(
+      backgroundColor: Colors.transparent,
+      surfaceTintColor: Colors.transparent,
+    );
   }
 }

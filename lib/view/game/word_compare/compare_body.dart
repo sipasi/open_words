@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:open_words/view/game/word_compare/word_compare_helpers.dart';
-import 'package:open_words/view/game/word_compare/word_compare_score.dart';
+import 'package:open_words/data/word/word.dart';
+import 'package:open_words/view/game/word_compare/compare_data.dart';
+import 'package:open_words/view/game/word_compare/compare_score.dart';
+import 'package:open_words/view/game/word_compare/helper_text_list.dart';
+import 'package:open_words/view/game/word_compare/helper_text_list_view.dart';
+import 'package:open_words/view/game/word_compare/compare_score_view.dart';
+import 'package:open_words/view/game/word_compare/word_text_getter.dart';
 
-class WordCompareBody extends StatelessWidget {
-  final String question;
-  final List<String> answers;
+class CompareBody extends StatelessWidget {
+  final CompareData data;
 
-  final List<String> helpers;
+  final WordTextGetter textGetter;
 
-  final int correct, wrong, total, answered;
+  final HelperTextList helpers;
 
-  final int visibleDefinitions;
+  final CompareScore score;
 
   final void Function() onHelpTap;
 
-  final void Function(String word) onAnswerTap;
+  final void Function(Word word) onAnswerTap;
 
-  const WordCompareBody({
+  const CompareBody({
     super.key,
-    required this.question,
-    required this.answers,
+    required this.data,
+    required this.textGetter,
     required this.helpers,
-    required this.correct,
-    required this.wrong,
-    required this.total,
-    required this.answered,
-    required this.visibleDefinitions,
+    required this.score,
     required this.onAnswerTap,
     required this.onHelpTap,
   });
@@ -41,22 +41,25 @@ class WordCompareBody extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        WordCompareScore(
-          correct: correct,
-          wrong: wrong,
-          total: total,
-          answered: answered,
+        CompareScoreView(
+          correct: score.correct,
+          wrong: score.wrong,
+          total: score.total,
+          answered: score.answered,
         ),
         Expanded(
-          child: WordCompareHelpers(
-            helpers: helpers,
-            visibleDefinitions: visibleDefinitions,
+          child: HelperTextListView(
+            helpers: helpers.requested,
+            canRequest: helpers.canRequest(),
             onHelpTap: onHelpTap,
           ),
         ),
         Column(
           children: [
-            Text(question, style: titleLargeBold?.copyWith(color: colorScheme.secondary)),
+            Text(
+              textGetter.question(data.question),
+              style: titleLargeBold?.copyWith(color: colorScheme.secondary),
+            ),
             const SizedBox(height: 20),
             createButtonGrid(colorScheme),
           ],
@@ -73,11 +76,11 @@ class WordCompareBody extends StatelessWidget {
       mainAxisSpacing: 10,
       crossAxisSpacing: 10,
       physics: const NeverScrollableScrollPhysics(),
-      children: List.generate(answers.length, (index) {
-        final answer = answers[index];
+      children: List.generate(data.answers.length, (index) {
+        final answer = data.answers[index];
 
         return createButton(
-          text: answer,
+          text: textGetter.answer(answer),
           borderColor: colorScheme.secondary,
           onTap: () => onAnswerTap(answer),
         );
