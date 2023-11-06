@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_words/data/language_info.dart';
+import 'package:open_words/data/metadata/meaning.dart';
 import 'package:open_words/data/metadata/word_metadata.dart';
 import 'package:open_words/service/clipboard_service.dart';
 import 'package:open_words/service/text_to_speech_service.dart';
@@ -21,12 +22,10 @@ class WordMetadataView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    return _column(context);
+  }
 
-    final headlineSmall = theme.textTheme.headlineSmall?.copyWith(
-      fontWeight: FontWeight.bold,
-    );
-
+  Widget _column(BuildContext context) {
     final meanings = metadata.meanings;
 
     return Padding(
@@ -35,24 +34,31 @@ class WordMetadataView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Meanings', style: headlineSmall),
-          const SizedBox(height: 20),
           ...List.generate(meanings.length, (index) {
-            return MeaningView(
-              meaning: meanings[index],
-              onSynonymTap: _speek,
-              onSynonymLongPress: (text) => _clipboard.copyWithSnakBar(context, text),
-              onAntonymTap: _speek,
-              onAntonymLongPress: (text) => _clipboard.copyWithSnakBar(context, text),
-              onDefinitionTap: _speek,
-              onDefinitionLongPress: (text) => _clipboard.copyWithSnakBar(context, text),
-              onExampleTap: _speek,
-              onExampleLongPress: (text) => _clipboard.copyWithSnakBar(context, text),
+            return Column(
+              children: [
+                if (index != 0) const Divider(),
+                _getMeaningView(context, meanings[index]),
+              ],
             );
           }),
           const SizedBox(height: 40),
         ],
       ),
+    );
+  }
+
+  Widget _getMeaningView(BuildContext context, Meaning meaning) {
+    return MeaningView(
+      meaning: meaning,
+      onSynonymTap: _speek,
+      onSynonymLongPress: (text) => _clipboard.copyWithSnakBar(context, text),
+      onAntonymTap: _speek,
+      onAntonymLongPress: (text) => _clipboard.copyWithSnakBar(context, text),
+      onDefinitionTap: _speek,
+      onDefinitionLongPress: (text) => _clipboard.copyWithSnakBar(context, text),
+      onExampleTap: _speek,
+      onExampleLongPress: (text) => _clipboard.copyWithSnakBar(context, text),
     );
   }
 
