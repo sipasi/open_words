@@ -33,17 +33,14 @@ class WordMetadataView extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          ...List.generate(meanings.length, (index) {
-            return Column(
-              children: [
-                if (index != 0) const Divider(),
-                _getMeaningView(context, meanings[index]),
-              ],
-            );
-          }),
-          const SizedBox(height: 40),
-        ],
+        children: List.generate(meanings.length, (index) {
+          return Column(
+            children: [
+              if (index != 0) const Divider(),
+              _getMeaningView(context, meanings[index]),
+            ],
+          );
+        }),
       ),
     );
   }
