@@ -64,8 +64,13 @@ class WordDetailPage extends StatelessWidget {
               word: word.origin,
               language: originLanguage,
             ),
+            const SizedBox(height: 100),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.edit_outlined),
+        onPressed: () {},
       ),
     );
   }
