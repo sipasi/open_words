@@ -22,7 +22,7 @@ class _WordGroupListPageState extends FutureState<WordGroupListPage, List<WordGr
 
     final all = await storage.getAll();
 
-    return all;
+    return all.isEmpty ? [] : all;
   }
 
   @override
