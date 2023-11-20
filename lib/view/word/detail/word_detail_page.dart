@@ -3,8 +3,10 @@ import 'package:get_it/get_it.dart';
 import 'package:open_words/data/language_info.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/service/clipboard_service.dart';
+import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/service/text_to_speech_service.dart';
 import 'package:open_words/view/word/detail/metadata/word_metadata_loader_view.dart';
+import 'package:open_words/view/word/edit/word_edit_page.dart';
 
 class WordDetailPage extends StatelessWidget {
   final Word word;
@@ -70,7 +72,9 @@ class WordDetailPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.edit_outlined),
-        onPressed: () {},
+        onPressed: () {
+          MaterialNavigator.push(context, (context) => const WordEditPage());
+        },
       ),
     );
   }
