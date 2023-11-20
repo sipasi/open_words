@@ -7,22 +7,18 @@ abstract class MaterialNavigator {
 
   static Future<Result> push<T extends Object?>(
     BuildContext context,
-    Widget Function(BuildContext context) builder,
+    WidgetBuilder builder,
   ) async {
     Result? result = await Navigator.push<Result>(
       context,
       MaterialPageRoute(builder: builder),
     );
 
-    if (result == null) {
-      String message = 'Page don\'t return result of PageResult<${T.runtimeType}> type';
-
-      logger.e(message);
-
+    if (isNot<T>(result)) {
       return const Result.empty();
     }
 
-    return result;
+    return result as Result;
   }
 
   static void pop<T>(BuildContext context) {
@@ -31,6 +27,39 @@ abstract class MaterialNavigator {
 
   static void popWith<T>(BuildContext context, Result result) {
     Navigator.pop(context, result);
+  }
+
+  static Future<Result> bottomSheet<T>({
+    required BuildContext context,
+    required WidgetBuilder builder,
+    bool isScrollControlled = false,
+    bool useSafeArea = false,
+  }) async {
+    final result = await showModalBottomSheet(
+      context: context,
+      builder: builder,
+      isScrollControlled: isScrollControlled,
+      enableDrag: false,
+      useSafeArea: useSafeArea,
+    );
+
+    if (isNot<T>(result)) {
+      return const Result.empty();
+    }
+
+    return result as Result;
+  }
+
+  static bool isNot<T>(dynamic object) {
+    if (object is Result) {
+      return false;
+    }
+
+    String message = 'Page return null insead of PageResult<${T.runtimeType}> type';
+
+    logger.e(message);
+
+    return true;
   }
 }
 
