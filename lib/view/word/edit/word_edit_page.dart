@@ -3,25 +3,39 @@ import 'package:open_words/data/metadata/definition.dart';
 import 'package:open_words/data/metadata/meaning.dart';
 import 'package:open_words/data/metadata/phonetic.dart';
 import 'package:open_words/data/metadata/word_metadata.dart';
-import 'package:open_words/data/metadata/word_metadata_genarator.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
 
 class WordEditPage extends StatefulWidget {
-  final Word word = const Word(origin: 'advise', translation: 'порада', index: 0);
+  final Word word;
+  final WordMetadata? metadata;
 
-  const WordEditPage({super.key});
+  const WordEditPage({
+    super.key,
+    required this.word,
+    this.metadata,
+  });
 
   @override
   State<WordEditPage> createState() => _WordEditPageState();
 }
 
 class _WordEditPageState extends State<WordEditPage> {
-  final WordMetadata metadata = WordMetadataGenarator.get();
-
-  final List<Phonetic> phonetics = [];
+  late final List<Phonetic> _phonetics;
+  late final List<Meaning> _meanings;
 
   final TextEditingController _translation = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    WordMetadata? metadata = widget.metadata;
+
+    _phonetics = metadata?.phonetics.toList() ?? [];
+    _meanings = metadata?.meanings.toList() ?? [];
+
+    _translation.text = widget.word.translation;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,59 +46,30 @@ class _WordEditPageState extends State<WordEditPage> {
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          FilledButton.tonalIcon(
+          FloatingActionButton.extended(
             onPressed: () async {
-              final result = await PhoneticBottomSheet.showCreate(context);
+              final result = await PhoneticEdit.pageCreate(context);
 
               result.contain<Phonetic>((value) {
                 setState(() {
-                  phonetics.add(value);
+                  _phonetics.add(value);
                 });
               });
             },
             icon: const Icon(Icons.music_note),
             label: const Text('phonetic'),
+            heroTag: 'save_phonetic_hero',
+            isExtended: true,
           ),
           const SizedBox(width: 10),
-          FilledButton.tonalIcon(
+          FloatingActionButton.extended(
             onPressed: () async {
-              final meaning = Meaning(
-                partOfSpeech: 'adv',
-                definitions: [
-                  Definition(
-                    value: 'Duis nisi minim nostrud aliquip quis exercitation nostrud.',
-                    example: 'Est qui mollit aliqua qui.',
-                  ),
-                  Definition(
-                    value: 'Duis nisi minim nostrud aliquip quis exercitation nostrud.',
-                    example: 'Est qui mollit aliqua qui.',
-                  ),
-                  Definition(
-                    value: 'Duis nisi minim nostrud aliquip quis exercitation nostrud.',
-                    example: 'Est qui mollit aliqua qui.',
-                  ),
-                  Definition(
-                    value: 'Duis nisi minim nostrud aliquip quis exercitation nostrud.',
-                    example: 'Est qui mollit aliqua qui.',
-                  ),
-                ],
-                synonyms: [
-                  'nisi',
-                  'minim',
-                  'aliquip',
-                  'exercitation',
-                  'nostrud',
-                  'mollit' 'aliquip',
-                  'exercitation',
-                  'nostrud',
-                  'mollit',
-                ],
-                antonyms: ['nisi'],
-              );
-              await MeaningBottomSheet.showEdit(context, meaning);
+              await MeaningEdit.pageCreate(context);
             },
             icon: const Icon(Icons.menu_book_outlined),
             label: const Text('meanings'),
+            heroTag: 'save_meaning_hero',
+            isExtended: true,
           ),
         ],
       ),
@@ -94,9 +79,9 @@ class _WordEditPageState extends State<WordEditPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             WordEditControl(translation: _translation, padding: const EdgeInsets.symmetric(horizontal: 10)),
-            const Divider(height: 50),
+            const Divider(height: 40),
             _phoneticsListView(),
-            const Divider(height: 30),
+            const Divider(height: 40),
             _meaningsListView(),
           ],
         ),
@@ -105,33 +90,49 @@ class _WordEditPageState extends State<WordEditPage> {
   }
 
   Widget _phoneticsListView() {
-    if (phonetics.isNotEmpty) {
+    final theme = Theme.of(context);
+    final boldStyle = theme.textTheme.headlineSmall?.copyWith(
+      fontWeight: FontWeight.bold,
+      color: theme.colorScheme.secondary,
+    );
+
+    if (_phonetics.isNotEmpty) {
       return Column(
         children: [
           Text(
             'Phonetics',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: boldStyle,
           ),
           Card(
             child: Column(
               children: List.generate(
-                phonetics.length,
+                _phonetics.length,
                 (index) {
-                  final phonetic = phonetics[index];
+                  final entity = _phonetics[index];
 
                   return ListTile(
-                    title: Text(phonetic.value),
+                    title: Text(entity.value),
                     contentPadding: EdgeInsets.zero,
-                    subtitle: phonetic.audio != null ? Text(phonetic.audio!) : null,
-                    trailing: IconButton(
-                      icon: const Icon(Icons.edit),
-                      onPressed: () {},
-                    ),
+                    subtitle: entity.audio != null ? Text(entity.audio!) : null,
                     leading: IconButton(
                       icon: const Icon(Icons.delete),
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          _phonetics.removeAt(index);
+                        });
+                      },
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.edit),
+                      onPressed: () async {
+                        final result = await PhoneticEdit.pageEdit(context, entity);
+
+                        result.modified<Phonetic>((value) {
+                          setState(() {
+                            _phonetics[index] = value;
+                          });
+                        });
+                      },
                     ),
                   );
                 },
@@ -141,39 +142,32 @@ class _WordEditPageState extends State<WordEditPage> {
         ],
       );
     }
-    return Container();
+
+    return _createFirstText('Definition');
   }
 
   Widget _meaningsListView() {
-    if (phonetics.isNotEmpty) {
+    final theme = Theme.of(context);
+    final boldStyle = theme.textTheme.headlineSmall?.copyWith(
+      fontWeight: FontWeight.bold,
+      color: theme.colorScheme.secondary,
+    );
+
+    if (_meanings.isNotEmpty) {
       return Column(
         children: [
           Text(
             'Meanings',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: boldStyle,
           ),
           Card(
             child: Column(
               children: List.generate(
-                phonetics.length,
+                _meanings.length,
                 (index) {
-                  final phonetic = phonetics[index];
+                  final entity = _meanings[index];
 
-                  return ListTile(
-                    title: Text(phonetic.value),
-                    contentPadding: EdgeInsets.zero,
-                    subtitle: phonetic.audio != null ? Text(phonetic.audio!) : null,
-                    trailing: IconButton(
-                      icon: const Icon(Icons.edit),
-                      onPressed: () {},
-                    ),
-                    leading: IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () {},
-                    ),
-                  );
+                  return _meaningTile(entity, index);
                 },
               ),
             ),
@@ -181,7 +175,65 @@ class _WordEditPageState extends State<WordEditPage> {
         ],
       );
     }
-    return Container();
+
+    return _createFirstText('Meaning');
+  }
+
+  RichText _createFirstText(String text) {
+    final theme = Theme.of(context);
+    final boldStyle = theme.textTheme.headlineSmall?.copyWith(
+      fontWeight: FontWeight.bold,
+    );
+
+    return RichText(
+      text: TextSpan(children: [
+        TextSpan(
+          text: 'Create first ',
+          style: boldStyle?.copyWith(color: theme.colorScheme.secondary),
+        ),
+        TextSpan(
+          text: text,
+          style: boldStyle?.copyWith(color: theme.colorScheme.primary),
+        ),
+      ]),
+      textAlign: TextAlign.center,
+    );
+  }
+
+  ListTile _meaningTile(Meaning entity, int index) {
+    return ListTile(
+      title: Text(entity.partOfSpeech),
+      contentPadding: EdgeInsets.zero,
+      titleAlignment: ListTileTitleAlignment.top,
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('synonyms: ${entity.synonyms.length}'),
+          Text('antonyms: ${entity.antonyms.length}'),
+          Text('definitions: ${entity.definitions.length}'),
+        ],
+      ),
+      leading: IconButton(
+        icon: const Icon(Icons.delete),
+        onPressed: () {
+          setState(() {
+            _meanings.removeAt(index);
+          });
+        },
+      ),
+      trailing: IconButton(
+        icon: const Icon(Icons.edit),
+        onPressed: () async {
+          final result = await MeaningEdit.pageEdit(context, entity);
+
+          result.modified<Meaning>((value) {
+            setState(() {
+              _meanings[index] = value;
+            });
+          });
+        },
+      ),
+    );
   }
 }
 
@@ -203,15 +255,20 @@ class WordEditControl extends StatelessWidget {
   }
 }
 
-class PhoneticBottomSheet extends StatelessWidget {
+class PhoneticEdit extends StatelessWidget {
   final _phonetic = TextEditingController();
   final _source = TextEditingController();
 
-  PhoneticBottomSheet({super.key});
+  PhoneticEdit({super.key});
+  PhoneticEdit.from({super.key, required Phonetic entity}) {
+    _phonetic.text = entity.value;
+    _source.text = entity.audio ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
     return EntityEditScaffold(
+      saveHeroTag: 'save_phonetic_hero',
       onSave: () {
         if (_phonetic.text.isEmpty) {
           return;
@@ -244,46 +301,47 @@ class PhoneticBottomSheet extends StatelessWidget {
     );
   }
 
-  static Future<Result> showCreate(BuildContext context) {
-    return MaterialNavigator.bottomSheet(
-      context: context,
-      builder: (context) => PhoneticBottomSheet(),
-      isScrollControlled: true,
-      useSafeArea: true,
+  static Future<Result> pageCreate(BuildContext context) {
+    return MaterialNavigator.push(
+      context,
+      (context) => PhoneticEdit(),
+    );
+  }
+
+  static Future<Result> pageEdit(BuildContext context, Phonetic entity) {
+    return MaterialNavigator.push(
+      context,
+      (context) => PhoneticEdit.from(entity: entity),
     );
   }
 }
 
-class MeaningBottomSheet extends StatefulWidget {
+class MeaningEdit extends StatefulWidget {
   static const double _spacing = 10;
 
   final Meaning? meaning;
 
-  const MeaningBottomSheet({super.key, this.meaning});
+  const MeaningEdit({super.key, this.meaning});
 
   @override
-  State<MeaningBottomSheet> createState() => _MeaningBottomSheetState();
+  State<MeaningEdit> createState() => _MeaningEditState();
 
-  static Future<Result> showCreate(BuildContext context) {
-    return MaterialNavigator.bottomSheet(
-      context: context,
-      builder: (context) => const MeaningBottomSheet(),
-      isScrollControlled: true,
-      useSafeArea: true,
+  static Future<Result> pageCreate(BuildContext context) {
+    return MaterialNavigator.push(
+      context,
+      (context) => const MeaningEdit(),
     );
   }
 
-  static Future<Result> showEdit(BuildContext context, Meaning meaning) {
-    return MaterialNavigator.bottomSheet(
-      context: context,
-      builder: (context) => MeaningBottomSheet(meaning: meaning),
-      isScrollControlled: true,
-      useSafeArea: true,
+  static Future<Result> pageEdit(BuildContext context, Meaning meaning) {
+    return MaterialNavigator.push(
+      context,
+      (context) => MeaningEdit(meaning: meaning),
     );
   }
 }
 
-class _MeaningBottomSheetState extends State<MeaningBottomSheet> {
+class _MeaningEditState extends State<MeaningEdit> {
   final List<Definition> _definitions = [];
 
   final _partOfSpeech = TextEditingController();
@@ -311,6 +369,7 @@ class _MeaningBottomSheetState extends State<MeaningBottomSheet> {
   Widget build(BuildContext context) {
     return EntityEditScaffold(
       padding: EdgeInsets.zero,
+      saveHeroTag: 'save_meaning_hero',
       onSave: () {},
       body: SingleChildScrollView(
         child: Column(
@@ -319,7 +378,7 @@ class _MeaningBottomSheetState extends State<MeaningBottomSheet> {
               padding: const EdgeInsets.all(10.0),
               child: _textFields(),
             ),
-            const SizedBox(height: MeaningBottomSheet._spacing),
+            const SizedBox(height: MeaningEdit._spacing),
             TextButton(
                 onPressed: () {
                   setState(() {
@@ -333,7 +392,7 @@ class _MeaningBottomSheetState extends State<MeaningBottomSheet> {
                   });
                 },
                 child: const Text('Add definition')),
-            const SizedBox(height: MeaningBottomSheet._spacing),
+            const SizedBox(height: MeaningEdit._spacing),
             _definitionList(),
             const SizedBox(height: 100),
           ],
@@ -345,7 +404,7 @@ class _MeaningBottomSheetState extends State<MeaningBottomSheet> {
   Widget _textFields() {
     return Column(
       children: [
-        const SizedBox(height: MeaningBottomSheet._spacing),
+        const SizedBox(height: MeaningEdit._spacing),
         TextField(
           controller: _partOfSpeech,
           decoration: const InputDecoration(
@@ -353,7 +412,7 @@ class _MeaningBottomSheetState extends State<MeaningBottomSheet> {
             border: OutlineInputBorder(),
           ),
         ),
-        const SizedBox(height: MeaningBottomSheet._spacing),
+        const SizedBox(height: MeaningEdit._spacing),
         TextField(
           controller: _synonyms,
           keyboardType: TextInputType.multiline,
@@ -363,7 +422,7 @@ class _MeaningBottomSheetState extends State<MeaningBottomSheet> {
             border: OutlineInputBorder(),
           ),
         ),
-        const SizedBox(height: MeaningBottomSheet._spacing),
+        const SizedBox(height: MeaningEdit._spacing),
         TextField(
           controller: _antonyms,
           keyboardType: TextInputType.multiline,
@@ -377,36 +436,31 @@ class _MeaningBottomSheetState extends State<MeaningBottomSheet> {
     );
   }
 
-  // keyboardType: TextInputType.multiline,
-  // maxLines: null,
-
   Widget _definitionList() {
     return Card(
       elevation: 5,
-      child: Column(
-        children: List.generate(_definitions.length, (index) {
-          final definition = _definitions[index];
+      child: ListView.separated(
+          itemCount: _definitions.length,
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          separatorBuilder: (context, index) => const Divider(),
+          itemBuilder: (context, index) {
+            final definition = _definitions[index];
 
-          return Column(
-            children: [
-              if (index > 0) const Divider(),
-              ListTile(
-                title: Text(definition.value),
-                contentPadding: EdgeInsets.zero,
-                subtitle: definition.example != null ? Text(definition.example!) : null,
-                trailing: IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () {},
-                ),
-                leading: IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () {},
-                ),
+            return ListTile(
+              title: Text(definition.value),
+              contentPadding: EdgeInsets.zero,
+              subtitle: definition.example != null ? Text(definition.example!) : null,
+              trailing: IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () {},
               ),
-            ],
-          );
-        }),
-      ),
+              leading: IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () {},
+              ),
+            );
+          }),
     );
   }
 }
@@ -418,17 +472,23 @@ class EntityEditScaffold extends StatelessWidget {
 
   final EdgeInsetsGeometry padding;
 
+  final Color? backgroundColor;
+
+  final String saveHeroTag;
+
   const EntityEditScaffold({
     super.key,
     required this.body,
     required this.onSave,
-    this.padding = const EdgeInsets.all(20.0),
+    this.padding = const EdgeInsets.all(10.0),
+    this.backgroundColor,
+    this.saveHeroTag = '<default FloatingActionButton tag>',
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: Container(),
@@ -441,28 +501,13 @@ class EntityEditScaffold extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: onSave,
+        heroTag: saveHeroTag,
         label: const Text('Save'),
       ),
       body: Padding(
         padding: padding,
         child: body,
       ),
-    );
-  }
-}
-
-class PhoneticView extends StatelessWidget {
-  final Phonetic phonetic;
-
-  const PhoneticView({super.key, required this.phonetic});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(phonetic.value),
-        if (phonetic.audio != null) Text(phonetic.value),
-      ],
     );
   }
 }

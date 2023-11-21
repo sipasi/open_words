@@ -4,16 +4,20 @@ import 'package:open_words/data/language_info.dart';
 import 'package:open_words/data/metadata/word_metadata.dart';
 import 'package:open_words/service/metadata/metadata_service.dart';
 import 'package:open_words/view/shared/future_state.dart';
+import 'package:open_words/view/shared/struct/ref.dart';
 import 'package:open_words/view/word/detail/metadata/word_metadata_view.dart';
 
 class WordMetadataLoaderView extends StatefulWidget {
   final String word;
   final LanguageInfo language;
 
+  final Ref<WordMetadata>? ref;
+
   const WordMetadataLoaderView({
     super.key,
     required this.word,
     required this.language,
+    this.ref,
   });
 
   @override
@@ -45,6 +49,8 @@ class _WordMetadataLoaderViewState extends FutureState<WordMetadataLoaderView, W
         ),
       );
     }
+
+    widget.ref?.set(data);
 
     return WordMetadataView(metadata: data, language: widget.language);
   }

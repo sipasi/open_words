@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_words/data/language_info.dart';
+import 'package:open_words/data/metadata/word_metadata.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/service/clipboard_service.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/service/text_to_speech_service.dart';
+import 'package:open_words/view/shared/struct/ref.dart';
 import 'package:open_words/view/word/detail/metadata/word_metadata_loader_view.dart';
 import 'package:open_words/view/word/edit/word_edit_page.dart';
 
@@ -14,7 +16,9 @@ class WordDetailPage extends StatelessWidget {
   final LanguageInfo originLanguage;
   final LanguageInfo translationLanguage;
 
-  const WordDetailPage({
+  final Ref<WordMetadata> ref = Ref<WordMetadata>();
+
+  WordDetailPage({
     super.key,
     required this.word,
     required this.originLanguage,
@@ -65,6 +69,7 @@ class WordDetailPage extends StatelessWidget {
             WordMetadataLoaderView(
               word: word.origin,
               language: originLanguage,
+              ref: ref,
             ),
             const SizedBox(height: 100),
           ],
@@ -73,7 +78,7 @@ class WordDetailPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.edit_outlined),
         onPressed: () {
-          MaterialNavigator.push(context, (context) => const WordEditPage());
+          MaterialNavigator.push(context, (context) => WordEditPage(word: word, metadata: ref.value));
         },
       ),
     );
