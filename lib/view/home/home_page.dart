@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     final navigation = AppNavigationBar(current: pageIndex, items: destinations, selected: onDestinationSelected);
 
-    return AdaptiveScaffold(body: getPageBy(pageIndex), navigationBar: navigation);
+    return ScaffoldWithNavBar(body: getPageBy(pageIndex), navigationBar: navigation);
   }
 
   void onDestinationSelected(int index) {

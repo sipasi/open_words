@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:open_words/view/home/app_navigation_bar.dart';
 
-class AdaptiveScaffold extends StatefulWidget {
+class ScaffoldWithNavBar extends StatefulWidget {
   final AppNavigationBar navigationBar;
 
   final Widget body;
 
-  const AdaptiveScaffold({super.key, required this.navigationBar, required this.body});
+  const ScaffoldWithNavBar({super.key, required this.navigationBar, required this.body});
 
   @override
-  State<AdaptiveScaffold> createState() => _AdaptiveScaffoldState();
+  State<ScaffoldWithNavBar> createState() => _ScaffoldWithNavBarState();
 }
 
-class _AdaptiveScaffoldState extends State<AdaptiveScaffold> {
+class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
