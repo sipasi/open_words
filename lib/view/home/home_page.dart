@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:open_words/view/home/adaptive_scaffold.dart';
 import 'package:open_words/view/home/app_navigation_bar.dart';
 import 'package:open_words/view/settings/settings_page.dart';
 import 'package:open_words/view/word_group/list/word_group_list_page.dart';
 
 import 'navigation_destination_base.dart';
+import 'scaffold_with_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

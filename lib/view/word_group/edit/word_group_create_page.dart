@@ -18,8 +18,8 @@ class WordGroupCreatePage extends StatefulWidget {
 class _WordGroupCreatePageState extends State<WordGroupCreatePage> {
   late final TextEditingController _nameController;
 
-  late final LanguageInfo origin;
-  late final LanguageInfo translation;
+  late LanguageInfo origin;
+  late LanguageInfo translation;
 
   @override
   void initState() {

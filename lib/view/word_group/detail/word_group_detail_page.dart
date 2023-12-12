@@ -105,19 +105,21 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
   }
 
   Widget _justGrid(BuildContext context, List<Word> words) {
-    return AdaptiveGridView(
-      padding: const EdgeInsets.only(bottom: 120),
-      children: List.generate(
-        words.length,
-        (index) => TextTile(
-          title: words[index].origin,
-          subtitle: words[index].translation,
-          onTap: () => MaterialNavigator.push(
-            context,
-            (builder) => WordDetailPage(
-              word: words[index],
-              originLanguage: modified.origin,
-              translationLanguage: modified.translation,
+    return SafeArea(
+      child: AdaptiveGridView(
+        padding: const EdgeInsets.only(bottom: 120),
+        children: List.generate(
+          words.length,
+          (index) => TextTile(
+            title: words[index].origin,
+            subtitle: words[index].translation,
+            onTap: () => MaterialNavigator.push(
+              context,
+              (builder) => WordDetailPage(
+                word: words[index],
+                originLanguage: modified.origin,
+                translationLanguage: modified.translation,
+              ),
             ),
           ),
         ),

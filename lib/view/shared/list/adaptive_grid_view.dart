@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AdaptiveGridView extends StatelessWidget {
-  final EdgeInsets padding;
   final List<Widget> children;
+  final EdgeInsets padding;
 
   final double maxCrossAxisExtent;
   final double mainAxisExtent;
