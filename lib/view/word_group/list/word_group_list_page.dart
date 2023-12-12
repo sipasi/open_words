@@ -4,7 +4,8 @@ import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/storage/word_group_storage.dart';
 import 'package:open_words/view/shared/future_state.dart';
-import 'package:open_words/view/shared/tile/hero_text_tile.dart';
+import 'package:open_words/view/shared/list/adaptive_grid_view.dart';
+import 'package:open_words/view/shared/tile/text_tile.dart';
 import 'package:open_words/view/word_group/detail/word_group_detail_page.dart';
 import 'package:open_words/view/word_group/edit/word_group_create_page.dart';
 
@@ -32,17 +33,13 @@ class _WordGroupListPageState extends FutureState<WordGroupListPage, List<WordGr
 
   Widget _asGridView(BuildContext context, List<WordGroup> data) {
     return Scaffold(
-      body: GridView.count(
-        crossAxisCount: 2,
+      body: AdaptiveGridView(
         padding: const EdgeInsets.only(bottom: 120),
-        childAspectRatio: 2.3,
         children: List.generate(
           data.length,
-          (index) => HeroTextTile(
+          (index) => TextTile(
             title: data[index].name,
             subtitle: data[index].words.length.toString(),
-            titleTag: 'WordGroupDetailTitle $index',
-            subtitleTag: 'WordGroupDetailSubtitle $index',
             onTap: () async {
               final result = await MaterialNavigator.push(
                 context,
