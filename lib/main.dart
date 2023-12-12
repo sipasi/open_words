@@ -48,7 +48,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 class _PreviewMyApp extends StatefulWidget {
-  const _PreviewMyApp({super.key});
+  const _PreviewMyApp();
 
   @override
   State<_PreviewMyApp> createState() => _MyPreviewMyAppAppState();
