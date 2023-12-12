@@ -6,6 +6,7 @@ import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/storage/word_group_storage.dart';
 import 'package:open_words/view/game/game_list_page.dart';
 import 'package:open_words/view/shared/dialog/word_create_dialog.dart';
+import 'package:open_words/view/shared/list/adaptive_grid_view.dart';
 import 'package:open_words/view/shared/tile/text_tile.dart';
 import 'package:open_words/view/word/detail/word_detail_page.dart';
 import 'package:open_words/view/word_group/edit/word_group_edit_page.dart';
@@ -37,12 +38,9 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Hero(
-          tag: 'WordGroupDetailTitle ${widget.heroIndex}',
-          child: Text(
-            modified.name,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
+        title: Text(
+          modified.name,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -107,10 +105,8 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
   }
 
   Widget _justGrid(BuildContext context, List<Word> words) {
-    return GridView.count(
-      crossAxisCount: 2,
+    return AdaptiveGridView(
       padding: const EdgeInsets.only(bottom: 120),
-      childAspectRatio: 2.3,
       children: List.generate(
         words.length,
         (index) => TextTile(
