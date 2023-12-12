@@ -8,7 +8,13 @@ abstract class FutureState<T extends StatefulWidget, TData> extends FutureBaseSt
       future: future,
       builder: (context, AsyncSnapshot<TData> snapshot) {
         if (snapshot.hasError) {
-          return Text('$runtimeType: has error');
+          return Column(
+            children: [
+              const Text('has error'),
+              Text(runtimeType.toString()),
+              Text(snapshot.error.toString()),
+            ],
+          );
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
