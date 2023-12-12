@@ -13,23 +13,25 @@ class GameListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Games')),
-      body: GridView.count(
-        crossAxisCount: 2,
-        childAspectRatio: 2,
-        children: [
-          _GameInfoTile(
-            name: 'Compare Origins',
-            needWords: 8,
-            count: group.words.length,
-            route: (builder) => OriginToTranslationPage(group: group),
-          ),
-          _GameInfoTile(
-            name: 'Compare Translations',
-            needWords: 8,
-            count: group.words.length,
-            route: (builder) => TranslationToOriginPage(group: group),
-          ),
-        ],
+      body: SafeArea(
+        child: GridView.count(
+          crossAxisCount: 2,
+          childAspectRatio: 2,
+          children: [
+            _GameInfoTile(
+              name: 'Compare Origins',
+              needWords: 8,
+              count: group.words.length,
+              route: (builder) => OriginToTranslationPage(group: group),
+            ),
+            _GameInfoTile(
+              name: 'Compare Translations',
+              needWords: 8,
+              count: group.words.length,
+              route: (builder) => TranslationToOriginPage(group: group),
+            ),
+          ],
+        ),
       ),
     );
   }

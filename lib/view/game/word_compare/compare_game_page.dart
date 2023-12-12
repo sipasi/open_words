@@ -52,12 +52,14 @@ class _CompareGamePageState extends FutureScaffoldState<CompareGamePage, GameSco
 
   @override
   Widget successBuild(BuildContext context, GameScoreData data) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: CompareGameView(
-        words: data.words,
-        map: data.metadatas,
-        textGetter: widget.textGetter,
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: CompareGameView(
+          words: data.words,
+          map: data.metadatas,
+          textGetter: widget.textGetter,
+        ),
       ),
     );
   }

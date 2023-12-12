@@ -27,50 +27,13 @@ class CompareResultsPage extends StatelessWidget {
 
           final right = textGetter.answer(item.question);
 
-          return _get2(context, item, question, answer, right);
+          return _tile(context, item, question, answer, right);
         },
       ),
     );
   }
 
-  Widget _get1(
-    BuildContext context,
-    ChooseResult item,
-    String question,
-    String answer,
-    String right,
-  ) {
-    final colorScheme = Theme.of(context).colorScheme;
-
-    return IntrinsicHeight(
-      child: Card(
-        child: Row(
-          children: [
-            Container(
-              width: 5,
-              color: _getColor(context, item.correct),
-            ),
-            Expanded(
-              child: ListTile(
-                title: Text(question),
-                subtitle: Text(right),
-                trailing: item.correct
-                    ? null
-                    : Text(
-                        answer,
-                        style: TextStyle(
-                          color: colorScheme.error,
-                        ),
-                      ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _get2(
+  Widget _tile(
     BuildContext context,
     ChooseResult item,
     String question,
@@ -92,39 +55,6 @@ class CompareResultsPage extends StatelessWidget {
                 color: Theme.of(context).colorScheme.error,
               ),
             ),
-    );
-  }
-
-  Widget _get4(
-    BuildContext context,
-    ChooseResult item,
-    String question,
-    String answer,
-    String right,
-  ) {
-    return IntrinsicHeight(
-      child: Row(
-        children: [
-          Container(
-            width: 5,
-            color: _getColor(context, item.correct),
-          ),
-          Expanded(
-            child: ListTile(
-              title: Text(question),
-              subtitle: Text(right),
-              trailing: item.correct
-                  ? null
-                  : Text(
-                      answer,
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
-                      ),
-                    ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 
