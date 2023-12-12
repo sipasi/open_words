@@ -5,16 +5,21 @@ class TextTile extends StatelessWidget {
   final String title;
   final String subtitle;
 
+  final int titleLines;
+  final int subtitleLines;
+
   final void Function() onTap;
 
-  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry padding;
 
   const TextTile({
     super.key,
     required this.title,
     required this.subtitle,
+    this.titleLines = 2,
+    this.subtitleLines = 1,
     required this.onTap,
-    this.margin = const EdgeInsets.all(14.0),
+    this.padding = const EdgeInsets.all(14.0),
   });
 
   @override
@@ -22,18 +27,20 @@ class TextTile extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Padding(
-        padding: margin,
+        padding: padding,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               title,
+              maxLines: titleLines,
               overflow: TextOverflow.ellipsis,
               style: TileStyle.title(context),
-            ),
-            const Spacer(),
+            ), 
             Text(
               subtitle,
+              maxLines: subtitleLines,
               overflow: TextOverflow.ellipsis,
               style: TileStyle.subtitle(context),
             ),
