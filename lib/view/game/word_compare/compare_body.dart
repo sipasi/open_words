@@ -6,6 +6,7 @@ import 'package:open_words/view/game/word_compare/helper_text_list.dart';
 import 'package:open_words/view/game/word_compare/helper_text_list_view.dart';
 import 'package:open_words/view/game/word_compare/compare_score_view.dart';
 import 'package:open_words/view/game/word_compare/word_text_getter.dart';
+import 'package:open_words/view/shared/layout/adaptive_layout_by_constraints_height.dart';
 
 class CompareBody extends StatelessWidget {
   final CompareData data;
@@ -32,39 +33,90 @@ class CompareBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return _body1(context);
+  }
+
+  Widget _body1(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
     final titleLarge = theme.textTheme.titleLarge;
     final titleLargeBold = titleLarge?.copyWith(fontWeight: FontWeight.bold);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CompareScoreView(
-          correct: score.correct,
-          wrong: score.wrong,
-          total: score.total,
-          answered: score.answered,
-        ),
-        Expanded(
-          child: HelperTextListView(
-            helpers: helpers.requested,
-            canRequest: helpers.canRequest(),
-            onHelpTap: onHelpTap,
-          ),
-        ),
-        Column(
+    return AdaptiveLayoutByConstraintsHeight(
+      portrait: (context) {
+        return Column(
           children: [
-            Text(
-              textGetter.question(data.question),
-              style: titleLargeBold?.copyWith(color: colorScheme.secondary),
+            CompareScoreView(
+              correct: score.correct,
+              wrong: score.wrong,
+              total: score.total,
+              answered: score.answered,
             ),
-            const SizedBox(height: 20),
-            createButtonGrid(colorScheme),
+            Expanded(
+              child: HelperTextListView(
+                helpers: helpers.requested,
+                canRequest: helpers.canRequest(),
+                onHelpTap: onHelpTap,
+              ),
+            ),
+            Column(
+              children: [
+                Text(
+                  textGetter.question(data.question),
+                  style: titleLargeBold?.copyWith(color: colorScheme.secondary),
+                ),
+                const SizedBox(height: 20),
+                createButtonGrid(colorScheme),
+              ],
+            )
           ],
-        )
-      ],
+        );
+      },
+      landscape: (context) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Expanded(
+                    child: HelperTextListView(
+                      helpers: helpers.requested,
+                      canRequest: helpers.canRequest(),
+                      onHelpTap: onHelpTap,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              child: VerticalDivider(),
+            ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CompareScoreView(
+                    correct: score.correct,
+                    wrong: score.wrong,
+                    total: score.total,
+                    answered: score.answered,
+                  ),
+                  Text(
+                    textGetter.question(data.question),
+                    style: titleLargeBold?.copyWith(color: colorScheme.secondary),
+                  ),
+                  createButtonGrid(colorScheme),
+                ],
+              ),
+            )
+          ],
+        );
+      },
     );
   }
 
