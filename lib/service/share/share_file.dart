@@ -2,38 +2,24 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:open_words/service/export/data_formatter.dart';
+import 'package:open_words/service/export/export_format.dart';
+import 'package:open_words/service/export/format_options.dart';
 import 'package:share_plus/share_plus.dart';
 
-import 'json_shared_file_factory.dart';
-import 'shared_file_factory.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:path/path.dart' as path_dart;
 
-abstract class ShareData {
+abstract class ShareFile {
   static final _logger = Logger();
 
-  static Future<ShareResult> asJson<T>({
+  static Future<ShareResult> share({
     required BuildContext context,
-    required List<T> data,
-    required String name,
-    required String Function(T) manyNamePolicy,
-    bool oneFile = false,
+    required String path,
   }) async {
-    return share(
-      context: context,
-      data: data,
-      factory: JsonSharedFileFactory(name: name, manyNamePolicy: manyNamePolicy),
-      oneFile: oneFile,
-    );
-  }
-
-  static Future<ShareResult> share<T>({
-    required BuildContext context,
-    required List<T> data,
-    required SharedFileFactory<T> factory,
-    bool oneFile = true,
-  }) async {
-    final files = await _prepare(data, factory, oneFile);
-
     ShareResult result;
+
+    final files = [XFile(path)];
 
     try {
       result = await Share.shareXFiles(
@@ -46,17 +32,32 @@ abstract class ShareData {
       result = const ShareResult('Error', ShareResultStatus.dismissed);
     }
 
-    await delete(files);
+    if (Platform.isWindows == false) {
+      await delete(files);
+    }
 
     return result;
   }
 
-  static Future<List<XFile>> _prepare<T>(List<T> data, SharedFileFactory<T> factory, bool oneFile) async {
-    if (oneFile) {
-      return [await factory.one(data)];
-    }
+  static Future<ShareResult> shareData<T>({
+    required BuildContext context,
+    required String name,
+    required T data,
+    required DataFormatter<T> formatter,
+    required ExportFormat format,
+    required FormatOptions options,
+  }) async {
+    final temp = await path_provider.getTemporaryDirectory();
 
-    return await factory.many(data);
+    final path = path_dart.join(temp.path, '$name.${format.extension}');
+
+    final file = File(path);
+
+    final bytes = await formatter.format(data, options);
+
+    await file.writeAsBytes(bytes, flush: true);
+
+    return share(context: context, path: path);
   }
 
   static Future delete(List<XFile> files) async {
