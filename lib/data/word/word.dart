@@ -18,4 +18,16 @@ class Word {
   factory Word.fromJson(Map<String, dynamic> json) => _$WordFromJson(json);
 
   Map<String, dynamic> toJson() => _$WordToJson(this);
+
+  Word copyWith({
+    String? origin,
+    String? translation,
+    int? index,
+  }) {
+    return Word(
+      origin: origin ?? this.origin,
+      translation: translation ?? this.translation,
+      index: index ?? this.index,
+    );
+  }
 }
