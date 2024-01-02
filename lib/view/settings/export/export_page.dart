@@ -1,114 +1,60 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:open_words/data/word/word_group.dart';
-import 'package:open_words/service/share/share_data.dart';
-import 'package:open_words/storage/word_group_storage.dart';
-import 'package:open_words/view/shared/future_state.dart';
-import 'package:share_plus/share_plus.dart';
+import 'package:open_words/view/mvvm/view_model.dart';
+import 'package:open_words/view/settings/export/export_view_model.dart';
+import 'package:open_words/view/shared/list/adaptive_grid_view.dart';
 
-class ExportPage extends StatefulWidget {
+class ExportPage extends StatefulView<ExportViewModel> {
   const ExportPage({super.key});
 
   @override
-  State<ExportPage> createState() => _ExportPageState();
+  ViewState<ExportViewModel> createState() => _ExportPageState();
 }
 
-class _ExportPageState extends FutureState<ExportPage, List<WordGroup>> {
-  final Set<int> selections = {};
-
-  bool get allSelected => selections.length == dataCount;
-
-  int get dataCount => cache?.length ?? 0;
-
+class _ExportPageState extends ViewState<ExportViewModel> {
   @override
-  Future<List<WordGroup>> getFuture() async {
-    final storage = GetIt.I.get<WordGroupStorage>();
-
-    return storage.getAll();
-  }
-
-  @override
-  Widget successBuild(BuildContext context, List<WordGroup> data) {
+  Widget success(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
-            icon: Icon(allSelected ? Icons.done : Icons.circle),
-            onPressed: _selectAllHandler,
+            icon: Icon(viewmodel.allSelected ? Icons.done : Icons.circle),
+            onPressed: () => viewmodel.onSelectAll(setState),
           ),
         ],
       ),
-      body: _listView(data),
-      floatingActionButton: selections.isNotEmpty ? _shareFab() : null,
+      floatingActionButton: viewmodel.canShare()
+          ? FloatingActionButton.extended(
+              label: const Text('Share'),
+              icon: const Icon(Icons.share_outlined),
+              onPressed: () => viewmodel.toExportDestination(context),
+            )
+          : null,
+      body: _grid(),
     );
   }
 
-  void _selectAllHandler() {
-    setState(() {
-      if (allSelected) {
-        selections.clear();
-        return;
-      }
-
-      selections.clear();
-
-      selections.addAll(List.generate(dataCount, (index) => index));
-    });
-  }
-
-  Widget _shareFab() {
-    return FloatingActionButton.extended(
-      label: const Text('Share'),
-      icon: const Icon(Icons.share_outlined),
-      onPressed: () => _onShare(),
+  Widget _grid() {
+    return AdaptiveGridView(
+      children: List.generate(
+        viewmodel.count,
+        (index) => _tile(index),
+      ),
     );
   }
 
-  ListView _listView(List<WordGroup> data) {
-    return ListView.separated(
-      itemCount: data.length,
-      separatorBuilder: (context, index) => const Divider(),
-      itemBuilder: (context, index) {
-        final entity = data[index];
+  InkWell _tile(int index) {
+    final entity = viewmodel.groupAt(index);
 
-        bool contains = selections.contains(index);
+    bool contains = viewmodel.selectedAt(index);
 
-        return _tile(entity, contains, index);
-      },
-    );
-  }
-
-  InkWell _tile(WordGroup entity, bool contains, int index) {
     return InkWell(
       child: ListTile(
         title: Text(entity.name),
-        selected: true,
-        trailing: contains ? const Icon(Icons.circle) : null,
+        titleAlignment: ListTileTitleAlignment.top,
+        selected: contains,
+        trailing: Icon(Icons.circle, color: contains ? null : Colors.transparent),
       ),
-      onTap: () {
-        setState(() {
-          if (contains) {
-            selections.remove(index);
-
-            return;
-          }
-          selections.add(index);
-        });
-      },
-    );
-  }
-
-  Future<ShareResult> _onShare() {
-    final export = selections.map((index) => cache![index]).toList();
-
-    return ShareData.asJson(
-      context: context,
-      data: export,
-      name: 'WordGroup.json',
-      manyNamePolicy: (entity) => '${entity.name}.json',
-      oneFile: true,
+      onTap: () => viewmodel.onTileTap(setState, contains, index),
     );
   }
 }

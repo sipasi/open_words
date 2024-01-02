@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:open_words/view/mvvm/view_model.dart';
+import 'package:open_words/view/settings/export/import_view_model.dart';
 
-class ImportPage extends StatefulWidget {
+class ImportPage extends StatefulView<ImportViewModel> {
   const ImportPage({super.key});
 
   @override
-  State<ImportPage> createState() => _ImportPageState();
+  ViewState<ImportViewModel> createState() => _ImportPageState();
 }
 
-class _ImportPageState extends State<ImportPage> {
+class _ImportPageState extends ViewState<ImportViewModel> {
   @override
-  Widget build(BuildContext context) {
-    return Container();
+  Widget success(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: const Text('ImportPage'),
+    );
   }
 }
