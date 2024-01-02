@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:open_words/service/export/data_formatter.dart';
-import 'package:open_words/service/export/export_format.dart';
-import 'package:open_words/service/export/format_options.dart';
+import 'package:open_words/service/export/formatter/data_formatter.dart';
+import 'package:open_words/service/export/formatter/export_format.dart';
+import 'package:open_words/service/export/formatter/format_options.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:path_provider/path_provider.dart' as path_provider;

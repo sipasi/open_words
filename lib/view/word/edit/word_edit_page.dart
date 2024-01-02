@@ -5,6 +5,7 @@ import 'package:open_words/data/metadata/phonetic.dart';
 import 'package:open_words/data/metadata/word_metadata.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
+import 'package:open_words/service/result.dart';
 
 class WordEditPage extends StatefulWidget {
   final Word word;
@@ -276,7 +277,7 @@ class PhoneticEdit extends StatelessWidget {
 
         final entity = Phonetic(value: _phonetic.text, audio: _source.text);
 
-        MaterialNavigator.popWith(context, Result.create(entity));
+        MaterialNavigator.popWith(context, CrudResult.create(entity));
       },
       body: Column(
         children: [
@@ -301,14 +302,14 @@ class PhoneticEdit extends StatelessWidget {
     );
   }
 
-  static Future<Result> pageCreate(BuildContext context) {
+  static Future<CrudResult> pageCreate(BuildContext context) {
     return MaterialNavigator.push(
       context,
       (context) => PhoneticEdit(),
     );
   }
 
-  static Future<Result> pageEdit(BuildContext context, Phonetic entity) {
+  static Future<CrudResult> pageEdit(BuildContext context, Phonetic entity) {
     return MaterialNavigator.push(
       context,
       (context) => PhoneticEdit.from(entity: entity),
@@ -333,7 +334,7 @@ class MeaningEdit extends StatefulWidget {
     );
   }
 
-  static Future<Result> pageEdit(BuildContext context, Meaning meaning) {
+  static Future<CrudResult> pageEdit(BuildContext context, Meaning meaning) {
     return MaterialNavigator.push(
       context,
       (context) => MeaningEdit(meaning: meaning),

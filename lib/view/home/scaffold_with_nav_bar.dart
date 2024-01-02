@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:open_words/view/home/app_navigation_bar.dart';
-import 'package:open_words/view/shared/layout/adaptive_layout_by_constraints_height.dart';
+import 'package:open_words/view/shared/layout/constraints_adaptive_layout.dart';
 
-class ScaffoldWithNavBar extends StatefulWidget {
+class ScaffoldWithNavBar extends StatelessWidget {
   final AppNavigationBar navigationBar;
 
   final Widget body;
@@ -10,29 +10,23 @@ class ScaffoldWithNavBar extends StatefulWidget {
   const ScaffoldWithNavBar({super.key, required this.navigationBar, required this.body});
 
   @override
-  State<ScaffoldWithNavBar> createState() => _ScaffoldWithNavBarState();
-}
-
-class _ScaffoldWithNavBarState extends State<ScaffoldWithNavBar> {
-  @override
   Widget build(BuildContext context) {
-    return AdaptiveLayoutByConstraintsHeight(
+    return ConstraintsAdaptiveLayout(
       portrait: (context) {
         return Scaffold(
-          body: SafeArea(child: widget.body),
-          bottomNavigationBar: widget.navigationBar.asBottom(),
+          body: SafeArea(child: body),
+          bottomNavigationBar: navigationBar.asBottom(),
         );
       },
       landscape: (context) {
         return Scaffold(
-          body: SafeArea(
-            top: false,
+          body: SafeArea( 
             child: Row(
               children: [
-                widget.navigationBar.asRail(),
+                navigationBar.asRail(),
                 const VerticalDivider(thickness: 1, width: 1),
                 Expanded(
-                  child: widget.body,
+                  child: body,
                 ),
               ],
             ),

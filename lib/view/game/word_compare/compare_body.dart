@@ -6,7 +6,7 @@ import 'package:open_words/view/game/word_compare/helper_text_list.dart';
 import 'package:open_words/view/game/word_compare/helper_text_list_view.dart';
 import 'package:open_words/view/game/word_compare/compare_score_view.dart';
 import 'package:open_words/view/game/word_compare/word_text_getter.dart';
-import 'package:open_words/view/shared/layout/adaptive_layout_by_constraints_height.dart';
+import 'package:open_words/view/shared/layout/constraints_adaptive_layout.dart';
 
 class CompareBody extends StatelessWidget {
   final CompareData data;
@@ -43,7 +43,7 @@ class CompareBody extends StatelessWidget {
     final titleLarge = theme.textTheme.titleLarge;
     final titleLargeBold = titleLarge?.copyWith(fontWeight: FontWeight.bold);
 
-    return AdaptiveLayoutByConstraintsHeight(
+    return ConstraintsAdaptiveLayout(
       portrait: (context) {
         return Column(
           children: [

@@ -4,8 +4,8 @@ import 'package:open_words/data/language_info.dart';
 import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/service/language/language_info_service.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
+import 'package:open_words/service/result.dart';
 import 'package:uuid/uuid.dart';
-
 import 'word_group_edit_create_body.dart';
 
 class WordGroupCreatePage extends StatefulWidget {
@@ -58,7 +58,7 @@ class _WordGroupCreatePageState extends State<WordGroupCreatePage> {
           index: 0,
         );
 
-        MaterialNavigator.popWith(context, Result.create(group));
+        MaterialNavigator.popWith(context, CrudResult.create(group));
       },
       onOriginSelect: (origin) {
         setState(() {

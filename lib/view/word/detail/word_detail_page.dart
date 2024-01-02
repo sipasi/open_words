@@ -5,6 +5,7 @@ import 'package:open_words/data/metadata/word_metadata.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/service/clipboard_service.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
+import 'package:open_words/service/result.dart';
 import 'package:open_words/service/text_to_speech_service.dart';
 import 'package:open_words/view/shared/struct/ref.dart';
 import 'package:open_words/view/word/detail/metadata/word_metadata_loader_view.dart';
@@ -47,7 +48,17 @@ class WordDetailPage extends StatelessWidget {
     final clipboard = GetIt.I.get<ClipboardService>();
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () => MaterialNavigator.popWith(
+              context,
+              CrudResult.delete(word),
+            ),
+            icon: const Icon(Icons.delete_forever_outlined),
+          )
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

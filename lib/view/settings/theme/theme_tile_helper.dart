@@ -8,13 +8,13 @@ abstract class ThemeTileHelper {
   static void setTheme({
     required BuildContext context,
     int? color,
-    int? mode,
+    ThemeMode? mode,
   }) {
-    mode = mode ?? ThemeStorage.modeValue();
     color = color ?? ThemeStorage.colorValue();
+    mode = mode ?? ThemeStorage.modeValue();
 
     AppTheme theme = AppTheme(
-      mode: mode == 0 ? ThemeMode.dark : ThemeMode.light,
+      mode: mode,
       seed: ColorSeed.values[color],
     );
 

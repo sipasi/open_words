@@ -3,11 +3,12 @@ import 'package:get_it/get_it.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
+import 'package:open_words/service/result.dart';
 import 'package:open_words/storage/word_group_storage.dart';
 import 'package:open_words/view/game/game_list_page.dart';
-import 'package:open_words/view/shared/dialog/word_create_dialog.dart';
 import 'package:open_words/view/shared/list/adaptive_grid_view.dart';
 import 'package:open_words/view/shared/tile/text_tile.dart';
+import 'package:open_words/view/word/create/word_list_create_page.dart';
 import 'package:open_words/view/word/detail/word_detail_page.dart';
 import 'package:open_words/view/word_group/edit/word_group_edit_page.dart';
 
@@ -46,7 +47,7 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => MaterialNavigator.popWith(
             context,
-            Result.modify(modified),
+            CrudResult.modify(modified),
           ),
         ),
         actions: [
@@ -55,7 +56,7 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
             onPressed: () async {
               await GetIt.I.get<WordGroupStorage>().delete(modified.id);
 
-              MaterialNavigator.popWith(context, Result.delete(modified));
+              MaterialNavigator.popWith(context, CrudResult.delete(modified));
             },
           ),
           IconButton(
@@ -84,23 +85,33 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
           ),
         ],
       ),
-      body: _justGrid(context, modified.words),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () async {
-          final created = await WordCreateDialog.show(context: context, parent: modified);
+          final result = await MaterialNavigator.push(
+            context,
+            (context) => WordListCreatePage(
+              name: modified.name,
+              origin: modified.origin,
+              translation: modified.translation,
+              startIndex: modified.words.length,
+            ),
+          );
 
-          if (created.isEmpty) {
-            return;
-          }
+          result.created<List<Word>>((list) async {
+            if (list.isEmpty) {
+              return;
+            }
 
-          setState(() {
-            modified.words.addAll(created);
+            setState(() {
+              modified.words.addAll(list);
+            });
+
+            await GetIt.I.get<WordGroupStorage>().set(modified.id, modified);
           });
-
-          await GetIt.I.get<WordGroupStorage>().set(modified.id, modified);
         },
       ),
+      body: _justGrid(context, modified.words),
     );
   }
 
@@ -113,17 +124,50 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
           (index) => TextTile(
             title: words[index].origin,
             subtitle: words[index].translation,
-            onTap: () => MaterialNavigator.push(
-              context,
-              (builder) => WordDetailPage(
-                word: words[index],
-                originLanguage: modified.origin,
-                translationLanguage: modified.translation,
-              ),
-            ),
+            onTap: () => onTap(words, index),
           ),
         ),
       ),
     );
+  }
+
+  Future onTap(List<Word> words, int index) async {
+    final result = await MaterialNavigator.push(
+      context,
+      (builder) => WordDetailPage(
+        word: words[index],
+        originLanguage: modified.origin,
+        translationLanguage: modified.translation,
+      ),
+    );
+
+    result.modified<Word>((word) async {
+      setState(() {
+        words.removeAt(index);
+        words[index] = words[index].copyWith(index: index);
+      });
+      await GetIt.I.get<WordGroupStorage>().set(modified.id, modified);
+    });
+
+    result.deleted<Word>((_) async {
+      setState(() {
+        words.removeAt(index);
+
+        modified = modified.copyWith(
+          words: words
+              .asMap()
+              .entries
+              .map(
+                (entry) => Word(
+                  origin: entry.value.origin,
+                  translation: entry.value.translation,
+                  index: entry.key,
+                ),
+              )
+              .toList(),
+        );
+      });
+      await GetIt.I.get<WordGroupStorage>().set(modified.id, modified);
+    });
   }
 }

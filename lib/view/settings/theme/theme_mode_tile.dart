@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:open_words/theme/theme_storage.dart';
-import 'package:open_words/view/settings/theme/theme_tile_helper.dart'; 
+import 'package:open_words/view/settings/theme/theme_tile_helper.dart';
 
 class ThemeModeTile extends StatefulWidget {
   const ThemeModeTile({super.key});
@@ -10,7 +10,7 @@ class ThemeModeTile extends StatefulWidget {
 }
 
 class _ThemeModeTileState extends State<ThemeModeTile> {
-  int mode = 0;
+  late ThemeMode mode;
 
   @override
   void initState() {
@@ -24,10 +24,10 @@ class _ThemeModeTileState extends State<ThemeModeTile> {
     return ListTile(
       title: const Text('Dark'),
       trailing: Switch(
-        value: mode == 0,
+        value: mode == ThemeMode.dark,
         onChanged: (value) {
           setState(() {
-            mode = value ? 0 : 1;
+            mode = value ? ThemeMode.dark : ThemeMode.light;
 
             ThemeTileHelper.setTheme(
               context: context,

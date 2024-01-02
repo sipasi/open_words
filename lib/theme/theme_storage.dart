@@ -13,16 +13,16 @@ abstract class ThemeStorage {
     _preferences = await SharedPreferences.getInstance();
   }
 
-  static int modeValue() => _preferences.getInt(_keyTheme) ?? 0;
+  static ThemeMode modeValue() => _toEnum(_preferences.getInt(_keyTheme));
   static int colorValue() => _preferences.getInt(_keyColor) ?? 0;
 
   static AppTheme get() {
     if (_preferences.containsKey(_keyTheme)) {
-      int theme = modeValue();
+      ThemeMode theme = modeValue();
       int color = colorValue();
 
       return AppTheme(
-        mode: theme == 0 ? ThemeMode.dark : ThemeMode.light,
+        mode: theme,
         seed: ColorSeed.values[color],
       );
     }
@@ -34,7 +34,15 @@ abstract class ThemeStorage {
   }
 
   static void set(AppTheme theme) {
-    _preferences.setInt(_keyTheme, theme.mode == ThemeMode.dark ? 0 : 1);
+    _preferences.setInt(_keyTheme, theme.mode.index);
     _preferences.setInt(_keyColor, theme.seed.index);
+  }
+
+  static ThemeMode _toEnum(int? value) {
+    if (value == null || value >= ThemeMode.values.length) {
+      return ThemeMode.dark;
+    }
+
+    return ThemeMode.values[value];
   }
 }

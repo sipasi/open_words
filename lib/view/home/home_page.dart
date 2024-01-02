@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:open_words/view/home/app_navigation_bar.dart';
 import 'package:open_words/view/settings/settings_page.dart';
 import 'package:open_words/view/word_group/list/word_group_list_page.dart';
@@ -41,8 +42,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget getPageBy(int index) => switch (index) {
-        0 => const WordGroupListPage(),
-        1 => const SettingsPage(),
-        _ => const WordGroupListPage(),
+        0 => GetIt.I.get<WordGroupListPage>(),
+        1 => GetIt.I.get<SettingsPage>(),
+        _ => GetIt.I.get<WordGroupListPage>(),
       };
 }
