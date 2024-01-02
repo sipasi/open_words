@@ -1,5 +1,4 @@
 import 'package:device_preview/device_preview.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:open_words/dependency/dependency_setter.dart';
 import 'package:open_words/theme/app_theme.dart';
@@ -18,9 +17,11 @@ void main() async {
 
   AppTheme theme = ThemeStorage.get();
 
+  bool release = true; // kReleaseMode && !Platform.isWindows;
+
   runApp(ThemeSwitcherWidget(
     initialTheme: theme,
-    child: kReleaseMode ? const MyApp() : const _PreviewMyApp(),
+    child: release ? const MyApp() : const _PreviewMyApp(),
   ));
 }
 
