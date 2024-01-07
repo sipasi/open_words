@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:open_words/view/home/app_navigation_bar.dart';
 import 'package:open_words/view/shared/layout/constraints_adaptive_layout.dart';
 
@@ -14,13 +15,15 @@ class ScaffoldWithNavBar extends StatelessWidget {
     return ConstraintsAdaptiveLayout(
       portrait: (context) {
         return Scaffold(
+          appBar: AppBar(toolbarHeight: 0),
           body: SafeArea(child: body),
           bottomNavigationBar: navigationBar.asBottom(),
         );
       },
       landscape: (context) {
         return Scaffold(
-          body: SafeArea( 
+          appBar: AppBar(toolbarHeight: 0),
+          body: SafeArea(
             child: Row(
               children: [
                 navigationBar.asRail(),
