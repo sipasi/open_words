@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:open_words/view/mvvm/view_model.dart';
 
-class TextEditingViewModel {
+class TextEditViewModel {
   final TextEditingController controller;
 
   final FocusNode? focusNode;
@@ -15,8 +16,10 @@ class TextEditingViewModel {
   String get text => controller.text;
   String get textTrim => controller.text.trim();
 
-  TextEditingViewModel({required this.controller, this.focusNode});
+  TextEditViewModel({required this.controller, this.focusNode});
+  TextEditViewModel.text({String? text, this.focusNode}) : controller = TextEditingController(text: text);
 
+  void setText(String? text) => controller.text = text ?? '';
   void setError(String? text) => _error = text;
   void clearError() => _error = null;
 
@@ -53,5 +56,17 @@ class TextEditingViewModel {
   void dispose() {
     controller.dispose();
     focusNode?.dispose();
+  } 
+
+  static void setErrorIfEmpty(TextEditViewModel edit, UpdateState updateState, [String message = 'can\'t be empty']) {
+    if (edit.textTrim.isNotEmpty) {
+      if (edit.error != null) {
+        updateState(() => edit.clearError());
+      }
+
+      return;
+    }
+
+    updateState(() => edit.setError(message));
   }
 }

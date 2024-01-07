@@ -32,7 +32,7 @@ abstract class ViewState<T extends ViewModel> extends State<StatefulView<T>> {
   void initState() {
     super.initState();
 
-    _viewmodel = GetIt.I.get<T>();
+    _viewmodel = getViewmodel();
 
     _load = _viewmodel.load();
   }
@@ -43,6 +43,8 @@ abstract class ViewState<T extends ViewModel> extends State<StatefulView<T>> {
 
     _viewmodel.unload();
   }
+
+  T getViewmodel() => GetIt.I.get<T>();
 
   Widget error(BuildContext context, String message) {
     return Column(

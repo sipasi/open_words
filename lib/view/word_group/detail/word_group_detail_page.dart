@@ -135,6 +135,8 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
     final result = await MaterialNavigator.push(
       context,
       (builder) => WordDetailPage(
+        groupId: widget.group.id,
+        wordId: index,
         word: words[index],
         originLanguage: modified.origin,
         translationLanguage: modified.translation,
@@ -146,7 +148,6 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
         words.removeAt(index);
         words[index] = words[index].copyWith(index: index);
       });
-      await GetIt.I.get<WordGroupStorage>().set(modified.id, modified);
     });
 
     result.deleted<Word>((_) async {
@@ -167,7 +168,6 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
               .toList(),
         );
       });
-      await GetIt.I.get<WordGroupStorage>().set(modified.id, modified);
     });
   }
 }

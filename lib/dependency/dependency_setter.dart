@@ -74,7 +74,7 @@ abstract class AppDependencySetter {
 
     instance.registerFactory<SettingsViewModel>(() => SettingsViewModel());
 
-    instance.registerFactory<ImportViewModel>(() => ImportViewModel(instance.get<WordGroupStorage>()));
+    instance.registerFactory<ImportViewModel>(() => ImportViewModel());
     instance.registerFactory<ExportViewModel>(() => ExportViewModel(instance.get<WordGroupStorage>()));
   }
 

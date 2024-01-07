@@ -8,7 +8,7 @@ import 'package:open_words/service/text_to_speech_service.dart';
 import 'package:open_words/view/word/detail/metadata/meaning_view.dart';
 
 class WordMetadataView extends StatelessWidget {
-  final WordMetadata metadata;
+  final WordMetadata? metadata;
   final LanguageInfo language;
 
   static final TextToSpeechService _textToSpeech = GetIt.I.get<TextToSpeechService>();
@@ -22,11 +22,15 @@ class WordMetadataView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (isNullOrEmpty(metadata)) {
+      return _metadataEmptyView(context);
+    }
+
     return _column(context);
   }
 
   Widget _column(BuildContext context) {
-    final meanings = metadata.meanings;
+    final meanings = metadata!.meanings;
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -59,7 +63,29 @@ class WordMetadataView extends StatelessWidget {
     );
   }
 
+  Widget _metadataEmptyView(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final large = theme.textTheme.headlineLarge?.copyWith(
+      fontWeight: FontWeight.bold,
+      color: theme.colorScheme.error,
+    );
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 100),
+      child: Text('Metadata is not found', style: large, textAlign: TextAlign.center),
+    );
+  }
+
   Future _speek(String text) {
     return _textToSpeech.stopAndSpeek(text, language);
+  }
+
+  bool isNullOrEmpty(WordMetadata? metadata) {
+    return metadata == null
+        ? true
+        : metadata.meanings.isEmpty && metadata.phonetics.isEmpty
+            ? true
+            : false;
   }
 }

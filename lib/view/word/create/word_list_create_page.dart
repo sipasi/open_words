@@ -3,8 +3,9 @@ import 'package:open_words/data/language_info.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/service/result.dart';
 import 'package:open_words/view/shared/layout/orientation_adaptive_layout.dart';
-import 'text_edit_card.dart';
-import 'text_editing_view_model.dart';
+import 'package:open_words/view/shared/text/text_edit_card.dart';
+import 'package:open_words/view/shared/text/text_edit_view_model.dart';
+
 import 'word_list_create_view_model.dart';
 
 class WordListCreatePage extends StatefulWidget {
@@ -150,19 +151,19 @@ class _WordListCreatePageState extends State<WordListCreatePage> {
   }
 
   static Widget toTextEditCart({
-    required TextEditingViewModel viewmodel,
+    required TextEditViewModel viewmodel,
     required String hint,
     bool autofocus = false,
   }) {
     return TextEditCard(
-      controller: viewmodel.controller,
+      viewmodel: TextEditViewModel(
+        controller: viewmodel.controller,
+        focusNode: viewmodel.focusNode,
+      ),
       autofocus: autofocus,
-      focusNode: viewmodel.focusNode,
-      hint: hint,
       onClear: () => viewmodel.clear(),
       onCopy: () => viewmodel.copyToClipboard(),
       onPaste: () => viewmodel.pasteFromClipboard(),
-      error: viewmodel.error,
     );
   }
 }

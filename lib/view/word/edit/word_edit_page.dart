@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:open_words/data/metadata/definition.dart';
 import 'package:open_words/data/metadata/meaning.dart';
-import 'package:open_words/data/metadata/phonetic.dart';
 import 'package:open_words/data/metadata/word_metadata.dart';
 import 'package:open_words/data/word/word.dart';
-import 'package:open_words/service/navigation/material_navigator.dart';
-import 'package:open_words/service/result.dart';
+import 'package:open_words/view/shared/text/text_edit_field.dart';
+import 'package:open_words/view/shared/text/text_edit_view_model.dart';
+import 'package:open_words/view/word/edit/word_edit_view_model.dart';
 
 class WordEditPage extends StatefulWidget {
+  final String groupId;
+  final int wordId;
+
   final Word word;
   final WordMetadata? metadata;
 
   const WordEditPage({
     super.key,
+    required this.groupId,
+    required this.wordId,
     required this.word,
     this.metadata,
   });
@@ -22,20 +26,23 @@ class WordEditPage extends StatefulWidget {
 }
 
 class _WordEditPageState extends State<WordEditPage> {
-  late final List<Phonetic> _phonetics;
-  late final List<Meaning> _meanings;
-
-  final TextEditingController _translation = TextEditingController();
+  late final WordEditViewModel viewmodel;
 
   @override
   void initState() {
     super.initState();
     WordMetadata? metadata = widget.metadata;
 
-    _phonetics = metadata?.phonetics.toList() ?? [];
-    _meanings = metadata?.meanings.toList() ?? [];
-
-    _translation.text = widget.word.translation;
+    viewmodel = WordEditViewModel(
+      updateState: setState,
+      groupId: widget.groupId,
+      wordId: widget.wordId,
+      index: widget.word.index,
+      origin: widget.word.origin,
+      translation: TextEditViewModel.text(text: widget.word.translation),
+      phonetics: metadata?.phonetics.toList() ?? [],
+      meanings: metadata?.meanings.toList() ?? [],
+    );
   }
 
   @override
@@ -48,29 +55,22 @@ class _WordEditPageState extends State<WordEditPage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton.extended(
-            onPressed: () async {
-              final result = await PhoneticEdit.pageCreate(context);
-
-              result.contain<Phonetic>((value) {
-                setState(() {
-                  _phonetics.add(value);
-                });
-              });
-            },
+            onPressed: () => viewmodel.createPhonetic(context),
             icon: const Icon(Icons.music_note),
             label: const Text('phonetic'),
             heroTag: 'save_phonetic_hero',
-            isExtended: true,
           ),
           const SizedBox(width: 10),
           FloatingActionButton.extended(
-            onPressed: () async {
-              await MeaningEdit.pageCreate(context);
-            },
+            onPressed: () => viewmodel.createMeaning(context),
             icon: const Icon(Icons.menu_book_outlined),
             label: const Text('meanings'),
             heroTag: 'save_meaning_hero',
-            isExtended: true,
+          ),
+          const SizedBox(width: 20),
+          FloatingActionButton.extended(
+            onPressed: () => viewmodel.save(context),
+            label: const Text('Save'),
           ),
         ],
       ),
@@ -79,37 +79,40 @@ class _WordEditPageState extends State<WordEditPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            WordEditControl(translation: _translation, padding: const EdgeInsets.symmetric(horizontal: 10)),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: TextEditField(
+                viewmodel: viewmodel.translation,
+                onChanged: (value) => viewmodel.editTranslation(),
+              ),
+            ),
             const Divider(height: 40),
-            _phoneticsListView(),
+            _phoneticsList(),
             const Divider(height: 40),
-            _meaningsListView(),
+            _meaningsList(),
           ],
         ),
       ),
     );
   }
 
-  Widget _phoneticsListView() {
+  Widget _phoneticsList() {
     final theme = Theme.of(context);
     final boldStyle = theme.textTheme.headlineSmall?.copyWith(
       fontWeight: FontWeight.bold,
       color: theme.colorScheme.secondary,
     );
 
-    if (_phonetics.isNotEmpty) {
+    if (viewmodel.phonetics.isNotEmpty) {
       return Column(
         children: [
-          Text(
-            'Phonetics',
-            style: boldStyle,
-          ),
+          Text('Phonetics', style: boldStyle),
           Card(
             child: Column(
               children: List.generate(
-                _phonetics.length,
+                viewmodel.phonetics.length,
                 (index) {
-                  final entity = _phonetics[index];
+                  final entity = viewmodel.phonetics[index];
 
                   return ListTile(
                     title: Text(entity.value),
@@ -117,23 +120,11 @@ class _WordEditPageState extends State<WordEditPage> {
                     subtitle: entity.audio != null ? Text(entity.audio!) : null,
                     leading: IconButton(
                       icon: const Icon(Icons.delete),
-                      onPressed: () {
-                        setState(() {
-                          _phonetics.removeAt(index);
-                        });
-                      },
+                      onPressed: () => viewmodel.removePhoneticAt(index),
                     ),
                     trailing: IconButton(
                       icon: const Icon(Icons.edit),
-                      onPressed: () async {
-                        final result = await PhoneticEdit.pageEdit(context, entity);
-
-                        result.modified<Phonetic>((value) {
-                          setState(() {
-                            _phonetics[index] = value;
-                          });
-                        });
-                      },
+                      onPressed: () => viewmodel.editPhoneticAt(index, context),
                     ),
                   );
                 },
@@ -144,40 +135,37 @@ class _WordEditPageState extends State<WordEditPage> {
       );
     }
 
-    return _createFirstText('Definition');
+    return _createFirstText('Phonetic');
   }
 
-  Widget _meaningsListView() {
+  Widget _meaningsList() {
     final theme = Theme.of(context);
     final boldStyle = theme.textTheme.headlineSmall?.copyWith(
       fontWeight: FontWeight.bold,
       color: theme.colorScheme.secondary,
     );
 
-    if (_meanings.isNotEmpty) {
-      return Column(
-        children: [
-          Text(
-            'Meanings',
-            style: boldStyle,
-          ),
-          Card(
-            child: Column(
-              children: List.generate(
-                _meanings.length,
-                (index) {
-                  final entity = _meanings[index];
-
-                  return _meaningTile(entity, index);
-                },
-              ),
-            ),
-          ),
-        ],
-      );
+    if (viewmodel.meanings.isEmpty) {
+      return _createFirstText('Meaning');
     }
 
-    return _createFirstText('Meaning');
+    return Column(
+      children: [
+        Text('Meanings', style: boldStyle),
+        Card(
+          child: Column(
+            children: List.generate(
+              viewmodel.meanings.length,
+              (index) {
+                final entity = viewmodel.meanings[index];
+
+                return _meaningTile(entity, index);
+              },
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   RichText _createFirstText(String text) {
@@ -217,297 +205,12 @@ class _WordEditPageState extends State<WordEditPage> {
       leading: IconButton(
         icon: const Icon(Icons.delete),
         onPressed: () {
-          setState(() {
-            _meanings.removeAt(index);
-          });
+          viewmodel.removeMeaningAt(index);
         },
       ),
       trailing: IconButton(
         icon: const Icon(Icons.edit),
-        onPressed: () async {
-          final result = await MeaningEdit.pageEdit(context, entity);
-
-          result.modified<Meaning>((value) {
-            setState(() {
-              _meanings[index] = value;
-            });
-          });
-        },
-      ),
-    );
-  }
-}
-
-class WordEditControl extends StatelessWidget {
-  final TextEditingController translation;
-  final EdgeInsetsGeometry padding;
-
-  const WordEditControl({super.key, required this.translation, required this.padding});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: padding,
-      child: TextField(
-        controller: translation,
-        decoration: const InputDecoration(labelText: 'translation'),
-      ),
-    );
-  }
-}
-
-class PhoneticEdit extends StatelessWidget {
-  final _phonetic = TextEditingController();
-  final _source = TextEditingController();
-
-  PhoneticEdit({super.key});
-  PhoneticEdit.from({super.key, required Phonetic entity}) {
-    _phonetic.text = entity.value;
-    _source.text = entity.audio ?? '';
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return EntityEditScaffold(
-      saveHeroTag: 'save_phonetic_hero',
-      onSave: () {
-        if (_phonetic.text.isEmpty) {
-          return;
-        }
-
-        final entity = Phonetic(value: _phonetic.text, audio: _source.text);
-
-        MaterialNavigator.popWith(context, CrudResult.create(entity));
-      },
-      body: Column(
-        children: [
-          const SizedBox(height: 10),
-          TextField(
-            controller: _phonetic,
-            decoration: const InputDecoration(
-              labelText: 'phonetic',
-              border: OutlineInputBorder(),
-            ),
-          ),
-          const SizedBox(height: 10),
-          TextField(
-            controller: _source,
-            decoration: const InputDecoration(
-              labelText: 'source',
-              border: OutlineInputBorder(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  static Future<CrudResult> pageCreate(BuildContext context) {
-    return MaterialNavigator.push(
-      context,
-      (context) => PhoneticEdit(),
-    );
-  }
-
-  static Future<CrudResult> pageEdit(BuildContext context, Phonetic entity) {
-    return MaterialNavigator.push(
-      context,
-      (context) => PhoneticEdit.from(entity: entity),
-    );
-  }
-}
-
-class MeaningEdit extends StatefulWidget {
-  static const double _spacing = 10;
-
-  final Meaning? meaning;
-
-  const MeaningEdit({super.key, this.meaning});
-
-  @override
-  State<MeaningEdit> createState() => _MeaningEditState();
-
-  static Future<Result> pageCreate(BuildContext context) {
-    return MaterialNavigator.push(
-      context,
-      (context) => const MeaningEdit(),
-    );
-  }
-
-  static Future<CrudResult> pageEdit(BuildContext context, Meaning meaning) {
-    return MaterialNavigator.push(
-      context,
-      (context) => MeaningEdit(meaning: meaning),
-    );
-  }
-}
-
-class _MeaningEditState extends State<MeaningEdit> {
-  final List<Definition> _definitions = [];
-
-  final _partOfSpeech = TextEditingController();
-  final _synonyms = TextEditingController();
-  final _antonyms = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-
-    final meaning = widget.meaning;
-
-    if (meaning == null) {
-      return;
-    }
-
-    _partOfSpeech.text = meaning.partOfSpeech;
-    _synonyms.text = meaning.synonyms.join(', ');
-    _antonyms.text = meaning.antonyms.join(', ');
-
-    _definitions.addAll(meaning.definitions);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return EntityEditScaffold(
-      padding: EdgeInsets.zero,
-      saveHeroTag: 'save_meaning_hero',
-      onSave: () {},
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: _textFields(),
-            ),
-            const SizedBox(height: MeaningEdit._spacing),
-            TextButton(
-                onPressed: () {
-                  setState(() {
-                    _definitions.add(
-                      Definition(
-                          value:
-                              'Non fugiat mollit eu veniam ullamco nostrud eiusmod eiusmod dolore aute adipisicing labore incididunt.',
-                          example:
-                              'Fugiat Lorem ullamco adipisicing deserunt irure magna veniam eu adipisicing nisi occaecat.'),
-                    );
-                  });
-                },
-                child: const Text('Add definition')),
-            const SizedBox(height: MeaningEdit._spacing),
-            _definitionList(),
-            const SizedBox(height: 100),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _textFields() {
-    return Column(
-      children: [
-        const SizedBox(height: MeaningEdit._spacing),
-        TextField(
-          controller: _partOfSpeech,
-          decoration: const InputDecoration(
-            labelText: 'Part of speech',
-            border: OutlineInputBorder(),
-          ),
-        ),
-        const SizedBox(height: MeaningEdit._spacing),
-        TextField(
-          controller: _synonyms,
-          keyboardType: TextInputType.multiline,
-          maxLines: null,
-          decoration: const InputDecoration(
-            labelText: 'synonyms',
-            border: OutlineInputBorder(),
-          ),
-        ),
-        const SizedBox(height: MeaningEdit._spacing),
-        TextField(
-          controller: _antonyms,
-          keyboardType: TextInputType.multiline,
-          maxLines: null,
-          decoration: const InputDecoration(
-            labelText: 'antonyms',
-            border: OutlineInputBorder(),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _definitionList() {
-    return Card(
-      elevation: 5,
-      child: ListView.separated(
-          itemCount: _definitions.length,
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          separatorBuilder: (context, index) => const Divider(),
-          itemBuilder: (context, index) {
-            final definition = _definitions[index];
-
-            return ListTile(
-              title: Text(definition.value),
-              contentPadding: EdgeInsets.zero,
-              subtitle: definition.example != null ? Text(definition.example!) : null,
-              trailing: IconButton(
-                icon: const Icon(Icons.edit),
-                onPressed: () {},
-              ),
-              leading: IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: () {},
-              ),
-            );
-          }),
-    );
-  }
-}
-
-class EntityEditScaffold extends StatelessWidget {
-  final Widget body;
-
-  final void Function() onSave;
-
-  final EdgeInsetsGeometry padding;
-
-  final Color? backgroundColor;
-
-  final String saveHeroTag;
-
-  const EntityEditScaffold({
-    super.key,
-    required this.body,
-    required this.onSave,
-    this.padding = const EdgeInsets.all(10.0),
-    this.backgroundColor,
-    this.saveHeroTag = '<default FloatingActionButton tag>',
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        leading: Container(),
-        actions: [
-          TextButton(
-            onPressed: () => MaterialNavigator.pop(context),
-            child: const Text('Discard'),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: onSave,
-        heroTag: saveHeroTag,
-        label: const Text('Save'),
-      ),
-      body: Padding(
-        padding: padding,
-        child: body,
+        onPressed: () => viewmodel.editMeaningAt(index, context),
       ),
     );
   }

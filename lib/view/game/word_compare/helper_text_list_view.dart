@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:open_words/view/game/word_compare/compare_game.dart';
+import 'package:open_words/collection/readonly_list.dart';
 import 'package:open_words/view/game/word_compare/helper_text.dart';
 
 class HelperTextListView extends StatelessWidget {
-  final ReadonlyList<HelperText> helpers;
+  final IReadonlyList<HelperText> helpers;
 
   final bool canRequest;
 

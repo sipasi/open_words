@@ -1,5 +1,5 @@
+import 'package:open_words/collection/readonly_list.dart';
 import 'package:open_words/data/metadata/word_metadata.dart';
-import 'package:open_words/view/game/word_compare/compare_game.dart';
 import 'package:open_words/view/game/word_compare/helper_text.dart';
 import 'package:open_words/view/game/word_compare/word_compare_tool.dart';
 

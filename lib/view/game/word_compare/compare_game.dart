@@ -1,3 +1,4 @@
+import 'package:open_words/collection/readonly_list.dart';
 import 'package:open_words/data/metadata/word_metadata.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/view/game/word_compare/choose_result.dart';
@@ -6,30 +7,21 @@ import 'package:open_words/view/game/word_compare/compare_score.dart';
 import 'package:open_words/view/game/word_compare/helper_text_list.dart';
 import 'package:open_words/view/game/word_compare/word_text_getter.dart';
 
-class ReadonlyList<T> {
-  final List<T> _results;
+class CompareHistory extends IReadonlyList<ChooseResult> {
+  final List<ChooseResult> _results;
 
-  const ReadonlyList(this._results);
-
+  @override
   int get length => _results.length;
+  @override
+  ChooseResult operator [](int index) => _results[index];
 
-  T operator [](int index) => _results[index];
-}
+  CompareHistory() : _results = [];
 
-class CompareHistory extends ReadonlyList<ChooseResult> {
-  CompareHistory() : super([]);
-
-  void add({
-    required Word question,
-    required Word answer,
-    required bool correct,
-  }) {
-    _results.add(ChooseResult(
-      question: question,
-      answer: answer,
-      correct: correct,
-    ));
-  }
+  void add({required Word question, required Word answer, required bool correct}) => _results.add(ChooseResult(
+        question: question,
+        answer: answer,
+        correct: correct,
+      ));
 
   void clear() => _results.clear();
 }
@@ -52,7 +44,7 @@ class CompareGame {
 
   CompareData get data => _data;
 
-  ReadonlyList<ChooseResult> get history => _history;
+  IReadonlyList<ChooseResult> get history => _history;
 
   bool get gameEnd => _history.length == words.length;
 

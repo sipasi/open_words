@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 import 'package:open_words/data/language_info.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/view/mvvm/view_model.dart';
+import 'package:open_words/view/shared/text/text_edit_view_model.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'text_editing_view_model.dart';
 
 class WordListCreateViewModel {
   final List<Word> _created;
@@ -15,8 +16,8 @@ class WordListCreateViewModel {
 
   final int startIndex;
 
-  final TextEditingViewModel origin;
-  final TextEditingViewModel translation;
+  final TextEditViewModel origin;
+  final TextEditViewModel translation;
 
   int get length => _created.length;
 
@@ -25,8 +26,8 @@ class WordListCreateViewModel {
     required this.originInfo,
     required this.translationInfo,
   })  : _created = [],
-        origin = TextEditingViewModel(controller: TextEditingController(), focusNode: FocusNode()),
-        translation = TextEditingViewModel(controller: TextEditingController(), focusNode: FocusNode());
+        origin = TextEditViewModel(controller: TextEditingController(), focusNode: FocusNode()),
+        translation = TextEditViewModel(controller: TextEditingController(), focusNode: FocusNode());
 
   Word get(int index) => _created[index];
 
@@ -114,7 +115,9 @@ class WordListCreateViewModel {
 
     try {
       openedInApp = await launchUrl(address, mode: LaunchMode.externalNonBrowserApplication);
-    } catch (e) {}
+    } catch (e) {
+      GetIt.I.get<Logger>().e(e);
+    }
 
     if (openedInApp == false) {
       await launchUrl(address, mode: LaunchMode.platformDefault);

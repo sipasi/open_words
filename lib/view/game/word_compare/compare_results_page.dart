@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:open_words/collection/readonly_list.dart';
 import 'package:open_words/view/game/word_compare/choose_result.dart';
-import 'package:open_words/view/game/word_compare/compare_game.dart';
 import 'package:open_words/view/game/word_compare/word_text_getter.dart';
 
 class CompareResultsPage extends StatelessWidget {
-  final ReadonlyList<ChooseResult> results;
+  final IReadonlyList<ChooseResult> results;
   final WordTextGetter textGetter;
 
   const CompareResultsPage({

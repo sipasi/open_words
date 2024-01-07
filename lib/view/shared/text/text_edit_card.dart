@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:open_words/view/shared/text/text_edit_field.dart';
+import 'package:open_words/view/shared/text/text_edit_view_model.dart';
 
 class TextEditCard extends StatelessWidget {
-  final TextEditingController controller;
+  final TextEditViewModel viewmodel;
   final bool autofocus;
-  final FocusNode? focusNode;
-
-  final String? hint;
-  final String? label;
-  final String? error;
 
   final EdgeInsets padding;
   final int offset;
@@ -18,17 +15,13 @@ class TextEditCard extends StatelessWidget {
 
   const TextEditCard({
     super.key,
-    required this.controller,
+    required this.viewmodel,
     required this.onClear,
     required this.onCopy,
     required this.onPaste,
     this.autofocus = false,
-    this.focusNode,
     this.padding = const EdgeInsets.all(12.0),
     this.offset = 12,
-    this.hint,
-    this.label,
-    this.error,
   });
 
   @override
@@ -38,16 +31,7 @@ class TextEditCard extends StatelessWidget {
         padding: padding,
         child: Column(
           children: [
-            TextField(
-              controller: controller,
-              autofocus: autofocus,
-              focusNode: focusNode,
-              decoration: InputDecoration(
-                hintText: hint,
-                labelText: label,
-                errorText: error,
-              ),
-            ),
+            TextEditField(viewmodel: viewmodel),
             SizedBox(height: offset.toDouble()),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

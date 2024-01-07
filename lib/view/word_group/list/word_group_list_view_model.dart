@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:open_words/collection/readonly_list.dart';
 import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/view/mvvm/view_model.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/storage/word_group_storage.dart';
-import 'package:open_words/view/game/word_compare/compare_game.dart';
 import 'package:open_words/view/word_group/detail/word_group_detail_page.dart';
 import 'package:open_words/view/word_group/edit/word_group_create_page.dart';
 
@@ -12,7 +12,7 @@ class WordGroupListViewModel extends ViewModel {
   final WordGroupStorage _storage;
 
   late final List<WordGroup> _groups;
-  late final ReadonlyList<WordGroup> groups;
+  late final IReadonlyList<WordGroup> groups;
 
   WordGroupListViewModel(this._storage);
 
