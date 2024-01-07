@@ -10,8 +10,8 @@ import 'package:open_words/service/export/word_group/word_group_export_service.d
 import 'package:open_words/service/export/word_group/word_group_formatter_factory.dart';
 import 'package:open_words/view/settings/export/export_page.dart';
 import 'package:open_words/view/settings/export/export_view_model.dart';
-import 'package:open_words/view/settings/export/import_page.dart';
-import 'package:open_words/view/settings/export/import_view_model.dart';
+import 'package:open_words/view/settings/import/import_page.dart';
+import 'package:open_words/view/settings/import/import_view_model.dart';
 import 'package:open_words/view/settings/settings_view_model.dart';
 import 'package:open_words/view/word_group/list/word_group_list_view_model.dart';
 import 'package:open_words/service/clipboard_service.dart';
