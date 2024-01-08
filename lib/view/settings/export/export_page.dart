@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:open_words/view/mvvm/view_model.dart';
 import 'package:open_words/view/settings/export/export_view_model.dart';
-import 'package:open_words/view/shared/list/adaptive_grid_view.dart';
+import 'package:open_words/view/shared/scaffold/selectable_words_scaffold.dart';
 
 class ExportPage extends StatefulView<ExportViewModel> {
   const ExportPage({super.key});
@@ -13,48 +13,20 @@ class ExportPage extends StatefulView<ExportViewModel> {
 class _ExportPageState extends ViewState<ExportViewModel> {
   @override
   Widget success(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: Icon(viewmodel.allSelected ? Icons.done : Icons.circle),
-            onPressed: () => viewmodel.onSelectAll(setState),
-          ),
-        ],
-      ),
-      floatingActionButton: viewmodel.canShare()
+    return SelectableWordsScaffold(
+      allSelected: viewmodel.selectable.allSelected,
+      onSelectAll: () => viewmodel.selectable.onSelectAll(setState),
+      count: viewmodel.selectable.groups.length,
+      groupAt: viewmodel.selectable.groupAt,
+      selectedAt: viewmodel.selectable.selectedAt,
+      fab: viewmodel.canShare()
           ? FloatingActionButton.extended(
               label: const Text('Share'),
               icon: const Icon(Icons.share_outlined),
               onPressed: () => viewmodel.toExportDestination(context),
             )
           : null,
-      body: _grid(),
-    );
-  }
-
-  Widget _grid() {
-    return AdaptiveGridView(
-      children: List.generate(
-        viewmodel.count,
-        (index) => _tile(index),
-      ),
-    );
-  }
-
-  InkWell _tile(int index) {
-    final entity = viewmodel.groupAt(index);
-
-    bool contains = viewmodel.selectedAt(index);
-
-    return InkWell(
-      child: ListTile(
-        title: Text(entity.name),
-        titleAlignment: ListTileTitleAlignment.top,
-        selected: contains,
-        trailing: Icon(Icons.circle, color: contains ? null : Colors.transparent),
-      ),
-      onTap: () => viewmodel.onTileTap(setState, contains, index),
+      onTap: (contains, index) => viewmodel.selectable.onTileTap(setState, contains, index),
     );
   }
 }
