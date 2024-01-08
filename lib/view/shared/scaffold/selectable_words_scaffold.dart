@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/view/shared/list/adaptive_grid_view.dart';
-import 'package:open_words/view/shared/tile/text_tile.dart';
 
 class SelectableWordsScaffold extends StatelessWidget {
   final int count;
