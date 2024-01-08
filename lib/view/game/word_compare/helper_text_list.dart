@@ -21,7 +21,12 @@ class HelperTextList {
       return;
     }
 
-    _cache.addAll(WordCompareTool.helpersFrom(metadata));
+    _cache.addAll(WordCompareTool.helpersFrom(
+      metadata,
+      antonymsCount: 10,
+      definitionCount: 10,
+      synonymsCount: 10,
+    ));
   }
 
   bool canRequest() {
