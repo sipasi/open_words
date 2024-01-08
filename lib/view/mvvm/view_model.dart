@@ -58,7 +58,10 @@ abstract class ViewState<T extends ViewModel> extends State<StatefulView<T>> {
     );
   }
 
-  Widget loading(BuildContext context) => const LinearProgressIndicator();
+  Widget loading(BuildContext context) {
+    return const Scaffold(body: LinearProgressIndicator());
+  }
+
   Widget success(BuildContext context);
 
   @override
