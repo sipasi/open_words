@@ -23,7 +23,7 @@ This project is a copy of my [. Net Maui](https://github.com/sipasi/OpenDictiona
 
   > metadata loading supports only english words
  
-  ### expot
+  ### export
 
   <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/export_page_dark.png?raw=true" width="30%"><img/> 
   <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/export_pdf_example_dark.png?raw=true" width="30%"><img/>
