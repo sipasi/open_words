@@ -44,6 +44,8 @@ abstract class ViewState<T extends ViewModel> extends State<StatefulView<T>> {
     _viewmodel.unload();
   }
 
+  void reload() => _load = _viewmodel.load();
+
   T getViewmodel() => GetIt.I.get<T>();
 
   Widget error(BuildContext context, String message) {
