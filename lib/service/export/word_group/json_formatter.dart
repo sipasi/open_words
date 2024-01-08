@@ -8,6 +8,8 @@ class JsonFormatter extends WordGroupFormatter {
   Future<List<int>> format(List<WordGroup> data, FormatOptions options) {
     String result = json.encode(data);
 
-    return Future.value(result.codeUnits);
+    final bytes = utf8.encode(result);
+
+    return Future.value(bytes);
   }
 }
