@@ -3,6 +3,7 @@ import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/view/game/word_compare/origin_to_translation_page.dart';
 import 'package:open_words/view/game/word_compare/translation_to_origin_page.dart';
+import 'package:open_words/view/shared/list/adaptive_grid_view.dart';
 
 class GameListPage extends StatelessWidget {
   final WordGroup group;
@@ -14,9 +15,7 @@ class GameListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Games')),
       body: SafeArea(
-        child: GridView.count(
-          crossAxisCount: 2,
-          childAspectRatio: 2,
+        child: AdaptiveGridView(
           children: [
             _GameInfoTile(
               name: 'Compare Origins',
