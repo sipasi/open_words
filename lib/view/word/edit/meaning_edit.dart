@@ -85,6 +85,7 @@ class _MeaningEditState extends State<MeaningEdit> {
             ),
             const SizedBox(height: MeaningEdit._spacing),
             _definitionList(),
+            const SizedBox(height: 100),
           ],
         ),
       ),
