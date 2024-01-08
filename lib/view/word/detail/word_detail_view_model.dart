@@ -4,10 +4,10 @@ import 'package:open_words/data/language_info.dart';
 import 'package:open_words/data/metadata/word_metadata.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/service/clipboard_service.dart';
+import 'package:open_words/service/metadata/metadata_service.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/service/result.dart';
 import 'package:open_words/service/text_to_speech_service.dart';
-import 'package:open_words/storage/metadata_storage.dart';
 import 'package:open_words/view/mvvm/view_model.dart';
 import 'package:open_words/view/word/edit/word_edit_page.dart';
 
@@ -18,7 +18,7 @@ class WordDetailViewModel extends ViewModel {
   final LanguageInfo _origin;
   final LanguageInfo _translation;
 
-  final _metadataStorage = GetIt.I.get<MetadataStorage>();
+  final _metadataService = GetIt.I.get<MetadataService>();
 
   final String groupId;
   final int wordId;
@@ -51,7 +51,7 @@ class WordDetailViewModel extends ViewModel {
 
   @override
   Future load() async {
-    _metadata = await _metadataStorage.getBy(word.origin);
+    _metadata = await _metadataService.localOrWeb(word.origin);
   }
 
   void delete(BuildContext context) {
