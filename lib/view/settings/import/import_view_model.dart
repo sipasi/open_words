@@ -4,6 +4,7 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:open_words/collection/readonly_list.dart';
 import 'package:open_words/data/word/word_group.dart';
+import 'package:open_words/service/json/import_export_json.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/storage/word_group_storage.dart';
 import 'package:open_words/view/mvvm/view_model.dart';
@@ -29,18 +30,13 @@ class ImportViewModel extends ViewModel {
     List<WordGroup> groups = [];
 
     for (var file in files) {
-      final text = await file.readAsString();
+      final bytes = await file.readAsBytes();
 
-      final decoded = json.decode(
-        text,
-        reviver: (key, value) => value,
-      );
+      final text = utf8.decode(bytes);
 
-      if (decoded is List<dynamic>) {
-        final result = decoded.map((item) => WordGroup.fromJson(item));
+      final list = ImportExportJson.group.from(text);
 
-        groups.addAll(result);
-      }
+      groups.addAll(list);
     }
 
     selectable = SelectableWordsViewModel(groups.asReadonly());
