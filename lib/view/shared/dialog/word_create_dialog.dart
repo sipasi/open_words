@@ -124,10 +124,7 @@ class _WordCreateDialogState extends State<WordCreateDialog> {
                     return;
                   }
 
-                  final startIndex = widget.parent.words.length;
-
                   final word = Word(
-                    index: created.length + startIndex,
                     origin: _origin.text,
                     translation: _translation.text,
                   );

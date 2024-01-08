@@ -36,8 +36,7 @@ class _WordEditPageState extends State<WordEditPage> {
     viewmodel = WordEditViewModel(
       updateState: setState,
       groupId: widget.groupId,
-      wordId: widget.wordId,
-      index: widget.word.index,
+      wordId: widget.wordId, 
       origin: widget.word.origin,
       translation: TextEditViewModel.text(text: widget.word.translation),
       phonetics: metadata?.phonetics.toList() ?? [],

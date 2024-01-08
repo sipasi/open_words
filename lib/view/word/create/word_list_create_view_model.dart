@@ -48,10 +48,7 @@ class WordListCreateViewModel {
       return;
     }
 
-    final index = startIndex + _created.length;
-
     final word = Word(
-      index: index,
       origin: origin.text,
       translation: translation.text,
     );
@@ -131,7 +128,6 @@ class WordListCreateViewModel {
         .map((entry) => Word(
               origin: entry.value.origin,
               translation: entry.value.translation,
-              index: entry.key,
             ))
         .toList();
 

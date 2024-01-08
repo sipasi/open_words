@@ -17,7 +17,6 @@ WordGroup _$WordGroupFromJson(Map<String, dynamic> json) => WordGroup(
       words: (json['words'] as List<dynamic>)
           .map((e) => Word.fromJson(e as Map<String, dynamic>))
           .toList(),
-      index: json['index'] as int,
     );
 
 Map<String, dynamic> _$WordGroupToJson(WordGroup instance) => <String, dynamic>{
@@ -28,5 +27,4 @@ Map<String, dynamic> _$WordGroupToJson(WordGroup instance) => <String, dynamic>{
       'origin': instance.origin.toJson(),
       'translation': instance.translation.toJson(),
       'words': instance.words.map((e) => e.toJson()).toList(),
-      'index': instance.index,
     };

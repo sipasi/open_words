@@ -19,8 +19,6 @@ class WordGroup {
 
   final List<Word> words;
 
-  final int index;
-
   const WordGroup({
     required this.id,
     required this.created,
@@ -29,7 +27,6 @@ class WordGroup {
     required this.origin,
     required this.translation,
     required this.words,
-    required this.index,
   });
 
   factory WordGroup.fromJson(Map<String, dynamic> json) => _$WordGroupFromJson(json);
@@ -54,7 +51,6 @@ class WordGroup {
       origin: origin ?? this.origin,
       translation: translation ?? this.translation,
       words: words ?? this.words,
-      index: index ?? this.index,
     );
   }
 }

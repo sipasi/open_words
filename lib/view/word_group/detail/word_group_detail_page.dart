@@ -162,7 +162,6 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
                 (entry) => Word(
                   origin: entry.value.origin,
                   translation: entry.value.translation,
-                  index: entry.key,
                 ),
               )
               .toList(),

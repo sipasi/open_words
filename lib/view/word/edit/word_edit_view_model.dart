@@ -18,7 +18,6 @@ import 'phonetic_edit.dart';
 class WordEditViewModel {
   final String groupId;
   final int wordId;
-  final int index;
   final String origin;
   final TextEditViewModel translation;
 
@@ -34,7 +33,6 @@ class WordEditViewModel {
     required this.updateState,
     required this.groupId,
     required this.wordId,
-    required this.index,
     required this.origin,
     required this.translation,
     required List<Phonetic> phonetics,
@@ -98,7 +96,6 @@ class WordEditViewModel {
     }
 
     Word word = Word(
-      index: index,
       origin: origin,
       translation: translation.textTrim,
     );

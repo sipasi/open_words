@@ -55,7 +55,6 @@ class _WordGroupCreatePageState extends State<WordGroupCreatePage> {
           origin: origin,
           translation: translation,
           words: [],
-          index: 0,
         );
 
         MaterialNavigator.popWith(context, CrudResult.create(group));

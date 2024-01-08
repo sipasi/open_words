@@ -53,16 +53,14 @@ List<WordGroup> createData() {
       id: 'test_$index',
       created: now,
       modified: now,
-      index: 0,
       name: 'Test name $index',
       origin: const LanguageInfo(code: 'origin:code', name: 'origin:name', native: 'origin:native'),
       translation: const LanguageInfo(code: 'translation:code', name: 'translation:name', native: 'translation:native'),
       words: List.generate(
         40,
-        (index) => Word(
+        (index) => const Word(
           origin: 'Eu nulla ullamco et ullamco tempor magna qui.',
           translation: 'Cillum ut duis cupidatat cillum.',
-          index: index,
         ),
       ),
     ),
