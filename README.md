@@ -1,16 +1,37 @@
-# open_words
+# Open Words
 
-A new Flutter project.
+Welcome to Open Words! A **Simple** implementation of a dictionary that allows you to write, group and repeat words in games.
 
-## Getting Started
+## About
 
-This project is a starting point for a Flutter application.
+Open Words is dedicated to fostering creativity, language exploration, and learning through a collection of words and phrases created by yourself.
 
-A few resources to get you started if this is your first Flutter project:
+This project is a copy of my [. Net Maui](https://github.com/sipasi/OpenDictionary) repository
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<details>
+  <summary>Screenshots</summary> 
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  ### dark and light
+
+  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/group_page_dark.png?raw=true" width="30%"><img/> 
+  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/group_page_light.png?raw=true" width="30%"><img/> 
+
+  ### build vocabulary
+
+  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/group_detail_page_dark.png?raw=true" width="30%"><img/> 
+  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/word_detail_page_dark.png?raw=true" width="30%"><img/> 
+
+  > metadata loading supports only english words
+ 
+  ### expot
+
+  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/export_page_dark.png?raw=true" width="30%"><img/> 
+  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/export_pdf_example_dark.png?raw=true" width="30%"><img/>
+
+  > supports formats: pdf, text, json and excel
+ 
+  ### games
+
+  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/compare_game_page_dark.png?raw=true" width="30%"><img/> 
+  
+</details>
