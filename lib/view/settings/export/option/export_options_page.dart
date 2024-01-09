@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/service/export/formatter/export_format.dart';
@@ -79,7 +78,7 @@ class _ExportOptionsPageState extends State<ExportOptionsPage> {
 class _NamingSection extends StatelessWidget {
   final ExportOptionsViewModel viewmodel;
 
-  const _NamingSection({super.key, required this.viewmodel});
+  const _NamingSection({required this.viewmodel});
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +119,7 @@ class _NamingSection extends StatelessWidget {
 class _DownloadSection extends StatelessWidget {
   final ExportOptionsViewModel viewmodel;
 
-  const _DownloadSection({super.key, required this.viewmodel});
+  const _DownloadSection({required this.viewmodel});
 
   @override
   Widget build(BuildContext context) {
@@ -195,7 +194,7 @@ class _FormatSection extends StatelessWidget {
   final Map<ExportFormat, OptionsWidget> options;
   final ExportOptionsViewModel viewmodel;
 
-  const _FormatSection({super.key, required this.viewmodel, required this.options});
+  const _FormatSection({required this.viewmodel, required this.options});
 
   @override
   Widget build(BuildContext context) {
