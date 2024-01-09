@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:open_words/dependency/dependency_setter.dart';
 import 'package:open_words/theme/app_theme.dart';
@@ -17,11 +16,9 @@ void main() async {
 
   AppTheme theme = ThemeStorage.get();
 
-  bool release = true; // kReleaseMode && !Platform.isWindows;
-
   runApp(ThemeSwitcherWidget(
     initialTheme: theme,
-    child: release ? const MyApp() : const _PreviewMyApp(),
+    child: const MyApp(),
   ));
 }
 
@@ -44,35 +41,6 @@ class _MyAppState extends State<MyApp> {
       theme: theme.asLight(),
       darkTheme: theme.asDark(),
       home: const HomePage(),
-    );
-  }
-}
-
-class _PreviewMyApp extends StatefulWidget {
-  const _PreviewMyApp();
-
-  @override
-  State<_PreviewMyApp> createState() => _MyPreviewMyAppAppState();
-}
-
-class _MyPreviewMyAppAppState extends State<_PreviewMyApp> {
-  @override
-  Widget build(BuildContext context) {
-    AppTheme theme = ThemeSwitcher.of(context).theme!;
-
-    return DevicePreview(
-      enabled: true,
-      builder: (context) => MaterialApp(
-        title: 'Open Words',
-        useInheritedMediaQuery: true,
-        locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
-        debugShowCheckedModeBanner: false,
-        themeMode: theme.mode,
-        theme: theme.asLight(),
-        darkTheme: theme.asDark(),
-        home: const HomePage(),
-      ), // Wrap your app
     );
   }
 }
