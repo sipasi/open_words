@@ -17,8 +17,6 @@ class SettingsPageState extends ViewState<SettingsViewModel> {
   Widget success(BuildContext context) {
     const EdgeInsetsGeometry padding = EdgeInsets.only(top: 10.0);
 
-    final colorScheme = Theme.of(context).colorScheme;
-
     return ListView(
       padding: padding,
       children: [
@@ -37,18 +35,6 @@ class SettingsPageState extends ViewState<SettingsViewModel> {
           title: OutlinedButton(
             child: const Text('Export'),
             onPressed: () => viewmodel.toExport(context),
-          ),
-        ),
-        const Divider(),
-        ListTile(
-          leading: const Icon(Icons.file_copy_outlined),
-          title: OutlinedButton(onPressed: viewmodel.addPreinstalled, child: const Text('Add preinstalled')),
-        ),
-        ListTile(
-          leading: const Icon(Icons.delete_outline),
-          title: OutlinedButton(
-            onPressed: viewmodel.deleteAll,
-            child: Text('Delete All', style: TextStyle(color: colorScheme.error)),
           ),
         ),
       ],

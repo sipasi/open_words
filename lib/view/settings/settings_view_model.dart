@@ -8,8 +8,4 @@ import 'package:open_words/view/settings/import/import_page.dart';
 class SettingsViewModel extends ViewModel {
   Future toImport(BuildContext context) => MaterialNavigator.push(context, (context) => GetIt.I.get<ImportPage>());
   Future toExport(BuildContext context) => MaterialNavigator.push(context, (context) => GetIt.I.get<ExportPage>());
-
-  void addPreinstalled() {}
-
-  void deleteAll() {}
 }
