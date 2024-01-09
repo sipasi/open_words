@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_words/data/word/word_group.dart';
@@ -7,20 +8,23 @@ import 'package:open_words/service/export/path_factory/folder_location.dart';
 import 'package:open_words/service/export/word_group/word_group_export_service.dart';
 import 'package:open_words/service/export/word_group/word_group_formatter_factory.dart';
 import 'package:open_words/service/share/share_file.dart';
+import 'package:open_words/view/mvvm/view_model.dart';
 import 'package:open_words/view/shared/dialog/loading_dialog.dart';
+import 'package:open_words/view/shared/text/text_edit_view_model.dart';
 
 class ExportOptionsViewModel {
   static const String _defauldName = 'WordGroups';
 
   final List<WordGroup> _groups;
 
-  String _name;
   bool _oneFile;
   bool _download;
   FolderLocation _location;
   ExportFormat _format;
 
-  String get name => _name;
+  final UpdateState updateState;
+  final TextEditViewModel name;
+
   bool get oneFile => _oneFile;
   bool get download => _download;
   FolderLocation get location => _location;
@@ -30,54 +34,63 @@ class ExportOptionsViewModel {
   bool get isSingle => _groups.length == 1;
   bool get isMany => _groups.length > 1;
 
-  ExportOptionsViewModel({required List<WordGroup> groups})
+  bool get canExportAsManyFiles => isWeb == false && isMany;
+  bool get canOnlyDownload => isWeb;
+
+  bool get isWeb => kIsWeb;
+
+  ExportOptionsViewModel({required List<WordGroup> groups, required this.updateState})
       : _groups = groups,
-        _name = _defauldName,
         _oneFile = true,
-        _download = false,
+        _download = kIsWeb ? true : false,
         _location = FolderLocation.downloads,
-        _format = ExportFormat.pdf {
+        _format = ExportFormat.pdf,
+        name = TextEditViewModel.text(text: _defauldName) {
     if (isSingle) {
-      _name = groups[0].name;
+      name.setText(groups[0].name);
     }
   }
 
-  void setName(String name) {
-    _name = name;
+  void onNameChange() {
+    TextEditViewModel.setErrorIfEmpty(name, updateState);
   }
 
-  void switchOneFile() {
-    _oneFile = !_oneFile;
+  void switchOneFile(bool value) {
+    updateState(() => _oneFile = value);
   }
 
-  void switchDownload() {
-    _download = !_download;
+  void switchDownload(bool value) {
+    updateState(() => _download = value);
   }
 
-  void selectLocation(FolderLocation? location) {
-    if (location == null) {
+  void selectLocation(FolderLocation? value) {
+    if (value == null) {
       return;
     }
 
-    _location = location;
+    updateState(() => _location = value);
   }
 
-  void selectFormat(ExportFormat? format) {
-    if (format == null) {
+  void selectFormat(ExportFormat? value) {
+    if (value == null) {
       return;
     }
 
-    _format = format;
+    updateState(() => _format = value);
   }
 
   Future perform(BuildContext context, FormatOptions options) {
+    if (canOnlyDownload) {
+      return _onDownload(context, options);
+    }
+
     return _download ? _onDownload(context, options) : _onShare(context, options);
   }
 
   Future _onDownload(BuildContext context, FormatOptions options) {
     final export = GetIt.I.get<WordGroupExportService>();
 
-    final future = export.exportTo(location, _groups, name, format, options);
+    final future = export.exportTo(location, _groups, name.textTrim, format, options);
 
     return LoadingDialog.show(context: context, future: future);
   }
@@ -90,7 +103,7 @@ class ExportOptionsViewModel {
       data: _groups,
       format: _format,
       formatter: factory.create(_format),
-      name: _name,
+      name: name.textTrim,
       options: options,
     );
   }

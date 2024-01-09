@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/service/export/formatter/export_format.dart';
@@ -5,6 +6,7 @@ import 'package:open_words/service/export/formatter/format_options.dart';
 import 'package:open_words/view/settings/export/option/options_widget.dart';
 import 'package:open_words/view/shared/dialog/export_format_list_dialog.dart';
 import 'package:open_words/view/shared/dialog/folder_location_list_dialog.dart';
+import 'package:open_words/view/shared/text/text_edit_field.dart';
 
 import 'export_options_view_model.dart';
 import 'pdf_options.dart';
@@ -22,15 +24,11 @@ class _ExportOptionsPageState extends State<ExportOptionsPage> {
   late final ExportOptionsViewModel viewmodel;
   late final Map<ExportFormat, OptionsWidget> options;
 
-  final _nameController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
 
-    viewmodel = ExportOptionsViewModel(groups: widget.groups);
-
-    _nameController.text = viewmodel.name;
+    viewmodel = ExportOptionsViewModel(groups: widget.groups, updateState: setState);
 
     options = {
       ExportFormat.pdf: PdfOptions(),
@@ -39,124 +37,25 @@ class _ExportOptionsPageState extends State<ExportOptionsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final scheem = Theme.of(context).colorScheme;
-
     return Scaffold(
       appBar: AppBar(),
       body: Column(
         children: [
-          if (viewmodel.isMany) _oneFileWidget(),
-          if (viewmodel.oneFile) _nameWidget(),
+          _NamingSection(viewmodel: viewmodel),
           const Divider(height: 40),
-          _getDownload(),
-          if (viewmodel.download) _folderSelector(scheem),
+          _DownloadSection(viewmodel: viewmodel),
           const Divider(height: 40),
-          _format(scheem),
-          _formatOption(),
+          _FormatSection(viewmodel: viewmodel, options: options),
         ],
       ),
       floatingActionButton: getFab(),
     );
   }
 
-  Widget _formatOption() {
-    final option = options[viewmodel.format];
-
-    if (option == null) {
-      return const Padding(
-        padding: EdgeInsets.all(20),
-        child: Text('Have not options'),
-      );
-    }
-
-    return option;
-  }
-
-  Widget _format(ColorScheme scheme) {
-    return ListTile(
-      title: Text(
-        viewmodel.format.name,
-        style: TextStyle(color: scheme.primary),
-      ),
-      subtitle: Text('.${viewmodel.format.extension}'),
-      leading: const Icon(Icons.file_present),
-      onTap: () {
-        ExportFormatListDialog.show(
-          context: context,
-          current: viewmodel.format,
-          selected: (value) {
-            setState(() {
-              viewmodel.selectFormat(value);
-            });
-          },
-        );
-      },
-    );
-  }
-
-  Widget _getDownload() {
-    return ListTile(
-      title: const Text('Save on device'),
-      trailing: Switch(
-        value: viewmodel.download,
-        onChanged: (value) {
-          setState(() {
-            viewmodel.switchDownload();
-          });
-        },
-      ),
-    );
-  }
-
-  Widget _folderSelector(ColorScheme scheme) {
-    return ListTile(
-      title: Text(
-        'Folder',
-        style: TextStyle(color: scheme.primary),
-      ),
-      subtitle: Text(viewmodel.location.label),
-      leading: const Icon(Icons.folder),
-      onTap: () {
-        FolderLocationListDialog.show(
-          context: context,
-          current: viewmodel.location,
-          selected: (value) {
-            setState(() {
-              viewmodel.selectLocation(value);
-            });
-          },
-        );
-      },
-    );
-  }
-
-  Widget _oneFileWidget() {
-    return ListTile(
-      title: const Text('As one file'),
-      trailing: Switch(
-        value: viewmodel.oneFile,
-        onChanged: (value) {
-          setState(() {
-            viewmodel.switchOneFile();
-          });
-        },
-      ),
-    );
-  }
-
-  Widget _nameWidget() {
-    return ListTile(
-      title: TextField(
-        controller: _nameController,
-        decoration: const InputDecoration(labelText: 'File name', border: OutlineInputBorder()),
-        onChanged: viewmodel.setName,
-      ),
-    );
-  }
-
   Widget getFab() {
-    final result = switch (viewmodel.download) {
-      true => ('Download', Icons.download_outlined),
+    final result = switch (viewmodel) {
+      ExportOptionsViewModel(canOnlyDownload: true) => ('Download', Icons.download_outlined),
+      ExportOptionsViewModel(download: true) => ('Download', Icons.download_outlined),
       _ => ('Share', Icons.share_outlined),
     };
 
@@ -172,6 +71,166 @@ class _ExportOptionsPageState extends State<ExportOptionsPage> {
         }
 
         viewmodel.perform(context, widget.getOptions());
+      },
+    );
+  }
+}
+
+class _NamingSection extends StatelessWidget {
+  final ExportOptionsViewModel viewmodel;
+
+  const _NamingSection({super.key, required this.viewmodel});
+
+  @override
+  Widget build(BuildContext context) {
+    if (viewmodel.canExportAsManyFiles) {
+      return Column(
+        children: [
+          if (viewmodel.isMany) _oneFileSwitch(),
+          if (viewmodel.oneFile) _name(),
+        ],
+      );
+    }
+
+    return _name();
+  }
+
+  Widget _oneFileSwitch() {
+    return ListTile(
+      title: const Text('As one file'),
+      trailing: Switch(
+        value: viewmodel.oneFile,
+        onChanged: viewmodel.switchOneFile,
+      ),
+    );
+  }
+
+  Widget _name() {
+    return ListTile(
+      title: TextEditField(
+        viewmodel: viewmodel.name,
+        border: const OutlineInputBorder(),
+        label: 'File name',
+        onChanged: (_) => viewmodel.onNameChange(),
+      ),
+    );
+  }
+}
+
+class _DownloadSection extends StatelessWidget {
+  final ExportOptionsViewModel viewmodel;
+
+  const _DownloadSection({super.key, required this.viewmodel});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheem = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    final bodyLarge = textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.bold);
+
+    if (viewmodel.canOnlyDownload) {
+      return RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+            children: [
+              TextSpan(
+                text: 'Web',
+                style: bodyLarge?.copyWith(color: scheem.primary),
+              ),
+              TextSpan(
+                text: ' is currently ',
+                style: bodyLarge,
+              ),
+              TextSpan(
+                text: 'limited',
+                style: bodyLarge?.copyWith(color: scheem.error),
+              ),
+              TextSpan(
+                text: ' to file downloads only',
+                style: bodyLarge,
+              ),
+            ],
+          ));
+    }
+
+    return Column(
+      children: [
+        _downloadSwitch(),
+        if (viewmodel.download) _folderSelector(context, scheem),
+      ],
+    );
+  }
+
+  Widget _downloadSwitch() {
+    return ListTile(
+      title: const Text('Save on device'),
+      trailing: Switch(
+        value: viewmodel.download,
+        onChanged: viewmodel.switchDownload,
+      ),
+    );
+  }
+
+  Widget _folderSelector(BuildContext context, ColorScheme scheme) {
+    return ListTile(
+      title: Text(
+        'Folder',
+        style: TextStyle(color: scheme.primary),
+      ),
+      subtitle: Text(viewmodel.location.label),
+      leading: const Icon(Icons.folder),
+      onTap: () {
+        FolderLocationListDialog.show(
+          context: context,
+          current: viewmodel.location,
+          selected: viewmodel.selectLocation,
+        );
+      },
+    );
+  }
+}
+
+class _FormatSection extends StatelessWidget {
+  final Map<ExportFormat, OptionsWidget> options;
+  final ExportOptionsViewModel viewmodel;
+
+  const _FormatSection({super.key, required this.viewmodel, required this.options});
+
+  @override
+  Widget build(BuildContext context) {
+    final scheem = Theme.of(context).colorScheme;
+
+    return Column(children: [_format(context, scheem), _formatOption()]);
+  }
+
+  Widget _formatOption() {
+    final option = options[viewmodel.format];
+
+    if (option == null) {
+      return const Padding(
+        padding: EdgeInsets.all(20),
+        child: Text('Have not options'),
+      );
+    }
+
+    return option;
+  }
+
+  Widget _format(BuildContext context, ColorScheme scheme) {
+    return ListTile(
+      title: Text(
+        viewmodel.format.name,
+        style: TextStyle(color: scheme.primary),
+      ),
+      subtitle: Text('.${viewmodel.format.extension}'),
+      leading: const Icon(Icons.file_present),
+      onTap: () {
+        ExportFormatListDialog.show(
+          context: context,
+          current: viewmodel.format,
+          selected: viewmodel.selectFormat,
+        );
       },
     );
   }
