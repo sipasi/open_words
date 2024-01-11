@@ -56,7 +56,7 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
             onPressed: () async {
               await GetIt.I.get<WordGroupStorage>().delete(modified.id);
 
-              MaterialNavigator.popWith(context, CrudResult.delete(modified));
+              if (context.mounted) MaterialNavigator.popWith(context, CrudResult.delete(modified));
             },
           ),
           IconButton(

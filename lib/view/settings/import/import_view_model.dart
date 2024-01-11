@@ -51,6 +51,6 @@ class ImportViewModel extends ViewModel {
       await storage.set(group.id, group);
     }
 
-    MaterialNavigator.pop(context);
+    if (context.mounted) MaterialNavigator.pop(context);
   }
 }

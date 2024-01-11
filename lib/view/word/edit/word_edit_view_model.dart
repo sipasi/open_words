@@ -116,6 +116,6 @@ class WordEditViewModel {
 
     await metadataStorage.set(word.origin, metadata);
 
-    MaterialNavigator.popWith(context, CrudResult.modify((word, metadata)));
+    if (context.mounted) MaterialNavigator.popWith(context, CrudResult.modify((word, metadata)));
   }
 }

@@ -57,7 +57,9 @@ abstract class ShareFile {
 
     await file.writeAsBytes(bytes, flush: true);
 
-    return share(context: context, path: path);
+    if (context.mounted) return share(context: context, path: path);
+
+    return const ShareResult('', ShareResultStatus.unavailable);
   }
 
   static Future delete(List<XFile> files) async {
