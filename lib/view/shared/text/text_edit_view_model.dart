@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
+import 'package:open_words/service/clipboard/clipboard_service.dart';
 import 'package:open_words/view/mvvm/view_model.dart';
 
 class TextEditViewModel {
+  final _clipboard = GetIt.I.get<ClipboardService>();
+
   final TextEditingController controller;
 
   final FocusNode? focusNode;
@@ -29,24 +33,27 @@ class TextEditViewModel {
     controller.clear();
   }
 
-  Future copyToClipboard() async {
-    final data = ClipboardData(text: controller.text.trim());
-
-    await HapticFeedback.vibrate();
-
-    await Clipboard.setData(data);
+  Future copyToClipboard(BuildContext context) {
+    return _clipboard.writeText(
+      context,
+      controller.text.trim(),
+      vibrate: true,
+      snackBar: true,
+    );
   }
 
-  Future pasteFromClipboard() async {
-    HapticFeedback.vibrate();
+  Future pasteFromClipboard(BuildContext context) async {
+    final text = await _clipboard.readText(
+      context,
+      vibrate: true,
+      snackBar: true,
+    );
 
-    final data = await Clipboard.getData(Clipboard.kTextPlain);
-
-    if (data == null || data.text == null) {
+    if (text == null) {
       return;
     }
 
-    controller.text = data.text!.trim();
+    controller.text = text.trim();
   }
 
   void setFocus() {
@@ -56,7 +63,7 @@ class TextEditViewModel {
   void dispose() {
     controller.dispose();
     focusNode?.dispose();
-  } 
+  }
 
   static void setErrorIfEmpty(TextEditViewModel edit, UpdateState updateState, [String message = 'can\'t be empty']) {
     if (edit.textTrim.isNotEmpty) {

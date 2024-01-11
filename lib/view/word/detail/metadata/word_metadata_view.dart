@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:open_words/data/language_info.dart';
 import 'package:open_words/data/metadata/meaning.dart';
 import 'package:open_words/data/metadata/word_metadata.dart';
-import 'package:open_words/service/clipboard_service.dart';
+import 'package:open_words/service/clipboard/clipboard_service.dart';
 import 'package:open_words/service/text_to_speech_service.dart';
 import 'package:open_words/view/word/detail/metadata/meaning_view.dart';
 
@@ -53,13 +53,13 @@ class WordMetadataView extends StatelessWidget {
     return MeaningView(
       meaning: meaning,
       onSynonymTap: _speek,
-      onSynonymLongPress: (text) => _clipboard.copyWithSnakBar(context, text),
+      onSynonymLongPress: (text) => _clipboard.writeText(context, text, vibrate: true, snackBar: true),
       onAntonymTap: _speek,
-      onAntonymLongPress: (text) => _clipboard.copyWithSnakBar(context, text),
+      onAntonymLongPress: (text) => _clipboard.writeText(context, text, vibrate: true, snackBar: true),
       onDefinitionTap: _speek,
-      onDefinitionLongPress: (text) => _clipboard.copyWithSnakBar(context, text),
+      onDefinitionLongPress: (text) => _clipboard.writeText(context, text, vibrate: true, snackBar: true),
       onExampleTap: _speek,
-      onExampleLongPress: (text) => _clipboard.copyWithSnakBar(context, text),
+      onExampleLongPress: (text) => _clipboard.writeText(context, text, vibrate: true, snackBar: true),
     );
   }
 

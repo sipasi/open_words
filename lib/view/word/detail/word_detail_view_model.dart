@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:open_words/data/language_info.dart';
 import 'package:open_words/data/metadata/word_metadata.dart';
 import 'package:open_words/data/word/word.dart';
-import 'package:open_words/service/clipboard_service.dart';
+import 'package:open_words/service/clipboard/clipboard_service.dart';
 import 'package:open_words/service/metadata/metadata_service.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/service/result.dart';

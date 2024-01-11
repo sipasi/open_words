@@ -100,13 +100,15 @@ class _WordDetailPageState extends ViewState<WordDetailViewModel> {
           title: Text(viewmodel.word.origin, style: origin),
           trailing: const Icon(Icons.volume_up_sharp),
           onTap: () => viewmodel.textToSpeech.stopAndSpeek(viewmodel.word.origin, viewmodel.origin),
-          onLongPress: () => viewmodel.clipboard.copyWithSnakBar(context, viewmodel.word.origin),
+          onLongPress: () =>
+              viewmodel.clipboard.writeText(context, viewmodel.word.origin, vibrate: true, snackBar: true),
         ),
         ListTile(
           title: Text(viewmodel.word.translation, style: translation),
           trailing: const Icon(Icons.volume_up_sharp),
           onTap: () => viewmodel.textToSpeech.stopAndSpeek(viewmodel.word.translation, viewmodel.translation),
-          onLongPress: () => viewmodel.clipboard.copyWithSnakBar(context, viewmodel.word.translation),
+          onLongPress: () =>
+              viewmodel.clipboard.writeText(context, viewmodel.word.translation, vibrate: true, snackBar: true),
         ),
       ],
     );

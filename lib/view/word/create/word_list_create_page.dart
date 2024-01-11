@@ -72,7 +72,7 @@ class _WordListCreatePageState extends State<WordListCreatePage> {
       child: OrientationAdaptiveLayout(
         portrait: (context) {
           return Column(children: [
-            _inputFields(),
+            _inputFields(context),
             const SizedBox(height: 10),
             _bottons(),
             Expanded(child: _list()),
@@ -90,7 +90,7 @@ class _WordListCreatePageState extends State<WordListCreatePage> {
                   padding: const EdgeInsets.only(bottom: 100),
                   child: Column(
                     children: [
-                      _inputFields(),
+                      _inputFields(context),
                       const SizedBox(height: 10),
                       _bottons(),
                     ],
@@ -104,11 +104,20 @@ class _WordListCreatePageState extends State<WordListCreatePage> {
     );
   }
 
-  Widget _inputFields() {
+  Widget _inputFields(BuildContext context) {
     return Column(children: [
-      toTextEditCart(viewmodel: viewmodel.origin, hint: 'Enter origin', autofocus: true),
+      toTextEditCart(
+        context: context,
+        viewmodel: viewmodel.origin,
+        hint: 'Enter origin',
+        autofocus: true,
+      ),
       const SizedBox(height: 10),
-      toTextEditCart(viewmodel: viewmodel.translation, hint: 'Enter translation'),
+      toTextEditCart(
+        context: context,
+        viewmodel: viewmodel.translation,
+        hint: 'Enter translation',
+      ),
     ]);
   }
 
@@ -151,6 +160,7 @@ class _WordListCreatePageState extends State<WordListCreatePage> {
   }
 
   static Widget toTextEditCart({
+    required BuildContext context,
     required TextEditViewModel viewmodel,
     required String hint,
     bool autofocus = false,
@@ -162,8 +172,8 @@ class _WordListCreatePageState extends State<WordListCreatePage> {
       ),
       autofocus: autofocus,
       onClear: () => viewmodel.clear(),
-      onCopy: () => viewmodel.copyToClipboard(),
-      onPaste: () => viewmodel.pasteFromClipboard(),
+      onCopy: () => viewmodel.copyToClipboard(context),
+      onPaste: () => viewmodel.pasteFromClipboard(context),
     );
   }
 }
