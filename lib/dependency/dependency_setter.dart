@@ -2,6 +2,10 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
+import 'package:open_words/service/clipboard/clipboard_handler.dart';
+import 'package:open_words/service/clipboard/clipboard_other_service.dart';
+import 'package:open_words/service/clipboard/clipboard_service.dart';
+import 'package:open_words/service/clipboard/clipboard_web_service.dart';
 import 'package:open_words/service/export/path_factory/system_path_factory.dart';
 import 'package:open_words/service/export/path_factory/web_path_factory.dart';
 import 'package:open_words/service/export/save_provider/local_saver.dart';
@@ -14,7 +18,6 @@ import 'package:open_words/view/settings/import/import_page.dart';
 import 'package:open_words/view/settings/import/import_view_model.dart';
 import 'package:open_words/view/settings/settings_view_model.dart';
 import 'package:open_words/view/word_group/list/word_group_list_view_model.dart';
-import 'package:open_words/service/clipboard_service.dart';
 import 'package:open_words/service/language/language_info_service.dart';
 import 'package:open_words/service/metadata/dev_dictionary_api.dart';
 import 'package:open_words/service/metadata/metadata_service.dart';
@@ -34,9 +37,10 @@ abstract class AppDependencySetter {
 
     instance.registerSingleton<LanguageInfoService>(LanguageInfoService());
     instance.registerSingleton<TextToSpeechService>(TextToSpeechService());
-    instance.registerSingleton<ClipboardService>(ClipboardService());
 
     instance.registerSingleton(Logger());
+
+    _clipboardService(instance);
 
     _registerExportService(instance);
 
@@ -102,6 +106,12 @@ abstract class AppDependencySetter {
 
       return ser;
     });
+  }
+
+  static void _clipboardService(GetIt instance) {
+    ClipboardHandler clipboard = kIsWeb ? ClipboardWebHandler() : ClipboardDefaultHandler();
+
+    instance.registerSingleton<ClipboardService>(ClipboardService(clipboard));
   }
 
   static T _whenWeb<T>({required T Function() then, required T Function() other}) {
