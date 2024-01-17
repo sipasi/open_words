@@ -6,6 +6,7 @@ import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/service/result.dart';
 import 'package:open_words/storage/word_group_storage.dart';
 import 'package:open_words/view/game/game_list_page.dart';
+import 'package:open_words/view/shared/dialog/delete_dialog.dart';
 import 'package:open_words/view/shared/list/adaptive_grid_view.dart';
 import 'package:open_words/view/shared/tile/text_tile.dart';
 import 'package:open_words/view/word/create/word_list_create_page.dart';
@@ -54,6 +55,12 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
           IconButton(
             icon: const Icon(Icons.delete_forever_outlined),
             onPressed: () async {
+              bool result = await DeleteDialog.show(context: context);
+
+              if (result == false) {
+                return;
+              }
+
               await GetIt.I.get<WordGroupStorage>().delete(modified.id);
 
               if (context.mounted) MaterialNavigator.popWith(context, CrudResult.delete(modified));
