@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:open_words/data/language_info.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/service/result.dart';
+import 'package:open_words/view/mvvm/view_model.dart';
 import 'package:open_words/view/shared/layout/orientation_adaptive_layout.dart';
 import 'package:open_words/view/shared/text/text_edit_card.dart';
 import 'package:open_words/view/shared/text/text_edit_view_model.dart';
@@ -111,12 +112,14 @@ class _WordListCreatePageState extends State<WordListCreatePage> {
         viewmodel: viewmodel.origin,
         hint: 'Enter origin',
         autofocus: true,
+        updateState: setState,
       ),
       const SizedBox(height: 10),
       toTextEditCart(
         context: context,
         viewmodel: viewmodel.translation,
         hint: 'Enter translation',
+        updateState: setState,
       ),
     ]);
   }
@@ -163,14 +166,13 @@ class _WordListCreatePageState extends State<WordListCreatePage> {
     required BuildContext context,
     required TextEditViewModel viewmodel,
     required String hint,
+    required UpdateState updateState,
     bool autofocus = false,
   }) {
     return TextEditCard(
-      viewmodel: TextEditViewModel(
-        controller: viewmodel.controller,
-        focusNode: viewmodel.focusNode,
-      ),
+      viewmodel: viewmodel,
       autofocus: autofocus,
+      onChange: (text) => TextEditViewModel.setErrorIfEmpty(viewmodel, updateState),
       onClear: () => viewmodel.clear(),
       onCopy: () => viewmodel.copyToClipboard(context),
       onPaste: () => viewmodel.pasteFromClipboard(context),

@@ -13,6 +13,11 @@ class TextEditCard extends StatelessWidget {
   final void Function() onCopy;
   final void Function() onPaste;
 
+  final String? label;
+  final String? hint;
+
+  final void Function(String text)? onChange;
+
   const TextEditCard({
     super.key,
     required this.viewmodel,
@@ -22,6 +27,9 @@ class TextEditCard extends StatelessWidget {
     this.autofocus = false,
     this.padding = const EdgeInsets.all(12.0),
     this.offset = 12,
+    this.label,
+    this.hint,
+    this.onChange,
   });
 
   @override
@@ -31,7 +39,12 @@ class TextEditCard extends StatelessWidget {
         padding: padding,
         child: Column(
           children: [
-            TextEditField(viewmodel: viewmodel),
+            TextEditField(
+              viewmodel: viewmodel,
+              onChanged: onChange,
+              label: label,
+              hint: hint,
+            ),
             SizedBox(height: offset.toDouble()),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

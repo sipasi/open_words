@@ -5,6 +5,7 @@ import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/service/language/language_info_service.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/service/result.dart';
+import 'package:open_words/view/shared/text/text_edit_view_model.dart';
 import 'package:uuid/uuid.dart';
 import 'word_group_edit_create_body.dart';
 
@@ -16,7 +17,7 @@ class WordGroupCreatePage extends StatefulWidget {
 }
 
 class _WordGroupCreatePageState extends State<WordGroupCreatePage> {
-  late final TextEditingController _nameController;
+  late final TextEditViewModel _name;
 
   late LanguageInfo origin;
   late LanguageInfo translation;
@@ -27,7 +28,7 @@ class _WordGroupCreatePageState extends State<WordGroupCreatePage> {
 
     final service = GetIt.I.get<LanguageInfoService>();
 
-    _nameController = TextEditingController();
+    _name = TextEditViewModel.text();
     origin = service.getByCode('en');
     translation = service.getByCode('uk');
   }
@@ -35,13 +36,13 @@ class _WordGroupCreatePageState extends State<WordGroupCreatePage> {
   @override
   Widget build(BuildContext context) {
     return WordGroupEditCreateBody(
-      name: _nameController,
+      name: _name,
       origin: origin,
       translation: translation,
       onSave: () {
-        final name = _nameController.text;
+        final name = _name.textTrim;
 
-        if (name.trim() == '') {
+        if (name.isEmpty) {
           return;
         }
 
@@ -59,6 +60,7 @@ class _WordGroupCreatePageState extends State<WordGroupCreatePage> {
 
         MaterialNavigator.popWith(context, CrudResult.create(group));
       },
+      onNameChange: (value) => TextEditViewModel.setErrorIfEmpty(_name, setState),
       onOriginSelect: (origin) {
         setState(() {
           this.origin = origin;

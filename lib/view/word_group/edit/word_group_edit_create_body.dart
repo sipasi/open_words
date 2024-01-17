@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:open_words/data/language_info.dart';
+import 'package:open_words/view/shared/text/text_edit_card.dart';
+import 'package:open_words/view/shared/text/text_edit_view_model.dart';
 import 'package:open_words/view/word_group/edit/language_selector_tile.dart';
 
 class WordGroupEditCreateBody extends StatelessWidget {
-  final TextEditingController name;
+  final TextEditViewModel name;
 
   final LanguageInfo origin;
   final LanguageInfo translation;
 
   final void Function() onSave;
+  final void Function(String value) onNameChange;
   final void Function(LanguageInfo origin) onOriginSelect;
   final void Function(LanguageInfo translation) onTranslationSelect;
 
@@ -18,6 +21,7 @@ class WordGroupEditCreateBody extends StatelessWidget {
     required this.origin,
     required this.translation,
     required this.onSave,
+    required this.onNameChange,
     required this.onOriginSelect,
     required this.onTranslationSelect,
   });
@@ -31,15 +35,13 @@ class WordGroupEditCreateBody extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 20),
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: TextField(
-              controller: name,
-              decoration: const InputDecoration(
-                hintText: 'Enter name',
-                labelText: 'Name',
-              ),
-            ),
+          TextEditCard(
+            viewmodel: name,
+            hint: 'name',
+            onClear: () => name.clear(),
+            onChange: onNameChange,
+            onCopy: () => name.copyToClipboard(context),
+            onPaste: () => name.pasteFromClipboard(context),
           ),
           const SizedBox(height: 10),
           LanguageSelectorTile(

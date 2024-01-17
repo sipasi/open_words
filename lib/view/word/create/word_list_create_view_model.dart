@@ -40,11 +40,18 @@ class WordListCreateViewModel {
   }
 
   void tryAdd(UpdateState updateState) {
+    origin.clearError();
+    translation.clearError();
+
     bool valid = validate(updateState);
 
     if (valid == false) {
       HapticFeedback.vibrate();
 
+      updateState(() {
+        TextEditViewModel.setErrorIfEmpty(origin, updateState);
+        TextEditViewModel.setErrorIfEmpty(translation, updateState);
+      });
       return;
     }
 
