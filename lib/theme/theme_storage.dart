@@ -14,18 +14,26 @@ abstract class ThemeStorage {
   }
 
   static ThemeMode modeValue() => _toEnum(_preferences.getInt(_keyTheme));
-  static int colorValue() => _preferences.getInt(_keyColor) ?? 0;
+  static ColorSeed colorValue() {
+    const colors = ColorSeed.values;
+
+    final index = _preferences.getInt(_keyColor);
+
+    if (index == null) {
+      return colors[0];
+    }
+
+    return colors[index % colors.length];
+  }
 
   static AppTheme get() {
     if (_preferences.containsKey(_keyTheme)) {
       ThemeMode theme = modeValue();
-      int color = colorValue();
-
-      int index = color % ColorSeed.values.length;
+      ColorSeed color = colorValue();
 
       return AppTheme(
         mode: theme,
-        seed: ColorSeed.values[index],
+        seed: color,
       );
     }
 

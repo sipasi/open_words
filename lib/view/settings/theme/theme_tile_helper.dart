@@ -7,15 +7,15 @@ import 'package:open_words/theme/theme_switcher.dart';
 abstract class ThemeTileHelper {
   static void setTheme({
     required BuildContext context,
-    int? color,
+    ColorSeed? seed,
     ThemeMode? mode,
   }) {
-    color = color ?? ThemeStorage.colorValue();
+    seed = seed ?? ThemeStorage.colorValue();
     mode = mode ?? ThemeStorage.modeValue();
 
     AppTheme theme = AppTheme(
       mode: mode,
-      seed: ColorSeed.values[color],
+      seed: seed,
     );
 
     ThemeSwitcher.of(context).switchTheme(theme);

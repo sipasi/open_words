@@ -23,13 +23,14 @@ class _PdfOptionsState extends State<PdfOptions> {
   void initState() {
     super.initState();
 
-    widget._viewmodel.setColor(ThemeStorage.colorValue());
+    widget._viewmodel.setColor(ThemeStorage.colorValue().index);
     widget._viewmodel.setMode(ThemeStorage.modeValue());
   }
 
   @override
   Widget build(BuildContext context) {
     final viewmodel = widget._viewmodel;
+    final scheme = Theme.of(context).colorScheme;
 
     return _cardWithPadding(
       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -47,7 +48,7 @@ class _PdfOptionsState extends State<PdfOptions> {
         ),
         if (viewmodel.notPrint)
           _cardWithPadding(
-            color: Theme.of(context).colorScheme.secondaryContainer,
+            color: scheme.secondaryContainer,
             padding: const EdgeInsets.symmetric(vertical: 10),
             children: [
               ListTile(
@@ -63,9 +64,15 @@ class _PdfOptionsState extends State<PdfOptions> {
               ),
               ListTile(
                 title: const Text('Color scheme'),
-                trailing: Icon(
-                  Icons.color_lens,
-                  color: ColorSeed.values[viewmodel.color].color,
+                trailing: Card(
+                  elevation: 6,
+                  child: Padding(
+                    padding: const EdgeInsets.all(2),
+                    child: Icon(
+                      Icons.color_lens,
+                      color: ColorSeed.values[viewmodel.color].color,
+                    ),
+                  ),
                 ),
                 onTap: () async {
                   ColorListDialog.show(
