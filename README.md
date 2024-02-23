@@ -1,5 +1,7 @@
 # Open Words
 
+[![Open Words Build](https://github.com/sipasi/open_words/actions/workflows/build.yml/badge.svg)](https://github.com/sipasi/open_words/actions/workflows/build.yml)
+
 Welcome to Open Words! A **Simple** implementation of a dictionary that allows you to write, group and repeat words in games.
 
 ## About
