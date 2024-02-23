@@ -21,9 +21,11 @@ abstract class ThemeStorage {
       ThemeMode theme = modeValue();
       int color = colorValue();
 
+      int index = color % ColorSeed.values.length;
+
       return AppTheme(
         mode: theme,
-        seed: ColorSeed.values[color],
+        seed: ColorSeed.values[index],
       );
     }
 
