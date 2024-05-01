@@ -16,7 +16,6 @@ import 'package:open_words/view/settings/export/export_page.dart';
 import 'package:open_words/view/settings/export/export_view_model.dart';
 import 'package:open_words/view/settings/import/import_page.dart';
 import 'package:open_words/view/settings/import/import_view_model.dart';
-import 'package:open_words/view/settings/settings_view_model.dart';
 import 'package:open_words/view/word_group/list/word_group_list_view_model.dart';
 import 'package:open_words/service/language/language_info_service.dart';
 import 'package:open_words/service/metadata/dev_dictionary_api.dart';
