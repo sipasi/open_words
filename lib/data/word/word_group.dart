@@ -53,4 +53,16 @@ class WordGroup {
       words: words ?? this.words,
     );
   }
+
+  WordGroup clone() {
+    return WordGroup(
+      id: id,
+      created: created,
+      modified: modified,
+      name: name,
+      origin: origin,
+      translation: translation,
+      words: words.toList(),
+    );
+  }
 }
