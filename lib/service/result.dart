@@ -1,79 +1,65 @@
-typedef SuccessResult<T> = void Function(T value);
-typedef FailResult = void Function(String message);
-
 class Result {
-  final Object? _result;
-  final String? _message;
+  const Result._();
 
-  final ResultAction _action;
+  static Result empty() => const _EmptyResult();
+  static Result contain(dynamic value) => _ContainedResult(value);
+  static Result fail(String message) => _FailedResult(message);
 
-  const Result(Object? result, ResultAction action, [String? message])
-      : _result = result,
-        _action = action,
-        _message = message;
-
-  const Result.empty() : this(null, ResultAction.success, null);
-  const Result.success([Object? result]) : this(result, ResultAction.success, null);
-
-  const Result.fail(String message) : this(null, ResultAction.created, message);
-
-  void empty(void Function() perform) {
-    if (_result != null) {
-      return;
+  void emptied(void Function() perform) {
+    if (this is _EmptyResult) {
+      perform();
     }
-
-    perform();
   }
 
-  void contain<T>(SuccessResult<T> perform) {
-    if (_result == null) {
-      return;
+  void failed(void Function(String message) perform) {
+    if (this case _FailedResult result) {
+      perform(result.message);
     }
-
-    final result = _result as T?;
-
-    if (result == null) {
-      return;
-    }
-
-    perform(result);
   }
 
-  void failed(FailResult perform) => _error(ResultAction.failed, perform);
+  void contained<T>(void Function(T item) perform) => _performWhen<_ContainedResult, T>(this, perform);
 
-  void _success<T>(ResultAction action, SuccessResult<T> event) {
-    if (_action != action) {
-      return;
+  static void _performWhen<TResult extends _ContainedResult, T2>(Result result, void Function(T2 item) perform) {
+    if (result case TResult result when result.value is T2) {
+      perform(result.value);
     }
-
-    contain(event);
-  }
-
-  void _error(ResultAction action, FailResult event) {
-    if (_action != action) {
-      return;
-    }
-
-    event(_message!);
   }
 }
 
-enum ResultAction {
-  success,
-  created,
-  deleted,
-  modified,
-  failed,
+extension CrudResult on Result {
+  static Result create(dynamic result) => _CreatedResult(result);
+  static Result delete(dynamic result) => _DeletedResult(result);
+  static Result modify(dynamic result) => _ModifiedResult(result);
+
+  void created<T>(void Function(T item) perform) => Result._performWhen<_CreatedResult, T>(this, perform);
+  void deleted<T>(void Function(T item) perform) => Result._performWhen<_DeletedResult, T>(this, perform);
+  void modified<T>(void Function(T item) perform) => Result._performWhen<_ModifiedResult, T>(this, perform);
 }
 
-class CrudResult extends Result {
-  const CrudResult.empty() : super.empty();
+class _EmptyResult extends Result {
+  const _EmptyResult() : super._();
+}
 
-  const CrudResult.create(Object result) : super(result, ResultAction.created);
-  const CrudResult.delete(Object result) : super(result, ResultAction.deleted);
-  const CrudResult.modify(Object result) : super(result, ResultAction.modified);
+class _FailedResult extends Result {
+  final String message;
 
-  void created<T>(SuccessResult<T> perform) => _success(ResultAction.created, perform);
-  void deleted<T>(SuccessResult<T> perform) => _success(ResultAction.deleted, perform);
-  void modified<T>(SuccessResult<T> perform) => _success(ResultAction.modified, perform);
+  const _FailedResult(this.message) : super._();
+}
+
+class _ContainedResult extends Result {
+  final dynamic value;
+
+  const _ContainedResult(this.value) : super._();
+}
+
+class _CreatedResult extends _ContainedResult {
+  _CreatedResult(super.value);
+}
+
+class _DeletedResult extends _ContainedResult {
+  _DeletedResult(super.value);
+}
+
+class _ModifiedResult extends _ContainedResult {
+  _ModifiedResult(super.value);
 }
