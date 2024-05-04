@@ -19,7 +19,6 @@ class Word {
   Word copyWith({
     String? origin,
     String? translation,
-    int? index,
   }) {
     return Word(
       origin: origin ?? this.origin,
