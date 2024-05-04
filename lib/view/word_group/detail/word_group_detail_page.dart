@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/data/word/word_group.dart';
-import 'package:open_words/service/navigation/material_navigator.dart';
-import 'package:open_words/service/result.dart';
-import 'package:open_words/storage/word_group_storage.dart';
-import 'package:open_words/view/game/game_list_page.dart';
-import 'package:open_words/view/shared/dialog/delete_dialog.dart';
 import 'package:open_words/view/shared/list/adaptive_grid_view.dart';
 import 'package:open_words/view/shared/tile/text_tile.dart';
-import 'package:open_words/view/word/create/word_list_create_page.dart';
-import 'package:open_words/view/word/detail/word_detail_page.dart';
-import 'package:open_words/view/word_group/edit/word_group_edit_page.dart';
+import 'package:open_words/view/word_group/detail/word_group_detail_view_model.dart';
 
 class WordGroupDetailPage extends StatefulWidget {
   final WordGroup group;
@@ -25,15 +17,13 @@ class WordGroupDetailPage extends StatefulWidget {
 }
 
 class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
-  late WordGroup modified;
+  late final WordGroupDetailViewModel viewmodel;
 
   @override
   void initState() {
     super.initState();
 
-    final group = widget.group;
-
-    modified = group.copyWith(words: group.words.toList());
+    viewmodel = WordGroupDetailViewModel(widget.group.clone());
   }
 
   @override
@@ -41,139 +31,53 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          modified.name,
+          viewmodel.name,
           style: Theme.of(context).textTheme.titleLarge,
         ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => MaterialNavigator.popWith(
-            context,
-            CrudResult.modify(modified),
-          ),
+          onPressed: () => viewmodel.navigateBack(context),
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.delete_forever_outlined),
-            onPressed: () async {
-              bool result = await DeleteDialog.show(context: context);
-
-              if (result == false) {
-                return;
-              }
-
-              await GetIt.I.get<WordGroupStorage>().delete(modified.id);
-
-              if (context.mounted) MaterialNavigator.popWith(context, CrudResult.delete(modified));
-            },
+            onPressed: () => viewmodel.tryDelete(context),
           ),
           IconButton(
             icon: const Icon(Icons.edit_note_outlined),
-            onPressed: () async {
-              final result = await MaterialNavigator.push<WordGroup>(
-                context,
-                (builder) => WordGroupEditPage(group: modified),
-              );
-
-              result.modified<WordGroup>((value) async {
-                setState(() {
-                  modified = value;
-                });
-
-                await GetIt.I.get<WordGroupStorage>().set(value.id, value);
-              });
-            },
+            onPressed: () => viewmodel.tryEdit(context, setState),
           ),
           IconButton(
             icon: const Icon(Icons.games_outlined),
-            onPressed: () => MaterialNavigator.push(
-              context,
-              (buider) => GameListPage(group: modified),
-            ),
+            onPressed: () => viewmodel.navigateToGames(context),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () async {
-          final result = await MaterialNavigator.push(
-            context,
-            (context) => WordListCreatePage(
-              name: modified.name,
-              origin: modified.origin,
-              translation: modified.translation,
-              startIndex: modified.words.length,
-            ),
-          );
-
-          result.created<List<Word>>((list) async {
-            if (list.isEmpty) {
-              return;
-            }
-
-            setState(() {
-              modified.words.addAll(list);
-            });
-
-            await GetIt.I.get<WordGroupStorage>().set(modified.id, modified);
-          });
-        },
+        onPressed: () => viewmodel.tryAddWords(context, setState),
       ),
-      body: _justGrid(context, modified.words),
+      body: _grid(context),
     );
   }
 
-  Widget _justGrid(BuildContext context, List<Word> words) {
+  Widget _grid(BuildContext context) {
     return SafeArea(
       child: AdaptiveGridView(
         padding: const EdgeInsets.only(bottom: 120),
         children: List.generate(
-          words.length,
-          (index) => TextTile(
-            title: words[index].origin,
-            subtitle: words[index].translation,
-            onTap: () => onTap(words, index),
-          ),
+          viewmodel.length,
+          (index) {
+            Word word = viewmodel.wordBy(index);
+
+            return TextTile(
+              title: word.origin,
+              subtitle: word.translation,
+              onTap: () => viewmodel.onTap(context, setState, index),
+            );
+          },
         ),
       ),
     );
-  }
-
-  Future onTap(List<Word> words, int index) async {
-    final result = await MaterialNavigator.push(
-      context,
-      (builder) => WordDetailPage(
-        groupId: widget.group.id,
-        wordId: index,
-        word: words[index],
-        originLanguage: modified.origin,
-        translationLanguage: modified.translation,
-      ),
-    );
-
-    result.modified<Word>((word) async {
-      setState(() {
-        words.removeAt(index);
-        words[index] = words[index].copyWith(index: index);
-      });
-    });
-
-    result.deleted<Word>((_) async {
-      setState(() {
-        words.removeAt(index);
-
-        modified = modified.copyWith(
-          words: words
-              .asMap()
-              .entries
-              .map(
-                (entry) => Word(
-                  origin: entry.value.origin,
-                  translation: entry.value.translation,
-                ),
-              )
-              .toList(),
-        );
-      });
-    });
   }
 }
