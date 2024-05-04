@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:open_words/data/language_info.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/view/mvvm/view_model.dart';
+import 'package:open_words/view/shared/navigation/on_pop_return.dart';
 import 'package:open_words/view/word/detail/metadata/word_metadata_view.dart';
 
 import 'word_detail_view_model.dart';
@@ -45,40 +46,52 @@ class _WordDetailPageState extends ViewState<WordDetailViewModel> {
 
   @override
   Widget loading(BuildContext context) {
-    return _scaffold(
-      body: Column(
-        children: [
-          _header(),
-          const LinearProgressIndicator(),
-        ],
-      ),
+    return _Body(
+      viewmodel: viewmodel,
       fab: FloatingActionButton(
         onPressed: () {},
         child: const CircularProgressIndicator(),
+      ),
+      child: Column(
+        children: [
+          _Header(viewmodel: viewmodel),
+          const LinearProgressIndicator(),
+        ],
       ),
     );
   }
 
   @override
   Widget success(BuildContext context) {
-    return _scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _header(),
-          const Divider(),
-          WordMetadataView(metadata: viewmodel.metadata, language: viewmodel.origin),
-          const SizedBox(height: 100),
-        ],
-      ),
+    return _Body(
+      viewmodel: viewmodel,
       fab: FloatingActionButton(
         child: const Icon(Icons.edit_outlined),
         onPressed: () => viewmodel.edit(context),
       ),
+      child: OnPopReturn<Word>(
+        value: () => viewmodel.word,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _Header(viewmodel: viewmodel),
+            const Divider(),
+            WordMetadataView(metadata: viewmodel.metadata, language: viewmodel.origin),
+            const SizedBox(height: 100),
+          ],
+        ),
+      ),
     );
   }
+}
 
-  Widget _header() {
+class _Header extends StatelessWidget {
+  final WordDetailViewModel viewmodel;
+
+  const _Header({required this.viewmodel});
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
@@ -94,27 +107,40 @@ class _WordDetailPageState extends ViewState<WordDetailViewModel> {
       color: colorScheme.secondary,
     );
 
+    final word = viewmodel.word;
+    final textToSpeech = viewmodel.textToSpeech;
+    final clipboard = viewmodel.clipboard;
+    final originLanguage = viewmodel.origin;
+    final translationLanguage = viewmodel.translation;
+
     return Column(
       children: [
         ListTile(
-          title: Text(viewmodel.word.origin, style: origin),
+          title: Text(word.origin, style: origin),
           trailing: const Icon(Icons.volume_up_sharp),
-          onTap: () => viewmodel.textToSpeech.stopAndSpeek(viewmodel.word.origin, viewmodel.origin),
-          onLongPress: () =>
-              viewmodel.clipboard.writeText(context, viewmodel.word.origin, vibrate: true, snackBar: true),
+          onTap: () => textToSpeech.stopAndSpeek(word.origin, originLanguage),
+          onLongPress: () => clipboard.writeText(context, word.origin, vibrate: true, snackBar: true),
         ),
         ListTile(
-          title: Text(viewmodel.word.translation, style: translation),
+          title: Text(word.translation, style: translation),
           trailing: const Icon(Icons.volume_up_sharp),
-          onTap: () => viewmodel.textToSpeech.stopAndSpeek(viewmodel.word.translation, viewmodel.translation),
-          onLongPress: () =>
-              viewmodel.clipboard.writeText(context, viewmodel.word.translation, vibrate: true, snackBar: true),
+          onTap: () => textToSpeech.stopAndSpeek(word.translation, translationLanguage),
+          onLongPress: () => clipboard.writeText(context, word.translation, vibrate: true, snackBar: true),
         ),
       ],
     );
   }
+}
 
-  Widget _scaffold({required Widget body, Widget? fab}) {
+class _Body extends StatelessWidget {
+  final WordDetailViewModel viewmodel;
+  final Widget child;
+  final Widget? fab;
+
+  const _Body({required this.viewmodel, required this.child, this.fab});
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -125,7 +151,7 @@ class _WordDetailPageState extends ViewState<WordDetailViewModel> {
         ],
       ),
       body: SingleChildScrollView(
-        child: body,
+        child: child,
       ),
       floatingActionButton: fab,
     );
