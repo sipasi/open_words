@@ -25,7 +25,7 @@ class MeaningEdit extends StatefulWidget {
     );
   }
 
-  static Future<CrudResult> pageEdit(BuildContext context, Meaning meaning) {
+  static Future<Result> pageEdit(BuildContext context, Meaning meaning) {
     return MaterialNavigator.push(
       context,
       (context) => MeaningEdit(meaning: meaning),

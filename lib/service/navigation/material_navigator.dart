@@ -6,7 +6,7 @@ import 'package:open_words/service/result.dart';
 abstract class MaterialNavigator {
   static final logger = GetIt.I.get<Logger>();
 
-  static Future<CrudResult> push<T extends Object?>(
+  static Future<Result> push<T extends Object?>(
     BuildContext context,
     WidgetBuilder builder,
   ) async {
@@ -16,21 +16,21 @@ abstract class MaterialNavigator {
     );
 
     if (isNot<T>(result)) {
-      return const CrudResult.empty();
+      return Result.empty();
     }
 
-    return result as CrudResult;
+    return result as Result;
   }
 
   static void pop<T>(BuildContext context) {
-    Navigator.pop(context, const Result.empty());
+    Navigator.pop(context, Result.empty());
   }
 
   static void popWith<T>(BuildContext context, Result result) {
     Navigator.pop(context, result);
   }
 
-  static Future<CrudResult> bottomSheet<T>({
+  static Future<Result> bottomSheet<T>({
     required BuildContext context,
     required WidgetBuilder builder,
     bool isScrollControlled = false,
@@ -45,18 +45,18 @@ abstract class MaterialNavigator {
     );
 
     if (isNot<T>(result)) {
-      return const CrudResult.empty();
+      return Result.empty();
     }
 
-    return result as CrudResult;
+    return result as Result;
   }
 
   static bool isNot<T>(dynamic object) {
-    if (object is CrudResult) {
+    if (object is Result) {
       return false;
     }
 
-    String message = 'Page return null insead of PageResult<${T.runtimeType}> type';
+    String message = 'Page return $object insead of PageResult<${T.runtimeType}> type';
 
     logger.e(message);
 

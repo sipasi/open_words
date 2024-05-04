@@ -17,14 +17,14 @@ class PhoneticEdit extends StatefulWidget {
   @override
   State<PhoneticEdit> createState() => _PhoneticEditState();
 
-  static Future<CrudResult> pageCreate(BuildContext context) {
+  static Future<Result> pageCreate(BuildContext context) {
     return MaterialNavigator.push(
       context,
       (context) => const PhoneticEdit(),
     );
   }
 
-  static Future<CrudResult> pageEdit(BuildContext context, Phonetic entity) {
+  static Future<Result> pageEdit(BuildContext context, Phonetic entity) {
     return MaterialNavigator.push(
       context,
       (context) => PhoneticEdit.from(entity: entity),

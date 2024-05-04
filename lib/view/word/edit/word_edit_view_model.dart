@@ -51,7 +51,7 @@ class WordEditViewModel {
   ) async {
     final result = await PhoneticEdit.pageCreate(context);
 
-    result.contain<Phonetic>((value) {
+    result.contained<Phonetic>((value) {
       updateState(() => _phonetics.add(value));
     });
   }
@@ -59,7 +59,7 @@ class WordEditViewModel {
   Future createMeaning(BuildContext context) async {
     final result = await MeaningEdit.pageCreate(context);
 
-    result.contain<Meaning>((value) {
+    result.contained<Meaning>((value) {
       updateState(() => _meanings.add(value));
     });
   }
