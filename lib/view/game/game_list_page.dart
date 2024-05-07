@@ -4,6 +4,7 @@ import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/view/game/word_compare/origin_to_translation_page.dart';
 import 'package:open_words/view/game/word_compare/translation_to_origin_page.dart';
 import 'package:open_words/view/shared/list/adaptive_grid_view.dart';
+import 'package:open_words/view/shared/tile/text_tile.dart';
 
 class GameListPage extends StatelessWidget {
   final WordGroup group;
@@ -16,6 +17,7 @@ class GameListPage extends StatelessWidget {
       appBar: AppBar(title: const Text('Games')),
       body: SafeArea(
         child: AdaptiveGridView(
+          maxCrossAxisExtent: 400,
           children: [
             _GameInfoTile(
               name: 'Compare Origins',
@@ -55,28 +57,23 @@ class _GameInfoTile extends StatelessWidget {
   bool _isNotEnough() => count < needWords;
 
   String _notEnoughMessage() {
-    return 'To play $name game needs at least $needWords words\nYou have $count words';
+    return 'To play needs at least $needWords words\nYou have $count words';
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_isNotEnough()) {
-      return ListTile(
-        title: Text(name),
-        subtitle: Text(
-          _notEnoughMessage(),
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.error,
-          ),
-        ),
-      );
-    }
+    final scheem = Theme.of(context).colorScheme;
 
-    return ListTile(
-      title: Text(name),
-      onTap: () => MaterialNavigator.push(
-        context,
-        route,
+    bool notEnough = _isNotEnough();
+
+    return Card(
+      child: TextTile(
+        padding: const EdgeInsets.all(10.0),
+        title: name,
+        subtitle: notEnough ? _notEnoughMessage() : null,
+        subtitleStyle: TextStyle(color: scheem.error),
+        subtitleLines: 2,
+        onTap: notEnough ? null : () => MaterialNavigator.push(context, route),
       ),
     );
   }

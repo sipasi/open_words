@@ -3,22 +3,27 @@ import 'package:open_words/view/shared/tile/tile_style.dart';
 
 class TextTile extends StatelessWidget {
   final String title;
-  final String subtitle;
+  final String? subtitle;
 
   final int titleLines;
   final int subtitleLines;
 
-  final void Function() onTap;
+  final TextStyle? titleStyle;
+  final TextStyle? subtitleStyle;
+
+  final void Function()? onTap;
 
   final EdgeInsetsGeometry padding;
 
   const TextTile({
     super.key,
     required this.title,
-    required this.subtitle,
+    this.subtitle,
     this.titleLines = 2,
     this.subtitleLines = 1,
-    required this.onTap,
+    this.titleStyle,
+    this.subtitleStyle,
+    this.onTap,
     this.padding = const EdgeInsets.all(14.0),
   });
 
@@ -36,13 +41,13 @@ class TextTile extends StatelessWidget {
               title,
               maxLines: titleLines,
               overflow: TextOverflow.ellipsis,
-              style: TileStyle.title(context),
-            ), 
+              style: titleStyle ?? TileStyle.title(context),
+            ),
             Text(
-              subtitle,
+              subtitle ?? '',
               maxLines: subtitleLines,
               overflow: TextOverflow.ellipsis,
-              style: TileStyle.subtitle(context),
+              style: subtitleStyle ?? TileStyle.subtitle(context),
             ),
           ],
         ),
