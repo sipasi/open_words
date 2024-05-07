@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_words/data/word/word.dart';
@@ -11,6 +13,8 @@ import 'package:open_words/view/shared/dialog/delete_dialog.dart';
 import 'package:open_words/view/word/create/word_list_create_page.dart';
 import 'package:open_words/view/word/detail/word_detail_page.dart';
 import 'package:open_words/view/word_group/edit/word_group_edit_page.dart';
+
+import 'download/download_metadata_page.dart';
 
 class WordGroupDetailViewModel {
   WordGroup _group;
@@ -108,5 +112,12 @@ class WordGroupDetailViewModel {
         _group.words.removeAt(index);
       });
     });
+  }
+
+  Future updateAllMetadatas(BuildContext context) async {
+    MaterialNavigator.push(
+      context,
+      (context) => DownloadMetadataPage(group: _group),
+    );
   }
 }

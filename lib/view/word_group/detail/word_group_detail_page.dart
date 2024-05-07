@@ -40,16 +40,12 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
         ),
         actions: [
           IconButton(
+            icon: const Icon(Icons.update),
+            onPressed: () => viewmodel.updateAllMetadatas(context),
+          ),
+          IconButton(
             icon: const Icon(Icons.delete_forever_outlined),
             onPressed: () => viewmodel.tryDelete(context),
-          ),
-          IconButton(
-            icon: const Icon(Icons.edit_note_outlined),
-            onPressed: () => viewmodel.tryEdit(context, setState),
-          ),
-          IconButton(
-            icon: const Icon(Icons.games_outlined),
-            onPressed: () => viewmodel.navigateToGames(context),
           ),
         ],
       ),
@@ -63,9 +59,10 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
 
   Widget _grid(BuildContext context) {
     return SafeArea(
-      child: AdaptiveGridView(
-        padding: const EdgeInsets.only(bottom: 120),
-        children: List.generate(
+      child: AdaptiveGridView(padding: const EdgeInsets.only(bottom: 120), children: [
+        _filledButton(Icons.edit, 'Edit', () => viewmodel.tryEdit(context, setState)),
+        _filledButton(Icons.gamepad, 'Games', () => viewmodel.navigateToGames(context)),
+        ...List.generate(
           viewmodel.length,
           (index) {
             Word word = viewmodel.wordBy(index);
@@ -77,6 +74,17 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
             );
           },
         ),
+      ]),
+    );
+  }
+
+  Widget _filledButton(IconData icon, String text, void Function() onTap) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: FilledButton.tonalIcon(
+        onPressed: onTap,
+        icon: Icon(icon),
+        label: Text(text),
       ),
     );
   }
