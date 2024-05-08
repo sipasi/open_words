@@ -6,7 +6,7 @@ importScripts(
 
 // precacheAndRoute function which takes the path of the files
 const { precacheAndRoute } = workbox.precaching;
-// self.__WB_MANIFEST will be replased with files precached on the initial load of the app.
+// WB_MANIFEST will be replased with files precached on the initial load of the app.
 CACHE_FILES = self.__WB_MANIFEST ?? [];
 precacheAndRoute(CACHE_FILES);
 
