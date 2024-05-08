@@ -1,6 +1,6 @@
 {
-  "name": "open_words",
-  "short_name": "open_words",
+  "name": "Open Words",
+  "short_name": "Words",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#FFF",
