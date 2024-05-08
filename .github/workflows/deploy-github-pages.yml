@@ -1,0 +1,45 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deploy Github Pages
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+
+      - run: flutter --version
+
+      - uses: subosito/flutter-action@v2
+
+      - name: Install packages
+        run: flutter pub get
+
+      - name: Build
+        run: flutter build web --base-href "/open_words/" --pwa-strategy none --release
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Artifacts
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./build/web"
+
+      - name: Deploy
+        uses: actions/deploy-pages@v4
