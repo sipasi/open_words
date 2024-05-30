@@ -1,32 +1,32 @@
 import 'package:open_words/storage/entity_storage_async.dart';
 import 'package:sembast/sembast.dart';
 
-abstract class SembastBaseStorage<T> extends EntityStorageAsync<String, T> {
-  final Database _database;
-  final StoreRef<String, Map<String, Object?>> _store;
+abstract class SembastBaseStorage<T> extends EntityStorageAsync<int, T> {
+  static const idName = 'id';
 
-  SembastBaseStorage({required Database database, required String name})
-      : _database = database,
-        _store = stringMapStoreFactory.store(name);
+  final Database database;
+  final StoreRef<int, Map<String, Object?>> store;
+
+  SembastBaseStorage({required this.database, required String name}) : store = intMapStoreFactory.store(name);
 
   @override
   Future<void> clear() {
-    return _store.delete(_database);
+    return store.delete(database);
   }
 
   @override
   Future<int> count() {
-    return _store.count(_database);
+    return store.count(database);
   }
 
   @override
-  Future<void> delete(String id) {
-    return _store.record(id).delete(_database);
+  Future<void> delete(int id) {
+    return store.record(id).delete(database);
   }
 
   @override
   Future<List<T>> getAll() async {
-    final all = await _store.find(_database, finder: getAllFinder());
+    final all = await store.find(database);
 
     if (all.isEmpty) {
       return List.empty();
@@ -36,21 +36,43 @@ abstract class SembastBaseStorage<T> extends EntityStorageAsync<String, T> {
   }
 
   @override
-  Future<T?> getBy(String id) async {
-    final map = await _store.record(id).get(_database);
+  Future<T?> getBy(int id) async {
+    final map = await store.record(id).get(database);
 
     return map == null ? null : fromJson(map);
   }
 
   @override
-  Future<void> set(String id, T entity) {
+  Future<void> set(T entity) async {
     final map = toJson(entity);
 
-    return _store.record(id).put(_database, map);
+    int? id = getId(entity);
+
+    if (id == null) {
+      int id = await store.add(database, map);
+
+      map[idName] = id;
+
+      return;
+    }
+
+    bool exists = await contains(id);
+
+    exists ? await store.record(id).put(database, map) : await store.add(database, map);
   }
+
+  @override
+  Future<bool> contains(int id) {
+    return store.record(id).exists(database);
+  }
+
+  @override
+  Future dispose() {
+    return database.close();
+  }
+
+  int? getId(T entity);
 
   T fromJson(Map<String, dynamic> json);
   Map<String, dynamic> toJson(T entity);
-
-  Finder? getAllFinder() => null;
 }
