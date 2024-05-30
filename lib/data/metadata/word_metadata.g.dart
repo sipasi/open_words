@@ -7,7 +7,6 @@ part of 'word_metadata.dart';
 // **************************************************************************
 
 WordMetadata _$WordMetadataFromJson(Map<String, dynamic> json) => WordMetadata(
-      id: json['id'] as String?,
       word: json['word'] as String,
       phonetics: (json['phonetics'] as List<dynamic>)
           .map((e) => Phonetic.fromJson(e as Map<String, dynamic>))
@@ -15,6 +14,7 @@ WordMetadata _$WordMetadataFromJson(Map<String, dynamic> json) => WordMetadata(
       meanings: (json['meanings'] as List<dynamic>)
           .map((e) => Meaning.fromJson(e as Map<String, dynamic>))
           .toList(),
+      id: (json['id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$WordMetadataToJson(WordMetadata instance) =>

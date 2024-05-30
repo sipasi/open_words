@@ -7,7 +7,6 @@ part of 'word_group.dart';
 // **************************************************************************
 
 WordGroup _$WordGroupFromJson(Map<String, dynamic> json) => WordGroup(
-      id: json['id'] as String,
       created: DateTime.parse(json['created'] as String),
       modified: DateTime.parse(json['modified'] as String),
       name: json['name'] as String,
@@ -17,6 +16,7 @@ WordGroup _$WordGroupFromJson(Map<String, dynamic> json) => WordGroup(
       words: (json['words'] as List<dynamic>)
           .map((e) => Word.fromJson(e as Map<String, dynamic>))
           .toList(),
+      id: (json['id'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$WordGroupToJson(WordGroup instance) => <String, dynamic>{

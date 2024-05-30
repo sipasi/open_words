@@ -7,7 +7,7 @@ part 'word_group.g.dart';
 
 @JsonSerializable(explicitToJson: true)
 class WordGroup {
-  final String id;
+  final int? id;
 
   final DateTime created;
   final DateTime modified;
@@ -20,13 +20,13 @@ class WordGroup {
   final List<Word> words;
 
   const WordGroup({
-    required this.id,
     required this.created,
     required this.modified,
     required this.name,
     required this.origin,
     required this.translation,
     required this.words,
+    this.id,
   });
 
   factory WordGroup.fromJson(Map<String, dynamic> json) => _$WordGroupFromJson(json);
@@ -34,7 +34,7 @@ class WordGroup {
   Map<String, dynamic> toJson() => _$WordGroupToJson(this);
 
   WordGroup copyWith({
-    String? id,
+    int? id,
     DateTime? created,
     DateTime? modified,
     String? name,
