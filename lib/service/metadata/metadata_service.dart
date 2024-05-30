@@ -13,7 +13,7 @@ class MetadataService {
         _webService = webFinder;
 
   Future<WordMetadata?> localOrWeb(String word) async {
-    var metadata = await _storage.getBy(word);
+    var metadata = await _storage.firstByWord(word);
 
     if (metadata != null) {
       return metadata;
@@ -22,7 +22,7 @@ class MetadataService {
     metadata = await _webService.find(word);
 
     if (metadata != null) {
-      await _storage.set(word, metadata);
+      await _storage.set(metadata);
     }
 
     return metadata;
