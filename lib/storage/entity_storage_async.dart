@@ -1,12 +1,18 @@
+typedef Predicate<T> = bool Function(T entity);
+
 abstract class EntityStorageAsync<TKey, TEntity> {
   Future<int> count();
+
+  Future<bool> contains(TKey id);
 
   Future<TEntity?> getBy(TKey id);
 
   Future<List<TEntity>> getAll();
 
-  Future<void> set(TKey id, TEntity entity);
-  Future<void> delete(TKey id);
+  Future set(TEntity entity);
 
-  Future<void> clear();
+  Future delete(TKey id);
+
+  Future clear();
+  Future dispose();
 }
