@@ -5,7 +5,6 @@ import 'package:open_words/data/metadata/word_metadata.dart';
 abstract class WordMetadataGenarator {
   static WordMetadata get() {
     return WordMetadata(
-      id: 'id',
       word: 'word.origin',
       phonetics: List.empty(),
       meanings: [
