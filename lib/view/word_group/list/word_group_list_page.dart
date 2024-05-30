@@ -14,18 +14,24 @@ class WordGroupListPage extends StatefulView<WordGroupListViewModel> {
 class _WordGroupListPageState extends ViewState<WordGroupListViewModel> {
   @override
   Widget success(BuildContext context) {
-    final data = viewmodel.groups;
+    final groups = viewmodel.groups;
 
     return Scaffold(
       body: AdaptiveGridView(
         padding: const EdgeInsets.only(bottom: 120),
         children: List.generate(
-          data.length,
-          (index) => TextTile(
-            title: data[index].name,
-            subtitle: data[index].words.length.toString(),
-            onTap: () => viewmodel.toDetail(context, index, setState),
-          ),
+          groups.length,
+          (element) {
+            int index = groups.length - element - 1;
+
+            final group = groups[index];
+
+            return TextTile(
+              title: group.name,
+              subtitle: group.words.length.toString(),
+              onTap: () => viewmodel.toDetail(context, index, setState),
+            );
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton(

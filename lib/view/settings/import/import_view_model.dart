@@ -9,7 +9,6 @@ import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/storage/word_group_storage.dart';
 import 'package:open_words/view/mvvm/view_model.dart';
 import 'package:open_words/view/shared/scaffold/selectable_words_view_model.dart';
-import 'package:uuid/v4.dart';
 
 class ImportViewModel extends ViewModel {
   late SelectableWordsViewModel selectable;
@@ -44,11 +43,9 @@ class ImportViewModel extends ViewModel {
 
   Future onImport(BuildContext context) async {
     for (var i = 0; i < selectable.groups.length; i++) {
-      final group = selectable.groups[i].copyWith(
-        id: const UuidV4().generate(),
-      );
+      final group = selectable.groups[i];
 
-      await storage.set(group.id, group);
+      await storage.set(group);
     }
 
     if (context.mounted) MaterialNavigator.pop(context);

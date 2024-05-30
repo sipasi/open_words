@@ -8,7 +8,7 @@ import 'package:open_words/view/word/detail/metadata/word_metadata_view.dart';
 import 'word_detail_view_model.dart';
 
 class WordDetailPage extends StatefulView<WordDetailViewModel> {
-  final String groupId;
+  final int groupId;
   final int wordId;
 
   final Word word;

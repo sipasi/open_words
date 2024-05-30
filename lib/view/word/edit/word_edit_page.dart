@@ -7,7 +7,7 @@ import 'package:open_words/view/shared/text/text_edit_view_model.dart';
 import 'package:open_words/view/word/edit/word_edit_view_model.dart';
 
 class WordEditPage extends StatefulWidget {
-  final String groupId;
+  final int groupId;
   final int wordId;
 
   final Word word;
@@ -36,7 +36,7 @@ class _WordEditPageState extends State<WordEditPage> {
     viewmodel = WordEditViewModel(
       updateState: setState,
       groupId: widget.groupId,
-      wordId: widget.wordId, 
+      wordId: widget.wordId,
       origin: widget.word.origin,
       translation: TextEditViewModel.text(text: widget.word.translation),
       phonetics: metadata?.phonetics.toList() ?? [],

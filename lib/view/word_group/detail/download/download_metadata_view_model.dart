@@ -92,7 +92,7 @@ class DownloadMetadataViewModel {
   Future _storeDownloads(List<WordMetadata> downloads) {
     final storage = GetIt.I.get<MetadataStorage>();
 
-    return Future.wait(downloads.map((item) => storage.set(item.word, item)));
+    return Future.wait(downloads.map((item) => storage.set(item)));
   }
 
   Future _checkMetadata(UpdateState updateState) async {
@@ -103,7 +103,7 @@ class DownloadMetadataViewModel {
     for (var i = 0; i < _words.length; i++) {
       final word = _words[i];
 
-      final metadata = await storage.getBy(word.origin);
+      final metadata = await storage.firstByWord(word.origin);
 
       if (metadata != null) {
         continue;

@@ -45,7 +45,7 @@ class WordGroupDetailViewModel {
       return;
     }
 
-    await GetIt.I.get<WordGroupStorage>().delete(_group.id);
+    await GetIt.I.get<WordGroupStorage>().delete(_group.id!);
 
     if (context.mounted) MaterialNavigator.popWith(context, CrudResult.delete(_group));
   }
@@ -56,12 +56,10 @@ class WordGroupDetailViewModel {
       (builder) => WordGroupEditPage(group: _group),
     );
 
-    result.modified<WordGroup>((value) async {
+    result.modified<WordGroup>((value) {
       updateState(() {
         _group = value;
       });
-
-      await GetIt.I.get<WordGroupStorage>().set(value.id, value);
     });
   }
 
@@ -85,7 +83,7 @@ class WordGroupDetailViewModel {
         _group.words.addAll(list);
       });
 
-      await GetIt.I.get<WordGroupStorage>().set(_group.id, _group);
+      await GetIt.I.get<WordGroupStorage>().set(_group);
     });
   }
 
@@ -93,7 +91,7 @@ class WordGroupDetailViewModel {
     final result = await MaterialNavigator.push(
       context,
       (builder) => WordDetailPage(
-        groupId: _group.id,
+        groupId: _group.id!,
         wordId: index,
         word: _group.words[index],
         originLanguage: _group.origin,

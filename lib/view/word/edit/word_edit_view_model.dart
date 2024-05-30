@@ -16,7 +16,7 @@ import 'meaning_edit.dart';
 import 'phonetic_edit.dart';
 
 class WordEditViewModel {
-  final String groupId;
+  final int groupId;
   final int wordId;
   final String origin;
   final TextEditViewModel translation;
@@ -112,9 +112,9 @@ class WordEditViewModel {
 
     group!.words[wordId] = word;
 
-    await groupStorage.set(groupId, group);
+    await groupStorage.set(group);
 
-    await metadataStorage.set(word.origin, metadata);
+    await metadataStorage.set(metadata);
 
     if (context.mounted) MaterialNavigator.popWith(context, CrudResult.modify((word, metadata)));
   }

@@ -20,7 +20,7 @@ class WordDetailViewModel extends ViewModel {
 
   final _metadataService = GetIt.I.get<MetadataService>();
 
-  final String groupId;
+  final int groupId;
   final int wordId;
 
   final UpdateState updateState;

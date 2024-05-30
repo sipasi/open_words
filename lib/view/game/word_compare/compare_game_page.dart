@@ -33,7 +33,7 @@ class _CompareGamePageState extends FutureScaffoldState<CompareGamePage, GameSco
     Map<Word, WordMetadata> metadatas = {};
 
     for (var word in words) {
-      final metadata = await storage.getBy(word.origin);
+      final metadata = await storage.firstByWord(word.origin);
 
       if (metadata == null) {
         continue;
