@@ -3,7 +3,6 @@ import 'package:open_words/data/language_info.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/service/json/json_parcer.dart';
-import 'package:uuid/v4.dart';
 
 class WordGroupJsonParcer extends JsonParcer<List<WordGroup>> {
   final converter = _WordGroupJsonConverter();
@@ -45,7 +44,6 @@ class _WordGroupJsonConverter extends _JsonConverter<WordGroup> {
     final now = DateTime.now();
 
     return WordGroup(
-      id: const UuidV4().generate(),
       created: now,
       modified: now,
       name: map['name'] as String,

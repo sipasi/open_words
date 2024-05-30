@@ -95,7 +95,6 @@ class DevDictionaryApiParcer extends MetadataParcer {
 
   WordMetadata? parceSingle(Map<String, dynamic> map) {
     return WordMetadata(
-      id: null,
       word: map['word'] as String,
       phonetics: asPhoneticList(map['phonetics']),
       meanings: asMeaningList(map['meanings']),
