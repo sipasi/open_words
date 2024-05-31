@@ -52,7 +52,7 @@ class WordGroupDocument {
         ),
       ),
       decoration: pw.BoxDecoration(
-        color: PdfUtils.toPdfColorOrNull(scheme?.surfaceVariant),
+        color: PdfUtils.toPdfColorOrNull(scheme?.surfaceContainerHighest),
       ),
     );
   }

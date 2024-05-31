@@ -42,7 +42,7 @@ class ClipboardService {
         overflow: TextOverflow.ellipsis,
         style: TextStyle(color: colors.primary),
       ),
-      backgroundColor: colors.surfaceVariant,
+      backgroundColor: colors.surfaceContainerHighest,
       elevation: 0,
       showCloseIcon: true,
       closeIconColor: colors.error,
