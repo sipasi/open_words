@@ -22,7 +22,7 @@ class MetadataService {
     metadata = await _webService.find(word);
 
     if (metadata != null) {
-      await _storage.set(metadata);
+      return await _storage.updateOrCreate(metadata);
     }
 
     return metadata;
