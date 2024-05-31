@@ -31,9 +31,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_tts: ^3.8.3
+  flutter_tts: ^4.0.2
   url_launcher: ^6.1.14
-  share_plus: ^7.2.1
+  share_plus: ^9.0.0
   file_selector: ^1.0.1
 
   json_annotation: ^4.8.0
@@ -65,7 +65,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.1
+  flutter_lints: ^4.0.0
 
   # build_runner
   build_runner: ^2.4.9
