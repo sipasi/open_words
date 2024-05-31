@@ -83,7 +83,7 @@ class WordGroupDetailViewModel {
         _group.words.addAll(list);
       });
 
-      await GetIt.I.get<WordGroupStorage>().set(_group);
+      await GetIt.I.get<WordGroupStorage>().updateOrCreate(_group);
     });
   }
 

@@ -112,9 +112,9 @@ class WordEditViewModel {
 
     group!.words[wordId] = word;
 
-    await groupStorage.set(group);
+    await groupStorage.updateOrCreate(group);
 
-    await metadataStorage.set(metadata);
+    await metadataStorage.updateOrCreate(metadata);
 
     if (context.mounted) MaterialNavigator.popWith(context, CrudResult.modify((word, metadata)));
   }

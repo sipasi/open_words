@@ -92,7 +92,7 @@ class DownloadMetadataViewModel {
   Future _storeDownloads(List<WordMetadata> downloads) {
     final storage = GetIt.I.get<MetadataStorage>();
 
-    return Future.wait(downloads.map((item) => storage.set(item)));
+    return Future.wait(downloads.map((item) => storage.updateOrCreate(item)));
   }
 
   Future _checkMetadata(UpdateState updateState) async {

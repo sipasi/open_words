@@ -45,7 +45,7 @@ class ImportViewModel extends ViewModel {
     for (var i = 0; i < selectable.groups.length; i++) {
       final group = selectable.groups[i];
 
-      await storage.set(group);
+      await storage.updateOrCreate(group);
     }
 
     if (context.mounted) MaterialNavigator.pop(context);

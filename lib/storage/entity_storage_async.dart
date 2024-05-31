@@ -9,7 +9,7 @@ abstract class EntityStorageAsync<TKey, TEntity> {
 
   Future<List<TEntity>> getAll();
 
-  Future set(TEntity entity);
+  Future<TEntity> updateOrCreate(TEntity entity);
 
   Future delete(TKey id);
 
