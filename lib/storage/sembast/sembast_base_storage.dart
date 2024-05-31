@@ -29,7 +29,7 @@ abstract class SembastBaseStorage<T> extends EntityStorageAsync<int, T> {
     final all = await store.find(database);
 
     if (all.isEmpty) {
-      return List.empty();
+      return List.empty(growable: true);
     }
 
     return all.map((map) => fromJson(map.value)).toList();
@@ -43,22 +43,28 @@ abstract class SembastBaseStorage<T> extends EntityStorageAsync<int, T> {
   }
 
   @override
-  Future<void> set(T entity) async {
+  Future<T> updateOrCreate(T entity) async {
+    final map = await _updateOrCreate(entity);
+
+    return fromJson(map);
+  }
+
+  Future<Map<String, dynamic>> _updateOrCreate(T entity) async {
     final map = toJson(entity);
 
     int? id = getId(entity);
 
-    if (id == null) {
-      int id = await store.add(database, map);
+    if (id is int) {
+      await store.record(id).put(database, map);
+    } else {
+      id = await store.add(database, map);
 
       map[idName] = id;
 
-      return;
+      await store.record(id).update(database, {'id': id});
     }
 
-    bool exists = await contains(id);
-
-    exists ? await store.record(id).put(database, map) : await store.add(database, map);
+    return map;
   }
 
   @override
