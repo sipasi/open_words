@@ -39,9 +39,9 @@ abstract class WordGroupEditCreateViewModel {
 
     final group = builder();
 
-    await GetIt.I.get<WordGroupStorage>().set(group);
+    final result = await GetIt.I.get<WordGroupStorage>().updateOrCreate(group);
 
-    if (context.mounted) MaterialNavigator.popWith(context, popWith(group));
+    if (context.mounted) MaterialNavigator.popWith(context, popWith(result));
   }
 
   void onNameChange(UpdateState updateState) => TextEditViewModel.setErrorIfEmpty(name, updateState);
