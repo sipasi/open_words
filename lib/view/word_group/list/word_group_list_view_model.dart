@@ -48,10 +48,8 @@ class WordGroupListViewModel extends ViewModel {
     );
 
     result.created<WordGroup>((value) {
-      final updated = value.copyWith(index: groups.length);
-
       updateState(() {
-        groups.add(updated);
+        groups.add(value);
       });
     });
   }
