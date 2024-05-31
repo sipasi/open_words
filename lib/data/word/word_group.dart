@@ -41,7 +41,6 @@ class WordGroup {
     LanguageInfo? origin,
     LanguageInfo? translation,
     List<Word>? words,
-    int? index,
   }) {
     return WordGroup(
       id: id ?? this.id,
@@ -50,7 +49,7 @@ class WordGroup {
       name: name ?? this.name,
       origin: origin ?? this.origin,
       translation: translation ?? this.translation,
-      words: words ?? this.words,
+      words: words ?? this.words.toList(),
     );
   }
 
