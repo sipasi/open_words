@@ -67,7 +67,7 @@ class _WordGroupJsonConverter extends _JsonConverter<WordGroup> {
     return switch (node) {
       List<dynamic> list => list.map((item) => wordConverter.from(item)).toList(),
       Map<String, dynamic> map => [wordConverter.from(map)],
-      _ => List.empty(),
+      _ => List.empty(growable: true),
     };
   }
 }
