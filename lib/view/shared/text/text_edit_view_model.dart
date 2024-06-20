@@ -42,18 +42,27 @@ class TextEditViewModel {
     );
   }
 
-  Future pasteFromClipboard(BuildContext context) async {
-    final text = await _clipboard.readText(
+  Future pasteFromClipboard(BuildContext context, {bool replace = true, String seperator = ', '}) async {
+    final result = await _clipboard.readText(
       context,
       vibrate: true,
-      snackBar: true,
+      snackBar: false,
     );
 
-    if (text == null) {
+    final clipboardText = result?.trim();
+
+    if (clipboardText == null || clipboardText.isEmpty) {
       return;
     }
 
-    controller.text = text.trim();
+    if (replace) {
+      controller.text = clipboardText;
+      return;
+    }
+
+    final contollerText = controller.text.trim();
+
+    controller.text = contollerText.isEmpty ? clipboardText : '$contollerText$seperator$clipboardText';
   }
 
   void setFocus() {
