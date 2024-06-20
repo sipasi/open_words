@@ -155,7 +155,12 @@ class _WordListCreatePageState extends State<WordListCreatePage> {
           subtitle: Text(word.translation),
           trailing: IconButton(
             icon: const Icon(Icons.delete),
-            onPressed: () => viewmodel.remove(index, setState),
+            onPressed: () {
+              viewmodel.origin.setText(word.origin);
+              viewmodel.translation.setText(word.translation);
+
+              viewmodel.remove(index, setState);
+            },
           ),
         );
       },
@@ -175,7 +180,7 @@ class _WordListCreatePageState extends State<WordListCreatePage> {
       onChange: (text) => TextEditViewModel.setErrorIfEmpty(viewmodel, updateState),
       onClear: () => viewmodel.clear(),
       onCopy: () => viewmodel.copyToClipboard(context),
-      onPaste: () => viewmodel.pasteFromClipboard(context),
+      onPaste: () => viewmodel.pasteFromClipboard(context, replace: false),
     );
   }
 }
