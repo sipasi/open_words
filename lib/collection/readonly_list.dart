@@ -1,10 +1,5 @@
-abstract class IReadonlyList<T> {
+abstract class IReadonlyList<T> with Iterable<T> {
   const IReadonlyList();
-
-  bool get isEmpty => length == 0;
-  bool get isNotEmpty => length > 0;
-
-  int get length;
 
   T operator [](int index);
 }
@@ -19,6 +14,9 @@ class ReadonlyList<T> extends IReadonlyList<T> {
 
   @override
   T operator [](int index) => _results[index];
+
+  @override
+  Iterator<T> get iterator => _results.iterator;
 }
 
 extension ReadonlyListExtension<T> on List<T> {
