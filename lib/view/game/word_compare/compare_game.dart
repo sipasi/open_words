@@ -24,6 +24,9 @@ class CompareHistory extends IReadonlyList<ChooseResult> {
       ));
 
   void clear() => _results.clear();
+
+  @override
+  Iterator<ChooseResult> get iterator => _results.iterator;
 }
 
 class CompareGame {
