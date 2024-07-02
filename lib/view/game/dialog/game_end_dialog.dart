@@ -50,9 +50,11 @@ class GameEndDialog extends StatelessWidget {
     required void Function() onResults,
     required void Function() onRestart,
     required void Function() onExit,
+    bool barrierDismissible = false,
   }) {
     return showDialog(
       context: context,
+      barrierDismissible: barrierDismissible,
       builder: (builder) {
         return GameEndDialog(
           onResults: onResults,
