@@ -69,6 +69,7 @@ class GameListPage extends StatelessWidget {
           maxCrossAxisExtent: 300,
           mainAxisExtent: 120,
           shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
           children: widgets,
         ),
       ],

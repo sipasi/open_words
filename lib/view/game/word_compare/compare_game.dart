@@ -51,10 +51,13 @@ class CompareGame {
 
   bool get gameEnd => _history.length == words.length;
 
+  void Function() onGameEnd;
+
   CompareGame({
     required this.words,
     required this.map,
     required this.textGetter,
+    required this.onGameEnd,
   })  : _current = 0,
         _history = CompareHistory(),
         helpers = HelperTextList(),
@@ -73,6 +76,8 @@ class CompareGame {
 
   bool next() {
     if (gameEnd) {
+      onGameEnd();
+
       return false;
     }
 

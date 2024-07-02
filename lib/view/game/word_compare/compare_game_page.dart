@@ -54,7 +54,7 @@ class _CompareGamePageState extends FutureScaffoldState<CompareGamePage, GameSco
   Widget successBuild(BuildContext context, GameScoreData data) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10.0).copyWith(bottom: 20),
         child: CompareGameView(
           words: data.words,
           map: data.metadatas,

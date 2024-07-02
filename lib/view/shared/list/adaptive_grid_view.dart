@@ -9,6 +9,8 @@ class AdaptiveGridView extends StatelessWidget {
 
   final bool shrinkWrap;
 
+  final ScrollPhysics? physics;
+
   const AdaptiveGridView({
     super.key,
     required this.children,
@@ -16,12 +18,14 @@ class AdaptiveGridView extends StatelessWidget {
     this.maxCrossAxisExtent = 220,
     this.mainAxisExtent = 100,
     this.shrinkWrap = false,
+    this.physics,
   });
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       padding: padding,
+      physics: physics,
       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: maxCrossAxisExtent,
         mainAxisExtent: mainAxisExtent,

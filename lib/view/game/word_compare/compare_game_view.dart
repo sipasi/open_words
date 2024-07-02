@@ -36,6 +36,7 @@ class _CompareGameViewState extends State<CompareGameView> {
       words: widget.words,
       map: widget.map,
       textGetter: widget.textGetter,
+      onGameEnd: () => _showGameEndDialog(),
     );
 
     game.start();
@@ -60,10 +61,6 @@ class _CompareGameViewState extends State<CompareGameView> {
           answered: score.answered,
           correct: score.correct,
           wrong: score.wrong,
-        ),
-        TextButton(
-          onPressed: () => _showGameEndDialog(),
-          child: const Text('tap'),
         ),
       ],
     );
