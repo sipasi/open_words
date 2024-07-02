@@ -20,14 +20,6 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
-      - run: flutter --version
-
-      - uses: actions/setup-java@v4
-        with:
-          distribution: "zulu"
-          java-version: "11"
-
-      - uses: subosito/flutter-action@v2
 
       - run: flutter pub get
       - run: flutter build apk
@@ -51,8 +43,8 @@ jobs:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
         with:
-          channel: "beta"
-      - run: flutter config --enable-windows-desktop
+          channel: stable
+      - run: flutter pub get
       - run: flutter build windows
       - name: upload windows to release
         uses: actions/upload-artifact@v4
