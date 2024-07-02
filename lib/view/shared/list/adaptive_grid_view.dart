@@ -7,12 +7,15 @@ class AdaptiveGridView extends StatelessWidget {
   final double maxCrossAxisExtent;
   final double mainAxisExtent;
 
+  final bool shrinkWrap;
+
   const AdaptiveGridView({
     super.key,
     required this.children,
     this.padding = EdgeInsets.zero,
     this.maxCrossAxisExtent = 220,
     this.mainAxisExtent = 100,
+    this.shrinkWrap = false,
   });
 
   @override
@@ -23,6 +26,7 @@ class AdaptiveGridView extends StatelessWidget {
         maxCrossAxisExtent: maxCrossAxisExtent,
         mainAxisExtent: mainAxisExtent,
       ),
+      shrinkWrap: shrinkWrap,
       itemCount: children.length,
       itemBuilder: (context, index) {
         return children[index];
