@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:open_words/view/shared/button/rectangle_style.dart';
 
 class SelectableButton extends StatelessWidget {
   final Widget child;
@@ -8,7 +9,7 @@ class SelectableButton extends StatelessWidget {
 
   final EdgeInsets margin;
 
-  final Function() onTap;
+  final void Function() onTap;
 
   const SelectableButton({
     super.key,
@@ -29,18 +30,16 @@ class SelectableButton extends StatelessWidget {
           child: selected
               ? FilledButton(
                   onPressed: disabled ? null : onTap,
-                  style: FilledButton.styleFrom(shape: _shape()),
+                  style: RectangleStyle.filled(),
                   child: child,
                 )
               : OutlinedButton(
                   onPressed: disabled ? null : onTap,
-                  style: FilledButton.styleFrom(shape: _shape()),
+                  style: RectangleStyle.outlined(),
                   child: child,
                 ),
         ),
       ),
     );
   }
-
-  static OutlinedBorder _shape() => RoundedRectangleBorder(borderRadius: BorderRadius.circular(10));
 }

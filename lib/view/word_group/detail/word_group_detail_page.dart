@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/data/word/word_group.dart';
+import 'package:open_words/view/shared/button/rectangle_style.dart';
 import 'package:open_words/view/shared/list/adaptive_grid_view.dart';
 import 'package:open_words/view/shared/tile/text_tile.dart';
 import 'package:open_words/view/word_group/detail/word_group_detail_view_model.dart';
@@ -81,8 +82,9 @@ class _WordGroupDetailPageState extends State<WordGroupDetailPage> {
   Widget _filledButton(IconData icon, String text, void Function() onTap) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: FilledButton.tonalIcon(
+      child: OutlinedButton.icon(
         onPressed: onTap,
+        style: RectangleStyle.outlined(),
         icon: Icon(icon),
         label: Text(text),
       ),
