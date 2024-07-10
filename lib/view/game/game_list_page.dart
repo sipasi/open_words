@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/view/game/match_pairs/audio_pairs/audio_pairs_page.dart';
+import 'package:open_words/view/game/word_constructor/word_constructor_page.dart';
 import 'package:open_words/view/game/word_compare/origin_to_translation_page.dart';
 import 'package:open_words/view/game/word_compare/translation_to_origin_page.dart';
 import 'package:open_words/view/game/match_pairs/word_pairs/word_pairs_page.dart';
@@ -48,6 +49,15 @@ class GameListPage extends StatelessWidget {
                 needWords: 5,
                 count: group.words.length,
                 route: (builder) => AudioPairsPage(group: group),
+              ),
+            ]),
+            const SizedBox(height: 10),
+            _section(context, 'Constructor', [
+              _GameInfoTile(
+                name: 'Origin',
+                needWords: 5,
+                count: group.words.length,
+                route: (builder) => WordConstructorPage(group: group),
               ),
             ]),
           ],
