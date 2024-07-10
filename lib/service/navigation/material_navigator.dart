@@ -22,8 +22,10 @@ abstract class MaterialNavigator {
     return result as Result;
   }
 
-  static void pop<T>(BuildContext context) {
-    Navigator.pop(context, Result.empty());
+  static void pop<T>(BuildContext context, {int times = 1}) {
+    for (var i = 0; i < times; i++) {
+      Navigator.pop(context, Result.empty());
+    }
   }
 
   static void popWith<T>(BuildContext context, Result result) {
