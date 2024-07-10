@@ -76,8 +76,7 @@ class _AudioPairsPageState extends State<AudioPairsPage> {
       onResults: () {},
       onRestart: () {},
       onExit: () {
-        MaterialNavigator.pop(context);
-        MaterialNavigator.pop(context);
+        MaterialNavigator.pop(context, times: 2);
       },
     );
   }

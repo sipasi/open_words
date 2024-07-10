@@ -59,8 +59,7 @@ class _WordPairsPageState extends State<WordPairsPage> {
       onResults: () {},
       onRestart: () {},
       onExit: () {
-        MaterialNavigator.pop(context);
-        MaterialNavigator.pop(context);
+          MaterialNavigator.pop(context, times: 2);
       },
     );
   }

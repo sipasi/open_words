@@ -110,8 +110,7 @@ class _CompareGameViewState extends State<CompareGameView> {
         });
       },
       onExit: () {
-        MaterialNavigator.pop(context);
-        MaterialNavigator.pop(context);
+        MaterialNavigator.pop(context, times: 2);
       },
     );
   }

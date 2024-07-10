@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:open_words/view/game/game_progress_indicator.dart';
 import 'package:open_words/view/game/match_pairs/expanded_column.dart';
 
 class PairsView extends StatelessWidget {
@@ -32,23 +33,16 @@ class PairsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
             children: [
-              Text(
-                title,
-                style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 12.0),
-                child: LinearProgressIndicator(value: answeredPairsPercentage),
+              GameProgressIndicator(
+                margin: const EdgeInsets.symmetric(vertical: 12.0),
+                percentage: answeredPairsPercentage,
               ),
               _body(),
               _bottom(context),
