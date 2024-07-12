@@ -7,7 +7,7 @@ import 'package:open_words/data/word/word_group.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
 import 'package:open_words/service/result.dart';
 import 'package:open_words/storage/word_group_storage.dart';
-import 'package:open_words/view/game/game_list_page.dart';
+import 'package:open_words/view/game/list/game_list_page.dart';
 import 'package:open_words/view/mvvm/view_model.dart';
 import 'package:open_words/view/shared/dialog/delete_dialog.dart';
 import 'package:open_words/view/word/create/word_list_create_page.dart';
