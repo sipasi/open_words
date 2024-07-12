@@ -34,6 +34,10 @@ This project is a copy of my [. Net Maui](https://github.com/sipasi/OpenDictiona
  
   ### games
 
-  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/compare_game_page_dark.png?raw=true" width="30%"><img/> 
+  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/game_all_dark.png?raw=true" width="30%"><img/> 
+  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/game_compare_dark.png?raw=true" width="30%"><img/> 
+  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/game_constructor_dark.png?raw=true" width="30%"><img/> 
+  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/game_match_audios_dark.png?raw=true" width="30%"><img/> 
+  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/game_match_words_dark.png?raw=true" width="30%"><img/> 
   
 </details>
