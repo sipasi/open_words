@@ -21,6 +21,11 @@ jobs:
         with:
           channel: "stable"
 
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "zulu"
+          java-version: "17"
+
       - run: flutter pub get
       - run: flutter build apk
       - run: flutter build appbundle
