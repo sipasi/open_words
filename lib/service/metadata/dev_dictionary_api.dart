@@ -28,7 +28,7 @@ class DevDictionaryApi extends WordMetadataWebApi {
     } catch (e) {
       final logger = GetIt.I.get<Logger>();
 
-      logger.e(e);
+      logger.e('$word\n$e');
     }
 
     return null;
