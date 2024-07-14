@@ -84,6 +84,8 @@ class DownloadMetadataViewModel {
 
     final downloaded = await Future.wait(futures);
 
+    await Future.delayed(const Duration(seconds: 2));
+
     downloaded.removeWhere((element) => element == null);
 
     return downloaded.cast<WordMetadata>();
