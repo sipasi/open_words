@@ -31,6 +31,7 @@ class AppNavigationBar {
       destinations: _railDestination,
       selectedIndex: current,
       onDestinationSelected: selected,
+      groupAlignment: 0,
     );
   }
 

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:open_words/view/shared/layout/separated_column.dart';
 
 class GameEndDialog extends StatelessWidget {
-  final void Function() onResults;
-  final void Function() onRestart;
   final void Function() onExit;
+  final void Function() onRestart;
+  final void Function()? onResults;
 
   const GameEndDialog({
     super.key,
-    required this.onResults,
+    this.onResults,
     required this.onRestart,
     required this.onExit,
   });
@@ -18,22 +19,22 @@ class GameEndDialog extends StatelessWidget {
       alignment: Alignment.bottomLeft,
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
+        child: SeparatedColumn(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          separatorBuilder: (context, index) => const SizedBox(height: 10),
           children: [
-            FilledButton.icon(
-              icon: const Icon(Icons.history_edu),
-              label: const Text('Results'),
-              onPressed: onResults,
-            ),
-            const SizedBox(height: 10),
+            if (onResults != null)
+              FilledButton.icon(
+                icon: const Icon(Icons.history_edu),
+                label: const Text('Results'),
+                onPressed: onResults,
+              ),
             FilledButton.tonalIcon(
               icon: const Icon(Icons.restart_alt),
               label: const Text('Restart'),
               onPressed: onRestart,
             ),
-            const SizedBox(height: 10),
             FilledButton.tonalIcon(
               icon: const Icon(Icons.exit_to_app),
               label: const Text('Exit'),
@@ -47,9 +48,9 @@ class GameEndDialog extends StatelessWidget {
 
   static Future show({
     required BuildContext context,
-    required void Function() onResults,
-    required void Function() onRestart,
     required void Function() onExit,
+    required void Function() onRestart,
+    void Function()? onResults,
     bool barrierDismissible = false,
   }) {
     return showDialog(

@@ -8,7 +8,7 @@ class GameProgressIndicator extends StatelessWidget {
   const GameProgressIndicator({
     super.key,
     required this.percentage,
-    required this.margin,
+    this.margin = const EdgeInsets.all(0),
   });
 
   @override
