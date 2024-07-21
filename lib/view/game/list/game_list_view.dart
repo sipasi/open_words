@@ -6,6 +6,7 @@ import 'package:open_words/view/game/match_pairs/word_pairs/word_pairs_page.dart
 import 'package:open_words/view/game/word_compare/origin_to_translation_page.dart';
 import 'package:open_words/view/game/word_compare/translation_to_origin_page.dart';
 import 'package:open_words/view/game/word_constructor/word_constructor_page.dart';
+import 'package:open_words/view/shared/layout/separated_column.dart';
 
 import 'game_section.dart';
 import 'game_tile.dart';
@@ -17,7 +18,8 @@ class GameListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return SeparatedColumn(
+      separator: (context, index) => const SizedBox(height: 20),
       children: [
         GameSection(
           title: 'Compare',
@@ -38,7 +40,6 @@ class GameListView extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 20),
         GameSection(
           title: 'Match',
           tiles: [
@@ -58,7 +59,6 @@ class GameListView extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 20),
         GameSection(
           title: 'Constructor',
           tiles: [
@@ -71,7 +71,6 @@ class GameListView extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 20),
         GameSection(
           title: 'Flashcard',
           tiles: [
@@ -91,7 +90,6 @@ class GameListView extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 10),
       ],
     );
   }

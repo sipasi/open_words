@@ -22,7 +22,7 @@ class GameEndDialog extends StatelessWidget {
         child: SeparatedColumn(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          separatorBuilder: (context, index) => const SizedBox(height: 10),
+          separator: (context, index) => const SizedBox(height: 10),
           children: [
             if (onResults != null)
               FilledButton.icon(
