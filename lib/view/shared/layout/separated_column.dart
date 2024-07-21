@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class SeparatedColumn extends StatelessWidget {
   final List<Widget> children;
 
-  final IndexedWidgetBuilder separatorBuilder;
+  final IndexedWidgetBuilder? firstSeparator;
+  final IndexedWidgetBuilder? lastSeparator;
+  final IndexedWidgetBuilder separator;
 
   final TextBaseline? textBaseline;
 
@@ -26,7 +28,9 @@ class SeparatedColumn extends StatelessWidget {
     this.verticalDirection = VerticalDirection.down,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.crossAxisAlignment = CrossAxisAlignment.center,
-    required this.separatorBuilder,
+    this.firstSeparator,
+    this.lastSeparator,
+    required this.separator,
   });
 
   @override
@@ -38,16 +42,30 @@ class SeparatedColumn extends StatelessWidget {
       verticalDirection: verticalDirection,
       mainAxisAlignment: mainAxisAlignment,
       crossAxisAlignment: crossAxisAlignment,
-      children: _separate(context, children, separatorBuilder),
+      children: _separate(
+        context,
+        children,
+        separator: separator,
+        firstSeparator: firstSeparator,
+        lastSeparator: lastSeparator,
+      ),
     );
   }
 
-  static List<Widget> _separate(BuildContext context, List<Widget> widgets, IndexedWidgetBuilder separatorBuilder) {
+  static List<Widget> _separate(
+    BuildContext context,
+    List<Widget> widgets, {
+    required IndexedWidgetBuilder? firstSeparator,
+    required IndexedWidgetBuilder? lastSeparator,
+    required IndexedWidgetBuilder separator,
+  }) {
     if (widgets.isEmpty) {
       return widgets;
     }
 
     final result = <Widget>[];
+
+    tryAdd(result, firstSeparator, context, 0);
 
     for (var i = 0; i < widgets.length; i++) {
       result.add(widgets[i]);
@@ -56,9 +74,17 @@ class SeparatedColumn extends StatelessWidget {
         continue;
       }
 
-      result.add(separatorBuilder(context, i));
+      result.add(separator(context, i));
     }
 
+    tryAdd(result, lastSeparator, context, result.length);
+
     return result;
+  }
+
+  static void tryAdd(List<Widget> widgets, IndexedWidgetBuilder? separator, BuildContext context, int index) {
+    if (separator case IndexedWidgetBuilder last) {
+      widgets.add(last(context, index));
+    }
   }
 }
