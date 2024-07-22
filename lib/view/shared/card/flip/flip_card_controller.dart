@@ -21,6 +21,7 @@ class FlipCardController {
   set state(FlipCardState? value) => _state = value;
 
   Future flip({CardSide? side}) => state.flip(side);
+  Future flipOpposite() => state.flip(oppositeSide);
 
   void flipWithoutAnimation([CardSide? targetSide]) => state.flipWithoutAnimation(targetSide);
 }
