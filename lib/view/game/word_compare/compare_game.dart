@@ -1,6 +1,8 @@
+import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 import 'package:open_words/collection/readonly_list.dart';
-import 'package:open_words/data/metadata/word_metadata.dart';
 import 'package:open_words/data/word/word.dart';
+import 'package:open_words/storage/metadata_storage.dart';
 import 'package:open_words/view/game/word_compare/choose_result.dart';
 import 'package:open_words/view/game/word_compare/compare_data.dart';
 import 'package:open_words/view/game/word_compare/compare_score.dart';
@@ -30,6 +32,8 @@ class CompareHistory extends IReadonlyList<ChooseResult> {
 }
 
 class CompareGame {
+  final Logger _logger = GetIt.I.get();
+
   final CompareHistory _history;
 
   late CompareData _data;
@@ -41,7 +45,6 @@ class CompareGame {
   final CompareScore score;
 
   final List<Word> words;
-  final Map<Word, WordMetadata> map;
 
   final WordTextGetter textGetter;
 
@@ -51,13 +54,17 @@ class CompareGame {
 
   bool get gameEnd => _history.length == words.length;
 
+  final MetadataStorage metadataStorage;
+
   void Function() onGameEnd;
+  void Function() onMetadataLoaded;
 
   CompareGame({
     required this.words,
-    required this.map,
     required this.textGetter,
     required this.onGameEnd,
+    required this.onMetadataLoaded,
+    required this.metadataStorage,
   })  : _current = 0,
         _history = CompareHistory(),
         helpers = HelperTextList(),
@@ -107,10 +114,29 @@ class CompareGame {
   void _updateState() {
     _data = _createState();
 
-    final metadata = map[data.question];
-
-    helpers.fillFrom(metadata);
+    loadMetadataAndSetHelpers();
 
     _current++;
+  }
+
+  Future loadMetadataAndSetHelpers() {
+    return Future(() async {
+      final cache = _data;
+
+      final metadata = await metadataStorage.firstByWord(data.question.origin);
+
+      if (metadata == null) {
+        return;
+      }
+
+      if (data != cache) {
+        _logger.e('Differen cache.\nLook for ${cache.question.toJson()} but current ${data.question.toJson()}');
+        return;
+      }
+
+      helpers.fillFrom(metadata);
+
+      onMetadataLoaded();
+    });
   }
 }

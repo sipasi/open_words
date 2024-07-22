@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:open_words/data/metadata/word_metadata.dart';
 import 'package:open_words/data/word/word.dart';
 import 'package:open_words/service/navigation/material_navigator.dart';
+import 'package:open_words/storage/metadata_storage.dart';
 import 'package:open_words/view/game/dialog/game_end_dialog.dart';
 import 'package:open_words/view/game/word_compare/compare_body.dart';
 import 'package:open_words/view/game/word_compare/compare_game.dart';
@@ -11,13 +11,13 @@ import 'package:open_words/view/game/word_compare/word_text_getter.dart';
 
 class CompareGameView extends StatefulWidget {
   final List<Word> words;
-  final Map<Word, WordMetadata> map;
+  final MetadataStorage metadataStorage;
   final WordTextGetter textGetter;
 
   const CompareGameView({
     super.key,
     required this.words,
-    required this.map,
+    required this.metadataStorage,
     required this.textGetter,
   });
 
@@ -34,9 +34,10 @@ class _CompareGameViewState extends State<CompareGameView> {
 
     game = CompareGame(
       words: widget.words,
-      map: widget.map,
+      metadataStorage: widget.metadataStorage,
       textGetter: widget.textGetter,
       onGameEnd: () => _showGameEndDialog(),
+      onMetadataLoaded: _onMetadataLoaded,
     );
 
     game.start();
@@ -114,4 +115,6 @@ class _CompareGameViewState extends State<CompareGameView> {
       },
     );
   }
+
+  void _onMetadataLoaded() => setState(() {});
 }

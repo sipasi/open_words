@@ -45,6 +45,7 @@ class HelperTextList {
 
   void clear() {
     _cache.clear();
+    _requested.clear();
     _count = 0;
   }
 }
