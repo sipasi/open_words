@@ -46,6 +46,29 @@ class GameEndDialog extends StatelessWidget {
     );
   }
 
+  static Future showDelayed({
+    required BuildContext context,
+    required void Function() onExit,
+    required void Function() onRestart,
+    void Function()? onResults,
+    bool barrierDismissible = false,
+    Duration time = const Duration(milliseconds: 300),
+  }) async {
+    await Future.delayed(time);
+
+    if (!context.mounted) {
+      return;
+    }
+
+    return show(
+      context: context,
+      onExit: onExit,
+      onRestart: onRestart,
+      onResults: onResults,
+      barrierDismissible: barrierDismissible,
+    );
+  }
+
   static Future show({
     required BuildContext context,
     required void Function() onExit,
