@@ -1,0 +1,24 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: #1e1e1e;
+}
+
+#loading-root {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#loading-text {
+    color: #4D4C7D;
+    font-size: 2.5em;
+    width: auto;
+    margin: auto;
+}
