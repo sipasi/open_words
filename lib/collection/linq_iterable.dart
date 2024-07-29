@@ -9,3 +9,9 @@ extension LinqIterable<T> on Iterable<T> {
     return sum;
   }
 }
+
+extension LinqNumIterable<T> on Iterable<num> {
+  T sum() {
+    return sumBy((element) => element) as T;
+  }
+}
