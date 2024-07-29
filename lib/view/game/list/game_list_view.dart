@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:open_words/data/word/word_group.dart';
-import 'package:open_words/view/game/flashcard/flashcard_game_page.dart';
-import 'package:open_words/view/game/match_pairs/audio_pairs/audio_pairs_page.dart';
-import 'package:open_words/view/game/match_pairs/word_pairs/word_pairs_page.dart';
-import 'package:open_words/view/game/word_compare/origin_to_translation_page.dart';
-import 'package:open_words/view/game/word_compare/translation_to_origin_page.dart';
-import 'package:open_words/view/game/word_constructor/word_constructor_page.dart';
+import 'package:open_words/view/game/guess_game/match_pairs/audio_pairs/audio_pairs_page.dart';
+import 'package:open_words/view/game/guess_game/match_pairs/word_pairs/word_pairs_page.dart';
+import 'package:open_words/view/game/guess_game/word_compare/compare_game_view.dart';
+import 'package:open_words/view/game/guess_game/word_constructor/word_constructor_page.dart';
+import 'package:open_words/view/game/view_word_game/flashcard/flashcard_game_page.dart';
 import 'package:open_words/view/shared/layout/separated_column.dart';
 
 import 'game_section.dart';
@@ -29,14 +28,14 @@ class GameListView extends StatelessWidget {
               description: 'Compare original words to translations',
               needWords: 8,
               count: group.words.length,
-              route: (builder) => OriginToTranslationPage(group: group),
+              route: (builder) => CompareGameView.origins(words: group.words),
             ),
             GameTile(
               name: 'Translations',
               description: 'Compare translations to their original words',
               needWords: 8,
               count: group.words.length,
-              route: (builder) => TranslationToOriginPage(group: group),
+              route: (builder) => CompareGameView.translations(words: group.words),
             ),
           ],
         ),
@@ -63,11 +62,18 @@ class GameListView extends StatelessWidget {
           title: 'Constructor',
           tiles: [
             GameTile(
-              name: 'Origin',
+              name: 'Origins',
               description: 'Create words from given parts or letters',
               needWords: 5,
               count: group.words.length,
-              route: (builder) => WordConstructorPage(group: group),
+              route: (builder) => WordConstructorPage.constructOrigins(group: group),
+            ),
+            GameTile(
+              name: 'Translations',
+              description: 'Create words from given parts or letters',
+              needWords: 5,
+              count: group.words.length,
+              route: (builder) => WordConstructorPage.constructTranslations(group: group),
             ),
           ],
         ),
