@@ -1,11 +1,11 @@
 import 'dart:math';
-import 'package:open_words/data/word/word.dart';
+import 'package:open_words/collection/list_randomizer.dart';
 
-extension WordListRandomExtension on List<Word> {
+extension ListRandomExtension<T> on List<T> {
   static final Random _random = Random();
 
-  List<Word> getRandom({required int count, Word? exclude}) {
-    final randoms = <Word>[];
+  List<T> getRandom({required int count, T? exclude}) {
+    final randoms = <T>[];
 
     if (count >= length) {
       return List.empty();
@@ -20,7 +20,7 @@ extension WordListRandomExtension on List<Word> {
     while (randoms.length != count) {
       int index = _random.nextInt(length);
 
-      Word word = this[index];
+      T word = this[index];
 
       if (repeat++ == 500) {
         break;
@@ -33,6 +33,6 @@ extension WordListRandomExtension on List<Word> {
       randoms.add(word);
     }
 
-    return randoms..shuffle();
+    return randoms..randomize();
   }
 }
