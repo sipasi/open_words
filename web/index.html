@@ -29,17 +29,10 @@
     <!-- Favicon -->
     <link rel="icon" href="favicon.ico" sizes="any" />
 
-    <title>open_words</title>
+    <title>Open Words</title>
     <link rel="manifest" href="manifest.json" />
 
     <link rel="stylesheet" href="app.css" />
-
-    <script>
-      // The value below is injected by flutter build, do not touch.
-      const serviceWorkerVersion = null;
-    </script>
-    <!-- This script adds the flutter initialization JS code -->
-    <script src="flutter.js" defer></script>
   </head>
   <body>
     <!-- Page loading animation -->
@@ -47,34 +40,17 @@
       <img class="logo" src="icons/icon-512.png" />
     </div>
 
-    <script>
-      const loadingRoot = document.querySelector("#loading-root");
-
-      const loadingText = document.querySelector("#loading-text");
-
-      function setLoadingText(text) {
-        loadingText.textContent = text;
-      }
-    </script>
+    <script src="flutter_bootstrap.js" async></script>
 
     <script>
-      window.addEventListener("load", function (ev) {
-        setLoadingText("Loading entrypoint...");
+      {{flutter_js}}
+      {{flutter_build_config}}
 
-        // Download main.dart.js
-        _flutter.loader.loadEntrypoint({
-          serviceWorker: {
-            serviceWorkerUrl: "./service-worker.js",
-            serviceWorkerVersion: serviceWorkerVersion,
-          },
-          onEntrypointLoaded: function (engineInitializer) {
-            setLoadingText("Initializing engine...");
-
-            engineInitializer.initializeEngine().then(function (appRunner) {
-              appRunner.runApp();
-            });
-          },
-        });
+      _flutter.loader.load({
+        serviceWorkerSettings: {
+          serviceWorkerUrl: "./service-worker.js",
+          serviceWorkerVersion: {{flutter_service_worker_version}},
+        },
       });
     </script>
   </body>
