@@ -1,24 +1,24 @@
 html,
 body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
     background-color: #1e1e1e;
 }
 
-#loading-root {
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+@keyframes logo-pulse {
+    0% {
+        transform: scale(.8);
+    }
+
+
+    100% {
+        transform: scale(1);
+    }
 }
 
-#loading-text {
-    color: #4D4C7D;
-    font-size: 2.5em;
-    width: auto;
-    margin: auto;
+.loading-animation-container .logo {
+    position: absolute;
+    margin: auto auto;
+    inset: 0;
+    width: 240px;
+    height: 240px;
+    animation: logo-pulse 1.6s alternate infinite;
 }
