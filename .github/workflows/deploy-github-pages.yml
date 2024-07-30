@@ -29,15 +29,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.13.0
-
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
 
@@ -46,14 +37,8 @@ jobs:
       - name: Install Flutter packages
         run: flutter pub get
 
-      - name: Install workbox cli
-        run: npm install workbox-cli --global
-
       - name: Build
-        run: flutter build web --base-href "/open_words/" --pwa-strategy none --release
-
-      - name: Inject workbox manifest
-        run: workbox injectManifest web/workbox-config.js
+        run: flutter build web --base-href "/open_words/" --release
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
