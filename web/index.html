@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <!--
+
+<head>
+  <!--
     If you are serving your web app in a path other than the root, change the
     href value below to reflect the base path you are serving from.
 
@@ -14,44 +15,29 @@
     This is a placeholder for base href that will be replaced by the value of
     the `--base-href` argument provided to `flutter build`.
   -->
-    <base href="$FLUTTER_BASE_HREF" />
 
-    <meta charset="UTF-8" />
-    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
-    <meta name="description" content="A new Flutter project." />
+  <base href="$FLUTTER_BASE_HREF" />
 
-    <!-- iOS meta tags & icons -->
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-    <meta name="apple-mobile-web-app-title" content="open_words" />
-    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <meta charset="UTF-8" />
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+  <meta name="description"
+    content="Simple implementation of a dictionary that allows you to write, group and repeat words in games." />
 
-    <!-- Favicon -->
-    <link rel="icon" href="favicon.ico" sizes="any" />
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-title" content="open_words" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
 
-    <title>Open Words</title>
-    <link rel="manifest" href="manifest.json" />
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
 
-    <link rel="stylesheet" href="app.css" />
-  </head>
-  <body>
-    <!-- Page loading animation -->
-    <div class="loading-animation-container">
-      <img class="logo" src="icons/icon-512.png" />
-    </div>
+  <title>Open Words</title>
+  <link rel="manifest" href="manifest.json" />
+</head>
 
-    <script src="flutter_bootstrap.js" async></script>
+<body>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
 
-    <script>
-      {{flutter_js}}
-      {{flutter_build_config}}
-
-      _flutter.loader.load({
-        serviceWorkerSettings: {
-          serviceWorkerUrl: "./flutter_service_worker.js",
-          serviceWorkerVersion: {{flutter_service_worker_version}},
-        },
-      });
-    </script>
-  </body>
 </html>

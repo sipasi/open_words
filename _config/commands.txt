@@ -1,6 +1,0 @@
-### Build
-    GitHub Pages: 
-        flutter build web --base-href "/openwords.github.io/" --pwa-strategy none --release 
-
-### Configs 
-    dart run flutter_launcher_icons -f _config/launcher_icons.yaml
