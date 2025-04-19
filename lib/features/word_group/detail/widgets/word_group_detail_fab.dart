@@ -1,0 +1,77 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:open_words/features/word/create_list/word_list_create_page.dart';
+import 'package:open_words/features/word_group/detail/cubit/word_group_detail_cubit.dart';
+import 'package:open_words/shared/constants/hero_tag_constants.dart';
+import 'package:open_words/shared/navigation/material_navigator.dart';
+
+class WordGroupDetailFab extends StatelessWidget {
+  final _key = GlobalKey<ExpandableFabState>();
+
+  WordGroupDetailFab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ExpandableFab(
+      key: _key,
+      openButtonBuilder: RotateFloatingActionButtonBuilder(
+        child: const Icon(Icons.menu),
+        fabSize: ExpandableFabSize.regular,
+        heroTag: HeroTagConstants.fabDefaultTag,
+      ),
+      overlayStyle: ExpandableFabOverlayStyle(
+        // color: context.colorScheme.primary.withValues(alpha: .01),
+        blur: 5,
+      ),
+      type: ExpandableFabType.up,
+      distance: 80,
+      children: [
+        FloatingActionButton.extended(
+          heroTag: null,
+          label: Text('Play'),
+          icon: const Icon(Icons.gamepad_outlined),
+          onPressed: () => _onPlayGames(context),
+        ),
+        FloatingActionButton.extended(
+          heroTag: null,
+          label: Text('Add words'),
+          icon: const Icon(Icons.add),
+          onPressed: () => _onWordAdd(context),
+        ),
+        FloatingActionButton.extended(
+          heroTag: null,
+          label: Text('Update metadata'),
+          icon: const Icon(Icons.update),
+          onPressed: () => _onUpdateMetadata(context),
+        ),
+      ],
+    );
+  }
+
+  void _onPlayGames(BuildContext context) {
+    _key.currentState?.toggle();
+  }
+
+  void _onWordAdd(BuildContext context) async {
+    _key.currentState?.toggle();
+
+    final bloc = context.read<WordGroupDetailCubit>();
+    final state = bloc.state;
+
+    await context.pushBlocValue(
+      context,
+      bloc,
+      (context) => WordListCreatePage(
+        groupId: state.id,
+        groupName: state.name,
+        origin: state.origin,
+        translation: state.translation,
+      ),
+    );
+  }
+
+  void _onUpdateMetadata(BuildContext context) {
+    _key.currentState?.toggle();
+  }
+}
