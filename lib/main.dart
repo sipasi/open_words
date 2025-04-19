@@ -1,20 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:open_words/core/dependency/app_dependency_provider.dart';
+import 'package:open_words/features/app/open_words_app.dart';
 
-void main() {
-  runApp(const MainApp());
-}
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  await AppDependencyProvider.init();
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+  runApp(const OpenWordsApp());
 }
