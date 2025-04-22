@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/core/data/draft/word_draft.dart';
-import 'package:open_words/core/data/entities/id.dart';
-import 'package:open_words/core/data/entities/language_info.dart';
+import 'package:open_words/core/data/entities/word/word_group.dart';
 import 'package:open_words/core/data/repository/word_group_repository.dart';
 import 'package:open_words/core/data/repository/word_repository.dart';
 
@@ -18,11 +17,7 @@ class WordListCreateCubit extends Cubit<WordListCreateState> {
   final _uiEvent = StreamController<WordListUiEvent>.broadcast();
   final _draftRemovedEvent = StreamController<WordDraft>.broadcast();
 
-  final Id groupId;
-  final String groupName;
-
-  final LanguageInfo origin;
-  final LanguageInfo translation;
+  final WordGroup group;
 
   final WordGroupRepository groupRepository;
   final WordRepository wordRepository;
@@ -31,10 +26,7 @@ class WordListCreateCubit extends Cubit<WordListCreateState> {
   Stream<WordDraft> get draftRemovedEvent => _draftRemovedEvent.stream;
 
   WordListCreateCubit({
-    required this.groupId,
-    required this.groupName,
-    required this.origin,
-    required this.translation,
+    required this.group,
     required this.groupRepository,
     required this.wordRepository,
   }) : super(WordListCreateState.intial());
@@ -60,7 +52,7 @@ class WordListCreateCubit extends Cubit<WordListCreateState> {
   }
 
   Future save() {
-    return wordRepository.addAll(groupId: groupId, drafts: state.drafts);
+    return wordRepository.createAll(groupId: group.id, drafts: state.drafts);
   }
 
   @override

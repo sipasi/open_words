@@ -55,8 +55,8 @@ class WordDraftEditor extends StatelessWidget {
     final bloc = context.read<WordListCreateCubit>();
 
     final request = TranslationRequest.languageInfo(
-      source: bloc.origin,
-      target: bloc.translation,
+      source: bloc.group.origin,
+      target: bloc.group.translation,
       word: origin.textTrim,
     );
 

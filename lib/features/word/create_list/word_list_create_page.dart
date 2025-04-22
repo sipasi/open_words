@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_words/core/data/draft/word_draft.dart';
-import 'package:open_words/core/data/entities/id.dart';
-import 'package:open_words/core/data/entities/language_info.dart';
+import 'package:open_words/core/data/entities/word/word_group.dart';
 import 'package:open_words/features/explorer/bloc/explorer_bloc.dart';
 import 'package:open_words/features/word/create_list/cubit/word_list_create_cubit.dart';
 import 'package:open_words/features/word/create_list/widgets/word_draft_editor.dart';
@@ -16,28 +15,16 @@ import 'package:open_words/shared/modal/discard_changes_modal.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 
 class WordListCreatePage extends StatelessWidget {
-  final Id groupId;
-  final String groupName;
-  final LanguageInfo origin;
-  final LanguageInfo translation;
+  final WordGroup group;
 
-  const WordListCreatePage({
-    super.key,
-    required this.groupId,
-    required this.groupName,
-    required this.origin,
-    required this.translation,
-  });
+  const WordListCreatePage({super.key, required this.group});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<WordListCreateCubit>(
       create:
           (context) => WordListCreateCubit(
-            groupId: groupId,
-            groupName: groupName,
-            origin: origin,
-            translation: translation,
+            group: group,
             groupRepository: GetIt.I.get(),
             wordRepository: GetIt.I.get(),
           ),
