@@ -163,13 +163,13 @@ class _ExplorerEntityEditorState extends State<ExplorerEntityEditor> {
     if (state.folderSelected) {
       return folderRepository.update(
         id: cubit.entityUnion!.folder!.id,
-        parentFolder: widget.parentFolder,
+        parentId: widget.parentFolder,
         name: state.name,
       );
     }
     return groupRepository.update(
       id: cubit.entityUnion!.group!.id,
-      parentFolder: widget.parentFolder,
+      parentId: widget.parentFolder,
       name: state.name,
       origin: state.origin,
       translation: state.translation,
@@ -181,12 +181,12 @@ class _ExplorerEntityEditorState extends State<ExplorerEntityEditor> {
 
     if (state.folderSelected) {
       return folderRepository.create(
-        parentFolder: widget.parentFolder,
+        parentId: widget.parentFolder,
         name: state.name,
       );
     }
     return groupRepository.create(
-      parentFolder: widget.parentFolder,
+      parentId: widget.parentFolder,
       name: state.name,
       origin: state.origin,
       translation: state.translation,
