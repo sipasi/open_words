@@ -1,0 +1,32 @@
+import 'package:get_it/get_it.dart';
+import 'package:open_words/core/data/draft/metadata/word_metadata_draft.dart';
+import 'package:open_words/core/services/logger/app_logger.dart';
+import 'package:open_words/core/services/word_metadata/dev_dictionary_api/mappers/meaning_model_mapper.dart';
+import 'package:open_words/core/services/word_metadata/dev_dictionary_api/mappers/phonetic_model_mapper.dart';
+import 'package:open_words/core/services/word_metadata/dev_dictionary_api/models/word_metadata_model.dart';
+
+sealed class MetadataModelMapper {
+  static WordMetadataDraft? map(WordMetadataModel? model) {
+    if (model == null) {
+      return null;
+    }
+
+    if (model.word == null) {
+      final logger = GetIt.I.get<AppLogger>();
+
+      logger.e(
+        '[MetadataModelMapper] - WordMetadataModel.word field was null\nword: ${model.word}',
+      );
+
+      return null;
+    }
+
+    return WordMetadataDraft(
+      word: model.word!,
+      origin: model.origin ?? '',
+      phonetic: model.phonetic ?? '',
+      phonetics: PhoneticModelMapper.mapList(model.phonetics),
+      meanings: MeaningModelMapper.mapList(model.meanings),
+    );
+  }
+}
