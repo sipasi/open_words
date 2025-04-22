@@ -1,6 +1,8 @@
+import 'package:drift/drift.dart';
 import 'package:open_words/core/data/draft/word_draft.dart';
 import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/entities/word/word.dart';
+import 'package:open_words/core/data/repository/mappers/word_sql_mapper.dart';
 import 'package:open_words/core/data/sources/drift/app_drift_database.dart';
 
 sealed class WordRepository {
@@ -12,7 +14,7 @@ sealed class WordRepository {
     required String translation,
   });
 
-  Future addAll({required Id groupId, required List<WordDraft> drafts});
+  Future createAll({required Id groupId, required List<WordDraft> drafts});
 }
 
 class WordRepositoryImpl extends WordRepository {
@@ -21,11 +23,8 @@ class WordRepositoryImpl extends WordRepository {
   WordRepositoryImpl(this.database);
 
   @override
-  Future<List<Word>> allByGroup(Id group) {
-    return database.managers.words
-        .filter((f) => f.groupId.id.equals(group.valueOrNull()))
-        .map(_mapWord)
-        .get();
+  Future<List<Word>> allByGroup(Id groupId) {
+    return database.allByGroupQuery(groupId).map(WordSqlMapper.from).get();
   }
 
   @override
@@ -46,17 +45,8 @@ class WordRepositoryImpl extends WordRepository {
     );
   }
 
-  Word _mapWord(DriftWord element) {
-    return Word(
-      id: Id.exist(element.id),
-      groupId: Id.exist(element.groupId),
-      origin: element.origin,
-      translation: element.translation,
-    );
-  }
-
   @override
-  Future addAll({required Id groupId, required List<WordDraft> drafts}) {
+  Future createAll({required Id groupId, required List<WordDraft> drafts}) {
     final now = DateTime.now();
 
     int id = groupId.valueOrThrow();
@@ -73,5 +63,22 @@ class WordRepositoryImpl extends WordRepository {
         );
       }),
     );
+  }
+}
+
+extension _Queries on AppDriftDatabase {
+  Selectable<QueryRow> allByGroupQuery(Id groupId) {
+    return customSelect(
+      _query(where: 'w.group_id = ?'),
+      variables: [Variable.withInt(groupId.valueOrThrow())],
+    );
+  }
+
+  static String _query({String? where}) {
+    const template =
+        'SELECT w.* '
+        'FROM words w ';
+
+    return where == null ? '$template;' : '$template WHERE $where;';
   }
 }
