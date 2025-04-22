@@ -4,7 +4,7 @@ import 'package:open_words/core/data/entities/word/word.dart';
 import 'package:open_words/features/word/detail/word_detail_page.dart';
 import 'package:open_words/features/word_group/detail/cubit/word_group_detail_cubit.dart';
 import 'package:open_words/features/word_group/detail/widgets/word_tile.dart';
-import 'package:open_words/shared/constants/list_view_padding.dart';
+import 'package:open_words/shared/constants/list_padding_constans.dart';
 import 'package:open_words/shared/layout/adaptive_grid_view.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 
@@ -21,7 +21,9 @@ class WordGridView extends StatelessWidget {
 
         return AdaptiveGridView(
           maxCrossAxisExtent: 300,
-          padding: const EdgeInsets.only(bottom: ListViewPadding.bottomForFab),
+          padding: const EdgeInsets.only(
+            bottom: ListPaddingConstans.bottomForFab,
+          ),
           itemCount: words.length,
 
           itemBuilder: (context, index) {
@@ -42,8 +44,7 @@ class WordGridView extends StatelessWidget {
     final state = context.read<WordGroupDetailCubit>().state;
 
     await context.push(
-      (context) =>
-          WordDetailPage(groupId: state.id, groupName: state.name, word: word),
+      (context) => WordDetailPage(group: state.group, word: word),
     );
   }
 }
