@@ -2,15 +2,16 @@ import 'package:drift/drift.dart';
 import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/entities/language_info.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
+import 'package:open_words/core/data/repository/mappers/word_group_sql_mapper.dart';
 import 'package:open_words/core/data/sources/drift/app_drift_database.dart';
 
 sealed class WordGroupRepository {
   Future<List<WordGroup>> all();
-  Future<List<WordGroup>> allByFolder(Id folder);
+  Future<List<WordGroup>> allByFolder(Id folderId);
   Future<WordGroup?> byId(Id id);
 
   Future<WordGroup> create({
-    required Id parentFolder,
+    required Id parentId,
     required String name,
     required LanguageInfo origin,
     required LanguageInfo translation,
@@ -18,7 +19,7 @@ sealed class WordGroupRepository {
 
   Future<WordGroup> update({
     required Id id,
-    required Id parentFolder,
+    required Id parentId,
     required String name,
     required LanguageInfo origin,
     required LanguageInfo translation,
@@ -32,54 +33,42 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
 
   @override
   Future<List<WordGroup>> all() {
-    return database.managers.wordGroups.map(_mapGroup).get();
+    return database.allQuery().map(WordGroupSqlMapper.from).get();
   }
 
   @override
-  Future<List<WordGroup>> allByFolder(Id folder) {
-    var query = database.allByFolderQuery(folder);
-
-    return query
-        .map(
-          (row) => _mapGroup(
-            database.wordGroups.map(row.data),
-          ).copyWith(words: row.read<int>('words_count')),
-        )
+  Future<List<WordGroup>> allByFolder(Id folderId) {
+    return database
+        .allByFolderQuery(folderId)
+        .map(WordGroupSqlMapper.from)
         .get();
-
-    // return database.managers.wordGroups
-    //     .filter((f) => f.folderId.id.equals(folder.valueOrNull()))
-    //     .map(_mapGroup)
-    //     .get();
   }
 
   @override
   Future<WordGroup?> byId(Id id) {
-    return database.managers.wordGroups
-        .filter((f) => f.id.equals(id.valueOrNull()))
-        .map(_mapGroup)
+    return database
+        .byIdQuery(id)
+        .map(WordGroupSqlMapper.from)
         .getSingleOrNull();
   }
 
   @override
   Future<WordGroup> create({
-    required Id parentFolder,
+    required Id parentId,
     required String name,
     required LanguageInfo origin,
     required LanguageInfo translation,
   }) async {
-    final now = DateTime.now();
-
-    final id = await database.managers.wordGroups.create(
-      (o) => o(
-        folderId: Value.absentIfNull(parentFolder.valueOrNull()),
-        created: now,
-        modified: now,
-        name: name,
-        origin: origin,
-        translation: translation,
-      ),
-    );
+    final id = await database
+        .into(database.wordGroups)
+        .insert(
+          WordGroupSqlMapper.toCreate(
+            folderId: parentId,
+            name: name,
+            origin: origin,
+            translation: translation,
+          ),
+        );
 
     final entity = await byId(Id.exist(id));
 
@@ -89,22 +78,19 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
   @override
   Future<WordGroup> update({
     required Id id,
-    required Id parentFolder,
-    required String name,
-    required LanguageInfo origin,
-    required LanguageInfo translation,
+    Id? parentId,
+    String? name,
+    LanguageInfo? origin,
+    LanguageInfo? translation,
   }) async {
-    final now = DateTime.now();
-
     await database.managers.wordGroups
         .filter((f) => f.id.equals(id.valueOrNull()))
         .update(
-          (o) => o(
-            folderId: Value.absentIfNull(parentFolder.valueOrNull()),
-            modified: Value(now),
-            name: Value(name),
-            origin: Value(origin),
-            translation: Value(translation),
+          (_) => WordGroupSqlMapper.toUpdate(
+            folderId: parentId,
+            name: name,
+            origin: origin,
+            translation: translation,
           ),
         );
 
@@ -112,35 +98,39 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
 
     return entity!;
   }
-
-  WordGroup _mapGroup(DriftWordGroup element) {
-    return WordGroup(
-      id: Id.exist(element.id),
-      folderId: Id.emptyIfNull(element.id),
-      created: element.created,
-      modified: element.modified,
-      name: element.name,
-      origin: element.origin,
-      translation: element.translation,
-      words: 0,
-    );
-  }
 }
 
 extension _Queries on AppDriftDatabase {
-  Selectable<QueryRow> allByFolderQuery(Id folder) {
-    final query =
-        'SELECT *, '
-        '(SELECT COUNT(*) FROM words WHERE group_id = g.id) AS "words_count" '
-        'FROM word_groups g ';
+  Selectable<QueryRow> allQuery() {
+    return customSelect(_query());
+  }
 
-    if (folder.isEmpty) {
-      return customSelect('$query WHERE g.folder_id IS NULL;');
+  Selectable<QueryRow> allByFolderQuery(Id folderId) {
+    if (folderId.isEmpty) {
+      return customSelect(_query(where: 'g.folder_id IS NULL'));
     }
 
     return customSelect(
-      '$query WHERE g.folder_id = ?;',
-      variables: [Variable.withInt(folder.valueOrThrow())],
+      _query(where: 'g.folder_id = ?'),
+      variables: [Variable.withInt(folderId.valueOrThrow())],
     );
+  }
+
+  Selectable<QueryRow> byIdQuery(Id id) {
+    return customSelect(
+      _query(where: 'g.id = ?'),
+      variables: [Variable.withInt(id.valueOrThrow())],
+    );
+  }
+
+  static String _query({String? where}) {
+    const template =
+        'SELECT g.*, COUNT(w.id) AS words '
+        'FROM word_groups g '
+        'LEFT JOIN words w ON w.group_id = g.id ';
+
+    return where == null
+        ? '$template GROUP BY g.id;'
+        : '$template WHERE $where GROUP BY g.id;';
   }
 }
