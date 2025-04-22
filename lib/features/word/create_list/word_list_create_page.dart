@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_words/core/data/draft/word_draft.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
+import 'package:open_words/core/services/vibration/vibration_service.dart';
 import 'package:open_words/features/explorer/bloc/explorer_bloc.dart';
 import 'package:open_words/features/word/create_list/cubit/word_list_create_cubit.dart';
 import 'package:open_words/features/word/create_list/widgets/word_draft_editor.dart';
@@ -41,6 +42,8 @@ class WordListCreateView extends StatefulWidget {
 }
 
 class _WordListCreateViewState extends State<WordListCreateView> {
+  final vibration = GetIt.I.get<VibrationService>();
+
   final TextEditController origin = TextEditController.text();
   final TextEditController translation = TextEditController.text();
 
@@ -57,11 +60,15 @@ class _WordListCreateViewState extends State<WordListCreateView> {
       if (event == WordListUiEvent.clearAllInput) {
         origin.clear();
         translation.clear();
+
+        vibration.tap();
       }
     });
     _daraftRemovedSubscription = bloc.draftRemovedEvent.listen((event) {
       origin.setText(event.origin);
       translation.setText(event.translation);
+
+      vibration.tap();
     });
   }
 

@@ -3,15 +3,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_words/core/services/clipboard/clipboard.dart';
+import 'package:open_words/core/services/vibration/vibration_service.dart';
 import 'package:open_words/shared/input_fields/text_edit_controller.dart';
 import 'package:open_words/shared/input_fields/text_edit_field.dart';
 
 class WordPartEditor extends StatelessWidget {
+  final vibration = GetIt.I.get<VibrationService>();
+  final clipboard = GetIt.I.get<ClipboardService>();
+
   final TextEditController controller;
   final String label;
   final String hint;
 
-  const WordPartEditor({
+  WordPartEditor({
     super.key,
     required this.controller,
     required this.label,
@@ -61,8 +65,6 @@ class WordPartEditor extends StatelessWidget {
   }
 
   Future _pastFromClipboard() async {
-    final clipboard = GetIt.I.get<ClipboardService>();
-
     final value = await clipboard.getText();
     final trimmed = controller.textTrim;
 
@@ -70,16 +72,23 @@ class WordPartEditor extends StatelessWidget {
       return;
     }
 
+    vibration.tap();
     controller.setText(trimmed.isEmpty ? value : '$trimmed, $value');
   }
 
   Future _copyToClipboard() {
-    final clipboard = GetIt.I.get<ClipboardService>();
+    if (controller.textTrim.isNotEmpty) {
+      vibration.tap();
+    }
 
     return clipboard.setText(controller.textTrim);
   }
 
   void _clearText() {
+    if (controller.textTrim.isNotEmpty) {
+      vibration.tap();
+    }
+
     controller.clear();
   }
 }
