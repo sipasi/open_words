@@ -3,7 +3,7 @@ import 'package:open_words/core/data/entities/folder/folder.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
 import 'package:open_words/features/explorer/widgets/folder_tile.dart';
 import 'package:open_words/features/explorer/widgets/group_tile.dart';
-import 'package:open_words/shared/constants/list_view_padding.dart';
+import 'package:open_words/shared/constants/list_padding_constans.dart';
 import 'package:open_words/shared/layout/adaptive_grid_view.dart';
 
 class ExplorerGridView extends StatelessWidget {
@@ -24,7 +24,7 @@ class ExplorerGridView extends StatelessWidget {
       mainAxisExtent: 48,
       maxCrossAxisExtent: 600,
       itemCount: folderLength + groups.length,
-      padding: const EdgeInsets.only(bottom: ListViewPadding.bottomForFab),
+      padding: const EdgeInsets.only(bottom: ListPaddingConstans.bottomForFab),
       itemBuilder: (context, index) {
         if (index < folderLength) {
           final folder = folders[index];

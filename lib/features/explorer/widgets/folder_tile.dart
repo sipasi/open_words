@@ -30,7 +30,7 @@ class FolderTile extends StatelessWidget {
   }
 
   void onTap(BuildContext context, Folder value) {
-    context.read<ExplorerBloc>().add(ExplorerLoadRequested(folderId: value.id));
+    context.read<ExplorerBloc>().add(ExplorerNavigateRequested(folder: value));
 
     GetIt.I.get<VibrationService>().tap();
   }

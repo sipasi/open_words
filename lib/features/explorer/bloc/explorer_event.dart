@@ -2,10 +2,18 @@ part of 'explorer_bloc.dart';
 
 sealed class ExplorerEvent {}
 
-final class ExplorerLoadRequested extends ExplorerEvent {
-  final Id folderId;
+final class ExplorerStarted extends ExplorerEvent {
+  ExplorerStarted();
+}
 
-  ExplorerLoadRequested({this.folderId = const Id.empty()});
+final class ExplorerNavigateRequested extends ExplorerEvent {
+  final Folder folder;
+
+  ExplorerNavigateRequested({required this.folder});
+}
+
+final class ExplorerNavigateBackRequested extends ExplorerEvent {
+  ExplorerNavigateBackRequested();
 }
 
 final class ExplorerRefreshRequested extends ExplorerEvent {

@@ -30,7 +30,7 @@ class GroupTile extends StatelessWidget {
   }
 
   Future onTap(BuildContext context, WordGroup value) {
-    return context.push((context) => WordGroupDetailPage(groupId: value.id));
+    return context.push((context) => WordGroupDetailPage(group: group));
   }
 
   Future onLongPress(BuildContext context, WordGroup value) {

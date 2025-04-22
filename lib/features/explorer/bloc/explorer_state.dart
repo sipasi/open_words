@@ -1,12 +1,12 @@
 part of 'explorer_bloc.dart';
 
 class ExplorerState {
-  final Id exploredId;
   final Folder? exploredFolder;
 
   final List<Folder> folders;
   final List<WordGroup> groups;
 
+  Id get exploredId => exploredFolder?.id ?? const Id.empty();
   String get exploredName => exploredFolder?.name ?? 'Home';
 
   bool get isEmpty => folders.isEmpty && groups.isEmpty;
@@ -16,26 +16,21 @@ class ExplorerState {
   bool get isRootFolder => exploredFolder == null;
 
   const ExplorerState({
-    required this.exploredId,
     required this.exploredFolder,
     required this.folders,
     required this.groups,
   });
   const ExplorerState.initial()
-    : exploredId = const Id.empty(),
-      exploredFolder = null,
-
+    : exploredFolder = null,
       folders = const [],
       groups = const [];
 
   ExplorerState copyWith({
-    required Id exploredId,
-    required Folder? exploredFolder,
+    Folder? exploredFolder,
     List<Folder>? folders,
     List<WordGroup>? groups,
   }) {
     return ExplorerState(
-      exploredId: exploredId,
       exploredFolder: exploredFolder,
       folders: folders ?? this.folders,
       groups: groups ?? this.groups,
