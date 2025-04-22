@@ -8,6 +8,7 @@ import 'package:open_words/core/dependency/repository_dependency.dart';
 import 'package:open_words/core/dependency/theme_storage_dependency.dart';
 import 'package:open_words/core/dependency/translator_services_dependency.dart';
 import 'package:open_words/core/dependency/vibration_service_dependency.dart';
+import 'package:open_words/core/dependency/word_metadata_service_dependency.dart';
 
 abstract class AppDependencyProvider {
   static Future init() async {
@@ -30,6 +31,7 @@ abstract class AppDependencyProvider {
       LanguageInfoServiceDependency(),
       TranslatorServicesDependency(),
       ClipboardServiceDependency(),
+      WordMetadataServiceDependency(),
     ];
   }
 }
