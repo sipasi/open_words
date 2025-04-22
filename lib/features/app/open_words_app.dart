@@ -22,9 +22,9 @@ class OpenWordsApp extends StatelessWidget {
           lazy: false,
           create: (context) {
             return ExplorerBloc(
+              explorerRepository: GetIt.I.get(),
               folderRepository: GetIt.I.get(),
-              groupRepository: GetIt.I.get(),
-            )..add(ExplorerLoadRequested());
+            )..add(ExplorerStarted());
           },
         ),
         BlocProvider(
