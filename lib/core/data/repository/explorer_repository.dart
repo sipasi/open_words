@@ -8,6 +8,7 @@ import 'package:open_words/core/data/sources/drift/app_drift_database.dart';
 
 sealed class ExplorerRepository {
   Future<ExplorerData> allByFolder(Id folderId);
+  Future<ExplorerData> allByFolderViaRepo(Id folderId);
 }
 
 class ExplorerRepositoryImpl extends ExplorerRepository {
@@ -28,6 +29,14 @@ class ExplorerRepositoryImpl extends ExplorerRepository {
 
     return ExplorerSqlMapper.fromList(rows);
   }
+
+  @override
+  Future<ExplorerData> allByFolderViaRepo(Id folderId) async {
+    return ExplorerData(
+      folders: await folderRepository.allByParent(folderId),
+      groups: await groupRepository.allByFolder(folderId),
+    );
+  }
 }
 
 extension _Queries on AppDriftDatabase {
@@ -40,7 +49,7 @@ extension _Queries on AppDriftDatabase {
         parentFolder.isEmpty ? 'IS NULL' : '= ${parentFolder.valueOrNull()}';
 
     final template =
-        'SELECT id, parent_id AS folder_id, name, created, NULL AS modified, '
+        'SELECT id, parent_id AS parent_id, name, created, NULL AS modified, '
         'NULL AS language_origin_code, NULL AS language_origin_name, NULL AS language_origin_native, '
         'NULL AS language_translation_code, NULL AS language_translation_name, NULL AS language_translation_native, '
         '\'Folder\' AS entity_type '

@@ -14,6 +14,7 @@ sealed class ExplorerSqlMapper {
       final type = data['entity_type'];
 
       if (type == 'WordGroup') {
+        data['folder_id'] = data['parent_id'];
         final group = WordGroupSqlMapper.from(row);
 
         explorer.groups.add(group);

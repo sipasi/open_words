@@ -36,6 +36,10 @@ class FolderRepositoryImpl extends FolderRepository {
 
   @override
   Future<Folder?> byId(Id id) {
+    if (id.isEmpty) {
+      return Future.value();
+    }
+
     return database.byIdQuery(id).map(FolderSqlMapper.from).getSingleOrNull();
   }
 
