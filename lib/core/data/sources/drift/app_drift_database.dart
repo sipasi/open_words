@@ -1,12 +1,11 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
-import 'package:open_words/core/data/entities/language_info.dart';
-import 'package:open_words/core/data/sources/drift/language_info_converter.dart';
 import 'package:open_words/core/data/sources/drift/synonym_antonym_converter.dart';
 import 'package:path_provider/path_provider.dart';
 
 part 'app_drift_database.g.dart';
 
+@TableIndex(name: 'word_created', columns: {#created})
 @DataClassName('DriftWord')
 class Words extends Table {
   IntColumn get id => integer().autoIncrement()();
@@ -19,6 +18,17 @@ class Words extends Table {
   TextColumn get translation => text()();
 }
 
+@TableIndex(name: 'group_created', columns: {#created})
+@TableIndex(name: 'group_name', columns: {#name})
+@TableIndex(name: 'group_language_origin_code', columns: {#languageOriginCode})
+@TableIndex(
+  name: 'group_language_translation_code',
+  columns: {#languageTranslationCode},
+)
+@TableIndex(
+  name: 'group_language_origin_translation_code',
+  columns: {#languageOriginCode, #languageTranslationCode},
+)
 @DataClassName('DriftWordGroup')
 class WordGroups extends Table {
   IntColumn get id => integer().autoIncrement()();
@@ -34,10 +44,17 @@ class WordGroups extends Table {
 
   TextColumn get name => text()();
 
-  TextColumn get origin => text().map(const LanguageInfoConverter())();
-  TextColumn get translation => text().map(const LanguageInfoConverter())();
+  TextColumn get languageOriginCode => text()();
+  TextColumn get languageOriginName => text()();
+  TextColumn get languageOriginNative => text()();
+
+  TextColumn get languageTranslationCode => text()();
+  TextColumn get languageTranslationName => text()();
+  TextColumn get languageTranslationNative => text()();
 }
 
+@TableIndex(name: 'folder_created', columns: {#created})
+@TableIndex(name: 'folder_name', columns: {#name})
 @DataClassName('DriftFolder')
 class Folders extends Table {
   IntColumn get id => integer().autoIncrement()();
@@ -53,25 +70,26 @@ class Folders extends Table {
   TextColumn get name => text()();
 }
 
-@TableIndex(name: 'word_index', columns: {#word})
+@TableIndex(name: 'metadata_word_index', columns: {#word})
 @DataClassName('DriftWordMetadata')
 class WordMetadatas extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   TextColumn get word => text()();
+
+  TextColumn get origin => text()();
+  TextColumn get phonetic => text()();
 }
 
 @DataClassName('DriftPhonetic')
 class Phonetics extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
   IntColumn get metadataId =>
-      integer().nullable().references(
-        WordMetadatas,
-        #id,
-        onDelete: KeyAction.cascade,
-      )();
+      integer().references(WordMetadatas, #id, onDelete: KeyAction.cascade)();
 
   TextColumn get value => text()();
-  TextColumn get audio => text().nullable()();
+  TextColumn get audio => text()();
 }
 
 @DataClassName('DriftMeaning')
@@ -79,11 +97,7 @@ class Meanings extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   IntColumn get metadataId =>
-      integer().nullable().references(
-        WordMetadatas,
-        #id,
-        onDelete: KeyAction.cascade,
-      )();
+      integer().references(WordMetadatas, #id, onDelete: KeyAction.cascade)();
 
   TextColumn get partOfSpeech => text()();
 
@@ -93,18 +107,26 @@ class Meanings extends Table {
 
 @DataClassName('DriftDefinition')
 class Definitions extends Table {
+  IntColumn get id => integer().autoIncrement()();
+
   IntColumn get meaningId =>
-      integer().nullable().references(
-        Meanings,
-        #id,
-        onDelete: KeyAction.cascade,
-      )();
+      integer().references(Meanings, #id, onDelete: KeyAction.cascade)();
 
   TextColumn get value => text()();
   TextColumn get example => text()();
 }
 
-@DriftDatabase(tables: [Folders, WordGroups, Words])
+@DriftDatabase(
+  tables: [
+    Folders,
+    WordGroups,
+    Words,
+    WordMetadatas,
+    Phonetics,
+    Meanings,
+    Definitions,
+  ],
+)
 class AppDriftDatabase extends _$AppDriftDatabase {
   // After generating code, this class needs to define a `schemaVersion` getter
   // and a constructor telling drift where the database should be stored.
@@ -126,7 +148,7 @@ class AppDriftDatabase extends _$AppDriftDatabase {
 
   static QueryExecutor _openConnection() {
     return driftDatabase(
-      name: 'my_database',
+      name: 'open-words-drift-database',
       native: const DriftNativeOptions(
         // By default, `driftDatabase` from `package:drift_flutter` stores the
         // database files in `getApplicationDocumentsDirectory()`.

@@ -372,24 +372,72 @@ class $WordGroupsTable extends WordGroups
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _languageOriginCodeMeta =
+      const VerificationMeta('languageOriginCode');
   @override
-  late final GeneratedColumnWithTypeConverter<LanguageInfo, String> origin =
+  late final GeneratedColumn<String> languageOriginCode =
       GeneratedColumn<String>(
-        'origin',
+        'language_origin_code',
         aliasedName,
         false,
         type: DriftSqlType.string,
         requiredDuringInsert: true,
-      ).withConverter<LanguageInfo>($WordGroupsTable.$converterorigin);
+      );
+  static const VerificationMeta _languageOriginNameMeta =
+      const VerificationMeta('languageOriginName');
   @override
-  late final GeneratedColumnWithTypeConverter<LanguageInfo, String>
-  translation = GeneratedColumn<String>(
-    'translation',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  ).withConverter<LanguageInfo>($WordGroupsTable.$convertertranslation);
+  late final GeneratedColumn<String> languageOriginName =
+      GeneratedColumn<String>(
+        'language_origin_name',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _languageOriginNativeMeta =
+      const VerificationMeta('languageOriginNative');
+  @override
+  late final GeneratedColumn<String> languageOriginNative =
+      GeneratedColumn<String>(
+        'language_origin_native',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _languageTranslationCodeMeta =
+      const VerificationMeta('languageTranslationCode');
+  @override
+  late final GeneratedColumn<String> languageTranslationCode =
+      GeneratedColumn<String>(
+        'language_translation_code',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _languageTranslationNameMeta =
+      const VerificationMeta('languageTranslationName');
+  @override
+  late final GeneratedColumn<String> languageTranslationName =
+      GeneratedColumn<String>(
+        'language_translation_name',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _languageTranslationNativeMeta =
+      const VerificationMeta('languageTranslationNative');
+  @override
+  late final GeneratedColumn<String> languageTranslationNative =
+      GeneratedColumn<String>(
+        'language_translation_native',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -397,8 +445,12 @@ class $WordGroupsTable extends WordGroups
     created,
     modified,
     name,
-    origin,
-    translation,
+    languageOriginCode,
+    languageOriginName,
+    languageOriginNative,
+    languageTranslationCode,
+    languageTranslationName,
+    languageTranslationNative,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -445,6 +497,72 @@ class $WordGroupsTable extends WordGroups
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
+    if (data.containsKey('language_origin_code')) {
+      context.handle(
+        _languageOriginCodeMeta,
+        languageOriginCode.isAcceptableOrUnknown(
+          data['language_origin_code']!,
+          _languageOriginCodeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_languageOriginCodeMeta);
+    }
+    if (data.containsKey('language_origin_name')) {
+      context.handle(
+        _languageOriginNameMeta,
+        languageOriginName.isAcceptableOrUnknown(
+          data['language_origin_name']!,
+          _languageOriginNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_languageOriginNameMeta);
+    }
+    if (data.containsKey('language_origin_native')) {
+      context.handle(
+        _languageOriginNativeMeta,
+        languageOriginNative.isAcceptableOrUnknown(
+          data['language_origin_native']!,
+          _languageOriginNativeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_languageOriginNativeMeta);
+    }
+    if (data.containsKey('language_translation_code')) {
+      context.handle(
+        _languageTranslationCodeMeta,
+        languageTranslationCode.isAcceptableOrUnknown(
+          data['language_translation_code']!,
+          _languageTranslationCodeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_languageTranslationCodeMeta);
+    }
+    if (data.containsKey('language_translation_name')) {
+      context.handle(
+        _languageTranslationNameMeta,
+        languageTranslationName.isAcceptableOrUnknown(
+          data['language_translation_name']!,
+          _languageTranslationNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_languageTranslationNameMeta);
+    }
+    if (data.containsKey('language_translation_native')) {
+      context.handle(
+        _languageTranslationNativeMeta,
+        languageTranslationNative.isAcceptableOrUnknown(
+          data['language_translation_native']!,
+          _languageTranslationNativeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_languageTranslationNativeMeta);
+    }
     return context;
   }
 
@@ -478,18 +596,36 @@ class $WordGroupsTable extends WordGroups
             DriftSqlType.string,
             data['${effectivePrefix}name'],
           )!,
-      origin: $WordGroupsTable.$converterorigin.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.string,
-          data['${effectivePrefix}origin'],
-        )!,
-      ),
-      translation: $WordGroupsTable.$convertertranslation.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.string,
-          data['${effectivePrefix}translation'],
-        )!,
-      ),
+      languageOriginCode:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}language_origin_code'],
+          )!,
+      languageOriginName:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}language_origin_name'],
+          )!,
+      languageOriginNative:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}language_origin_native'],
+          )!,
+      languageTranslationCode:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}language_translation_code'],
+          )!,
+      languageTranslationName:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}language_translation_name'],
+          )!,
+      languageTranslationNative:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}language_translation_native'],
+          )!,
     );
   }
 
@@ -497,11 +633,6 @@ class $WordGroupsTable extends WordGroups
   $WordGroupsTable createAlias(String alias) {
     return $WordGroupsTable(attachedDatabase, alias);
   }
-
-  static JsonTypeConverter2<LanguageInfo, String, Map<String, Object?>>
-  $converterorigin = const LanguageInfoConverter();
-  static JsonTypeConverter2<LanguageInfo, String, Map<String, Object?>>
-  $convertertranslation = const LanguageInfoConverter();
 }
 
 class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
@@ -510,16 +641,24 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
   final DateTime created;
   final DateTime modified;
   final String name;
-  final LanguageInfo origin;
-  final LanguageInfo translation;
+  final String languageOriginCode;
+  final String languageOriginName;
+  final String languageOriginNative;
+  final String languageTranslationCode;
+  final String languageTranslationName;
+  final String languageTranslationNative;
   const DriftWordGroup({
     required this.id,
     this.folderId,
     required this.created,
     required this.modified,
     required this.name,
-    required this.origin,
-    required this.translation,
+    required this.languageOriginCode,
+    required this.languageOriginName,
+    required this.languageOriginNative,
+    required this.languageTranslationCode,
+    required this.languageTranslationName,
+    required this.languageTranslationNative,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -531,16 +670,18 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
     map['created'] = Variable<DateTime>(created);
     map['modified'] = Variable<DateTime>(modified);
     map['name'] = Variable<String>(name);
-    {
-      map['origin'] = Variable<String>(
-        $WordGroupsTable.$converterorigin.toSql(origin),
-      );
-    }
-    {
-      map['translation'] = Variable<String>(
-        $WordGroupsTable.$convertertranslation.toSql(translation),
-      );
-    }
+    map['language_origin_code'] = Variable<String>(languageOriginCode);
+    map['language_origin_name'] = Variable<String>(languageOriginName);
+    map['language_origin_native'] = Variable<String>(languageOriginNative);
+    map['language_translation_code'] = Variable<String>(
+      languageTranslationCode,
+    );
+    map['language_translation_name'] = Variable<String>(
+      languageTranslationName,
+    );
+    map['language_translation_native'] = Variable<String>(
+      languageTranslationNative,
+    );
     return map;
   }
 
@@ -554,8 +695,12 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
       created: Value(created),
       modified: Value(modified),
       name: Value(name),
-      origin: Value(origin),
-      translation: Value(translation),
+      languageOriginCode: Value(languageOriginCode),
+      languageOriginName: Value(languageOriginName),
+      languageOriginNative: Value(languageOriginNative),
+      languageTranslationCode: Value(languageTranslationCode),
+      languageTranslationName: Value(languageTranslationName),
+      languageTranslationNative: Value(languageTranslationNative),
     );
   }
 
@@ -570,11 +715,23 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
       created: serializer.fromJson<DateTime>(json['created']),
       modified: serializer.fromJson<DateTime>(json['modified']),
       name: serializer.fromJson<String>(json['name']),
-      origin: $WordGroupsTable.$converterorigin.fromJson(
-        serializer.fromJson<Map<String, Object?>>(json['origin']),
+      languageOriginCode: serializer.fromJson<String>(
+        json['languageOriginCode'],
       ),
-      translation: $WordGroupsTable.$convertertranslation.fromJson(
-        serializer.fromJson<Map<String, Object?>>(json['translation']),
+      languageOriginName: serializer.fromJson<String>(
+        json['languageOriginName'],
+      ),
+      languageOriginNative: serializer.fromJson<String>(
+        json['languageOriginNative'],
+      ),
+      languageTranslationCode: serializer.fromJson<String>(
+        json['languageTranslationCode'],
+      ),
+      languageTranslationName: serializer.fromJson<String>(
+        json['languageTranslationName'],
+      ),
+      languageTranslationNative: serializer.fromJson<String>(
+        json['languageTranslationNative'],
       ),
     );
   }
@@ -587,11 +744,17 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
       'created': serializer.toJson<DateTime>(created),
       'modified': serializer.toJson<DateTime>(modified),
       'name': serializer.toJson<String>(name),
-      'origin': serializer.toJson<Map<String, Object?>>(
-        $WordGroupsTable.$converterorigin.toJson(origin),
+      'languageOriginCode': serializer.toJson<String>(languageOriginCode),
+      'languageOriginName': serializer.toJson<String>(languageOriginName),
+      'languageOriginNative': serializer.toJson<String>(languageOriginNative),
+      'languageTranslationCode': serializer.toJson<String>(
+        languageTranslationCode,
       ),
-      'translation': serializer.toJson<Map<String, Object?>>(
-        $WordGroupsTable.$convertertranslation.toJson(translation),
+      'languageTranslationName': serializer.toJson<String>(
+        languageTranslationName,
+      ),
+      'languageTranslationNative': serializer.toJson<String>(
+        languageTranslationNative,
       ),
     };
   }
@@ -602,16 +765,27 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
     DateTime? created,
     DateTime? modified,
     String? name,
-    LanguageInfo? origin,
-    LanguageInfo? translation,
+    String? languageOriginCode,
+    String? languageOriginName,
+    String? languageOriginNative,
+    String? languageTranslationCode,
+    String? languageTranslationName,
+    String? languageTranslationNative,
   }) => DriftWordGroup(
     id: id ?? this.id,
     folderId: folderId.present ? folderId.value : this.folderId,
     created: created ?? this.created,
     modified: modified ?? this.modified,
     name: name ?? this.name,
-    origin: origin ?? this.origin,
-    translation: translation ?? this.translation,
+    languageOriginCode: languageOriginCode ?? this.languageOriginCode,
+    languageOriginName: languageOriginName ?? this.languageOriginName,
+    languageOriginNative: languageOriginNative ?? this.languageOriginNative,
+    languageTranslationCode:
+        languageTranslationCode ?? this.languageTranslationCode,
+    languageTranslationName:
+        languageTranslationName ?? this.languageTranslationName,
+    languageTranslationNative:
+        languageTranslationNative ?? this.languageTranslationNative,
   );
   DriftWordGroup copyWithCompanion(WordGroupsCompanion data) {
     return DriftWordGroup(
@@ -620,9 +794,30 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
       created: data.created.present ? data.created.value : this.created,
       modified: data.modified.present ? data.modified.value : this.modified,
       name: data.name.present ? data.name.value : this.name,
-      origin: data.origin.present ? data.origin.value : this.origin,
-      translation:
-          data.translation.present ? data.translation.value : this.translation,
+      languageOriginCode:
+          data.languageOriginCode.present
+              ? data.languageOriginCode.value
+              : this.languageOriginCode,
+      languageOriginName:
+          data.languageOriginName.present
+              ? data.languageOriginName.value
+              : this.languageOriginName,
+      languageOriginNative:
+          data.languageOriginNative.present
+              ? data.languageOriginNative.value
+              : this.languageOriginNative,
+      languageTranslationCode:
+          data.languageTranslationCode.present
+              ? data.languageTranslationCode.value
+              : this.languageTranslationCode,
+      languageTranslationName:
+          data.languageTranslationName.present
+              ? data.languageTranslationName.value
+              : this.languageTranslationName,
+      languageTranslationNative:
+          data.languageTranslationNative.present
+              ? data.languageTranslationNative.value
+              : this.languageTranslationNative,
     );
   }
 
@@ -634,15 +829,30 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
           ..write('created: $created, ')
           ..write('modified: $modified, ')
           ..write('name: $name, ')
-          ..write('origin: $origin, ')
-          ..write('translation: $translation')
+          ..write('languageOriginCode: $languageOriginCode, ')
+          ..write('languageOriginName: $languageOriginName, ')
+          ..write('languageOriginNative: $languageOriginNative, ')
+          ..write('languageTranslationCode: $languageTranslationCode, ')
+          ..write('languageTranslationName: $languageTranslationName, ')
+          ..write('languageTranslationNative: $languageTranslationNative')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, folderId, created, modified, name, origin, translation);
+  int get hashCode => Object.hash(
+    id,
+    folderId,
+    created,
+    modified,
+    name,
+    languageOriginCode,
+    languageOriginName,
+    languageOriginNative,
+    languageTranslationCode,
+    languageTranslationName,
+    languageTranslationNative,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -652,8 +862,12 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
           other.created == this.created &&
           other.modified == this.modified &&
           other.name == this.name &&
-          other.origin == this.origin &&
-          other.translation == this.translation);
+          other.languageOriginCode == this.languageOriginCode &&
+          other.languageOriginName == this.languageOriginName &&
+          other.languageOriginNative == this.languageOriginNative &&
+          other.languageTranslationCode == this.languageTranslationCode &&
+          other.languageTranslationName == this.languageTranslationName &&
+          other.languageTranslationNative == this.languageTranslationNative);
 }
 
 class WordGroupsCompanion extends UpdateCompanion<DriftWordGroup> {
@@ -662,16 +876,24 @@ class WordGroupsCompanion extends UpdateCompanion<DriftWordGroup> {
   final Value<DateTime> created;
   final Value<DateTime> modified;
   final Value<String> name;
-  final Value<LanguageInfo> origin;
-  final Value<LanguageInfo> translation;
+  final Value<String> languageOriginCode;
+  final Value<String> languageOriginName;
+  final Value<String> languageOriginNative;
+  final Value<String> languageTranslationCode;
+  final Value<String> languageTranslationName;
+  final Value<String> languageTranslationNative;
   const WordGroupsCompanion({
     this.id = const Value.absent(),
     this.folderId = const Value.absent(),
     this.created = const Value.absent(),
     this.modified = const Value.absent(),
     this.name = const Value.absent(),
-    this.origin = const Value.absent(),
-    this.translation = const Value.absent(),
+    this.languageOriginCode = const Value.absent(),
+    this.languageOriginName = const Value.absent(),
+    this.languageOriginNative = const Value.absent(),
+    this.languageTranslationCode = const Value.absent(),
+    this.languageTranslationName = const Value.absent(),
+    this.languageTranslationNative = const Value.absent(),
   });
   WordGroupsCompanion.insert({
     this.id = const Value.absent(),
@@ -679,21 +901,33 @@ class WordGroupsCompanion extends UpdateCompanion<DriftWordGroup> {
     required DateTime created,
     required DateTime modified,
     required String name,
-    required LanguageInfo origin,
-    required LanguageInfo translation,
+    required String languageOriginCode,
+    required String languageOriginName,
+    required String languageOriginNative,
+    required String languageTranslationCode,
+    required String languageTranslationName,
+    required String languageTranslationNative,
   }) : created = Value(created),
        modified = Value(modified),
        name = Value(name),
-       origin = Value(origin),
-       translation = Value(translation);
+       languageOriginCode = Value(languageOriginCode),
+       languageOriginName = Value(languageOriginName),
+       languageOriginNative = Value(languageOriginNative),
+       languageTranslationCode = Value(languageTranslationCode),
+       languageTranslationName = Value(languageTranslationName),
+       languageTranslationNative = Value(languageTranslationNative);
   static Insertable<DriftWordGroup> custom({
     Expression<int>? id,
     Expression<int>? folderId,
     Expression<DateTime>? created,
     Expression<DateTime>? modified,
     Expression<String>? name,
-    Expression<String>? origin,
-    Expression<String>? translation,
+    Expression<String>? languageOriginCode,
+    Expression<String>? languageOriginName,
+    Expression<String>? languageOriginNative,
+    Expression<String>? languageTranslationCode,
+    Expression<String>? languageTranslationName,
+    Expression<String>? languageTranslationNative,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -701,8 +935,18 @@ class WordGroupsCompanion extends UpdateCompanion<DriftWordGroup> {
       if (created != null) 'created': created,
       if (modified != null) 'modified': modified,
       if (name != null) 'name': name,
-      if (origin != null) 'origin': origin,
-      if (translation != null) 'translation': translation,
+      if (languageOriginCode != null)
+        'language_origin_code': languageOriginCode,
+      if (languageOriginName != null)
+        'language_origin_name': languageOriginName,
+      if (languageOriginNative != null)
+        'language_origin_native': languageOriginNative,
+      if (languageTranslationCode != null)
+        'language_translation_code': languageTranslationCode,
+      if (languageTranslationName != null)
+        'language_translation_name': languageTranslationName,
+      if (languageTranslationNative != null)
+        'language_translation_native': languageTranslationNative,
     });
   }
 
@@ -712,8 +956,12 @@ class WordGroupsCompanion extends UpdateCompanion<DriftWordGroup> {
     Value<DateTime>? created,
     Value<DateTime>? modified,
     Value<String>? name,
-    Value<LanguageInfo>? origin,
-    Value<LanguageInfo>? translation,
+    Value<String>? languageOriginCode,
+    Value<String>? languageOriginName,
+    Value<String>? languageOriginNative,
+    Value<String>? languageTranslationCode,
+    Value<String>? languageTranslationName,
+    Value<String>? languageTranslationNative,
   }) {
     return WordGroupsCompanion(
       id: id ?? this.id,
@@ -721,8 +969,15 @@ class WordGroupsCompanion extends UpdateCompanion<DriftWordGroup> {
       created: created ?? this.created,
       modified: modified ?? this.modified,
       name: name ?? this.name,
-      origin: origin ?? this.origin,
-      translation: translation ?? this.translation,
+      languageOriginCode: languageOriginCode ?? this.languageOriginCode,
+      languageOriginName: languageOriginName ?? this.languageOriginName,
+      languageOriginNative: languageOriginNative ?? this.languageOriginNative,
+      languageTranslationCode:
+          languageTranslationCode ?? this.languageTranslationCode,
+      languageTranslationName:
+          languageTranslationName ?? this.languageTranslationName,
+      languageTranslationNative:
+          languageTranslationNative ?? this.languageTranslationNative,
     );
   }
 
@@ -744,14 +999,30 @@ class WordGroupsCompanion extends UpdateCompanion<DriftWordGroup> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
-    if (origin.present) {
-      map['origin'] = Variable<String>(
-        $WordGroupsTable.$converterorigin.toSql(origin.value),
+    if (languageOriginCode.present) {
+      map['language_origin_code'] = Variable<String>(languageOriginCode.value);
+    }
+    if (languageOriginName.present) {
+      map['language_origin_name'] = Variable<String>(languageOriginName.value);
+    }
+    if (languageOriginNative.present) {
+      map['language_origin_native'] = Variable<String>(
+        languageOriginNative.value,
       );
     }
-    if (translation.present) {
-      map['translation'] = Variable<String>(
-        $WordGroupsTable.$convertertranslation.toSql(translation.value),
+    if (languageTranslationCode.present) {
+      map['language_translation_code'] = Variable<String>(
+        languageTranslationCode.value,
+      );
+    }
+    if (languageTranslationName.present) {
+      map['language_translation_name'] = Variable<String>(
+        languageTranslationName.value,
+      );
+    }
+    if (languageTranslationNative.present) {
+      map['language_translation_native'] = Variable<String>(
+        languageTranslationNative.value,
       );
     }
     return map;
@@ -765,8 +1036,12 @@ class WordGroupsCompanion extends UpdateCompanion<DriftWordGroup> {
           ..write('created: $created, ')
           ..write('modified: $modified, ')
           ..write('name: $name, ')
-          ..write('origin: $origin, ')
-          ..write('translation: $translation')
+          ..write('languageOriginCode: $languageOriginCode, ')
+          ..write('languageOriginName: $languageOriginName, ')
+          ..write('languageOriginNative: $languageOriginNative, ')
+          ..write('languageTranslationCode: $languageTranslationCode, ')
+          ..write('languageTranslationName: $languageTranslationName, ')
+          ..write('languageTranslationNative: $languageTranslationNative')
           ..write(')'))
         .toString();
   }
@@ -1133,12 +1408,1337 @@ class WordsCompanion extends UpdateCompanion<DriftWord> {
   }
 }
 
+class $WordMetadatasTable extends WordMetadatas
+    with TableInfo<$WordMetadatasTable, DriftWordMetadata> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $WordMetadatasTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _wordMeta = const VerificationMeta('word');
+  @override
+  late final GeneratedColumn<String> word = GeneratedColumn<String>(
+    'word',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _originMeta = const VerificationMeta('origin');
+  @override
+  late final GeneratedColumn<String> origin = GeneratedColumn<String>(
+    'origin',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _phoneticMeta = const VerificationMeta(
+    'phonetic',
+  );
+  @override
+  late final GeneratedColumn<String> phonetic = GeneratedColumn<String>(
+    'phonetic',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, word, origin, phonetic];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'word_metadatas';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DriftWordMetadata> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('word')) {
+      context.handle(
+        _wordMeta,
+        word.isAcceptableOrUnknown(data['word']!, _wordMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_wordMeta);
+    }
+    if (data.containsKey('origin')) {
+      context.handle(
+        _originMeta,
+        origin.isAcceptableOrUnknown(data['origin']!, _originMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_originMeta);
+    }
+    if (data.containsKey('phonetic')) {
+      context.handle(
+        _phoneticMeta,
+        phonetic.isAcceptableOrUnknown(data['phonetic']!, _phoneticMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_phoneticMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  DriftWordMetadata map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DriftWordMetadata(
+      id:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}id'],
+          )!,
+      word:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}word'],
+          )!,
+      origin:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}origin'],
+          )!,
+      phonetic:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}phonetic'],
+          )!,
+    );
+  }
+
+  @override
+  $WordMetadatasTable createAlias(String alias) {
+    return $WordMetadatasTable(attachedDatabase, alias);
+  }
+}
+
+class DriftWordMetadata extends DataClass
+    implements Insertable<DriftWordMetadata> {
+  final int id;
+  final String word;
+  final String origin;
+  final String phonetic;
+  const DriftWordMetadata({
+    required this.id,
+    required this.word,
+    required this.origin,
+    required this.phonetic,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['word'] = Variable<String>(word);
+    map['origin'] = Variable<String>(origin);
+    map['phonetic'] = Variable<String>(phonetic);
+    return map;
+  }
+
+  WordMetadatasCompanion toCompanion(bool nullToAbsent) {
+    return WordMetadatasCompanion(
+      id: Value(id),
+      word: Value(word),
+      origin: Value(origin),
+      phonetic: Value(phonetic),
+    );
+  }
+
+  factory DriftWordMetadata.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DriftWordMetadata(
+      id: serializer.fromJson<int>(json['id']),
+      word: serializer.fromJson<String>(json['word']),
+      origin: serializer.fromJson<String>(json['origin']),
+      phonetic: serializer.fromJson<String>(json['phonetic']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'word': serializer.toJson<String>(word),
+      'origin': serializer.toJson<String>(origin),
+      'phonetic': serializer.toJson<String>(phonetic),
+    };
+  }
+
+  DriftWordMetadata copyWith({
+    int? id,
+    String? word,
+    String? origin,
+    String? phonetic,
+  }) => DriftWordMetadata(
+    id: id ?? this.id,
+    word: word ?? this.word,
+    origin: origin ?? this.origin,
+    phonetic: phonetic ?? this.phonetic,
+  );
+  DriftWordMetadata copyWithCompanion(WordMetadatasCompanion data) {
+    return DriftWordMetadata(
+      id: data.id.present ? data.id.value : this.id,
+      word: data.word.present ? data.word.value : this.word,
+      origin: data.origin.present ? data.origin.value : this.origin,
+      phonetic: data.phonetic.present ? data.phonetic.value : this.phonetic,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DriftWordMetadata(')
+          ..write('id: $id, ')
+          ..write('word: $word, ')
+          ..write('origin: $origin, ')
+          ..write('phonetic: $phonetic')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, word, origin, phonetic);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DriftWordMetadata &&
+          other.id == this.id &&
+          other.word == this.word &&
+          other.origin == this.origin &&
+          other.phonetic == this.phonetic);
+}
+
+class WordMetadatasCompanion extends UpdateCompanion<DriftWordMetadata> {
+  final Value<int> id;
+  final Value<String> word;
+  final Value<String> origin;
+  final Value<String> phonetic;
+  const WordMetadatasCompanion({
+    this.id = const Value.absent(),
+    this.word = const Value.absent(),
+    this.origin = const Value.absent(),
+    this.phonetic = const Value.absent(),
+  });
+  WordMetadatasCompanion.insert({
+    this.id = const Value.absent(),
+    required String word,
+    required String origin,
+    required String phonetic,
+  }) : word = Value(word),
+       origin = Value(origin),
+       phonetic = Value(phonetic);
+  static Insertable<DriftWordMetadata> custom({
+    Expression<int>? id,
+    Expression<String>? word,
+    Expression<String>? origin,
+    Expression<String>? phonetic,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (word != null) 'word': word,
+      if (origin != null) 'origin': origin,
+      if (phonetic != null) 'phonetic': phonetic,
+    });
+  }
+
+  WordMetadatasCompanion copyWith({
+    Value<int>? id,
+    Value<String>? word,
+    Value<String>? origin,
+    Value<String>? phonetic,
+  }) {
+    return WordMetadatasCompanion(
+      id: id ?? this.id,
+      word: word ?? this.word,
+      origin: origin ?? this.origin,
+      phonetic: phonetic ?? this.phonetic,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (word.present) {
+      map['word'] = Variable<String>(word.value);
+    }
+    if (origin.present) {
+      map['origin'] = Variable<String>(origin.value);
+    }
+    if (phonetic.present) {
+      map['phonetic'] = Variable<String>(phonetic.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WordMetadatasCompanion(')
+          ..write('id: $id, ')
+          ..write('word: $word, ')
+          ..write('origin: $origin, ')
+          ..write('phonetic: $phonetic')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PhoneticsTable extends Phonetics
+    with TableInfo<$PhoneticsTable, DriftPhonetic> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PhoneticsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _metadataIdMeta = const VerificationMeta(
+    'metadataId',
+  );
+  @override
+  late final GeneratedColumn<int> metadataId = GeneratedColumn<int>(
+    'metadata_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES word_metadatas (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _valueMeta = const VerificationMeta('value');
+  @override
+  late final GeneratedColumn<String> value = GeneratedColumn<String>(
+    'value',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _audioMeta = const VerificationMeta('audio');
+  @override
+  late final GeneratedColumn<String> audio = GeneratedColumn<String>(
+    'audio',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, metadataId, value, audio];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'phonetics';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DriftPhonetic> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('metadata_id')) {
+      context.handle(
+        _metadataIdMeta,
+        metadataId.isAcceptableOrUnknown(data['metadata_id']!, _metadataIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_metadataIdMeta);
+    }
+    if (data.containsKey('value')) {
+      context.handle(
+        _valueMeta,
+        value.isAcceptableOrUnknown(data['value']!, _valueMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_valueMeta);
+    }
+    if (data.containsKey('audio')) {
+      context.handle(
+        _audioMeta,
+        audio.isAcceptableOrUnknown(data['audio']!, _audioMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_audioMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  DriftPhonetic map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DriftPhonetic(
+      id:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}id'],
+          )!,
+      metadataId:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}metadata_id'],
+          )!,
+      value:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}value'],
+          )!,
+      audio:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}audio'],
+          )!,
+    );
+  }
+
+  @override
+  $PhoneticsTable createAlias(String alias) {
+    return $PhoneticsTable(attachedDatabase, alias);
+  }
+}
+
+class DriftPhonetic extends DataClass implements Insertable<DriftPhonetic> {
+  final int id;
+  final int metadataId;
+  final String value;
+  final String audio;
+  const DriftPhonetic({
+    required this.id,
+    required this.metadataId,
+    required this.value,
+    required this.audio,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['metadata_id'] = Variable<int>(metadataId);
+    map['value'] = Variable<String>(value);
+    map['audio'] = Variable<String>(audio);
+    return map;
+  }
+
+  PhoneticsCompanion toCompanion(bool nullToAbsent) {
+    return PhoneticsCompanion(
+      id: Value(id),
+      metadataId: Value(metadataId),
+      value: Value(value),
+      audio: Value(audio),
+    );
+  }
+
+  factory DriftPhonetic.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DriftPhonetic(
+      id: serializer.fromJson<int>(json['id']),
+      metadataId: serializer.fromJson<int>(json['metadataId']),
+      value: serializer.fromJson<String>(json['value']),
+      audio: serializer.fromJson<String>(json['audio']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'metadataId': serializer.toJson<int>(metadataId),
+      'value': serializer.toJson<String>(value),
+      'audio': serializer.toJson<String>(audio),
+    };
+  }
+
+  DriftPhonetic copyWith({
+    int? id,
+    int? metadataId,
+    String? value,
+    String? audio,
+  }) => DriftPhonetic(
+    id: id ?? this.id,
+    metadataId: metadataId ?? this.metadataId,
+    value: value ?? this.value,
+    audio: audio ?? this.audio,
+  );
+  DriftPhonetic copyWithCompanion(PhoneticsCompanion data) {
+    return DriftPhonetic(
+      id: data.id.present ? data.id.value : this.id,
+      metadataId:
+          data.metadataId.present ? data.metadataId.value : this.metadataId,
+      value: data.value.present ? data.value.value : this.value,
+      audio: data.audio.present ? data.audio.value : this.audio,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DriftPhonetic(')
+          ..write('id: $id, ')
+          ..write('metadataId: $metadataId, ')
+          ..write('value: $value, ')
+          ..write('audio: $audio')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, metadataId, value, audio);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DriftPhonetic &&
+          other.id == this.id &&
+          other.metadataId == this.metadataId &&
+          other.value == this.value &&
+          other.audio == this.audio);
+}
+
+class PhoneticsCompanion extends UpdateCompanion<DriftPhonetic> {
+  final Value<int> id;
+  final Value<int> metadataId;
+  final Value<String> value;
+  final Value<String> audio;
+  const PhoneticsCompanion({
+    this.id = const Value.absent(),
+    this.metadataId = const Value.absent(),
+    this.value = const Value.absent(),
+    this.audio = const Value.absent(),
+  });
+  PhoneticsCompanion.insert({
+    this.id = const Value.absent(),
+    required int metadataId,
+    required String value,
+    required String audio,
+  }) : metadataId = Value(metadataId),
+       value = Value(value),
+       audio = Value(audio);
+  static Insertable<DriftPhonetic> custom({
+    Expression<int>? id,
+    Expression<int>? metadataId,
+    Expression<String>? value,
+    Expression<String>? audio,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (metadataId != null) 'metadata_id': metadataId,
+      if (value != null) 'value': value,
+      if (audio != null) 'audio': audio,
+    });
+  }
+
+  PhoneticsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? metadataId,
+    Value<String>? value,
+    Value<String>? audio,
+  }) {
+    return PhoneticsCompanion(
+      id: id ?? this.id,
+      metadataId: metadataId ?? this.metadataId,
+      value: value ?? this.value,
+      audio: audio ?? this.audio,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (metadataId.present) {
+      map['metadata_id'] = Variable<int>(metadataId.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    if (audio.present) {
+      map['audio'] = Variable<String>(audio.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PhoneticsCompanion(')
+          ..write('id: $id, ')
+          ..write('metadataId: $metadataId, ')
+          ..write('value: $value, ')
+          ..write('audio: $audio')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MeaningsTable extends Meanings
+    with TableInfo<$MeaningsTable, DriftMeaning> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MeaningsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _metadataIdMeta = const VerificationMeta(
+    'metadataId',
+  );
+  @override
+  late final GeneratedColumn<int> metadataId = GeneratedColumn<int>(
+    'metadata_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES word_metadatas (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _partOfSpeechMeta = const VerificationMeta(
+    'partOfSpeech',
+  );
+  @override
+  late final GeneratedColumn<String> partOfSpeech = GeneratedColumn<String>(
+    'part_of_speech',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<List<String>, String> synonyms =
+      GeneratedColumn<String>(
+        'synonyms',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<List<String>>($MeaningsTable.$convertersynonyms);
+  @override
+  late final GeneratedColumnWithTypeConverter<List<String>, String> antonyms =
+      GeneratedColumn<String>(
+        'antonyms',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      ).withConverter<List<String>>($MeaningsTable.$converterantonyms);
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    metadataId,
+    partOfSpeech,
+    synonyms,
+    antonyms,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'meanings';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DriftMeaning> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('metadata_id')) {
+      context.handle(
+        _metadataIdMeta,
+        metadataId.isAcceptableOrUnknown(data['metadata_id']!, _metadataIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_metadataIdMeta);
+    }
+    if (data.containsKey('part_of_speech')) {
+      context.handle(
+        _partOfSpeechMeta,
+        partOfSpeech.isAcceptableOrUnknown(
+          data['part_of_speech']!,
+          _partOfSpeechMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_partOfSpeechMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  DriftMeaning map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DriftMeaning(
+      id:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}id'],
+          )!,
+      metadataId:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}metadata_id'],
+          )!,
+      partOfSpeech:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}part_of_speech'],
+          )!,
+      synonyms: $MeaningsTable.$convertersynonyms.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}synonyms'],
+        )!,
+      ),
+      antonyms: $MeaningsTable.$converterantonyms.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}antonyms'],
+        )!,
+      ),
+    );
+  }
+
+  @override
+  $MeaningsTable createAlias(String alias) {
+    return $MeaningsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<List<String>, String, Map<String, Object?>>
+  $convertersynonyms = const SynonymAntonymConverter();
+  static JsonTypeConverter2<List<String>, String, Map<String, Object?>>
+  $converterantonyms = const SynonymAntonymConverter();
+}
+
+class DriftMeaning extends DataClass implements Insertable<DriftMeaning> {
+  final int id;
+  final int metadataId;
+  final String partOfSpeech;
+  final List<String> synonyms;
+  final List<String> antonyms;
+  const DriftMeaning({
+    required this.id,
+    required this.metadataId,
+    required this.partOfSpeech,
+    required this.synonyms,
+    required this.antonyms,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['metadata_id'] = Variable<int>(metadataId);
+    map['part_of_speech'] = Variable<String>(partOfSpeech);
+    {
+      map['synonyms'] = Variable<String>(
+        $MeaningsTable.$convertersynonyms.toSql(synonyms),
+      );
+    }
+    {
+      map['antonyms'] = Variable<String>(
+        $MeaningsTable.$converterantonyms.toSql(antonyms),
+      );
+    }
+    return map;
+  }
+
+  MeaningsCompanion toCompanion(bool nullToAbsent) {
+    return MeaningsCompanion(
+      id: Value(id),
+      metadataId: Value(metadataId),
+      partOfSpeech: Value(partOfSpeech),
+      synonyms: Value(synonyms),
+      antonyms: Value(antonyms),
+    );
+  }
+
+  factory DriftMeaning.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DriftMeaning(
+      id: serializer.fromJson<int>(json['id']),
+      metadataId: serializer.fromJson<int>(json['metadataId']),
+      partOfSpeech: serializer.fromJson<String>(json['partOfSpeech']),
+      synonyms: $MeaningsTable.$convertersynonyms.fromJson(
+        serializer.fromJson<Map<String, Object?>>(json['synonyms']),
+      ),
+      antonyms: $MeaningsTable.$converterantonyms.fromJson(
+        serializer.fromJson<Map<String, Object?>>(json['antonyms']),
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'metadataId': serializer.toJson<int>(metadataId),
+      'partOfSpeech': serializer.toJson<String>(partOfSpeech),
+      'synonyms': serializer.toJson<Map<String, Object?>>(
+        $MeaningsTable.$convertersynonyms.toJson(synonyms),
+      ),
+      'antonyms': serializer.toJson<Map<String, Object?>>(
+        $MeaningsTable.$converterantonyms.toJson(antonyms),
+      ),
+    };
+  }
+
+  DriftMeaning copyWith({
+    int? id,
+    int? metadataId,
+    String? partOfSpeech,
+    List<String>? synonyms,
+    List<String>? antonyms,
+  }) => DriftMeaning(
+    id: id ?? this.id,
+    metadataId: metadataId ?? this.metadataId,
+    partOfSpeech: partOfSpeech ?? this.partOfSpeech,
+    synonyms: synonyms ?? this.synonyms,
+    antonyms: antonyms ?? this.antonyms,
+  );
+  DriftMeaning copyWithCompanion(MeaningsCompanion data) {
+    return DriftMeaning(
+      id: data.id.present ? data.id.value : this.id,
+      metadataId:
+          data.metadataId.present ? data.metadataId.value : this.metadataId,
+      partOfSpeech:
+          data.partOfSpeech.present
+              ? data.partOfSpeech.value
+              : this.partOfSpeech,
+      synonyms: data.synonyms.present ? data.synonyms.value : this.synonyms,
+      antonyms: data.antonyms.present ? data.antonyms.value : this.antonyms,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DriftMeaning(')
+          ..write('id: $id, ')
+          ..write('metadataId: $metadataId, ')
+          ..write('partOfSpeech: $partOfSpeech, ')
+          ..write('synonyms: $synonyms, ')
+          ..write('antonyms: $antonyms')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, metadataId, partOfSpeech, synonyms, antonyms);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DriftMeaning &&
+          other.id == this.id &&
+          other.metadataId == this.metadataId &&
+          other.partOfSpeech == this.partOfSpeech &&
+          other.synonyms == this.synonyms &&
+          other.antonyms == this.antonyms);
+}
+
+class MeaningsCompanion extends UpdateCompanion<DriftMeaning> {
+  final Value<int> id;
+  final Value<int> metadataId;
+  final Value<String> partOfSpeech;
+  final Value<List<String>> synonyms;
+  final Value<List<String>> antonyms;
+  const MeaningsCompanion({
+    this.id = const Value.absent(),
+    this.metadataId = const Value.absent(),
+    this.partOfSpeech = const Value.absent(),
+    this.synonyms = const Value.absent(),
+    this.antonyms = const Value.absent(),
+  });
+  MeaningsCompanion.insert({
+    this.id = const Value.absent(),
+    required int metadataId,
+    required String partOfSpeech,
+    required List<String> synonyms,
+    required List<String> antonyms,
+  }) : metadataId = Value(metadataId),
+       partOfSpeech = Value(partOfSpeech),
+       synonyms = Value(synonyms),
+       antonyms = Value(antonyms);
+  static Insertable<DriftMeaning> custom({
+    Expression<int>? id,
+    Expression<int>? metadataId,
+    Expression<String>? partOfSpeech,
+    Expression<String>? synonyms,
+    Expression<String>? antonyms,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (metadataId != null) 'metadata_id': metadataId,
+      if (partOfSpeech != null) 'part_of_speech': partOfSpeech,
+      if (synonyms != null) 'synonyms': synonyms,
+      if (antonyms != null) 'antonyms': antonyms,
+    });
+  }
+
+  MeaningsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? metadataId,
+    Value<String>? partOfSpeech,
+    Value<List<String>>? synonyms,
+    Value<List<String>>? antonyms,
+  }) {
+    return MeaningsCompanion(
+      id: id ?? this.id,
+      metadataId: metadataId ?? this.metadataId,
+      partOfSpeech: partOfSpeech ?? this.partOfSpeech,
+      synonyms: synonyms ?? this.synonyms,
+      antonyms: antonyms ?? this.antonyms,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (metadataId.present) {
+      map['metadata_id'] = Variable<int>(metadataId.value);
+    }
+    if (partOfSpeech.present) {
+      map['part_of_speech'] = Variable<String>(partOfSpeech.value);
+    }
+    if (synonyms.present) {
+      map['synonyms'] = Variable<String>(
+        $MeaningsTable.$convertersynonyms.toSql(synonyms.value),
+      );
+    }
+    if (antonyms.present) {
+      map['antonyms'] = Variable<String>(
+        $MeaningsTable.$converterantonyms.toSql(antonyms.value),
+      );
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MeaningsCompanion(')
+          ..write('id: $id, ')
+          ..write('metadataId: $metadataId, ')
+          ..write('partOfSpeech: $partOfSpeech, ')
+          ..write('synonyms: $synonyms, ')
+          ..write('antonyms: $antonyms')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DefinitionsTable extends Definitions
+    with TableInfo<$DefinitionsTable, DriftDefinition> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DefinitionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _meaningIdMeta = const VerificationMeta(
+    'meaningId',
+  );
+  @override
+  late final GeneratedColumn<int> meaningId = GeneratedColumn<int>(
+    'meaning_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES meanings (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _valueMeta = const VerificationMeta('value');
+  @override
+  late final GeneratedColumn<String> value = GeneratedColumn<String>(
+    'value',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _exampleMeta = const VerificationMeta(
+    'example',
+  );
+  @override
+  late final GeneratedColumn<String> example = GeneratedColumn<String>(
+    'example',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, meaningId, value, example];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'definitions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DriftDefinition> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('meaning_id')) {
+      context.handle(
+        _meaningIdMeta,
+        meaningId.isAcceptableOrUnknown(data['meaning_id']!, _meaningIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_meaningIdMeta);
+    }
+    if (data.containsKey('value')) {
+      context.handle(
+        _valueMeta,
+        value.isAcceptableOrUnknown(data['value']!, _valueMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_valueMeta);
+    }
+    if (data.containsKey('example')) {
+      context.handle(
+        _exampleMeta,
+        example.isAcceptableOrUnknown(data['example']!, _exampleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  DriftDefinition map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DriftDefinition(
+      id:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}id'],
+          )!,
+      meaningId:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}meaning_id'],
+          )!,
+      value:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}value'],
+          )!,
+      example:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}example'],
+          )!,
+    );
+  }
+
+  @override
+  $DefinitionsTable createAlias(String alias) {
+    return $DefinitionsTable(attachedDatabase, alias);
+  }
+}
+
+class DriftDefinition extends DataClass implements Insertable<DriftDefinition> {
+  final int id;
+  final int meaningId;
+  final String value;
+  final String example;
+  const DriftDefinition({
+    required this.id,
+    required this.meaningId,
+    required this.value,
+    required this.example,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['meaning_id'] = Variable<int>(meaningId);
+    map['value'] = Variable<String>(value);
+    map['example'] = Variable<String>(example);
+    return map;
+  }
+
+  DefinitionsCompanion toCompanion(bool nullToAbsent) {
+    return DefinitionsCompanion(
+      id: Value(id),
+      meaningId: Value(meaningId),
+      value: Value(value),
+      example: Value(example),
+    );
+  }
+
+  factory DriftDefinition.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DriftDefinition(
+      id: serializer.fromJson<int>(json['id']),
+      meaningId: serializer.fromJson<int>(json['meaningId']),
+      value: serializer.fromJson<String>(json['value']),
+      example: serializer.fromJson<String>(json['example']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'meaningId': serializer.toJson<int>(meaningId),
+      'value': serializer.toJson<String>(value),
+      'example': serializer.toJson<String>(example),
+    };
+  }
+
+  DriftDefinition copyWith({
+    int? id,
+    int? meaningId,
+    String? value,
+    String? example,
+  }) => DriftDefinition(
+    id: id ?? this.id,
+    meaningId: meaningId ?? this.meaningId,
+    value: value ?? this.value,
+    example: example ?? this.example,
+  );
+  DriftDefinition copyWithCompanion(DefinitionsCompanion data) {
+    return DriftDefinition(
+      id: data.id.present ? data.id.value : this.id,
+      meaningId: data.meaningId.present ? data.meaningId.value : this.meaningId,
+      value: data.value.present ? data.value.value : this.value,
+      example: data.example.present ? data.example.value : this.example,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DriftDefinition(')
+          ..write('id: $id, ')
+          ..write('meaningId: $meaningId, ')
+          ..write('value: $value, ')
+          ..write('example: $example')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, meaningId, value, example);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DriftDefinition &&
+          other.id == this.id &&
+          other.meaningId == this.meaningId &&
+          other.value == this.value &&
+          other.example == this.example);
+}
+
+class DefinitionsCompanion extends UpdateCompanion<DriftDefinition> {
+  final Value<int> id;
+  final Value<int> meaningId;
+  final Value<String> value;
+  final Value<String> example;
+  const DefinitionsCompanion({
+    this.id = const Value.absent(),
+    this.meaningId = const Value.absent(),
+    this.value = const Value.absent(),
+    this.example = const Value.absent(),
+  });
+  DefinitionsCompanion.insert({
+    this.id = const Value.absent(),
+    required int meaningId,
+    required String value,
+    required String example,
+  }) : meaningId = Value(meaningId),
+       value = Value(value),
+       example = Value(example);
+  static Insertable<DriftDefinition> custom({
+    Expression<int>? id,
+    Expression<int>? meaningId,
+    Expression<String>? value,
+    Expression<String>? example,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (meaningId != null) 'meaning_id': meaningId,
+      if (value != null) 'value': value,
+      if (example != null) 'example': example,
+    });
+  }
+
+  DefinitionsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? meaningId,
+    Value<String>? value,
+    Value<String>? example,
+  }) {
+    return DefinitionsCompanion(
+      id: id ?? this.id,
+      meaningId: meaningId ?? this.meaningId,
+      value: value ?? this.value,
+      example: example ?? this.example,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (meaningId.present) {
+      map['meaning_id'] = Variable<int>(meaningId.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    if (example.present) {
+      map['example'] = Variable<String>(example.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DefinitionsCompanion(')
+          ..write('id: $id, ')
+          ..write('meaningId: $meaningId, ')
+          ..write('value: $value, ')
+          ..write('example: $example')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDriftDatabase extends GeneratedDatabase {
   _$AppDriftDatabase(QueryExecutor e) : super(e);
   $AppDriftDatabaseManager get managers => $AppDriftDatabaseManager(this);
   late final $FoldersTable folders = $FoldersTable(this);
   late final $WordGroupsTable wordGroups = $WordGroupsTable(this);
   late final $WordsTable words = $WordsTable(this);
+  late final $WordMetadatasTable wordMetadatas = $WordMetadatasTable(this);
+  late final $PhoneticsTable phonetics = $PhoneticsTable(this);
+  late final $MeaningsTable meanings = $MeaningsTable(this);
+  late final $DefinitionsTable definitions = $DefinitionsTable(this);
+  late final Index folderCreated = Index(
+    'folder_created',
+    'CREATE INDEX folder_created ON folders (created)',
+  );
+  late final Index folderName = Index(
+    'folder_name',
+    'CREATE INDEX folder_name ON folders (name)',
+  );
+  late final Index groupCreated = Index(
+    'group_created',
+    'CREATE INDEX group_created ON word_groups (created)',
+  );
+  late final Index groupName = Index(
+    'group_name',
+    'CREATE INDEX group_name ON word_groups (name)',
+  );
+  late final Index groupLanguageOriginCode = Index(
+    'group_language_origin_code',
+    'CREATE INDEX group_language_origin_code ON word_groups (language_origin_code)',
+  );
+  late final Index groupLanguageTranslationCode = Index(
+    'group_language_translation_code',
+    'CREATE INDEX group_language_translation_code ON word_groups (language_translation_code)',
+  );
+  late final Index groupLanguageOriginTranslationCode = Index(
+    'group_language_origin_translation_code',
+    'CREATE INDEX group_language_origin_translation_code ON word_groups (language_origin_code, language_translation_code)',
+  );
+  late final Index wordCreated = Index(
+    'word_created',
+    'CREATE INDEX word_created ON words (created)',
+  );
+  late final Index metadataWordIndex = Index(
+    'metadata_word_index',
+    'CREATE INDEX metadata_word_index ON word_metadatas (word)',
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1147,6 +2747,19 @@ abstract class _$AppDriftDatabase extends GeneratedDatabase {
     folders,
     wordGroups,
     words,
+    wordMetadatas,
+    phonetics,
+    meanings,
+    definitions,
+    folderCreated,
+    folderName,
+    groupCreated,
+    groupName,
+    groupLanguageOriginCode,
+    groupLanguageTranslationCode,
+    groupLanguageOriginTranslationCode,
+    wordCreated,
+    metadataWordIndex,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -1170,6 +2783,27 @@ abstract class _$AppDriftDatabase extends GeneratedDatabase {
         limitUpdateKind: UpdateKind.delete,
       ),
       result: [TableUpdate('words', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'word_metadatas',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('phonetics', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'word_metadatas',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('meanings', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'meanings',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('definitions', kind: UpdateKind.delete)],
     ),
   ]);
 }
@@ -1564,8 +3198,12 @@ typedef $$WordGroupsTableCreateCompanionBuilder =
       required DateTime created,
       required DateTime modified,
       required String name,
-      required LanguageInfo origin,
-      required LanguageInfo translation,
+      required String languageOriginCode,
+      required String languageOriginName,
+      required String languageOriginNative,
+      required String languageTranslationCode,
+      required String languageTranslationName,
+      required String languageTranslationNative,
     });
 typedef $$WordGroupsTableUpdateCompanionBuilder =
     WordGroupsCompanion Function({
@@ -1574,8 +3212,12 @@ typedef $$WordGroupsTableUpdateCompanionBuilder =
       Value<DateTime> created,
       Value<DateTime> modified,
       Value<String> name,
-      Value<LanguageInfo> origin,
-      Value<LanguageInfo> translation,
+      Value<String> languageOriginCode,
+      Value<String> languageOriginName,
+      Value<String> languageOriginNative,
+      Value<String> languageTranslationCode,
+      Value<String> languageTranslationName,
+      Value<String> languageTranslationNative,
     });
 
 final class $$WordGroupsTableReferences
@@ -1649,16 +3291,34 @@ class $$WordGroupsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<LanguageInfo, LanguageInfo, String>
-  get origin => $composableBuilder(
-    column: $table.origin,
-    builder: (column) => ColumnWithTypeConverterFilters(column),
+  ColumnFilters<String> get languageOriginCode => $composableBuilder(
+    column: $table.languageOriginCode,
+    builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<LanguageInfo, LanguageInfo, String>
-  get translation => $composableBuilder(
-    column: $table.translation,
-    builder: (column) => ColumnWithTypeConverterFilters(column),
+  ColumnFilters<String> get languageOriginName => $composableBuilder(
+    column: $table.languageOriginName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get languageOriginNative => $composableBuilder(
+    column: $table.languageOriginNative,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get languageTranslationCode => $composableBuilder(
+    column: $table.languageTranslationCode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get languageTranslationName => $composableBuilder(
+    column: $table.languageTranslationName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get languageTranslationNative => $composableBuilder(
+    column: $table.languageTranslationNative,
+    builder: (column) => ColumnFilters(column),
   );
 
   $$FoldersTableFilterComposer get folderId {
@@ -1739,13 +3399,33 @@ class $$WordGroupsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get origin => $composableBuilder(
-    column: $table.origin,
+  ColumnOrderings<String> get languageOriginCode => $composableBuilder(
+    column: $table.languageOriginCode,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get translation => $composableBuilder(
-    column: $table.translation,
+  ColumnOrderings<String> get languageOriginName => $composableBuilder(
+    column: $table.languageOriginName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get languageOriginNative => $composableBuilder(
+    column: $table.languageOriginNative,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get languageTranslationCode => $composableBuilder(
+    column: $table.languageTranslationCode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get languageTranslationName => $composableBuilder(
+    column: $table.languageTranslationName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get languageTranslationNative => $composableBuilder(
+    column: $table.languageTranslationNative,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -1794,14 +3474,35 @@ class $$WordGroupsTableAnnotationComposer
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<LanguageInfo, String> get origin =>
-      $composableBuilder(column: $table.origin, builder: (column) => column);
+  GeneratedColumn<String> get languageOriginCode => $composableBuilder(
+    column: $table.languageOriginCode,
+    builder: (column) => column,
+  );
 
-  GeneratedColumnWithTypeConverter<LanguageInfo, String> get translation =>
-      $composableBuilder(
-        column: $table.translation,
-        builder: (column) => column,
-      );
+  GeneratedColumn<String> get languageOriginName => $composableBuilder(
+    column: $table.languageOriginName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get languageOriginNative => $composableBuilder(
+    column: $table.languageOriginNative,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get languageTranslationCode => $composableBuilder(
+    column: $table.languageTranslationCode,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get languageTranslationName => $composableBuilder(
+    column: $table.languageTranslationName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get languageTranslationNative => $composableBuilder(
+    column: $table.languageTranslationNative,
+    builder: (column) => column,
+  );
 
   $$FoldersTableAnnotationComposer get folderId {
     final $$FoldersTableAnnotationComposer composer = $composerBuilder(
@@ -1885,16 +3586,24 @@ class $$WordGroupsTableTableManager
                 Value<DateTime> created = const Value.absent(),
                 Value<DateTime> modified = const Value.absent(),
                 Value<String> name = const Value.absent(),
-                Value<LanguageInfo> origin = const Value.absent(),
-                Value<LanguageInfo> translation = const Value.absent(),
+                Value<String> languageOriginCode = const Value.absent(),
+                Value<String> languageOriginName = const Value.absent(),
+                Value<String> languageOriginNative = const Value.absent(),
+                Value<String> languageTranslationCode = const Value.absent(),
+                Value<String> languageTranslationName = const Value.absent(),
+                Value<String> languageTranslationNative = const Value.absent(),
               }) => WordGroupsCompanion(
                 id: id,
                 folderId: folderId,
                 created: created,
                 modified: modified,
                 name: name,
-                origin: origin,
-                translation: translation,
+                languageOriginCode: languageOriginCode,
+                languageOriginName: languageOriginName,
+                languageOriginNative: languageOriginNative,
+                languageTranslationCode: languageTranslationCode,
+                languageTranslationName: languageTranslationName,
+                languageTranslationNative: languageTranslationNative,
               ),
           createCompanionCallback:
               ({
@@ -1903,16 +3612,24 @@ class $$WordGroupsTableTableManager
                 required DateTime created,
                 required DateTime modified,
                 required String name,
-                required LanguageInfo origin,
-                required LanguageInfo translation,
+                required String languageOriginCode,
+                required String languageOriginName,
+                required String languageOriginNative,
+                required String languageTranslationCode,
+                required String languageTranslationName,
+                required String languageTranslationNative,
               }) => WordGroupsCompanion.insert(
                 id: id,
                 folderId: folderId,
                 created: created,
                 modified: modified,
                 name: name,
-                origin: origin,
-                translation: translation,
+                languageOriginCode: languageOriginCode,
+                languageOriginName: languageOriginName,
+                languageOriginNative: languageOriginNative,
+                languageTranslationCode: languageTranslationCode,
+                languageTranslationName: languageTranslationName,
+                languageTranslationNative: languageTranslationNative,
               ),
           withReferenceMapper:
               (p0) =>
@@ -2319,6 +4036,1411 @@ typedef $$WordsTableProcessedTableManager =
       DriftWord,
       PrefetchHooks Function({bool groupId})
     >;
+typedef $$WordMetadatasTableCreateCompanionBuilder =
+    WordMetadatasCompanion Function({
+      Value<int> id,
+      required String word,
+      required String origin,
+      required String phonetic,
+    });
+typedef $$WordMetadatasTableUpdateCompanionBuilder =
+    WordMetadatasCompanion Function({
+      Value<int> id,
+      Value<String> word,
+      Value<String> origin,
+      Value<String> phonetic,
+    });
+
+final class $$WordMetadatasTableReferences
+    extends
+        BaseReferences<
+          _$AppDriftDatabase,
+          $WordMetadatasTable,
+          DriftWordMetadata
+        > {
+  $$WordMetadatasTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<$PhoneticsTable, List<DriftPhonetic>>
+  _phoneticsRefsTable(_$AppDriftDatabase db) => MultiTypedResultKey.fromTable(
+    db.phonetics,
+    aliasName: $_aliasNameGenerator(
+      db.wordMetadatas.id,
+      db.phonetics.metadataId,
+    ),
+  );
+
+  $$PhoneticsTableProcessedTableManager get phoneticsRefs {
+    final manager = $$PhoneticsTableTableManager(
+      $_db,
+      $_db.phonetics,
+    ).filter((f) => f.metadataId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_phoneticsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$MeaningsTable, List<DriftMeaning>>
+  _meaningsRefsTable(_$AppDriftDatabase db) => MultiTypedResultKey.fromTable(
+    db.meanings,
+    aliasName: $_aliasNameGenerator(
+      db.wordMetadatas.id,
+      db.meanings.metadataId,
+    ),
+  );
+
+  $$MeaningsTableProcessedTableManager get meaningsRefs {
+    final manager = $$MeaningsTableTableManager(
+      $_db,
+      $_db.meanings,
+    ).filter((f) => f.metadataId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_meaningsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$WordMetadatasTableFilterComposer
+    extends Composer<_$AppDriftDatabase, $WordMetadatasTable> {
+  $$WordMetadatasTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get word => $composableBuilder(
+    column: $table.word,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get origin => $composableBuilder(
+    column: $table.origin,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get phonetic => $composableBuilder(
+    column: $table.phonetic,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> phoneticsRefs(
+    Expression<bool> Function($$PhoneticsTableFilterComposer f) f,
+  ) {
+    final $$PhoneticsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.phonetics,
+      getReferencedColumn: (t) => t.metadataId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PhoneticsTableFilterComposer(
+            $db: $db,
+            $table: $db.phonetics,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> meaningsRefs(
+    Expression<bool> Function($$MeaningsTableFilterComposer f) f,
+  ) {
+    final $$MeaningsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.meanings,
+      getReferencedColumn: (t) => t.metadataId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MeaningsTableFilterComposer(
+            $db: $db,
+            $table: $db.meanings,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$WordMetadatasTableOrderingComposer
+    extends Composer<_$AppDriftDatabase, $WordMetadatasTable> {
+  $$WordMetadatasTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get word => $composableBuilder(
+    column: $table.word,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get origin => $composableBuilder(
+    column: $table.origin,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get phonetic => $composableBuilder(
+    column: $table.phonetic,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$WordMetadatasTableAnnotationComposer
+    extends Composer<_$AppDriftDatabase, $WordMetadatasTable> {
+  $$WordMetadatasTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get word =>
+      $composableBuilder(column: $table.word, builder: (column) => column);
+
+  GeneratedColumn<String> get origin =>
+      $composableBuilder(column: $table.origin, builder: (column) => column);
+
+  GeneratedColumn<String> get phonetic =>
+      $composableBuilder(column: $table.phonetic, builder: (column) => column);
+
+  Expression<T> phoneticsRefs<T extends Object>(
+    Expression<T> Function($$PhoneticsTableAnnotationComposer a) f,
+  ) {
+    final $$PhoneticsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.phonetics,
+      getReferencedColumn: (t) => t.metadataId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PhoneticsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.phonetics,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<T> meaningsRefs<T extends Object>(
+    Expression<T> Function($$MeaningsTableAnnotationComposer a) f,
+  ) {
+    final $$MeaningsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.meanings,
+      getReferencedColumn: (t) => t.metadataId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MeaningsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.meanings,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$WordMetadatasTableTableManager
+    extends
+        RootTableManager<
+          _$AppDriftDatabase,
+          $WordMetadatasTable,
+          DriftWordMetadata,
+          $$WordMetadatasTableFilterComposer,
+          $$WordMetadatasTableOrderingComposer,
+          $$WordMetadatasTableAnnotationComposer,
+          $$WordMetadatasTableCreateCompanionBuilder,
+          $$WordMetadatasTableUpdateCompanionBuilder,
+          (DriftWordMetadata, $$WordMetadatasTableReferences),
+          DriftWordMetadata,
+          PrefetchHooks Function({bool phoneticsRefs, bool meaningsRefs})
+        > {
+  $$WordMetadatasTableTableManager(
+    _$AppDriftDatabase db,
+    $WordMetadatasTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer:
+              () => $$WordMetadatasTableFilterComposer($db: db, $table: table),
+          createOrderingComposer:
+              () =>
+                  $$WordMetadatasTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer:
+              () => $$WordMetadatasTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<String> word = const Value.absent(),
+                Value<String> origin = const Value.absent(),
+                Value<String> phonetic = const Value.absent(),
+              }) => WordMetadatasCompanion(
+                id: id,
+                word: word,
+                origin: origin,
+                phonetic: phonetic,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required String word,
+                required String origin,
+                required String phonetic,
+              }) => WordMetadatasCompanion.insert(
+                id: id,
+                word: word,
+                origin: origin,
+                phonetic: phonetic,
+              ),
+          withReferenceMapper:
+              (p0) =>
+                  p0
+                      .map(
+                        (e) => (
+                          e.readTable(table),
+                          $$WordMetadatasTableReferences(db, table, e),
+                        ),
+                      )
+                      .toList(),
+          prefetchHooksCallback: ({
+            phoneticsRefs = false,
+            meaningsRefs = false,
+          }) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (phoneticsRefs) db.phonetics,
+                if (meaningsRefs) db.meanings,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (phoneticsRefs)
+                    await $_getPrefetchedData<
+                      DriftWordMetadata,
+                      $WordMetadatasTable,
+                      DriftPhonetic
+                    >(
+                      currentTable: table,
+                      referencedTable: $$WordMetadatasTableReferences
+                          ._phoneticsRefsTable(db),
+                      managerFromTypedResult:
+                          (p0) =>
+                              $$WordMetadatasTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).phoneticsRefs,
+                      referencedItemsForCurrentItem:
+                          (item, referencedItems) => referencedItems.where(
+                            (e) => e.metadataId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
+                  if (meaningsRefs)
+                    await $_getPrefetchedData<
+                      DriftWordMetadata,
+                      $WordMetadatasTable,
+                      DriftMeaning
+                    >(
+                      currentTable: table,
+                      referencedTable: $$WordMetadatasTableReferences
+                          ._meaningsRefsTable(db),
+                      managerFromTypedResult:
+                          (p0) =>
+                              $$WordMetadatasTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).meaningsRefs,
+                      referencedItemsForCurrentItem:
+                          (item, referencedItems) => referencedItems.where(
+                            (e) => e.metadataId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$WordMetadatasTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDriftDatabase,
+      $WordMetadatasTable,
+      DriftWordMetadata,
+      $$WordMetadatasTableFilterComposer,
+      $$WordMetadatasTableOrderingComposer,
+      $$WordMetadatasTableAnnotationComposer,
+      $$WordMetadatasTableCreateCompanionBuilder,
+      $$WordMetadatasTableUpdateCompanionBuilder,
+      (DriftWordMetadata, $$WordMetadatasTableReferences),
+      DriftWordMetadata,
+      PrefetchHooks Function({bool phoneticsRefs, bool meaningsRefs})
+    >;
+typedef $$PhoneticsTableCreateCompanionBuilder =
+    PhoneticsCompanion Function({
+      Value<int> id,
+      required int metadataId,
+      required String value,
+      required String audio,
+    });
+typedef $$PhoneticsTableUpdateCompanionBuilder =
+    PhoneticsCompanion Function({
+      Value<int> id,
+      Value<int> metadataId,
+      Value<String> value,
+      Value<String> audio,
+    });
+
+final class $$PhoneticsTableReferences
+    extends BaseReferences<_$AppDriftDatabase, $PhoneticsTable, DriftPhonetic> {
+  $$PhoneticsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $WordMetadatasTable _metadataIdTable(_$AppDriftDatabase db) =>
+      db.wordMetadatas.createAlias(
+        $_aliasNameGenerator(db.phonetics.metadataId, db.wordMetadatas.id),
+      );
+
+  $$WordMetadatasTableProcessedTableManager get metadataId {
+    final $_column = $_itemColumn<int>('metadata_id')!;
+
+    final manager = $$WordMetadatasTableTableManager(
+      $_db,
+      $_db.wordMetadatas,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_metadataIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$PhoneticsTableFilterComposer
+    extends Composer<_$AppDriftDatabase, $PhoneticsTable> {
+  $$PhoneticsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get audio => $composableBuilder(
+    column: $table.audio,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$WordMetadatasTableFilterComposer get metadataId {
+    final $$WordMetadatasTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.metadataId,
+      referencedTable: $db.wordMetadatas,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$WordMetadatasTableFilterComposer(
+            $db: $db,
+            $table: $db.wordMetadatas,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PhoneticsTableOrderingComposer
+    extends Composer<_$AppDriftDatabase, $PhoneticsTable> {
+  $$PhoneticsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get audio => $composableBuilder(
+    column: $table.audio,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$WordMetadatasTableOrderingComposer get metadataId {
+    final $$WordMetadatasTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.metadataId,
+      referencedTable: $db.wordMetadatas,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$WordMetadatasTableOrderingComposer(
+            $db: $db,
+            $table: $db.wordMetadatas,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PhoneticsTableAnnotationComposer
+    extends Composer<_$AppDriftDatabase, $PhoneticsTable> {
+  $$PhoneticsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get value =>
+      $composableBuilder(column: $table.value, builder: (column) => column);
+
+  GeneratedColumn<String> get audio =>
+      $composableBuilder(column: $table.audio, builder: (column) => column);
+
+  $$WordMetadatasTableAnnotationComposer get metadataId {
+    final $$WordMetadatasTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.metadataId,
+      referencedTable: $db.wordMetadatas,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$WordMetadatasTableAnnotationComposer(
+            $db: $db,
+            $table: $db.wordMetadatas,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PhoneticsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDriftDatabase,
+          $PhoneticsTable,
+          DriftPhonetic,
+          $$PhoneticsTableFilterComposer,
+          $$PhoneticsTableOrderingComposer,
+          $$PhoneticsTableAnnotationComposer,
+          $$PhoneticsTableCreateCompanionBuilder,
+          $$PhoneticsTableUpdateCompanionBuilder,
+          (DriftPhonetic, $$PhoneticsTableReferences),
+          DriftPhonetic,
+          PrefetchHooks Function({bool metadataId})
+        > {
+  $$PhoneticsTableTableManager(_$AppDriftDatabase db, $PhoneticsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer:
+              () => $$PhoneticsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer:
+              () => $$PhoneticsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer:
+              () => $$PhoneticsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> metadataId = const Value.absent(),
+                Value<String> value = const Value.absent(),
+                Value<String> audio = const Value.absent(),
+              }) => PhoneticsCompanion(
+                id: id,
+                metadataId: metadataId,
+                value: value,
+                audio: audio,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int metadataId,
+                required String value,
+                required String audio,
+              }) => PhoneticsCompanion.insert(
+                id: id,
+                metadataId: metadataId,
+                value: value,
+                audio: audio,
+              ),
+          withReferenceMapper:
+              (p0) =>
+                  p0
+                      .map(
+                        (e) => (
+                          e.readTable(table),
+                          $$PhoneticsTableReferences(db, table, e),
+                        ),
+                      )
+                      .toList(),
+          prefetchHooksCallback: ({metadataId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                T extends TableManagerState<
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic
+                >
+              >(state) {
+                if (metadataId) {
+                  state =
+                      state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.metadataId,
+                            referencedTable: $$PhoneticsTableReferences
+                                ._metadataIdTable(db),
+                            referencedColumn:
+                                $$PhoneticsTableReferences
+                                    ._metadataIdTable(db)
+                                    .id,
+                          )
+                          as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$PhoneticsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDriftDatabase,
+      $PhoneticsTable,
+      DriftPhonetic,
+      $$PhoneticsTableFilterComposer,
+      $$PhoneticsTableOrderingComposer,
+      $$PhoneticsTableAnnotationComposer,
+      $$PhoneticsTableCreateCompanionBuilder,
+      $$PhoneticsTableUpdateCompanionBuilder,
+      (DriftPhonetic, $$PhoneticsTableReferences),
+      DriftPhonetic,
+      PrefetchHooks Function({bool metadataId})
+    >;
+typedef $$MeaningsTableCreateCompanionBuilder =
+    MeaningsCompanion Function({
+      Value<int> id,
+      required int metadataId,
+      required String partOfSpeech,
+      required List<String> synonyms,
+      required List<String> antonyms,
+    });
+typedef $$MeaningsTableUpdateCompanionBuilder =
+    MeaningsCompanion Function({
+      Value<int> id,
+      Value<int> metadataId,
+      Value<String> partOfSpeech,
+      Value<List<String>> synonyms,
+      Value<List<String>> antonyms,
+    });
+
+final class $$MeaningsTableReferences
+    extends BaseReferences<_$AppDriftDatabase, $MeaningsTable, DriftMeaning> {
+  $$MeaningsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $WordMetadatasTable _metadataIdTable(_$AppDriftDatabase db) =>
+      db.wordMetadatas.createAlias(
+        $_aliasNameGenerator(db.meanings.metadataId, db.wordMetadatas.id),
+      );
+
+  $$WordMetadatasTableProcessedTableManager get metadataId {
+    final $_column = $_itemColumn<int>('metadata_id')!;
+
+    final manager = $$WordMetadatasTableTableManager(
+      $_db,
+      $_db.wordMetadatas,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_metadataIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$DefinitionsTable, List<DriftDefinition>>
+  _definitionsRefsTable(_$AppDriftDatabase db) => MultiTypedResultKey.fromTable(
+    db.definitions,
+    aliasName: $_aliasNameGenerator(db.meanings.id, db.definitions.meaningId),
+  );
+
+  $$DefinitionsTableProcessedTableManager get definitionsRefs {
+    final manager = $$DefinitionsTableTableManager(
+      $_db,
+      $_db.definitions,
+    ).filter((f) => f.meaningId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_definitionsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$MeaningsTableFilterComposer
+    extends Composer<_$AppDriftDatabase, $MeaningsTable> {
+  $$MeaningsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get partOfSpeech => $composableBuilder(
+    column: $table.partOfSpeech,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<List<String>, List<String>, String>
+  get synonyms => $composableBuilder(
+    column: $table.synonyms,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<List<String>, List<String>, String>
+  get antonyms => $composableBuilder(
+    column: $table.antonyms,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  $$WordMetadatasTableFilterComposer get metadataId {
+    final $$WordMetadatasTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.metadataId,
+      referencedTable: $db.wordMetadatas,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$WordMetadatasTableFilterComposer(
+            $db: $db,
+            $table: $db.wordMetadatas,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> definitionsRefs(
+    Expression<bool> Function($$DefinitionsTableFilterComposer f) f,
+  ) {
+    final $$DefinitionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.definitions,
+      getReferencedColumn: (t) => t.meaningId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DefinitionsTableFilterComposer(
+            $db: $db,
+            $table: $db.definitions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$MeaningsTableOrderingComposer
+    extends Composer<_$AppDriftDatabase, $MeaningsTable> {
+  $$MeaningsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get partOfSpeech => $composableBuilder(
+    column: $table.partOfSpeech,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get synonyms => $composableBuilder(
+    column: $table.synonyms,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get antonyms => $composableBuilder(
+    column: $table.antonyms,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$WordMetadatasTableOrderingComposer get metadataId {
+    final $$WordMetadatasTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.metadataId,
+      referencedTable: $db.wordMetadatas,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$WordMetadatasTableOrderingComposer(
+            $db: $db,
+            $table: $db.wordMetadatas,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$MeaningsTableAnnotationComposer
+    extends Composer<_$AppDriftDatabase, $MeaningsTable> {
+  $$MeaningsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get partOfSpeech => $composableBuilder(
+    column: $table.partOfSpeech,
+    builder: (column) => column,
+  );
+
+  GeneratedColumnWithTypeConverter<List<String>, String> get synonyms =>
+      $composableBuilder(column: $table.synonyms, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<String>, String> get antonyms =>
+      $composableBuilder(column: $table.antonyms, builder: (column) => column);
+
+  $$WordMetadatasTableAnnotationComposer get metadataId {
+    final $$WordMetadatasTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.metadataId,
+      referencedTable: $db.wordMetadatas,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$WordMetadatasTableAnnotationComposer(
+            $db: $db,
+            $table: $db.wordMetadatas,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> definitionsRefs<T extends Object>(
+    Expression<T> Function($$DefinitionsTableAnnotationComposer a) f,
+  ) {
+    final $$DefinitionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.definitions,
+      getReferencedColumn: (t) => t.meaningId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$DefinitionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.definitions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$MeaningsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDriftDatabase,
+          $MeaningsTable,
+          DriftMeaning,
+          $$MeaningsTableFilterComposer,
+          $$MeaningsTableOrderingComposer,
+          $$MeaningsTableAnnotationComposer,
+          $$MeaningsTableCreateCompanionBuilder,
+          $$MeaningsTableUpdateCompanionBuilder,
+          (DriftMeaning, $$MeaningsTableReferences),
+          DriftMeaning,
+          PrefetchHooks Function({bool metadataId, bool definitionsRefs})
+        > {
+  $$MeaningsTableTableManager(_$AppDriftDatabase db, $MeaningsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer:
+              () => $$MeaningsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer:
+              () => $$MeaningsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer:
+              () => $$MeaningsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> metadataId = const Value.absent(),
+                Value<String> partOfSpeech = const Value.absent(),
+                Value<List<String>> synonyms = const Value.absent(),
+                Value<List<String>> antonyms = const Value.absent(),
+              }) => MeaningsCompanion(
+                id: id,
+                metadataId: metadataId,
+                partOfSpeech: partOfSpeech,
+                synonyms: synonyms,
+                antonyms: antonyms,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int metadataId,
+                required String partOfSpeech,
+                required List<String> synonyms,
+                required List<String> antonyms,
+              }) => MeaningsCompanion.insert(
+                id: id,
+                metadataId: metadataId,
+                partOfSpeech: partOfSpeech,
+                synonyms: synonyms,
+                antonyms: antonyms,
+              ),
+          withReferenceMapper:
+              (p0) =>
+                  p0
+                      .map(
+                        (e) => (
+                          e.readTable(table),
+                          $$MeaningsTableReferences(db, table, e),
+                        ),
+                      )
+                      .toList(),
+          prefetchHooksCallback: ({
+            metadataId = false,
+            definitionsRefs = false,
+          }) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [if (definitionsRefs) db.definitions],
+              addJoins: <
+                T extends TableManagerState<
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic
+                >
+              >(state) {
+                if (metadataId) {
+                  state =
+                      state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.metadataId,
+                            referencedTable: $$MeaningsTableReferences
+                                ._metadataIdTable(db),
+                            referencedColumn:
+                                $$MeaningsTableReferences
+                                    ._metadataIdTable(db)
+                                    .id,
+                          )
+                          as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (definitionsRefs)
+                    await $_getPrefetchedData<
+                      DriftMeaning,
+                      $MeaningsTable,
+                      DriftDefinition
+                    >(
+                      currentTable: table,
+                      referencedTable: $$MeaningsTableReferences
+                          ._definitionsRefsTable(db),
+                      managerFromTypedResult:
+                          (p0) =>
+                              $$MeaningsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).definitionsRefs,
+                      referencedItemsForCurrentItem:
+                          (item, referencedItems) => referencedItems.where(
+                            (e) => e.meaningId == item.id,
+                          ),
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$MeaningsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDriftDatabase,
+      $MeaningsTable,
+      DriftMeaning,
+      $$MeaningsTableFilterComposer,
+      $$MeaningsTableOrderingComposer,
+      $$MeaningsTableAnnotationComposer,
+      $$MeaningsTableCreateCompanionBuilder,
+      $$MeaningsTableUpdateCompanionBuilder,
+      (DriftMeaning, $$MeaningsTableReferences),
+      DriftMeaning,
+      PrefetchHooks Function({bool metadataId, bool definitionsRefs})
+    >;
+typedef $$DefinitionsTableCreateCompanionBuilder =
+    DefinitionsCompanion Function({
+      Value<int> id,
+      required int meaningId,
+      required String value,
+      required String example,
+    });
+typedef $$DefinitionsTableUpdateCompanionBuilder =
+    DefinitionsCompanion Function({
+      Value<int> id,
+      Value<int> meaningId,
+      Value<String> value,
+      Value<String> example,
+    });
+
+final class $$DefinitionsTableReferences
+    extends
+        BaseReferences<_$AppDriftDatabase, $DefinitionsTable, DriftDefinition> {
+  $$DefinitionsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static $MeaningsTable _meaningIdTable(_$AppDriftDatabase db) =>
+      db.meanings.createAlias(
+        $_aliasNameGenerator(db.definitions.meaningId, db.meanings.id),
+      );
+
+  $$MeaningsTableProcessedTableManager get meaningId {
+    final $_column = $_itemColumn<int>('meaning_id')!;
+
+    final manager = $$MeaningsTableTableManager(
+      $_db,
+      $_db.meanings,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_meaningIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$DefinitionsTableFilterComposer
+    extends Composer<_$AppDriftDatabase, $DefinitionsTable> {
+  $$DefinitionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get example => $composableBuilder(
+    column: $table.example,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$MeaningsTableFilterComposer get meaningId {
+    final $$MeaningsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.meaningId,
+      referencedTable: $db.meanings,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MeaningsTableFilterComposer(
+            $db: $db,
+            $table: $db.meanings,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DefinitionsTableOrderingComposer
+    extends Composer<_$AppDriftDatabase, $DefinitionsTable> {
+  $$DefinitionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get example => $composableBuilder(
+    column: $table.example,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$MeaningsTableOrderingComposer get meaningId {
+    final $$MeaningsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.meaningId,
+      referencedTable: $db.meanings,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MeaningsTableOrderingComposer(
+            $db: $db,
+            $table: $db.meanings,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DefinitionsTableAnnotationComposer
+    extends Composer<_$AppDriftDatabase, $DefinitionsTable> {
+  $$DefinitionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get value =>
+      $composableBuilder(column: $table.value, builder: (column) => column);
+
+  GeneratedColumn<String> get example =>
+      $composableBuilder(column: $table.example, builder: (column) => column);
+
+  $$MeaningsTableAnnotationComposer get meaningId {
+    final $$MeaningsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.meaningId,
+      referencedTable: $db.meanings,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$MeaningsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.meanings,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$DefinitionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDriftDatabase,
+          $DefinitionsTable,
+          DriftDefinition,
+          $$DefinitionsTableFilterComposer,
+          $$DefinitionsTableOrderingComposer,
+          $$DefinitionsTableAnnotationComposer,
+          $$DefinitionsTableCreateCompanionBuilder,
+          $$DefinitionsTableUpdateCompanionBuilder,
+          (DriftDefinition, $$DefinitionsTableReferences),
+          DriftDefinition,
+          PrefetchHooks Function({bool meaningId})
+        > {
+  $$DefinitionsTableTableManager(_$AppDriftDatabase db, $DefinitionsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer:
+              () => $$DefinitionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer:
+              () => $$DefinitionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer:
+              () =>
+                  $$DefinitionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> meaningId = const Value.absent(),
+                Value<String> value = const Value.absent(),
+                Value<String> example = const Value.absent(),
+              }) => DefinitionsCompanion(
+                id: id,
+                meaningId: meaningId,
+                value: value,
+                example: example,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int meaningId,
+                required String value,
+                required String example,
+              }) => DefinitionsCompanion.insert(
+                id: id,
+                meaningId: meaningId,
+                value: value,
+                example: example,
+              ),
+          withReferenceMapper:
+              (p0) =>
+                  p0
+                      .map(
+                        (e) => (
+                          e.readTable(table),
+                          $$DefinitionsTableReferences(db, table, e),
+                        ),
+                      )
+                      .toList(),
+          prefetchHooksCallback: ({meaningId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                T extends TableManagerState<
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic,
+                  dynamic
+                >
+              >(state) {
+                if (meaningId) {
+                  state =
+                      state.withJoin(
+                            currentTable: table,
+                            currentColumn: table.meaningId,
+                            referencedTable: $$DefinitionsTableReferences
+                                ._meaningIdTable(db),
+                            referencedColumn:
+                                $$DefinitionsTableReferences
+                                    ._meaningIdTable(db)
+                                    .id,
+                          )
+                          as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$DefinitionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDriftDatabase,
+      $DefinitionsTable,
+      DriftDefinition,
+      $$DefinitionsTableFilterComposer,
+      $$DefinitionsTableOrderingComposer,
+      $$DefinitionsTableAnnotationComposer,
+      $$DefinitionsTableCreateCompanionBuilder,
+      $$DefinitionsTableUpdateCompanionBuilder,
+      (DriftDefinition, $$DefinitionsTableReferences),
+      DriftDefinition,
+      PrefetchHooks Function({bool meaningId})
+    >;
 
 class $AppDriftDatabaseManager {
   final _$AppDriftDatabase _db;
@@ -2329,4 +5451,12 @@ class $AppDriftDatabaseManager {
       $$WordGroupsTableTableManager(_db, _db.wordGroups);
   $$WordsTableTableManager get words =>
       $$WordsTableTableManager(_db, _db.words);
+  $$WordMetadatasTableTableManager get wordMetadatas =>
+      $$WordMetadatasTableTableManager(_db, _db.wordMetadatas);
+  $$PhoneticsTableTableManager get phonetics =>
+      $$PhoneticsTableTableManager(_db, _db.phonetics);
+  $$MeaningsTableTableManager get meanings =>
+      $$MeaningsTableTableManager(_db, _db.meanings);
+  $$DefinitionsTableTableManager get definitions =>
+      $$DefinitionsTableTableManager(_db, _db.definitions);
 }
