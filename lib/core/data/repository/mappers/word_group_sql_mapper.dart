@@ -12,7 +12,7 @@ sealed class WordGroupSqlMapper {
       created: row.read('created'),
       modified: row.read('modified'),
       name: row.read('name'),
-      words: row.readNullable<int>('words') ?? 0,
+      words: row.readNullable<int>('words_count') ?? 0,
       origin: LanguageInfo(
         code: row.data['language_origin_code'],
         name: row.data['language_origin_name'],

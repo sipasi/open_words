@@ -125,7 +125,7 @@ extension _Queries on AppDriftDatabase {
 
   static String _query({String? where}) {
     const template =
-        'SELECT g.*, COUNT(w.id) AS words '
+        'SELECT g.*, COUNT(w.id) AS words_count '
         'FROM word_groups g '
         'LEFT JOIN words w ON w.group_id = g.id ';
 
