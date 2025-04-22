@@ -34,6 +34,6 @@ class DeleteAllTile extends StatelessWidget {
       return;
     }
 
-    context.read<ExplorerBloc>().add(ExplorerLoadRequested());
+    context.read<ExplorerBloc>().add(ExplorerRefreshRequested());
   }
 }
