@@ -15,27 +15,25 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
   SettingsBloc({
     required this.themeStorage,
     required this.translatorOptionStorage,
-  }) : super(SettingsInitial()) {
+  }) : super(SettingsState.initial()) {
     on<SettingsInitRequested>((event, emit) {
       final theme = themeStorage.get();
       final translatorOption = translatorOptionStorage.rememberedOrDefault();
 
-      final loaded = SettingsLoadSuccess(
-        themeSeed: theme.seed,
-        themeMode: theme.mode,
-        translatorOption: translatorOption,
+      emit(
+        state.copyWith(
+          themeSeed: theme.seed,
+          themeMode: theme.mode,
+          translatorOption: translatorOption,
+        ),
       );
-
-      emit(loaded);
     });
     on<SettingsTranslatorChanged>((event, emit) {
       final state = this.state;
 
       translatorOptionStorage.remember(event.value);
 
-      if (state is SettingsLoadSuccess) {
-        emit(state.copyWith(translatorOption: event.value));
-      }
+      emit(state.copyWith(translatorOption: event.value));
     });
   }
 }

@@ -1,26 +1,27 @@
 part of 'settings_bloc.dart';
 
-sealed class SettingsState {}
-
-final class SettingsInitial extends SettingsState {}
-
-final class SettingsLoadSuccess extends SettingsState {
+class SettingsState {
   final ColorSeed themeSeed;
   final ThemeMode themeMode;
   final TranslatorOption translatorOption;
 
-  SettingsLoadSuccess({
+  SettingsState({
     required this.themeSeed,
     required this.themeMode,
     required this.translatorOption,
   });
 
-  SettingsLoadSuccess copyWith({
+  SettingsState.initial()
+    : themeSeed = ColorSeed.blue,
+      themeMode = ThemeMode.dark,
+      translatorOption = TranslatorOption.google;
+
+  SettingsState copyWith({
     ColorSeed? themeSeed,
     ThemeMode? themeMode,
     TranslatorOption? translatorOption,
   }) {
-    return SettingsLoadSuccess(
+    return SettingsState(
       themeSeed: themeSeed ?? this.themeSeed,
       themeMode: themeMode ?? this.themeMode,
       translatorOption: translatorOption ?? this.translatorOption,
