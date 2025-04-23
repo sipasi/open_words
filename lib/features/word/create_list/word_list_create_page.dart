@@ -10,10 +10,14 @@ import 'package:open_words/features/explorer/bloc/explorer_bloc.dart';
 import 'package:open_words/features/word/create_list/cubit/word_list_create_cubit.dart';
 import 'package:open_words/features/word/create_list/widgets/word_draft_editor.dart';
 import 'package:open_words/features/word/create_list/widgets/word_draft_list_view.dart';
+import 'package:open_words/features/word/create_list/widgets/word_list_create_bottom_bar.dart';
+import 'package:open_words/features/word/create_list/widgets/word_list_create_fab.dart';
 import 'package:open_words/features/word_group/detail/cubit/word_group_detail_cubit.dart';
+import 'package:open_words/shared/constants/hero_tag_constants.dart';
 import 'package:open_words/shared/input_fields/text_edit_controller.dart';
 import 'package:open_words/shared/modal/discard_changes_modal.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
+import 'package:open_words/shared/theme/theme_extension.dart';
 
 class WordListCreatePage extends StatelessWidget {
   final WordGroup group;
@@ -23,6 +27,7 @@ class WordListCreatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<WordListCreateCubit>(
+      lazy: false,
       create:
           (context) => WordListCreateCubit(
             group: group,
@@ -42,8 +47,6 @@ class WordListCreateView extends StatefulWidget {
 }
 
 class _WordListCreateViewState extends State<WordListCreateView> {
-  final vibration = GetIt.I.get<VibrationService>();
-
   final TextEditController origin = TextEditController.text();
   final TextEditController translation = TextEditController.text();
 
@@ -54,6 +57,7 @@ class _WordListCreateViewState extends State<WordListCreateView> {
   void initState() {
     super.initState();
 
+    final vibration = GetIt.I.get<VibrationService>();
     final bloc = context.read<WordListCreateCubit>();
 
     _clearInputSubscription = bloc.uiEvents.listen((event) {
@@ -87,6 +91,7 @@ class _WordListCreateViewState extends State<WordListCreateView> {
           (didPop, result) => _onPopHandler(context, didPop, result),
       child: Scaffold(
         appBar: AppBar(
+          title: WordListCreateTitle(),
           actions: [
             IconButton(
               onPressed: () => _onSave(context),
@@ -104,6 +109,9 @@ class _WordListCreateViewState extends State<WordListCreateView> {
             ],
           ),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButton: WordListCreateFab(),
+        bottomNavigationBar: WordListCreateBottomBar(),
       ),
     );
   }
@@ -138,5 +146,20 @@ class _WordListCreateViewState extends State<WordListCreateView> {
     context.read<WordGroupDetailCubit>().init();
     context.read<ExplorerBloc>().add(ExplorerRefreshRequested());
     context.pop();
+  }
+}
+
+class WordListCreateTitle extends StatelessWidget {
+  const WordListCreateTitle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Hero(
+      tag: HeroTagConstants.appbarTitleTag,
+      child: Text(
+        context.read<WordListCreateCubit>().group.name,
+        style: context.textTheme.titleLarge,
+      ),
+    );
   }
 }

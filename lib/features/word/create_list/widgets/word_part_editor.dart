@@ -12,14 +12,18 @@ class WordPartEditor extends StatelessWidget {
   final clipboard = GetIt.I.get<ClipboardService>();
 
   final TextEditController controller;
+
   final String label;
   final String hint;
+
+  final void Function(String value) onChanged;
 
   WordPartEditor({
     super.key,
     required this.controller,
     required this.label,
     required this.hint,
+    required this.onChanged,
   });
 
   @override
@@ -37,6 +41,7 @@ class WordPartEditor extends StatelessWidget {
               textInputAction: TextInputAction.next,
               maxLines: 1,
               label: label,
+              onChanged: onChanged,
             ),
             Row(
               children: [
@@ -74,6 +79,8 @@ class WordPartEditor extends StatelessWidget {
 
     vibration.tap();
     controller.setText(trimmed.isEmpty ? value : '$trimmed, $value');
+
+    onChanged(controller.text);
   }
 
   Future _copyToClipboard() {
@@ -88,6 +95,8 @@ class WordPartEditor extends StatelessWidget {
     if (controller.textTrim.isNotEmpty) {
       vibration.tap();
     }
+
+    onChanged('');
 
     controller.clear();
   }

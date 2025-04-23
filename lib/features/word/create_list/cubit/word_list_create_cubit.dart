@@ -29,16 +29,32 @@ class WordListCreateCubit extends Cubit<WordListCreateState> {
     required this.group,
     required this.groupRepository,
     required this.wordRepository,
-  }) : super(WordListCreateState.intial());
+  }) : super(WordListCreateState.initial());
 
-  void addDraft({required String origin, required String translation}) {
+  void setOrigin(String value) {
+    emit(state.copyWith(originDraft: value));
+  }
+
+  void setTranslation(String value) {
+    emit(state.copyWith(translationDraft: value));
+  }
+
+  void addDraft() {
+    final (origin, translation) = (state.originDraft, state.translationDraft);
+
     if (origin.isEmpty || translation.isEmpty) {
       return;
     }
 
     final draft = WordDraft(origin: origin, translation: translation);
 
-    emit(state.copyWith(drafts: state.drafts.toList()..add(draft)));
+    emit(
+      state.copyWith(
+        drafts: state.drafts.toList()..add(draft),
+        originDraft: '',
+        translationDraft: '',
+      ),
+    );
 
     _uiEvent.add(WordListUiEvent.clearAllInput);
   }
@@ -46,7 +62,13 @@ class WordListCreateCubit extends Cubit<WordListCreateState> {
   void removeDraft(int index) {
     final draft = state.drafts.removeAt(index);
 
-    emit(state.copyWith(drafts: state.drafts.toList()..remove(draft)));
+    emit(
+      state.copyWith(
+        drafts: state.drafts.toList()..remove(draft),
+        originDraft: draft.origin,
+        translationDraft: draft.translation,
+      ),
+    );
 
     _draftRemovedEvent.add(draft);
   }
