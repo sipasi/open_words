@@ -19,13 +19,13 @@ class WordGroupDetailCubit extends Cubit<WordGroupDetailState> {
   Future init() async {
     emit(state.copyWith(loadingState: LoadingState.loading));
 
-    final group = await groupRepository.byId(state.group.id);
+    final id = state.group.id;
 
-    if (group == null) {
+    if (id.isEmpty) {
       return;
     }
 
-    final words = await wordRepository.allByGroup(group.id);
+    final words = await wordRepository.allByGroup(id);
 
     emit(state.copyWith(words: words, loadingState: LoadingState.loading));
   }
