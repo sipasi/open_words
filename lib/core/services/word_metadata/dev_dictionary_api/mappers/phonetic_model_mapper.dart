@@ -9,10 +9,8 @@ sealed class PhoneticModelMapper {
 
   static List<PhoneticDraft> mapList(List<PhoneticModel> models) {
     return models
-        .where((item) => item.audio != null || item.text == null)
+        .where((item) => item.audio?.isNotEmpty ?? false)
         .distinctBy((item) => item)
-        .distinctBy((item) => item.audio)
-        .distinctBy((item) => item.text)
         .map(map)
         .toList();
   }
