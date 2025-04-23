@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_words/shared/navigation/result.dart';
+import 'package:open_words/core/result/result.dart';
+import 'package:open_words/shared/navigation/material_bloc_navigator.dart';
 
 sealed class MaterialNavigator {
-  static Future<Result> push<T extends Object?>(
+  static AsyncResult<T> push<T extends Object?>(
     BuildContext context,
     WidgetBuilder builder,
   ) async {
-    Result? result = await Navigator.push<Result>(
+    final result = await Navigator.push<Result<T>?>(
       context,
       MaterialPageRoute(builder: builder),
     );
 
-    if (isNot<T>(result)) {
+    if (result is! Result<T>) {
       return Result.empty();
     }
 
-    return result as Result;
+    return result;
   }
 
   static void pop<T>(BuildContext context, {int times = 1}) {
@@ -26,7 +27,7 @@ sealed class MaterialNavigator {
   }
 
   static void popWith<T>(BuildContext context, T value) {
-    Navigator.pop(context, Result.contain(value));
+    Navigator.pop(context, Result.success(value));
   }
 
   static Future<Result> popAndPush<T extends Object?>(
@@ -36,14 +37,6 @@ sealed class MaterialNavigator {
     pop(context);
 
     return push(context, builder);
-  }
-
-  static bool isNot<T>(dynamic object) {
-    if (object is Result) {
-      return false;
-    }
-
-    return true;
   }
 }
 
@@ -65,27 +58,12 @@ extension MaterialNavigatorExtension on BuildContext {
   }
 
   void popWith<T>(T value) {
-    MaterialNavigator.popWith(this, Result.contain(value));
+    MaterialNavigator.popWith(this, Result.success(value));
   }
 
   Future<Result> popAndPush<T extends Object?>(WidgetBuilder builder) {
     pop();
 
     return push(builder);
-  }
-
-  bool isNot<T>(dynamic object) {
-    return MaterialNavigator.isNot(object);
-  }
-}
-
-class MaterialBlocNavigator {
-  static Future<Result> pushBlocValue<
-    T extends Object?,
-    TBloc extends BlocBase
-  >(BuildContext context, TBloc bloc, WidgetBuilder builder) async {
-    return MaterialNavigator.push(context, (context) {
-      return BlocProvider.value(value: bloc, child: builder(context));
-    });
   }
 }
