@@ -130,7 +130,7 @@ extension _Queries on AppDriftDatabase {
         'LEFT JOIN words w ON w.group_id = g.id ';
 
     return where == null
-        ? '$template GROUP BY g.id;'
-        : '$template WHERE $where GROUP BY g.id;';
+        ? '$template GROUP BY g.id ORDER BY g.name;'
+        : '$template WHERE $where GROUP BY g.id ORDER BY g.name;';
   }
 }

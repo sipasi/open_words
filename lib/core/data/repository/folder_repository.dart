@@ -53,8 +53,6 @@ class FolderRepositoryImpl extends FolderRepository {
 
   @override
   Future<Folder> create({Id? parentId, required String name}) async {
-    final now = DateTime.now();
-
     final id = await database
         .into(database.folders)
         .insert(FolderSqlMapper.toCreate(parentId: parentId, name: name));
@@ -113,6 +111,8 @@ extension _Queries on AppDriftDatabase {
         'SELECT f.* '
         'FROM folders f ';
 
-    return where == null ? '$template;' : '$template WHERE $where;';
+    return where == null
+        ? '$template ORDER BY f.name;'
+        : '$template WHERE $where ORDER BY f.name;';
   }
 }

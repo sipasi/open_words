@@ -79,6 +79,8 @@ extension _Queries on AppDriftDatabase {
         'SELECT w.* '
         'FROM words w ';
 
-    return where == null ? '$template;' : '$template WHERE $where;';
+    return where == null
+        ? '$template ORDER BY w.created DESC;'
+        : '$template WHERE $where ORDER BY w.created DESC;';
   }
 }
