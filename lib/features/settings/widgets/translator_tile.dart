@@ -11,10 +11,6 @@ class TranslatorTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsBloc, SettingsState>(
       builder: (context, state) {
-        if (state is! SettingsLoadSuccess) {
-          return const SizedBox();
-        }
-
         final translator = state.translatorOption;
 
         return ListTile(
