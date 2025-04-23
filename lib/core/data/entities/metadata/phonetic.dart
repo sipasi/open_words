@@ -7,7 +7,7 @@ class Phonetic extends Entity {
   final String value;
   final String audio;
 
-  Phonetic({
+  const Phonetic({
     required super.id,
     required this.metadataId,
     required this.value,

@@ -13,7 +13,7 @@ class Meaning extends Entity {
 
   final List<String> antonyms;
 
-  Meaning({
+  const Meaning({
     required super.id,
     required this.metadataId,
     required this.partOfSpeech,

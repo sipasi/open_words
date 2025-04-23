@@ -1,4 +1,5 @@
 import 'package:open_words/core/data/entities/entity.dart';
+import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/entities/metadata/meaning.dart';
 import 'package:open_words/core/data/entities/metadata/phonetic.dart';
 
@@ -13,7 +14,7 @@ class WordMetadata extends Entity {
 
   final List<Meaning> meanings;
 
-  WordMetadata({
+  const WordMetadata({
     required super.id,
     required this.word,
     required this.origin,
@@ -21,4 +22,13 @@ class WordMetadata extends Entity {
     required this.phonetics,
     required this.meanings,
   });
+  const WordMetadata.empty()
+    : this(
+        id: const Id.empty(),
+        word: '',
+        origin: '',
+        phonetic: '',
+        phonetics: const [],
+        meanings: const [],
+      );
 }

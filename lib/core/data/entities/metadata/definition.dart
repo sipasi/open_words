@@ -7,10 +7,10 @@ class Definition extends Entity {
   final String value;
   final String example;
 
-  Definition({
+  const Definition({
     required super.id,
     required this.meaningId,
     required this.value,
     required this.example,
-  }) : assert(value.isNotEmpty || example.isNotEmpty);
+  });
 }
