@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_words/features/word/detail/cubit/word_detail_page_cubit.dart';
 import 'package:open_words/shared/theme/theme_extension.dart';
 
 class WordInfoCard extends StatelessWidget {
-  final String origin;
-  final String translation;
-
-  const WordInfoCard({
-    super.key,
-    required this.origin,
-    required this.translation,
-  });
+  const WordInfoCard({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final origin = context.select(
+      (WordDetailPageCubit value) => value.state.origin,
+    );
+    final translation = context.select(
+      (WordDetailPageCubit value) => value.state.translation,
+    );
+
     return Card.outlined(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
