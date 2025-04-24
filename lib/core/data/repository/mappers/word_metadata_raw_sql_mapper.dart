@@ -55,7 +55,7 @@ sealed class WordMetadataRawSqlMapper {
         partOfSpeech: e.read('part_of_speech'),
         definitions: _mapDefinitions(meaningId, meanings, definitions),
         synonyms: synonymAntonym.fromSql(e.read('synonyms')),
-        antonyms: synonymAntonym.fromSql(e.read('synonyms')),
+        antonyms: synonymAntonym.fromSql(e.read('antonyms')),
       );
     }).toList();
   }
