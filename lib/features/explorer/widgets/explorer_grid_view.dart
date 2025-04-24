@@ -20,9 +20,7 @@ class ExplorerGridView extends StatelessWidget {
   Widget build(BuildContext context) {
     int folderLength = folders.length;
 
-    return AdaptiveGridView(
-      mainAxisExtent: 48,
-      maxCrossAxisExtent: 600,
+    return AdaptiveGridView.listTiles(
       itemCount: folderLength + groups.length,
       padding: const EdgeInsets.only(bottom: ListPaddingConstans.bottomForFab),
       itemBuilder: (context, index) {
