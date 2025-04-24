@@ -22,12 +22,12 @@ class MeaningListTile extends StatelessWidget {
         ),
 
         if (meaning.synonyms.isNotEmpty)
-          SynonymAntonymView(groupName: 'Synonyms', values: meaning.synonyms),
+          SynonymAntonymView(name: 'Synonyms', values: meaning.synonyms),
 
         if (meaning.antonyms.isNotEmpty)
-          SynonymAntonymView(groupName: 'Antonyms', values: meaning.antonyms),
+          SynonymAntonymView(name: 'Antonyms', values: meaning.antonyms),
 
-        if (meaning.definitions.isNotEmpty) Divider(),
+        if (meaning.definitions.isNotEmpty) const Divider(),
         if (meaning.definitions.isNotEmpty)
           DefinitionListView(definitions: meaning.definitions),
       ],

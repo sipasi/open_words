@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:open_words/shared/theme/theme_extension.dart';
 
 class SynonymAntonymView extends StatelessWidget {
-  final String groupName;
+  final String name;
   final List<String> values;
 
   const SynonymAntonymView({
     super.key,
-    required this.groupName,
+    required this.name,
     required this.values,
   });
 
@@ -24,7 +24,7 @@ class SynonymAntonymView extends StatelessWidget {
 
     return Wrap(
       children: [
-        Text('$groupName:', style: title),
+        Text('$name:', style: title),
         ...List.generate(values.length, (index) {
           final text = values[index];
 
