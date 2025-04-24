@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:open_words/shared/bottom_sheet/dismissible_bottom_sheet.dart';
 import 'package:open_words/shared/modal/discard_changes_modal.dart';
-import 'package:smooth_sheets/smooth_sheets.dart';
 
-class PopScopeBottomSheet<T> extends StatelessWidget {
+class PopScopeBottomSheet extends StatelessWidget {
   final Widget body;
   final Widget bottomBar;
   final bool Function() showDismissDialog;
@@ -21,30 +21,7 @@ class PopScopeBottomSheet<T> extends StatelessWidget {
       onPopInvokedWithResult: (didPop, result) {
         _onPopInvoked(context, didPop, result);
       },
-      child: SheetKeyboardDismissible(
-        dismissBehavior: const SheetKeyboardDismissBehavior.onDragDown(
-          isContentScrollAware: true,
-        ),
-        child: Sheet(
-          scrollConfiguration: const SheetScrollConfiguration(),
-          decoration: MaterialSheetDecoration(
-            size: SheetSize.stretch,
-            color: Theme.of(context).colorScheme.secondaryContainer,
-            clipBehavior: Clip.antiAlias,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-            ),
-          ),
-          child: SheetContentScaffold(
-            bottomBarVisibility: const BottomBarVisibility.always(
-              // Make the bottom bar visible when the keyboard is open.
-              ignoreBottomInset: true,
-            ),
-            body: body,
-            bottomBar: bottomBar,
-          ),
-        ),
-      ),
+      child: DismissibleBottomSheet(body: body, bottomBar: bottomBar),
     );
   }
 
