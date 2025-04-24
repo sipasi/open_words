@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/features/explorer/bloc/explorer_bloc.dart';
-import 'package:open_words/features/explorer/usecase/explorer_back_navigation_usecase.dart';
 import 'package:open_words/features/explorer/widgets/explorer_grid_view.dart';
 
 class ExplorerScreen extends StatelessWidget {
@@ -14,7 +13,9 @@ class ExplorerScreen extends StatelessWidget {
     return PopScope(
       canPop: state.isRootFolder,
       onPopInvokedWithResult: (didPop, result) {
-        ExplorerBackNavigationUsecase.handle(context);
+        final bloc = context.read<ExplorerBloc>();
+
+        bloc.add(ExplorerNavigateBackRequested());
       },
       child: ExplorerGridView(folders: state.folders, groups: state.groups),
     );
