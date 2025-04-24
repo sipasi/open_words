@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/features/word/detail/cubit/word_detail_page_cubit.dart';
 import 'package:open_words/features/word/detail/widgets/metadata_not_found_view.dart';
 import 'package:open_words/features/word_metadata/detail/word_metadata_view.dart';
-import 'package:open_words/features/word_metadata/word_metadata_loading_view.dart';
+import 'package:open_words/features/word_metadata/loading/word_metadata_loading_view.dart';
 
 class WordDetailMetadataView extends StatelessWidget {
   const WordDetailMetadataView({super.key});
