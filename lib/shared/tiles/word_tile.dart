@@ -2,16 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:open_words/shared/theme/theme_extension.dart';
 
 class WordTile extends StatelessWidget {
-  final String origin;
-  final String translation;
+  final String title;
+  final String subtitle;
 
-  final void Function() onTap;
+  final Color? titleColor;
+  final Color? subtitleColor;
+
+  final void Function()? onTap;
 
   const WordTile({
     super.key,
-    required this.origin,
-    required this.translation,
-    required this.onTap,
+    required this.title,
+    required this.subtitle,
+    this.titleColor,
+    this.subtitleColor,
+    this.onTap,
   });
 
   @override
@@ -30,20 +35,20 @@ class WordTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                origin,
+                title,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: textTheme.bodyMedium?.copyWith(
+                style: textTheme.bodyMedium!.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: colorScheme.primary,
+                  color: titleColor ?? colorScheme.primary,
                 ),
               ),
               Text(
-                translation,
+                subtitle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
+                style: textTheme.bodyMedium!.copyWith(
+                  color: subtitleColor ?? colorScheme.onSurfaceVariant,
                 ),
               ),
             ],

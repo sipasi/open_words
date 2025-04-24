@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/core/data/entities/word/word.dart';
 import 'package:open_words/features/word/detail/word_detail_page.dart';
 import 'package:open_words/features/word_group/detail/cubit/word_group_detail_cubit.dart';
-import 'package:open_words/features/word_group/detail/widgets/word_tile.dart';
 import 'package:open_words/shared/constants/list_padding_constans.dart';
 import 'package:open_words/shared/layout/adaptive_grid_view.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
+import 'package:open_words/shared/tiles/word_tile.dart';
 
 class WordGridView extends StatelessWidget {
   const WordGridView({super.key});
@@ -30,8 +30,8 @@ class WordGridView extends StatelessWidget {
             final word = words[index];
 
             return WordTile(
-              origin: word.origin,
-              translation: word.translation,
+              title: word.origin,
+              subtitle: word.translation,
               onTap: () => _onTap(context, word),
             );
           },
