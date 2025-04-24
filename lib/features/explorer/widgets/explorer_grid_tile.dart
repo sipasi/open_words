@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ExplorerListTile extends StatelessWidget {
+class ExplorerGridTile extends StatelessWidget {
   final String title;
   final TextStyle? titleStyle;
   final int titleLines;
@@ -10,7 +10,7 @@ class ExplorerListTile extends StatelessWidget {
   final void Function() onTap;
   final void Function() onLongPress;
 
-  const ExplorerListTile({
+  const ExplorerGridTile({
     super.key,
     required this.title,
     this.titleStyle,

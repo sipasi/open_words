@@ -18,7 +18,7 @@ class GroupTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExplorerListTile(
+    return ExplorerGridTile(
       title: group.name,
       titleLines: 1,
       titleStyle: TextStyle(color: context.colorScheme.primary),

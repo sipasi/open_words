@@ -16,7 +16,7 @@ class FolderTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExplorerListTile(
+    return ExplorerGridTile(
       title: folder.name,
       titleStyle: TextStyle(
         fontWeight: FontWeight.bold,
