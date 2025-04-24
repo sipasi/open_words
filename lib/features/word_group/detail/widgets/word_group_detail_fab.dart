@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:open_words/features/word/create_list/word_list_create_page.dart';
 import 'package:open_words/features/word_group/detail/cubit/word_group_detail_cubit.dart';
+import 'package:open_words/features/word_metadata/update/word_metadata_update_page.dart';
 import 'package:open_words/shared/constants/hero_tag_constants.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 
@@ -53,19 +54,24 @@ class WordGroupDetailFab extends StatelessWidget {
     _key.currentState?.toggle();
   }
 
-  void _onWordAdd(BuildContext context) async {
+  Future _onWordAdd(BuildContext context) async {
     _key.currentState?.toggle();
 
     final bloc = context.read<WordGroupDetailCubit>();
 
     await context.pushBlocValue(
-      context,
       bloc,
       (context) => WordListCreatePage(group: bloc.state.group),
     );
   }
 
-  void _onUpdateMetadata(BuildContext context) {
+  Future _onUpdateMetadata(BuildContext context) async {
     _key.currentState?.toggle();
+
+    final bloc = context.read<WordGroupDetailCubit>();
+
+    await context.push(
+      (context) => WordMetadataUpdatePage(words: bloc.state.words),
+    );
   }
 }
