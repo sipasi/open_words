@@ -17,15 +17,16 @@ class WordMetadataUpdateFab extends StatelessWidget {
 
     return FloatingActionButton.extended(
       onPressed: () {
-        if (updateStatus.isFinished) context.pop();
+        if (updateStatus.isFinished || updateStatus.isNoInternet) context.pop();
       },
       label: switch (updateStatus) {
         UpdateStatus.noInternet => Text('No Internet connection'),
         _ => Text(' $progressText'),
       },
-      icon: switch (updateStatus.inProgress) {
-        true => progressIndicator(),
-        _ => Icon(Icons.done_all),
+      icon: switch (updateStatus) {
+        UpdateStatus.finished => const Icon(Icons.done_all),
+        UpdateStatus.noInternet => const Icon(Icons.wifi_off_outlined),
+        _ => progressIndicator(),
       },
     );
   }
