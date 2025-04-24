@@ -6,6 +6,7 @@ import 'package:open_words/core/data/sources/drift/app_drift_database.dart';
 
 sealed class WordMetadataRepository {
   Future<WordMetadata?> byWord(String word);
+  Future<bool> exist(String word);
   Future<WordMetadata> create(WordMetadataDraft draft);
 }
 
@@ -88,12 +89,31 @@ class WordMetadataRepositoryImpl extends WordMetadataRepository {
       return (await byWord(draft.word))!;
     });
   }
+
+  @override
+  Future<bool> exist(String word) async {
+    final exist = await database.exist(word);
+
+    return exist != null;
+  }
 }
 
 extension _Queries on AppDriftDatabase {
   Future<QueryRow?> byWord(String word) {
     final query =
         'SELECT * '
+        'FROM word_metadatas metadata '
+        'WHERE metadata.word = ?;';
+
+    return customSelect(
+      query,
+      variables: [Variable.withString(word)],
+    ).getSingleOrNull();
+  }
+
+  Future<QueryRow?> exist(String word) {
+    final query =
+        'SELECT metadata.id '
         'FROM word_metadatas metadata '
         'WHERE metadata.word = ?;';
 
