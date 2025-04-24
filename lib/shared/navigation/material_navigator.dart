@@ -46,11 +46,10 @@ extension MaterialNavigatorExtension on BuildContext {
   }
 
   Future<Result> pushBlocValue<T extends Object?, TBloc extends BlocBase>(
-    BuildContext context,
     TBloc bloc,
     WidgetBuilder builder,
   ) {
-    return MaterialBlocNavigator.pushBlocValue(context, bloc, builder);
+    return MaterialBlocNavigator.pushBlocValue(this, bloc, builder);
   }
 
   void pop<T>({int times = 1}) {
