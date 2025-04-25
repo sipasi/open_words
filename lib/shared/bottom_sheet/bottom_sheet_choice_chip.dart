@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:open_words/shared/theme/theme_extension.dart';
 
 class BottomSheetChoiceChip extends StatelessWidget {
-  final BuildContext context;
   final String text;
   final IconData icon;
   final bool selected;
@@ -12,7 +11,6 @@ class BottomSheetChoiceChip extends StatelessWidget {
 
   const BottomSheetChoiceChip({
     super.key,
-    required this.context,
     required this.text,
     required this.icon,
     required this.selected,
