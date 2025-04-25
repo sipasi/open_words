@@ -17,7 +17,13 @@ class WordGroupTitle extends StatelessWidget {
 
         return Hero(
           tag: HeroTagConstants.appbarTitleTag,
-          child: Text(name, style: context.textTheme.titleLarge),
+          child: Text(
+            name,
+            style: context.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: context.colorScheme.secondary,
+            ),
+          ),
         );
       },
     );

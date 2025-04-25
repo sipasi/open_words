@@ -13,7 +13,13 @@ class WordDetailTitle extends StatelessWidget {
 
     return Hero(
       tag: HeroTagConstants.appbarTitleTag,
-      child: Text(cubit.group.name, style: context.textTheme.titleLarge),
+      child: Text(
+        cubit.group.name,
+        style: context.textTheme.titleLarge?.copyWith(
+          fontWeight: FontWeight.bold,
+          color: context.colorScheme.secondary,
+        ),
+      ),
     );
   }
 }

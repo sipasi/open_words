@@ -7,7 +7,7 @@ import 'package:open_words/features/word/detail/cubit/word_detail_page_cubit.dar
 import 'package:open_words/features/word/detail/widgets/text_to_speech_card.dart';
 import 'package:open_words/features/word/detail/widgets/word_detail_fab.dart';
 import 'package:open_words/features/word/detail/widgets/word_detail_metadata_view.dart';
-import 'package:open_words/features/word/detail/widgets/word_detail_page.dart';
+import 'package:open_words/features/word/detail/widgets/word_detail_title.dart';
 import 'package:open_words/features/word/detail/widgets/word_info_card.dart';
 import 'package:open_words/shared/constants/list_padding_constans.dart';
 
