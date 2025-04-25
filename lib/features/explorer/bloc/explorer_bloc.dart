@@ -25,7 +25,7 @@ class ExplorerBloc extends Bloc<ExplorerEvent, ExplorerState> {
 
       emit(
         state.copyWith(
-          exploredFolder: null,
+          exploredFolder: () => null,
           folders: data.folders,
           groups: data.groups,
         ),
@@ -36,7 +36,7 @@ class ExplorerBloc extends Bloc<ExplorerEvent, ExplorerState> {
 
       emit(
         state.copyWith(
-          exploredFolder: event.folder,
+          exploredFolder: () => event.folder,
           folders: data.folders,
           groups: data.groups,
         ),
@@ -61,7 +61,7 @@ class ExplorerBloc extends Bloc<ExplorerEvent, ExplorerState> {
 
       emit(
         state.copyWith(
-          exploredFolder: exploredNow,
+          exploredFolder: () => exploredNow,
           folders: data.folders,
           groups: data.groups,
         ),
@@ -70,7 +70,13 @@ class ExplorerBloc extends Bloc<ExplorerEvent, ExplorerState> {
     on<ExplorerRefreshRequested>((event, emit) async {
       final data = await explorerRepository.allByFolder(state.exploredId);
 
-      emit(state.copyWith(folders: data.folders, groups: data.groups));
+      emit(
+        state.copyWith(
+          exploredFolder: () => state.exploredFolder,
+          folders: data.folders,
+          groups: data.groups,
+        ),
+      );
     });
   }
 }

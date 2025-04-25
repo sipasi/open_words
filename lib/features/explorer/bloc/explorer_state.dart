@@ -26,12 +26,12 @@ class ExplorerState {
       groups = const [];
 
   ExplorerState copyWith({
-    Folder? exploredFolder,
+    required Folder? Function() exploredFolder,
     List<Folder>? folders,
     List<WordGroup>? groups,
   }) {
     return ExplorerState(
-      exploredFolder: exploredFolder,
+      exploredFolder: exploredFolder.call(),
       folders: folders ?? this.folders,
       groups: groups ?? this.groups,
     );

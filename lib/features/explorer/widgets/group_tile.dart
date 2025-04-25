@@ -42,7 +42,7 @@ class GroupTile extends StatelessWidget {
       languageService: GetIt.I.get(),
       folderRepository: GetIt.I.get(),
       groupRepository: GetIt.I.get(),
-      entityUnion: ExplorerEntityUnion(folder: null, group: value),
+      entityUnion: ExplorerEntityUnion.group(value),
     );
   }
 }

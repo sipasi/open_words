@@ -44,7 +44,7 @@ class FolderTile extends StatelessWidget {
       languageService: GetIt.I.get(),
       folderRepository: GetIt.I.get(),
       groupRepository: GetIt.I.get(),
-      entityUnion: ExplorerEntityUnion(folder: value, group: null),
+      entityUnion: ExplorerEntityUnion.folder(value),
     );
   }
 }
