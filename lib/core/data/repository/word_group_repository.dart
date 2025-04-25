@@ -10,8 +10,10 @@ sealed class WordGroupRepository {
   Future<List<WordGroup>> allByFolder(Id folderId);
   Future<WordGroup?> byId(Id id);
 
+  Future delete(Id id);
+
   Future<WordGroup> create({
-    required Id parentId,
+    required Id folderId,
     required String name,
     required LanguageInfo origin,
     required LanguageInfo translation,
@@ -19,10 +21,10 @@ sealed class WordGroupRepository {
 
   Future<WordGroup> update({
     required Id id,
-    required Id parentId,
-    required String name,
-    required LanguageInfo origin,
-    required LanguageInfo translation,
+    Id? folderId,
+    String? name,
+    LanguageInfo? origin,
+    LanguageInfo? translation,
   });
 }
 
@@ -54,7 +56,7 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
 
   @override
   Future<WordGroup> create({
-    required Id parentId,
+    required Id folderId,
     required String name,
     required LanguageInfo origin,
     required LanguageInfo translation,
@@ -63,7 +65,7 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
         .into(database.wordGroups)
         .insert(
           WordGroupSqlMapper.toCreate(
-            folderId: parentId,
+            folderId: folderId,
             name: name,
             origin: origin,
             translation: translation,
@@ -78,7 +80,7 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
   @override
   Future<WordGroup> update({
     required Id id,
-    Id? parentId,
+    Id? folderId,
     String? name,
     LanguageInfo? origin,
     LanguageInfo? translation,
@@ -87,7 +89,7 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
         .filter((f) => f.id.equals(id.valueOrNull()))
         .update(
           (_) => WordGroupSqlMapper.toUpdate(
-            folderId: parentId,
+            folderId: folderId,
             name: name,
             origin: origin,
             translation: translation,
@@ -97,6 +99,13 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
     final entity = await byId(id);
 
     return entity!;
+  }
+
+  @override
+  Future delete(Id id) {
+    return database.managers.wordGroups
+        .filter((f) => f.id.equals(id.valueOrNull()))
+        .delete();
   }
 }
 
