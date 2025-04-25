@@ -8,9 +8,11 @@ import 'package:open_words/features/explorer/bloc/explorer_bloc.dart';
 import 'package:open_words/features/explorer_entity_editor/cubit/explorer_entity_editor_cubit.dart';
 import 'package:open_words/features/explorer_entity_editor/models/explorer_entity_union.dart';
 import 'package:open_words/shared/bottom_sheet/bottom_sheet_choice_chip.dart';
+import 'package:open_words/shared/bottom_sheet/editor/editor_bottom_bar.dart';
 import 'package:open_words/shared/bottom_sheet/pop_scope_bottom_sheet.dart';
 import 'package:open_words/shared/input_fields/text_edit_controller.dart';
 import 'package:open_words/shared/input_fields/text_edit_field.dart';
+import 'package:open_words/shared/modal/folder_list_modal.dart';
 import 'package:open_words/shared/tiles/language_selector_tile.dart';
 import 'package:smooth_sheets/smooth_sheets.dart';
 
@@ -97,7 +99,8 @@ class _ExplorerEntityEditorState extends State<ExplorerEntityEditor> {
     folderRepository = widget.folderRepository;
     groupRepository = widget.groupRepository;
 
-    cubit = ExplorerEntityEditorCubit(languageService, widget.entityUnion);
+    cubit = ExplorerEntityEditorCubit(languageService, widget.entityUnion)
+      ..init();
   }
 
   @override
@@ -113,7 +116,12 @@ class _ExplorerEntityEditorState extends State<ExplorerEntityEditor> {
       create: (context) => cubit,
       child: PopScopeBottomSheet(
         body: _EditorBody(cubit: cubit, nameController: nameController),
-        bottomBar: _EditorBottomBar(cubit: cubit, onSave: _onSave),
+        bottomBar: _EditorBottomBar(
+          cubit: cubit,
+          onSave: _onSave,
+          onDelete: _onDelete,
+          onMove: _onMove,
+        ),
         showDismissDialog: _showDismissDialog,
       ),
     );
@@ -157,6 +165,54 @@ class _ExplorerEntityEditorState extends State<ExplorerEntityEditor> {
     }
   }
 
+  Future _onDelete() async {
+    final state = cubit.state;
+
+    final deleted =
+        state.folderSelected
+            ? folderRepository.delete(cubit.entityUnion!.folder!.id)
+            : groupRepository.delete(cubit.entityUnion!.group!.id);
+
+    await deleted;
+
+    final context = this.context;
+
+    if (context.mounted) {
+      context.read<ExplorerBloc>().add(ExplorerRefreshRequested());
+
+      Navigator.pop(context);
+    }
+  }
+
+  Future _onMove() async {
+    final id = (cubit.entityUnion!.folder ?? cubit.entityUnion!.group)!.id;
+
+    final path = await FolderListModal.dialog(
+      context: context,
+      current: null,
+      values: await folderRepository.allMovedPathFor(id),
+    );
+
+    if (path == null) {
+      return;
+    }
+
+    final move =
+        cubit.state.folderSelected
+            ? folderRepository.update(id: id, parentId: path.folderId)
+            : groupRepository.update(id: id, folderId: path.folderId);
+
+    await move;
+
+    final c = context;
+
+    if (c.mounted) {
+      c.read<ExplorerBloc>().add(ExplorerRefreshRequested());
+
+      Navigator.pop(c);
+    }
+  }
+
   Future _saveExisted() {
     final state = cubit.state;
 
@@ -169,7 +225,7 @@ class _ExplorerEntityEditorState extends State<ExplorerEntityEditor> {
     }
     return groupRepository.update(
       id: cubit.entityUnion!.group!.id,
-      parentId: widget.parentFolder,
+      folderId: widget.parentFolder,
       name: state.name,
       origin: state.origin,
       translation: state.translation,
@@ -186,7 +242,7 @@ class _ExplorerEntityEditorState extends State<ExplorerEntityEditor> {
       );
     }
     return groupRepository.create(
-      parentId: widget.parentFolder,
+      folderId: widget.parentFolder,
       name: state.name,
       origin: state.origin,
       translation: state.translation,
@@ -269,69 +325,67 @@ class _EditorBottomBar extends StatelessWidget {
   final ExplorerEntityEditorCubit cubit;
 
   final void Function() onSave;
+  final void Function() onDelete;
+  final void Function() onMove;
 
-  const _EditorBottomBar({required this.cubit, required this.onSave});
+  const _EditorBottomBar({
+    required this.cubit,
+    required this.onSave,
+    required this.onDelete,
+    required this.onMove,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).colorScheme.secondaryContainer,
-      child: SafeArea(
-        top: false,
-        child: SizedBox.fromSize(
-          size: const Size.fromHeight(kToolbarHeight),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            child: _body(),
-          ),
-        ),
-      ),
+    final createEntityType = context.select(
+      (ExplorerEntityEditorCubit value) => value.state.createEntityType,
     );
-  }
+    final canSave = context.select(
+      (ExplorerEntityEditorCubit value) => value.state.canSave,
+    );
 
-  Widget _body() {
-    return Builder(
-      builder: (context) {
-        final createEntityType = context.select(
-          (ExplorerEntityEditorCubit value) => value.state.createEntityType,
-        );
-        final canSave = context.select(
-          (ExplorerEntityEditorCubit value) => value.state.canSave,
-        );
-        final editorType = context.read<ExplorerEntityEditorCubit>().editorType;
+    final editorType = context.read<ExplorerEntityEditorCubit>().editorType;
 
-        return Row(
-          children: [
-            BottomSheetChoiceChip(
-              context: context,
-              text: 'Dictionary',
-              icon: Icons.book_outlined,
-              selected: createEntityType == CreateEntityType.wordGroup,
-              interactable: editorType == EditorType.create,
-              onTap: () {
-                cubit.setGroupView();
-              },
-            ),
-            const SizedBox(width: 8),
-            BottomSheetChoiceChip(
-              context: context,
-              text: 'Folder',
-              icon: Icons.folder_outlined,
-              selected: createEntityType == CreateEntityType.folder,
-              interactable: editorType == EditorType.create,
-              onTap: () {
-                cubit.setFolderView();
-              },
-            ),
-            const Spacer(),
-            IconButton.filled(
-              onPressed: canSave ? onSave : null,
-              icon: const Icon(Icons.arrow_upward),
-              tooltip: 'Submit',
-            ),
-          ],
-        );
-      },
+    if (editorType == EditorType.create) {
+      return EditorBottomBar(
+        onSubmitPressed: canSave ? onSave : null,
+        actions: [
+          BottomSheetChoiceChip(
+            text: 'Dictionary',
+            icon: Icons.book_outlined,
+            selected: createEntityType == CreateEntityType.wordGroup,
+            interactable: editorType == EditorType.create,
+            onTap: () {
+              cubit.setGroupView();
+            },
+          ),
+          BottomSheetChoiceChip(
+            text: 'Folder',
+            icon: Icons.folder_outlined,
+            selected: createEntityType == CreateEntityType.folder,
+            interactable: editorType == EditorType.create,
+            onTap: () {
+              cubit.setFolderView();
+            },
+          ),
+        ],
+      );
+    }
+
+    return EditorBottomBar(
+      onSubmitPressed: canSave ? onSave : null,
+      actions: [
+        FilledButton.icon(
+          onPressed: onDelete,
+          icon: Icon(Icons.delete_outline),
+          label: Text('Delete'),
+        ),
+        FilledButton.icon(
+          onPressed: onMove,
+          icon: Icon(Icons.drive_file_move_outlined),
+          label: Text('Move'),
+        ),
+      ],
     );
   }
 }

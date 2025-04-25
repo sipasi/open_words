@@ -14,16 +14,20 @@ class ExplorerEntityEditorCubit extends Cubit<ExplorerEntityEditorState> {
       entityUnion == null ? EditorType.create : EditorType.edit;
 
   ExplorerEntityEditorCubit(this.languageService, this.entityUnion)
-    : super(
-        ExplorerEntityEditorState(
-          name: entityUnion?.getName() ?? '',
-          origin: entityUnion?.getOrigin() ?? languageService.english,
-          translation:
-              entityUnion?.getTranslation() ?? languageService.ukrainian,
-          createEntityType:
-              entityUnion?.getCreateEntityType() ?? CreateEntityType.wordGroup,
-        ),
-      );
+    : super(ExplorerEntityEditorState.initial());
+
+  void init() {
+    emit(
+      state.copyWith(
+        
+        name: entityUnion?.getName() ?? '',
+        origin: entityUnion?.getOrigin() ?? languageService.english,
+        translation: entityUnion?.getTranslation() ?? languageService.ukrainian,
+        createEntityType:
+            entityUnion?.getCreateEntityType() ?? CreateEntityType.wordGroup,
+      ),
+    );
+  }
 
   void setName(String value) {
     emit(state.copyWith(name: value));

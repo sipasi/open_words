@@ -7,8 +7,8 @@ class ExplorerEntityUnion {
   final Folder? folder;
   final WordGroup? group;
 
-  ExplorerEntityUnion({required this.folder, required this.group})
-    : assert(folder != null || group != null);
+  ExplorerEntityUnion.folder(Folder folder) : folder = folder, group = null;
+  ExplorerEntityUnion.group(WordGroup group) : folder = null, group = group;
 
   String? getName() => folder?.name ?? group?.name;
   LanguageInfo? getOrigin() => group?.origin;

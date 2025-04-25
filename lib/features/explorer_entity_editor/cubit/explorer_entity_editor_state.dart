@@ -1,8 +1,8 @@
 part of 'explorer_entity_editor_cubit.dart';
 
-enum CreateEntityType { wordGroup, folder }
+enum CreateEntityType { none, wordGroup, folder }
 
-enum EditorType { create, edit }
+enum EditorType { none, create, edit }
 
 final class ExplorerEntityEditorState {
   final String name;
@@ -24,6 +24,11 @@ final class ExplorerEntityEditorState {
     required this.translation,
     required this.createEntityType,
   });
+  ExplorerEntityEditorState.initial()
+    : name = '',
+      origin = const LanguageInfo.empty(),
+      translation = const LanguageInfo.empty(),
+      createEntityType = CreateEntityType.none;
 
   ExplorerEntityEditorState copyWith({
     String? name,
