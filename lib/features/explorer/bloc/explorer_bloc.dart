@@ -57,7 +57,7 @@ class ExplorerBloc extends Bloc<ExplorerEvent, ExplorerState> {
         exploredBefore.parentId,
       );
 
-      final exploredNow = await folderRepository.byId(exploredBefore.parentId);
+      final exploredNow = await folderRepository.oneById(exploredBefore.parentId);
 
       emit(
         state.copyWith(
