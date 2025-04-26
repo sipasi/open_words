@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:open_words/features/settings/widgets/add_preinstalled_tile.dart';
+import 'package:open_words/features/settings/widgets/database_info_open_tile.dart';
+import 'package:open_words/features/settings/widgets/import_export_section.dart';
 import 'package:open_words/features/settings/widgets/settings_screen.dart';
 import 'package:open_words/features/settings/widgets/thank_you_tile.dart';
 import 'package:open_words/features/settings/widgets/theme_color_tile.dart';
@@ -21,8 +23,12 @@ class SettingsScreen extends StatelessWidget {
         const Divider(),
         TranslatorTile(),
         const Divider(),
+        ImportExportSection(),
+        const Divider(),
         AddPreinstalledTile(),
         DeleteAllTile(),
+        const Divider(),
+        DatabaseInfoOpenTile(),
       ],
     );
   }

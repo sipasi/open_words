@@ -47,7 +47,7 @@ class AddPreinstalledTile extends StatelessWidget {
     final folderName = 'Open Words Collection';
 
     final folder =
-        await folderRepository.byName(folderName) ??
+        await folderRepository.oneByName(folderName) ??
         await folderRepository.create(
           parentId: const Id.empty(),
           name: folderName,
@@ -55,7 +55,7 @@ class AddPreinstalledTile extends StatelessWidget {
 
     for (var node in jsonResult) {
       final group = await groupRepository.create(
-        parentId: folder.id,
+        folderId: folder.id,
         name: node['name'],
         origin: LanguageInfo.fromMap(node['origin']),
         translation: LanguageInfo.fromMap(node['translation']),
