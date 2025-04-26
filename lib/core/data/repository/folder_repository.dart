@@ -43,9 +43,18 @@ class FolderRepositoryImpl extends FolderRepository {
   }
 
   @override
-  Future<List<FolderPath>> allMovedPathFor(Id id) {
+  Future<List<FolderPath>> allMovedPathFor(Id id) async {
+    final folder =
+        await database.managers.folders
+            .filter((f) => f.id.equals(id.valueOrNull()))
+            .getSingleOrNull();
+
+    if (folder == null) {
+      return [];
+    }
+
     return database
-        .allMovedPathByQuery(id)
+        .allMovedPathByQuery(id.valueOrThrow(), folder.parentId)
         .map(FolderSqlMapper.folderPath)
         .get();
   }
@@ -129,8 +138,8 @@ extension _Queries on AppDriftDatabase {
     return customSelect(_allPathQuery());
   }
 
-  Selectable<QueryRow> allMovedPathByQuery(Id id) {
-    return customSelect(_allMovedPathByQuery(id));
+  Selectable<QueryRow> allMovedPathByQuery(int id, int? parentId) {
+    return customSelect(_allMovedPathByQuery(id, parentId));
   }
 
   Selectable<QueryRow> pathQuery(Id id) {
@@ -188,9 +197,7 @@ SELECT * FROM FolderPath;
 ''';
   }
 
-  static String _allMovedPathByQuery(Id id) {
-    int? idValue = id.valueOrNull();
-
+  static String _allMovedPathByQuery(int id, int? parentId) {
     return '''
 WITH RECURSIVE FolderPath(id, parent_id, name, full_path) AS (
     -- Base case: root folders
@@ -200,7 +207,7 @@ WITH RECURSIVE FolderPath(id, parent_id, name, full_path) AS (
         name,
         name AS full_path
     FROM folders
-    WHERE parent_id IS NULL
+    WHERE parent_id IS NULL AND id != $id
 
     UNION ALL
 
@@ -212,9 +219,10 @@ WITH RECURSIVE FolderPath(id, parent_id, name, full_path) AS (
         fp.full_path || '/' || f.name AS full_path
     FROM folders f
     JOIN FolderPath fp ON f.parent_id = fp.id
-    WHERE f.id != $idValue
+    WHERE f.id != $id AND f.parent_id != $id
 )
-SELECT * FROM FolderPath;
+SELECT * FROM FolderPath
+ORDER BY full_path;
 ''';
   }
 
