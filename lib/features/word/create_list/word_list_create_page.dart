@@ -12,12 +12,11 @@ import 'package:open_words/features/word/create_list/widgets/word_draft_editor.d
 import 'package:open_words/features/word/create_list/widgets/word_draft_list_view.dart';
 import 'package:open_words/features/word/create_list/widgets/word_list_create_bottom_bar.dart';
 import 'package:open_words/features/word/create_list/widgets/word_list_create_fab.dart';
+import 'package:open_words/features/word/create_list/widgets/word_list_create_title.dart';
 import 'package:open_words/features/word_group/detail/cubit/word_group_detail_cubit.dart';
-import 'package:open_words/shared/constants/hero_tag_constants.dart';
 import 'package:open_words/shared/input_fields/text_edit_controller.dart';
 import 'package:open_words/shared/modal/discard_changes_modal.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
-import 'package:open_words/shared/theme/theme_extension.dart';
 
 class WordListCreatePage extends StatelessWidget {
   final WordGroup group;
@@ -146,20 +145,5 @@ class _WordListCreateViewState extends State<WordListCreateView> {
     context.read<WordGroupDetailCubit>().init();
     context.read<ExplorerBloc>().add(ExplorerRefreshRequested());
     context.pop();
-  }
-}
-
-class WordListCreateTitle extends StatelessWidget {
-  const WordListCreateTitle({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Hero(
-      tag: HeroTagConstants.appbarTitleTag,
-      child: Text(
-        context.read<WordListCreateCubit>().group.name,
-        style: context.textTheme.titleLarge,
-      ),
-    );
   }
 }
