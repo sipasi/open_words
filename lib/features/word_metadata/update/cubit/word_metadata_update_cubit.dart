@@ -9,12 +9,14 @@ part 'word_metadata_update_state.dart';
 
 class WordMetadataUpdateCubit extends Cubit<WordMetadataUpdateState> {
   final List<Word> words;
+  final String groupName;
   final WordMetadataRepository metadataRepository;
   final WordMetadataWebApi metadataWebApi;
   final VibrationService vibrationService;
 
   WordMetadataUpdateCubit({
     required this.words,
+    required this.groupName,
     required this.metadataRepository,
     required this.metadataWebApi,
     required this.vibrationService,

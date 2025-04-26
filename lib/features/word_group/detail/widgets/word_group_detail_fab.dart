@@ -71,7 +71,10 @@ class WordGroupDetailFab extends StatelessWidget {
     final bloc = context.read<WordGroupDetailCubit>();
 
     await context.push(
-      (context) => WordMetadataUpdatePage(words: bloc.state.words),
+      (context) => WordMetadataUpdatePage(
+        words: bloc.state.words,
+        groupName: bloc.state.group.name,
+      ),
     );
   }
 }

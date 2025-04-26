@@ -5,12 +5,19 @@ import 'package:open_words/core/data/entities/word/word.dart';
 import 'package:open_words/features/word_metadata/update/cubit/word_metadata_update_cubit.dart';
 import 'package:open_words/features/word_metadata/update/widgets/word_metadata_update_fab.dart';
 import 'package:open_words/features/word_metadata/update/widgets/word_metadata_update_grid_view.dart';
+import 'package:open_words/shared/appbar/app_bar_title.dart';
+import 'package:open_words/shared/constants/hero_tag_constants.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 
 class WordMetadataUpdatePage extends StatelessWidget {
+  final String groupName;
   final List<Word> words;
 
-  const WordMetadataUpdatePage({super.key, required this.words});
+  const WordMetadataUpdatePage({
+    super.key,
+    required this.words,
+    required this.groupName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +25,7 @@ class WordMetadataUpdatePage extends StatelessWidget {
       create:
           (context) => WordMetadataUpdateCubit(
             words: words,
+            groupName: groupName,
             metadataRepository: GetIt.I.get(),
             metadataWebApi: GetIt.I.get(),
             vibrationService: GetIt.I.get(),
@@ -37,7 +45,12 @@ class WordMetadataUpdateView extends StatelessWidget {
       onPopInvokedWithResult:
           (didPop, result) => _onPopInvoked(context, didPop, result),
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: AppBarTitle(
+            title: context.read<WordMetadataUpdateCubit>().groupName,
+            heroTag: HeroTagConstants.appbarTitleTag,
+          ),
+        ),
         floatingActionButton: WordMetadataUpdateFab(),
         body: WordMetadataUpdateGridView(),
       ),
