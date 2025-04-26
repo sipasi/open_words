@@ -7,6 +7,7 @@ import 'package:open_words/core/services/language/translation/translator_url_ser
 import 'package:open_words/features/settings/bloc/settings_bloc.dart';
 import 'package:open_words/features/word/create_list/cubit/word_list_create_cubit.dart';
 import 'package:open_words/shared/modal/translator_list_modal.dart';
+import 'package:open_words/shared/theme/theme_extension.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WordListCreateBottomBar extends StatelessWidget {
@@ -33,7 +34,10 @@ class WordListCreateBottomBar extends StatelessWidget {
           Text(
             'hold to change',
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 12),
+            style: TextStyle(
+              fontSize: 12,
+              color: context.colorScheme.onSurfaceVariant,
+            ),
           ),
         ],
       ),
