@@ -188,9 +188,10 @@ class _ExplorerEntityEditorState extends State<ExplorerEntityEditor> {
     final id = (cubit.entityUnion!.folder ?? cubit.entityUnion!.group)!.id;
 
     final path = await FolderListModal.dialog(
+      // ignore: use_build_context_synchronously
       context: context,
       current: null,
-      values: await folderRepository.allMovedPathFor(id),
+      values: await folderRepository.allMovablePathBy(id),
     );
 
     if (path == null) {
