@@ -1408,6 +1408,270 @@ class WordsCompanion extends UpdateCompanion<DriftWord> {
   }
 }
 
+class $WordRepeatsTable extends WordRepeats
+    with TableInfo<$WordRepeatsTable, DriftWordRepeats> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $WordRepeatsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _wordMeta = const VerificationMeta('word');
+  @override
+  late final GeneratedColumn<String> word = GeneratedColumn<String>(
+    'word',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _repeatMeta = const VerificationMeta('repeat');
+  @override
+  late final GeneratedColumn<DateTime> repeat = GeneratedColumn<DateTime>(
+    'repeat',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _countMeta = const VerificationMeta('count');
+  @override
+  late final GeneratedColumn<int> count = GeneratedColumn<int>(
+    'count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [word, repeat, count];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'word_repeats';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DriftWordRepeats> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('word')) {
+      context.handle(
+        _wordMeta,
+        word.isAcceptableOrUnknown(data['word']!, _wordMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_wordMeta);
+    }
+    if (data.containsKey('repeat')) {
+      context.handle(
+        _repeatMeta,
+        repeat.isAcceptableOrUnknown(data['repeat']!, _repeatMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_repeatMeta);
+    }
+    if (data.containsKey('count')) {
+      context.handle(
+        _countMeta,
+        count.isAcceptableOrUnknown(data['count']!, _countMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_countMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  DriftWordRepeats map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DriftWordRepeats(
+      word:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}word'],
+          )!,
+      repeat:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.dateTime,
+            data['${effectivePrefix}repeat'],
+          )!,
+      count:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}count'],
+          )!,
+    );
+  }
+
+  @override
+  $WordRepeatsTable createAlias(String alias) {
+    return $WordRepeatsTable(attachedDatabase, alias);
+  }
+}
+
+class DriftWordRepeats extends DataClass
+    implements Insertable<DriftWordRepeats> {
+  final String word;
+  final DateTime repeat;
+  final int count;
+  const DriftWordRepeats({
+    required this.word,
+    required this.repeat,
+    required this.count,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['word'] = Variable<String>(word);
+    map['repeat'] = Variable<DateTime>(repeat);
+    map['count'] = Variable<int>(count);
+    return map;
+  }
+
+  WordRepeatsCompanion toCompanion(bool nullToAbsent) {
+    return WordRepeatsCompanion(
+      word: Value(word),
+      repeat: Value(repeat),
+      count: Value(count),
+    );
+  }
+
+  factory DriftWordRepeats.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DriftWordRepeats(
+      word: serializer.fromJson<String>(json['word']),
+      repeat: serializer.fromJson<DateTime>(json['repeat']),
+      count: serializer.fromJson<int>(json['count']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'word': serializer.toJson<String>(word),
+      'repeat': serializer.toJson<DateTime>(repeat),
+      'count': serializer.toJson<int>(count),
+    };
+  }
+
+  DriftWordRepeats copyWith({String? word, DateTime? repeat, int? count}) =>
+      DriftWordRepeats(
+        word: word ?? this.word,
+        repeat: repeat ?? this.repeat,
+        count: count ?? this.count,
+      );
+  DriftWordRepeats copyWithCompanion(WordRepeatsCompanion data) {
+    return DriftWordRepeats(
+      word: data.word.present ? data.word.value : this.word,
+      repeat: data.repeat.present ? data.repeat.value : this.repeat,
+      count: data.count.present ? data.count.value : this.count,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DriftWordRepeats(')
+          ..write('word: $word, ')
+          ..write('repeat: $repeat, ')
+          ..write('count: $count')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(word, repeat, count);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DriftWordRepeats &&
+          other.word == this.word &&
+          other.repeat == this.repeat &&
+          other.count == this.count);
+}
+
+class WordRepeatsCompanion extends UpdateCompanion<DriftWordRepeats> {
+  final Value<String> word;
+  final Value<DateTime> repeat;
+  final Value<int> count;
+  final Value<int> rowid;
+  const WordRepeatsCompanion({
+    this.word = const Value.absent(),
+    this.repeat = const Value.absent(),
+    this.count = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  WordRepeatsCompanion.insert({
+    required String word,
+    required DateTime repeat,
+    required int count,
+    this.rowid = const Value.absent(),
+  }) : word = Value(word),
+       repeat = Value(repeat),
+       count = Value(count);
+  static Insertable<DriftWordRepeats> custom({
+    Expression<String>? word,
+    Expression<DateTime>? repeat,
+    Expression<int>? count,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (word != null) 'word': word,
+      if (repeat != null) 'repeat': repeat,
+      if (count != null) 'count': count,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  WordRepeatsCompanion copyWith({
+    Value<String>? word,
+    Value<DateTime>? repeat,
+    Value<int>? count,
+    Value<int>? rowid,
+  }) {
+    return WordRepeatsCompanion(
+      word: word ?? this.word,
+      repeat: repeat ?? this.repeat,
+      count: count ?? this.count,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (word.present) {
+      map['word'] = Variable<String>(word.value);
+    }
+    if (repeat.present) {
+      map['repeat'] = Variable<DateTime>(repeat.value);
+    }
+    if (count.present) {
+      map['count'] = Variable<int>(count.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WordRepeatsCompanion(')
+          ..write('word: $word, ')
+          ..write('repeat: $repeat, ')
+          ..write('count: $count, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $WordMetadatasTable extends WordMetadatas
     with TableInfo<$WordMetadatasTable, DriftWordMetadata> {
   @override
@@ -1704,6 +1968,279 @@ class WordMetadatasCompanion extends UpdateCompanion<DriftWordMetadata> {
           ..write('word: $word, ')
           ..write('origin: $origin, ')
           ..write('phonetic: $phonetic')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $WordMetadataWebLookupsTable extends WordMetadataWebLookups
+    with TableInfo<$WordMetadataWebLookupsTable, DriftWordMetadataWebLookup> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $WordMetadataWebLookupsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _wordMeta = const VerificationMeta('word');
+  @override
+  late final GeneratedColumn<String> word = GeneratedColumn<String>(
+    'word',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _attempMeta = const VerificationMeta('attemp');
+  @override
+  late final GeneratedColumn<DateTime> attemp = GeneratedColumn<DateTime>(
+    'attemp',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _countMeta = const VerificationMeta('count');
+  @override
+  late final GeneratedColumn<int> count = GeneratedColumn<int>(
+    'count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [word, attemp, count];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'word_metadata_web_lookups';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<DriftWordMetadataWebLookup> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('word')) {
+      context.handle(
+        _wordMeta,
+        word.isAcceptableOrUnknown(data['word']!, _wordMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_wordMeta);
+    }
+    if (data.containsKey('attemp')) {
+      context.handle(
+        _attempMeta,
+        attemp.isAcceptableOrUnknown(data['attemp']!, _attempMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_attempMeta);
+    }
+    if (data.containsKey('count')) {
+      context.handle(
+        _countMeta,
+        count.isAcceptableOrUnknown(data['count']!, _countMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_countMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  DriftWordMetadataWebLookup map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DriftWordMetadataWebLookup(
+      word:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.string,
+            data['${effectivePrefix}word'],
+          )!,
+      attemp:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.dateTime,
+            data['${effectivePrefix}attemp'],
+          )!,
+      count:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.int,
+            data['${effectivePrefix}count'],
+          )!,
+    );
+  }
+
+  @override
+  $WordMetadataWebLookupsTable createAlias(String alias) {
+    return $WordMetadataWebLookupsTable(attachedDatabase, alias);
+  }
+}
+
+class DriftWordMetadataWebLookup extends DataClass
+    implements Insertable<DriftWordMetadataWebLookup> {
+  final String word;
+  final DateTime attemp;
+  final int count;
+  const DriftWordMetadataWebLookup({
+    required this.word,
+    required this.attemp,
+    required this.count,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['word'] = Variable<String>(word);
+    map['attemp'] = Variable<DateTime>(attemp);
+    map['count'] = Variable<int>(count);
+    return map;
+  }
+
+  WordMetadataWebLookupsCompanion toCompanion(bool nullToAbsent) {
+    return WordMetadataWebLookupsCompanion(
+      word: Value(word),
+      attemp: Value(attemp),
+      count: Value(count),
+    );
+  }
+
+  factory DriftWordMetadataWebLookup.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DriftWordMetadataWebLookup(
+      word: serializer.fromJson<String>(json['word']),
+      attemp: serializer.fromJson<DateTime>(json['attemp']),
+      count: serializer.fromJson<int>(json['count']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'word': serializer.toJson<String>(word),
+      'attemp': serializer.toJson<DateTime>(attemp),
+      'count': serializer.toJson<int>(count),
+    };
+  }
+
+  DriftWordMetadataWebLookup copyWith({
+    String? word,
+    DateTime? attemp,
+    int? count,
+  }) => DriftWordMetadataWebLookup(
+    word: word ?? this.word,
+    attemp: attemp ?? this.attemp,
+    count: count ?? this.count,
+  );
+  DriftWordMetadataWebLookup copyWithCompanion(
+    WordMetadataWebLookupsCompanion data,
+  ) {
+    return DriftWordMetadataWebLookup(
+      word: data.word.present ? data.word.value : this.word,
+      attemp: data.attemp.present ? data.attemp.value : this.attemp,
+      count: data.count.present ? data.count.value : this.count,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DriftWordMetadataWebLookup(')
+          ..write('word: $word, ')
+          ..write('attemp: $attemp, ')
+          ..write('count: $count')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(word, attemp, count);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DriftWordMetadataWebLookup &&
+          other.word == this.word &&
+          other.attemp == this.attemp &&
+          other.count == this.count);
+}
+
+class WordMetadataWebLookupsCompanion
+    extends UpdateCompanion<DriftWordMetadataWebLookup> {
+  final Value<String> word;
+  final Value<DateTime> attemp;
+  final Value<int> count;
+  final Value<int> rowid;
+  const WordMetadataWebLookupsCompanion({
+    this.word = const Value.absent(),
+    this.attemp = const Value.absent(),
+    this.count = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  WordMetadataWebLookupsCompanion.insert({
+    required String word,
+    required DateTime attemp,
+    required int count,
+    this.rowid = const Value.absent(),
+  }) : word = Value(word),
+       attemp = Value(attemp),
+       count = Value(count);
+  static Insertable<DriftWordMetadataWebLookup> custom({
+    Expression<String>? word,
+    Expression<DateTime>? attemp,
+    Expression<int>? count,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (word != null) 'word': word,
+      if (attemp != null) 'attemp': attemp,
+      if (count != null) 'count': count,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  WordMetadataWebLookupsCompanion copyWith({
+    Value<String>? word,
+    Value<DateTime>? attemp,
+    Value<int>? count,
+    Value<int>? rowid,
+  }) {
+    return WordMetadataWebLookupsCompanion(
+      word: word ?? this.word,
+      attemp: attemp ?? this.attemp,
+      count: count ?? this.count,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (word.present) {
+      map['word'] = Variable<String>(word.value);
+    }
+    if (attemp.present) {
+      map['attemp'] = Variable<DateTime>(attemp.value);
+    }
+    if (count.present) {
+      map['count'] = Variable<int>(count.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('WordMetadataWebLookupsCompanion(')
+          ..write('word: $word, ')
+          ..write('attemp: $attemp, ')
+          ..write('count: $count, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -2699,7 +3236,10 @@ abstract class _$AppDriftDatabase extends GeneratedDatabase {
   late final $FoldersTable folders = $FoldersTable(this);
   late final $WordGroupsTable wordGroups = $WordGroupsTable(this);
   late final $WordsTable words = $WordsTable(this);
+  late final $WordRepeatsTable wordRepeats = $WordRepeatsTable(this);
   late final $WordMetadatasTable wordMetadatas = $WordMetadatasTable(this);
+  late final $WordMetadataWebLookupsTable wordMetadataWebLookups =
+      $WordMetadataWebLookupsTable(this);
   late final $PhoneticsTable phonetics = $PhoneticsTable(this);
   late final $MeaningsTable meanings = $MeaningsTable(this);
   late final $DefinitionsTable definitions = $DefinitionsTable(this);
@@ -2735,6 +3275,26 @@ abstract class _$AppDriftDatabase extends GeneratedDatabase {
     'word_created',
     'CREATE INDEX word_created ON words (created)',
   );
+  late final Index wordRepeatsWord = Index(
+    'word_repeats_word',
+    'CREATE INDEX word_repeats_word ON word_repeats (word)',
+  );
+  late final Index wordRepeatsRepeat = Index(
+    'word_repeats_repeat',
+    'CREATE INDEX word_repeats_repeat ON word_repeats (repeat)',
+  );
+  late final Index wordRepeatsCount = Index(
+    'word_repeats_count',
+    'CREATE INDEX word_repeats_count ON word_repeats (count)',
+  );
+  late final Index wordRepeatsWordRepeat = Index(
+    'word_repeats_word_repeat',
+    'CREATE INDEX word_repeats_word_repeat ON word_repeats (word, repeat)',
+  );
+  late final Index wordRepeatsCountRepeat = Index(
+    'word_repeats_count_repeat',
+    'CREATE INDEX word_repeats_count_repeat ON word_repeats (count, repeat)',
+  );
   late final Index metadataWordIndex = Index(
     'metadata_word_index',
     'CREATE INDEX metadata_word_index ON word_metadatas (word)',
@@ -2747,7 +3307,9 @@ abstract class _$AppDriftDatabase extends GeneratedDatabase {
     folders,
     wordGroups,
     words,
+    wordRepeats,
     wordMetadatas,
+    wordMetadataWebLookups,
     phonetics,
     meanings,
     definitions,
@@ -2759,6 +3321,11 @@ abstract class _$AppDriftDatabase extends GeneratedDatabase {
     groupLanguageTranslationCode,
     groupLanguageOriginTranslationCode,
     wordCreated,
+    wordRepeatsWord,
+    wordRepeatsRepeat,
+    wordRepeatsCount,
+    wordRepeatsWordRepeat,
+    wordRepeatsCountRepeat,
     metadataWordIndex,
   ];
   @override
@@ -4036,6 +4603,180 @@ typedef $$WordsTableProcessedTableManager =
       DriftWord,
       PrefetchHooks Function({bool groupId})
     >;
+typedef $$WordRepeatsTableCreateCompanionBuilder =
+    WordRepeatsCompanion Function({
+      required String word,
+      required DateTime repeat,
+      required int count,
+      Value<int> rowid,
+    });
+typedef $$WordRepeatsTableUpdateCompanionBuilder =
+    WordRepeatsCompanion Function({
+      Value<String> word,
+      Value<DateTime> repeat,
+      Value<int> count,
+      Value<int> rowid,
+    });
+
+class $$WordRepeatsTableFilterComposer
+    extends Composer<_$AppDriftDatabase, $WordRepeatsTable> {
+  $$WordRepeatsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get word => $composableBuilder(
+    column: $table.word,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get repeat => $composableBuilder(
+    column: $table.repeat,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get count => $composableBuilder(
+    column: $table.count,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$WordRepeatsTableOrderingComposer
+    extends Composer<_$AppDriftDatabase, $WordRepeatsTable> {
+  $$WordRepeatsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get word => $composableBuilder(
+    column: $table.word,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get repeat => $composableBuilder(
+    column: $table.repeat,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get count => $composableBuilder(
+    column: $table.count,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$WordRepeatsTableAnnotationComposer
+    extends Composer<_$AppDriftDatabase, $WordRepeatsTable> {
+  $$WordRepeatsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get word =>
+      $composableBuilder(column: $table.word, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get repeat =>
+      $composableBuilder(column: $table.repeat, builder: (column) => column);
+
+  GeneratedColumn<int> get count =>
+      $composableBuilder(column: $table.count, builder: (column) => column);
+}
+
+class $$WordRepeatsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDriftDatabase,
+          $WordRepeatsTable,
+          DriftWordRepeats,
+          $$WordRepeatsTableFilterComposer,
+          $$WordRepeatsTableOrderingComposer,
+          $$WordRepeatsTableAnnotationComposer,
+          $$WordRepeatsTableCreateCompanionBuilder,
+          $$WordRepeatsTableUpdateCompanionBuilder,
+          (
+            DriftWordRepeats,
+            BaseReferences<
+              _$AppDriftDatabase,
+              $WordRepeatsTable,
+              DriftWordRepeats
+            >,
+          ),
+          DriftWordRepeats,
+          PrefetchHooks Function()
+        > {
+  $$WordRepeatsTableTableManager(_$AppDriftDatabase db, $WordRepeatsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer:
+              () => $$WordRepeatsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer:
+              () => $$WordRepeatsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer:
+              () =>
+                  $$WordRepeatsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> word = const Value.absent(),
+                Value<DateTime> repeat = const Value.absent(),
+                Value<int> count = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => WordRepeatsCompanion(
+                word: word,
+                repeat: repeat,
+                count: count,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String word,
+                required DateTime repeat,
+                required int count,
+                Value<int> rowid = const Value.absent(),
+              }) => WordRepeatsCompanion.insert(
+                word: word,
+                repeat: repeat,
+                count: count,
+                rowid: rowid,
+              ),
+          withReferenceMapper:
+              (p0) =>
+                  p0
+                      .map(
+                        (e) => (
+                          e.readTable(table),
+                          BaseReferences(db, table, e),
+                        ),
+                      )
+                      .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$WordRepeatsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDriftDatabase,
+      $WordRepeatsTable,
+      DriftWordRepeats,
+      $$WordRepeatsTableFilterComposer,
+      $$WordRepeatsTableOrderingComposer,
+      $$WordRepeatsTableAnnotationComposer,
+      $$WordRepeatsTableCreateCompanionBuilder,
+      $$WordRepeatsTableUpdateCompanionBuilder,
+      (
+        DriftWordRepeats,
+        BaseReferences<_$AppDriftDatabase, $WordRepeatsTable, DriftWordRepeats>,
+      ),
+      DriftWordRepeats,
+      PrefetchHooks Function()
+    >;
 typedef $$WordMetadatasTableCreateCompanionBuilder =
     WordMetadatasCompanion Function({
       Value<int> id,
@@ -4433,6 +5174,194 @@ typedef $$WordMetadatasTableProcessedTableManager =
       (DriftWordMetadata, $$WordMetadatasTableReferences),
       DriftWordMetadata,
       PrefetchHooks Function({bool phoneticsRefs, bool meaningsRefs})
+    >;
+typedef $$WordMetadataWebLookupsTableCreateCompanionBuilder =
+    WordMetadataWebLookupsCompanion Function({
+      required String word,
+      required DateTime attemp,
+      required int count,
+      Value<int> rowid,
+    });
+typedef $$WordMetadataWebLookupsTableUpdateCompanionBuilder =
+    WordMetadataWebLookupsCompanion Function({
+      Value<String> word,
+      Value<DateTime> attemp,
+      Value<int> count,
+      Value<int> rowid,
+    });
+
+class $$WordMetadataWebLookupsTableFilterComposer
+    extends Composer<_$AppDriftDatabase, $WordMetadataWebLookupsTable> {
+  $$WordMetadataWebLookupsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get word => $composableBuilder(
+    column: $table.word,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get attemp => $composableBuilder(
+    column: $table.attemp,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get count => $composableBuilder(
+    column: $table.count,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$WordMetadataWebLookupsTableOrderingComposer
+    extends Composer<_$AppDriftDatabase, $WordMetadataWebLookupsTable> {
+  $$WordMetadataWebLookupsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get word => $composableBuilder(
+    column: $table.word,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get attemp => $composableBuilder(
+    column: $table.attemp,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get count => $composableBuilder(
+    column: $table.count,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$WordMetadataWebLookupsTableAnnotationComposer
+    extends Composer<_$AppDriftDatabase, $WordMetadataWebLookupsTable> {
+  $$WordMetadataWebLookupsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get word =>
+      $composableBuilder(column: $table.word, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get attemp =>
+      $composableBuilder(column: $table.attemp, builder: (column) => column);
+
+  GeneratedColumn<int> get count =>
+      $composableBuilder(column: $table.count, builder: (column) => column);
+}
+
+class $$WordMetadataWebLookupsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDriftDatabase,
+          $WordMetadataWebLookupsTable,
+          DriftWordMetadataWebLookup,
+          $$WordMetadataWebLookupsTableFilterComposer,
+          $$WordMetadataWebLookupsTableOrderingComposer,
+          $$WordMetadataWebLookupsTableAnnotationComposer,
+          $$WordMetadataWebLookupsTableCreateCompanionBuilder,
+          $$WordMetadataWebLookupsTableUpdateCompanionBuilder,
+          (
+            DriftWordMetadataWebLookup,
+            BaseReferences<
+              _$AppDriftDatabase,
+              $WordMetadataWebLookupsTable,
+              DriftWordMetadataWebLookup
+            >,
+          ),
+          DriftWordMetadataWebLookup,
+          PrefetchHooks Function()
+        > {
+  $$WordMetadataWebLookupsTableTableManager(
+    _$AppDriftDatabase db,
+    $WordMetadataWebLookupsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer:
+              () => $$WordMetadataWebLookupsTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer:
+              () => $$WordMetadataWebLookupsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer:
+              () => $$WordMetadataWebLookupsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> word = const Value.absent(),
+                Value<DateTime> attemp = const Value.absent(),
+                Value<int> count = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => WordMetadataWebLookupsCompanion(
+                word: word,
+                attemp: attemp,
+                count: count,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String word,
+                required DateTime attemp,
+                required int count,
+                Value<int> rowid = const Value.absent(),
+              }) => WordMetadataWebLookupsCompanion.insert(
+                word: word,
+                attemp: attemp,
+                count: count,
+                rowid: rowid,
+              ),
+          withReferenceMapper:
+              (p0) =>
+                  p0
+                      .map(
+                        (e) => (
+                          e.readTable(table),
+                          BaseReferences(db, table, e),
+                        ),
+                      )
+                      .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$WordMetadataWebLookupsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDriftDatabase,
+      $WordMetadataWebLookupsTable,
+      DriftWordMetadataWebLookup,
+      $$WordMetadataWebLookupsTableFilterComposer,
+      $$WordMetadataWebLookupsTableOrderingComposer,
+      $$WordMetadataWebLookupsTableAnnotationComposer,
+      $$WordMetadataWebLookupsTableCreateCompanionBuilder,
+      $$WordMetadataWebLookupsTableUpdateCompanionBuilder,
+      (
+        DriftWordMetadataWebLookup,
+        BaseReferences<
+          _$AppDriftDatabase,
+          $WordMetadataWebLookupsTable,
+          DriftWordMetadataWebLookup
+        >,
+      ),
+      DriftWordMetadataWebLookup,
+      PrefetchHooks Function()
     >;
 typedef $$PhoneticsTableCreateCompanionBuilder =
     PhoneticsCompanion Function({
@@ -5451,8 +6380,15 @@ class $AppDriftDatabaseManager {
       $$WordGroupsTableTableManager(_db, _db.wordGroups);
   $$WordsTableTableManager get words =>
       $$WordsTableTableManager(_db, _db.words);
+  $$WordRepeatsTableTableManager get wordRepeats =>
+      $$WordRepeatsTableTableManager(_db, _db.wordRepeats);
   $$WordMetadatasTableTableManager get wordMetadatas =>
       $$WordMetadatasTableTableManager(_db, _db.wordMetadatas);
+  $$WordMetadataWebLookupsTableTableManager get wordMetadataWebLookups =>
+      $$WordMetadataWebLookupsTableTableManager(
+        _db,
+        _db.wordMetadataWebLookups,
+      );
   $$PhoneticsTableTableManager get phonetics =>
       $$PhoneticsTableTableManager(_db, _db.phonetics);
   $$MeaningsTableTableManager get meanings =>
