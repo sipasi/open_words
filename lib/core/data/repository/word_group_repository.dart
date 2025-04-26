@@ -1,14 +1,14 @@
-import 'package:drift/drift.dart';
 import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/entities/language_info.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
 import 'package:open_words/core/data/repository/mappers/word_group_sql_mapper.dart';
 import 'package:open_words/core/data/sources/drift/app_drift_database.dart';
+import 'package:open_words/core/data/sources/drift/tables/word_groups_query.dart';
 
 sealed class WordGroupRepository {
   Future<List<WordGroup>> all();
   Future<List<WordGroup>> allByFolder(Id folderId);
-  Future<WordGroup?> byId(Id id);
+  Future<WordGroup?> oneById(Id id);
 
   Future delete(Id id);
 
@@ -35,21 +35,32 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
 
   @override
   Future<List<WordGroup>> all() {
-    return database.allQuery().map(WordGroupSqlMapper.from).get();
+    return database.allGroups().map(WordGroupSqlMapper.from).get();
   }
 
   @override
   Future<List<WordGroup>> allByFolder(Id folderId) {
+    if (folderId.isEmpty) {
+      return database
+          .allGroupsByFolderRoot()
+          .map(WordGroupSqlMapper.from)
+          .get();
+    }
+
     return database
-        .allByFolderQuery(folderId)
+        .allGroupsByFolder(folderId.valueOrThrow())
         .map(WordGroupSqlMapper.from)
         .get();
   }
 
   @override
-  Future<WordGroup?> byId(Id id) {
+  Future<WordGroup?> oneById(Id id) {
+    if (id.isEmpty) {
+      return Future.value();
+    }
+
     return database
-        .byIdQuery(id)
+        .oneGroupById(id.valueOrThrow())
         .map(WordGroupSqlMapper.from)
         .getSingleOrNull();
   }
@@ -72,7 +83,7 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
           ),
         );
 
-    final entity = await byId(Id.exist(id));
+    final entity = await oneById(Id.exist(id));
 
     return entity!;
   }
@@ -96,7 +107,7 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
           ),
         );
 
-    final entity = await byId(id);
+    final entity = await oneById(id);
 
     return entity!;
   }
@@ -106,40 +117,5 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
     return database.managers.wordGroups
         .filter((f) => f.id.equals(id.valueOrNull()))
         .delete();
-  }
-}
-
-extension _Queries on AppDriftDatabase {
-  Selectable<QueryRow> allQuery() {
-    return customSelect(_query());
-  }
-
-  Selectable<QueryRow> allByFolderQuery(Id folderId) {
-    if (folderId.isEmpty) {
-      return customSelect(_query(where: 'g.folder_id IS NULL'));
-    }
-
-    return customSelect(
-      _query(where: 'g.folder_id = ?'),
-      variables: [Variable.withInt(folderId.valueOrThrow())],
-    );
-  }
-
-  Selectable<QueryRow> byIdQuery(Id id) {
-    return customSelect(
-      _query(where: 'g.id = ?'),
-      variables: [Variable.withInt(id.valueOrThrow())],
-    );
-  }
-
-  static String _query({String? where}) {
-    const template =
-        'SELECT g.*, COUNT(w.id) AS words_count '
-        'FROM word_groups g '
-        'LEFT JOIN words w ON w.group_id = g.id ';
-
-    return where == null
-        ? '$template GROUP BY g.id ORDER BY g.name;'
-        : '$template WHERE $where GROUP BY g.id ORDER BY g.name;';
   }
 }
