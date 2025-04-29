@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_words/core/data/entities/word/word.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
@@ -52,6 +53,7 @@ class WordDetailView extends StatelessWidget {
           WordDetailMetadataView(),
         ],
       ),
+      floatingActionButtonLocation: ExpandableFab.location,
       floatingActionButton: WordDetailFab(),
     );
   }
