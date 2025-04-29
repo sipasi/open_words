@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/entities/metadata/word_metadata.dart';
-import 'package:open_words/features/word/detail/cubit/word_detail_page_cubit.dart';
 import 'package:open_words/features/word/edit/bloc/word_edit_bloc.dart';
 import 'package:open_words/features/word/edit/widgets/editable_meaning_tile.dart';
 import 'package:open_words/features/word/edit/widgets/editable_phonetic_tile.dart';
@@ -87,8 +86,6 @@ class WordEditView extends StatelessWidget {
     final state = bloc.state;
 
     if (didPop || state.saveStatus == WordEditSaveStatus.saved) {
-      context.read<WordDetailPageCubit>().refresh();
-
       return;
     }
 
