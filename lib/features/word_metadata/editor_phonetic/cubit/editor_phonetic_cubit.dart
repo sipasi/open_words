@@ -9,7 +9,17 @@ class EditorPhoneticCubit extends Cubit<EditorPhoneticState> {
   bool get isCreate => initial == null;
   bool get isEdit => !isCreate;
 
-  EditorPhoneticCubit({this.initial}) : super(EditorPhoneticState.initial());
+  EditorPhoneticCubit({this.initial}) : super(EditorPhoneticState.initial()) {
+    init();
+  }
+
+  void init() {
+    if (initial == null) {
+      return;
+    }
+
+    emit(EditorPhoneticState(value: initial!.value, audio: initial!.audio));
+  }
 
   void setPhonetic(String value) => emit(state.copyWith(value: value));
 
