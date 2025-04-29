@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:open_words/shared/widget_builder/value_builder.dart';
+import 'package:open_words/shared/builders/value_builder_extension.dart';
 
 class PhoneticListTile extends StatelessWidget {
   final String value;
