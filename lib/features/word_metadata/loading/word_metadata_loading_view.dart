@@ -21,9 +21,8 @@ class WordMetadataLoadingView extends StatelessWidget {
     return const WordMetadata(
       id: Id.empty(),
       word: 'advice',
-      origin:
+      etymology:
           'from Old French avis, based on Latin ad ‘to’ + visum, past participle of videre ‘to see’. The original sense was ‘way of looking at something, judgement’, hence later ‘an opinion given’',
-      phonetic: '/ədˈvaɪs/',
       phonetics: [
         Phonetic(
           id: Id.empty(),
