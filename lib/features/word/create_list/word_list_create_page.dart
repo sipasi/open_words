@@ -13,7 +13,6 @@ import 'package:open_words/features/word/create_list/widgets/word_draft_list_vie
 import 'package:open_words/features/word/create_list/widgets/word_list_create_bottom_bar.dart';
 import 'package:open_words/features/word/create_list/widgets/word_list_create_fab.dart';
 import 'package:open_words/features/word/create_list/widgets/word_list_create_title.dart';
-import 'package:open_words/features/word_group/detail/cubit/word_group_detail_cubit.dart';
 import 'package:open_words/shared/input_fields/text_edit_controller.dart';
 import 'package:open_words/shared/modal/discard_changes_modal.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
@@ -142,7 +141,6 @@ class _WordListCreateViewState extends State<WordListCreateView> {
       return;
     }
 
-    context.read<WordGroupDetailCubit>().init();
     context.read<ExplorerBloc>().add(ExplorerRefreshRequested());
     context.pop();
   }
