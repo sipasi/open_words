@@ -1940,26 +1940,46 @@ class $WordMetadataWebLookupsTable extends WordMetadataWebLookups
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _attempMeta = const VerificationMeta('attemp');
+  static const VerificationMeta _firstAttempMeta = const VerificationMeta(
+    'firstAttemp',
+  );
   @override
-  late final GeneratedColumn<DateTime> attemp = GeneratedColumn<DateTime>(
-    'attemp',
+  late final GeneratedColumn<DateTime> firstAttemp = GeneratedColumn<DateTime>(
+    'first_attemp',
     aliasedName,
     false,
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _countMeta = const VerificationMeta('count');
+  static const VerificationMeta _lastAttempMeta = const VerificationMeta(
+    'lastAttemp',
+  );
   @override
-  late final GeneratedColumn<int> count = GeneratedColumn<int>(
-    'count',
+  late final GeneratedColumn<DateTime> lastAttemp = GeneratedColumn<DateTime>(
+    'last_attemp',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _attempsMeta = const VerificationMeta(
+    'attemps',
+  );
+  @override
+  late final GeneratedColumn<int> attemps = GeneratedColumn<int>(
+    'attemps',
     aliasedName,
     false,
     type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
   @override
-  List<GeneratedColumn> get $columns => [word, attemp, count];
+  List<GeneratedColumn> get $columns => [
+    word,
+    firstAttemp,
+    lastAttemp,
+    attemps,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1980,21 +2000,32 @@ class $WordMetadataWebLookupsTable extends WordMetadataWebLookups
     } else if (isInserting) {
       context.missing(_wordMeta);
     }
-    if (data.containsKey('attemp')) {
+    if (data.containsKey('first_attemp')) {
       context.handle(
-        _attempMeta,
-        attemp.isAcceptableOrUnknown(data['attemp']!, _attempMeta),
+        _firstAttempMeta,
+        firstAttemp.isAcceptableOrUnknown(
+          data['first_attemp']!,
+          _firstAttempMeta,
+        ),
       );
     } else if (isInserting) {
-      context.missing(_attempMeta);
+      context.missing(_firstAttempMeta);
     }
-    if (data.containsKey('count')) {
+    if (data.containsKey('last_attemp')) {
       context.handle(
-        _countMeta,
-        count.isAcceptableOrUnknown(data['count']!, _countMeta),
+        _lastAttempMeta,
+        lastAttemp.isAcceptableOrUnknown(data['last_attemp']!, _lastAttempMeta),
       );
     } else if (isInserting) {
-      context.missing(_countMeta);
+      context.missing(_lastAttempMeta);
+    }
+    if (data.containsKey('attemps')) {
+      context.handle(
+        _attempsMeta,
+        attemps.isAcceptableOrUnknown(data['attemps']!, _attempsMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_attempsMeta);
     }
     return context;
   }
@@ -2013,15 +2044,20 @@ class $WordMetadataWebLookupsTable extends WordMetadataWebLookups
             DriftSqlType.string,
             data['${effectivePrefix}word'],
           )!,
-      attemp:
+      firstAttemp:
           attachedDatabase.typeMapping.read(
             DriftSqlType.dateTime,
-            data['${effectivePrefix}attemp'],
+            data['${effectivePrefix}first_attemp'],
           )!,
-      count:
+      lastAttemp:
+          attachedDatabase.typeMapping.read(
+            DriftSqlType.dateTime,
+            data['${effectivePrefix}last_attemp'],
+          )!,
+      attemps:
           attachedDatabase.typeMapping.read(
             DriftSqlType.int,
-            data['${effectivePrefix}count'],
+            data['${effectivePrefix}attemps'],
           )!,
     );
   }
@@ -2035,27 +2071,31 @@ class $WordMetadataWebLookupsTable extends WordMetadataWebLookups
 class DriftWordMetadataWebLookup extends DataClass
     implements Insertable<DriftWordMetadataWebLookup> {
   final String word;
-  final DateTime attemp;
-  final int count;
+  final DateTime firstAttemp;
+  final DateTime lastAttemp;
+  final int attemps;
   const DriftWordMetadataWebLookup({
     required this.word,
-    required this.attemp,
-    required this.count,
+    required this.firstAttemp,
+    required this.lastAttemp,
+    required this.attemps,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['word'] = Variable<String>(word);
-    map['attemp'] = Variable<DateTime>(attemp);
-    map['count'] = Variable<int>(count);
+    map['first_attemp'] = Variable<DateTime>(firstAttemp);
+    map['last_attemp'] = Variable<DateTime>(lastAttemp);
+    map['attemps'] = Variable<int>(attemps);
     return map;
   }
 
   WordMetadataWebLookupsCompanion toCompanion(bool nullToAbsent) {
     return WordMetadataWebLookupsCompanion(
       word: Value(word),
-      attemp: Value(attemp),
-      count: Value(count),
+      firstAttemp: Value(firstAttemp),
+      lastAttemp: Value(lastAttemp),
+      attemps: Value(attemps),
     );
   }
 
@@ -2066,8 +2106,9 @@ class DriftWordMetadataWebLookup extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return DriftWordMetadataWebLookup(
       word: serializer.fromJson<String>(json['word']),
-      attemp: serializer.fromJson<DateTime>(json['attemp']),
-      count: serializer.fromJson<int>(json['count']),
+      firstAttemp: serializer.fromJson<DateTime>(json['firstAttemp']),
+      lastAttemp: serializer.fromJson<DateTime>(json['lastAttemp']),
+      attemps: serializer.fromJson<int>(json['attemps']),
     );
   }
   @override
@@ -2075,27 +2116,33 @@ class DriftWordMetadataWebLookup extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'word': serializer.toJson<String>(word),
-      'attemp': serializer.toJson<DateTime>(attemp),
-      'count': serializer.toJson<int>(count),
+      'firstAttemp': serializer.toJson<DateTime>(firstAttemp),
+      'lastAttemp': serializer.toJson<DateTime>(lastAttemp),
+      'attemps': serializer.toJson<int>(attemps),
     };
   }
 
   DriftWordMetadataWebLookup copyWith({
     String? word,
-    DateTime? attemp,
-    int? count,
+    DateTime? firstAttemp,
+    DateTime? lastAttemp,
+    int? attemps,
   }) => DriftWordMetadataWebLookup(
     word: word ?? this.word,
-    attemp: attemp ?? this.attemp,
-    count: count ?? this.count,
+    firstAttemp: firstAttemp ?? this.firstAttemp,
+    lastAttemp: lastAttemp ?? this.lastAttemp,
+    attemps: attemps ?? this.attemps,
   );
   DriftWordMetadataWebLookup copyWithCompanion(
     WordMetadataWebLookupsCompanion data,
   ) {
     return DriftWordMetadataWebLookup(
       word: data.word.present ? data.word.value : this.word,
-      attemp: data.attemp.present ? data.attemp.value : this.attemp,
-      count: data.count.present ? data.count.value : this.count,
+      firstAttemp:
+          data.firstAttemp.present ? data.firstAttemp.value : this.firstAttemp,
+      lastAttemp:
+          data.lastAttemp.present ? data.lastAttemp.value : this.lastAttemp,
+      attemps: data.attemps.present ? data.attemps.value : this.attemps,
     );
   }
 
@@ -2103,67 +2150,77 @@ class DriftWordMetadataWebLookup extends DataClass
   String toString() {
     return (StringBuffer('DriftWordMetadataWebLookup(')
           ..write('word: $word, ')
-          ..write('attemp: $attemp, ')
-          ..write('count: $count')
+          ..write('firstAttemp: $firstAttemp, ')
+          ..write('lastAttemp: $lastAttemp, ')
+          ..write('attemps: $attemps')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(word, attemp, count);
+  int get hashCode => Object.hash(word, firstAttemp, lastAttemp, attemps);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is DriftWordMetadataWebLookup &&
           other.word == this.word &&
-          other.attemp == this.attemp &&
-          other.count == this.count);
+          other.firstAttemp == this.firstAttemp &&
+          other.lastAttemp == this.lastAttemp &&
+          other.attemps == this.attemps);
 }
 
 class WordMetadataWebLookupsCompanion
     extends UpdateCompanion<DriftWordMetadataWebLookup> {
   final Value<String> word;
-  final Value<DateTime> attemp;
-  final Value<int> count;
+  final Value<DateTime> firstAttemp;
+  final Value<DateTime> lastAttemp;
+  final Value<int> attemps;
   final Value<int> rowid;
   const WordMetadataWebLookupsCompanion({
     this.word = const Value.absent(),
-    this.attemp = const Value.absent(),
-    this.count = const Value.absent(),
+    this.firstAttemp = const Value.absent(),
+    this.lastAttemp = const Value.absent(),
+    this.attemps = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   WordMetadataWebLookupsCompanion.insert({
     required String word,
-    required DateTime attemp,
-    required int count,
+    required DateTime firstAttemp,
+    required DateTime lastAttemp,
+    required int attemps,
     this.rowid = const Value.absent(),
   }) : word = Value(word),
-       attemp = Value(attemp),
-       count = Value(count);
+       firstAttemp = Value(firstAttemp),
+       lastAttemp = Value(lastAttemp),
+       attemps = Value(attemps);
   static Insertable<DriftWordMetadataWebLookup> custom({
     Expression<String>? word,
-    Expression<DateTime>? attemp,
-    Expression<int>? count,
+    Expression<DateTime>? firstAttemp,
+    Expression<DateTime>? lastAttemp,
+    Expression<int>? attemps,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (word != null) 'word': word,
-      if (attemp != null) 'attemp': attemp,
-      if (count != null) 'count': count,
+      if (firstAttemp != null) 'first_attemp': firstAttemp,
+      if (lastAttemp != null) 'last_attemp': lastAttemp,
+      if (attemps != null) 'attemps': attemps,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
   WordMetadataWebLookupsCompanion copyWith({
     Value<String>? word,
-    Value<DateTime>? attemp,
-    Value<int>? count,
+    Value<DateTime>? firstAttemp,
+    Value<DateTime>? lastAttemp,
+    Value<int>? attemps,
     Value<int>? rowid,
   }) {
     return WordMetadataWebLookupsCompanion(
       word: word ?? this.word,
-      attemp: attemp ?? this.attemp,
-      count: count ?? this.count,
+      firstAttemp: firstAttemp ?? this.firstAttemp,
+      lastAttemp: lastAttemp ?? this.lastAttemp,
+      attemps: attemps ?? this.attemps,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -2174,11 +2231,14 @@ class WordMetadataWebLookupsCompanion
     if (word.present) {
       map['word'] = Variable<String>(word.value);
     }
-    if (attemp.present) {
-      map['attemp'] = Variable<DateTime>(attemp.value);
+    if (firstAttemp.present) {
+      map['first_attemp'] = Variable<DateTime>(firstAttemp.value);
     }
-    if (count.present) {
-      map['count'] = Variable<int>(count.value);
+    if (lastAttemp.present) {
+      map['last_attemp'] = Variable<DateTime>(lastAttemp.value);
+    }
+    if (attemps.present) {
+      map['attemps'] = Variable<int>(attemps.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -2190,8 +2250,9 @@ class WordMetadataWebLookupsCompanion
   String toString() {
     return (StringBuffer('WordMetadataWebLookupsCompanion(')
           ..write('word: $word, ')
-          ..write('attemp: $attemp, ')
-          ..write('count: $count, ')
+          ..write('firstAttemp: $firstAttemp, ')
+          ..write('lastAttemp: $lastAttemp, ')
+          ..write('attemps: $attemps, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -3251,6 +3312,10 @@ abstract class _$AppDriftDatabase extends GeneratedDatabase {
     'metadata_word_index',
     'CREATE INDEX metadata_word_index ON word_metadatas (word)',
   );
+  late final Index webLookupsWord = Index(
+    'web_lookups_word',
+    'CREATE INDEX web_lookups_word ON word_metadata_web_lookups (word)',
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -3279,6 +3344,7 @@ abstract class _$AppDriftDatabase extends GeneratedDatabase {
     wordRepeatsWordRepeat,
     wordRepeatsCountRepeat,
     metadataWordIndex,
+    webLookupsWord,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -5111,15 +5177,17 @@ typedef $$WordMetadatasTableProcessedTableManager =
 typedef $$WordMetadataWebLookupsTableCreateCompanionBuilder =
     WordMetadataWebLookupsCompanion Function({
       required String word,
-      required DateTime attemp,
-      required int count,
+      required DateTime firstAttemp,
+      required DateTime lastAttemp,
+      required int attemps,
       Value<int> rowid,
     });
 typedef $$WordMetadataWebLookupsTableUpdateCompanionBuilder =
     WordMetadataWebLookupsCompanion Function({
       Value<String> word,
-      Value<DateTime> attemp,
-      Value<int> count,
+      Value<DateTime> firstAttemp,
+      Value<DateTime> lastAttemp,
+      Value<int> attemps,
       Value<int> rowid,
     });
 
@@ -5137,13 +5205,18 @@ class $$WordMetadataWebLookupsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<DateTime> get attemp => $composableBuilder(
-    column: $table.attemp,
+  ColumnFilters<DateTime> get firstAttemp => $composableBuilder(
+    column: $table.firstAttemp,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get count => $composableBuilder(
-    column: $table.count,
+  ColumnFilters<DateTime> get lastAttemp => $composableBuilder(
+    column: $table.lastAttemp,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get attemps => $composableBuilder(
+    column: $table.attemps,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -5162,13 +5235,18 @@ class $$WordMetadataWebLookupsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<DateTime> get attemp => $composableBuilder(
-    column: $table.attemp,
+  ColumnOrderings<DateTime> get firstAttemp => $composableBuilder(
+    column: $table.firstAttemp,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get count => $composableBuilder(
-    column: $table.count,
+  ColumnOrderings<DateTime> get lastAttemp => $composableBuilder(
+    column: $table.lastAttemp,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get attemps => $composableBuilder(
+    column: $table.attemps,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -5185,11 +5263,18 @@ class $$WordMetadataWebLookupsTableAnnotationComposer
   GeneratedColumn<String> get word =>
       $composableBuilder(column: $table.word, builder: (column) => column);
 
-  GeneratedColumn<DateTime> get attemp =>
-      $composableBuilder(column: $table.attemp, builder: (column) => column);
+  GeneratedColumn<DateTime> get firstAttemp => $composableBuilder(
+    column: $table.firstAttemp,
+    builder: (column) => column,
+  );
 
-  GeneratedColumn<int> get count =>
-      $composableBuilder(column: $table.count, builder: (column) => column);
+  GeneratedColumn<DateTime> get lastAttemp => $composableBuilder(
+    column: $table.lastAttemp,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get attemps =>
+      $composableBuilder(column: $table.attemps, builder: (column) => column);
 }
 
 class $$WordMetadataWebLookupsTableTableManager
@@ -5239,25 +5324,29 @@ class $$WordMetadataWebLookupsTableTableManager
           updateCompanionCallback:
               ({
                 Value<String> word = const Value.absent(),
-                Value<DateTime> attemp = const Value.absent(),
-                Value<int> count = const Value.absent(),
+                Value<DateTime> firstAttemp = const Value.absent(),
+                Value<DateTime> lastAttemp = const Value.absent(),
+                Value<int> attemps = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => WordMetadataWebLookupsCompanion(
                 word: word,
-                attemp: attemp,
-                count: count,
+                firstAttemp: firstAttemp,
+                lastAttemp: lastAttemp,
+                attemps: attemps,
                 rowid: rowid,
               ),
           createCompanionCallback:
               ({
                 required String word,
-                required DateTime attemp,
-                required int count,
+                required DateTime firstAttemp,
+                required DateTime lastAttemp,
+                required int attemps,
                 Value<int> rowid = const Value.absent(),
               }) => WordMetadataWebLookupsCompanion.insert(
                 word: word,
-                attemp: attemp,
-                count: count,
+                firstAttemp: firstAttemp,
+                lastAttemp: lastAttemp,
+                attemps: attemps,
                 rowid: rowid,
               ),
           withReferenceMapper:
