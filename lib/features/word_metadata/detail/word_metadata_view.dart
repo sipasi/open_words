@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:open_words/core/data/entities/metadata/word_metadata.dart';
 import 'package:open_words/features/word_metadata/detail/widgets/meaning_list_view.dart';
 import 'package:open_words/features/word_metadata/detail/widgets/phonetic_list_view.dart';
-import 'package:open_words/features/word_metadata/detail/widgets/word_metadata_info.dart';
 
 class WordMetadataView extends StatelessWidget {
   final WordMetadata metadata;
@@ -11,13 +10,15 @@ class WordMetadataView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Column( 
       children: [
-        WordMetadataInfo(
-          origin: metadata.origin,
-          phonetic: metadata.phonetic,
-          isPhoneticsEmpty: metadata.phonetic.isEmpty,
-        ),
+        if (metadata.etymology.isNotEmpty)
+          Card.filled(
+            child: ListTile(
+              title: Text('Etymology'),
+              subtitle: Text(metadata.etymology),
+            ),
+          ),
         PhoneticListView(phonetics: metadata.phonetics),
         MeaningListView(meanings: metadata.meanings),
       ],
