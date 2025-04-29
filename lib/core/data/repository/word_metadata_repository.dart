@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:open_words/core/data/draft/metadata/word_metadata_draft.dart';
+import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/entities/metadata/word_metadata.dart';
 import 'package:open_words/core/data/repository/mappers/word_metadata_raw_sql_mapper.dart';
 import 'package:open_words/core/data/sources/drift/app_drift_database.dart';
@@ -8,6 +9,8 @@ sealed class WordMetadataRepository {
   Future<WordMetadata?> byWord(String word);
   Future<bool> exist(String word);
   Future<WordMetadata> create(WordMetadataDraft draft);
+
+  Future delete(Id id);
 }
 
 class WordMetadataRepositoryImpl extends WordMetadataRepository {
@@ -47,10 +50,9 @@ class WordMetadataRepositoryImpl extends WordMetadataRepository {
 
   @override
   Future<WordMetadata> create(WordMetadataDraft draft) async {
-    return await database.transaction(() async {
+    await database.transaction(() async {
       final metadataId = await database.managers.wordMetadatas.create(
-        (o) =>
-            o(phonetic: draft.phonetic, word: draft.word, origin: draft.origin),
+        (o) => o(word: draft.word, etymology: draft.etymology),
       );
 
       await database.managers.phonetics.bulkCreate((o) {
@@ -85,9 +87,11 @@ class WordMetadataRepositoryImpl extends WordMetadataRepository {
           ];
         });
       }
-
-      return (await byWord(draft.word))!;
     });
+
+    final result = await byWord(draft.word);
+
+    return result!;
   }
 
   @override
@@ -95,6 +99,17 @@ class WordMetadataRepositoryImpl extends WordMetadataRepository {
     final exist = await database.exist(word);
 
     return exist != null;
+  }
+
+  @override
+  Future delete(Id id) {
+    if (id.isEmpty) {
+      return Future.value();
+    }
+
+    return database.managers.wordMetadatas
+        .filter((f) => f.id.equals(id.valueOrThrow()))
+        .delete();
   }
 }
 
