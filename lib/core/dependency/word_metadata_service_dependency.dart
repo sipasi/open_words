@@ -10,7 +10,11 @@ final class WordMetadataServiceDependency extends AppDependency {
     container.registerSingleton<WordMetadataWebApi>(DevDictionaryApi());
 
     container.registerSingleton<WordMetadataService>(
-      WordMetadataService(repository: container.get(), api: container.get()),
+      WordMetadataService(
+        webLookup: container.get(),
+        repository: container.get(),
+        api: container.get(),
+      ),
     );
 
     return Future.value();
