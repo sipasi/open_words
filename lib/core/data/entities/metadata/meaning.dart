@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:open_words/core/data/entities/entity.dart';
 import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/entities/metadata/definition.dart';
@@ -48,5 +49,28 @@ class Meaning extends Entity {
       synonyms: synonyms ?? this.synonyms,
       antonyms: antonyms ?? this.antonyms,
     );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Meaning &&
+        other.id == id &&
+        other.metadataId == metadataId &&
+        other.partOfSpeech == partOfSpeech &&
+        listEquals(other.definitions, definitions) &&
+        listEquals(other.synonyms, synonyms) &&
+        listEquals(other.antonyms, antonyms);
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        metadataId.hashCode ^
+        partOfSpeech.hashCode ^
+        definitions.hashCode ^
+        synonyms.hashCode ^
+        antonyms.hashCode;
   }
 }
