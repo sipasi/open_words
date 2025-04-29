@@ -10,6 +10,7 @@ class MeaningListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: List.generate(meanings.length, (index) {
         return Card.outlined(
           child: Padding(
