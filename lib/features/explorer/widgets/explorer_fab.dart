@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/features/explorer/bloc/explorer_bloc.dart';
 import 'package:open_words/features/explorer_entity_editor/explorer_entity_editor.dart';
@@ -26,9 +25,6 @@ class ExplorerFab extends StatelessWidget {
     return ExplorerEntityEditor.show(
       context: context,
       parentFolder: exploredId,
-      languageService: GetIt.I.get(),
-      folderRepository: GetIt.I.get(),
-      groupRepository: GetIt.I.get(),
     );
   }
 

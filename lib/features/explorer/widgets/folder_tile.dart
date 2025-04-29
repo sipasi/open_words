@@ -40,10 +40,7 @@ class FolderTile extends StatelessWidget {
 
     ExplorerEntityEditor.show(
       context: context,
-      parentFolder: context.read<ExplorerBloc>().state.exploredId,
-      languageService: GetIt.I.get(),
-      folderRepository: GetIt.I.get(),
-      groupRepository: GetIt.I.get(),
+      parentFolder: context.read<ExplorerBloc>().state.exploredId, 
       entityUnion: ExplorerEntityUnion.folder(value),
     );
   }

@@ -38,10 +38,7 @@ class GroupTile extends StatelessWidget {
 
     return ExplorerEntityEditor.show(
       context: context,
-      parentFolder: context.read<ExplorerBloc>().state.exploredId,
-      languageService: GetIt.I.get(),
-      folderRepository: GetIt.I.get(),
-      groupRepository: GetIt.I.get(),
+      parentFolder: context.read<ExplorerBloc>().state.exploredId, 
       entityUnion: ExplorerEntityUnion.group(value),
     );
   }
