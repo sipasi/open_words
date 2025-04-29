@@ -14,7 +14,7 @@ sealed class MetadataModelMapper {
     if (model.word == null) {
       final logger = GetIt.I.get<AppLogger>();
 
-      logger.e(
+      logger.w(
         '[MetadataModelMapper] - WordMetadataModel.word field was null\nword: ${model.word}',
       );
 
@@ -23,8 +23,7 @@ sealed class MetadataModelMapper {
 
     return WordMetadataDraft(
       word: model.word!,
-      origin: model.origin ?? '',
-      phonetic: model.phonetic ?? '',
+      etymology: model.origin ?? '',
       phonetics: PhoneticModelMapper.mapList(model.phonetics),
       meanings: MeaningModelMapper.mapList(model.meanings),
     );

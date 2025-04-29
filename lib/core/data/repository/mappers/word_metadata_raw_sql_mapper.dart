@@ -21,8 +21,7 @@ sealed class WordMetadataRawSqlMapper {
     return WordMetadata(
       id: id,
       word: rawMetadata.read('word'),
-      origin: rawMetadata.read('origin'),
-      phonetic: rawMetadata.read('phonetic'),
+      etymology: rawMetadata.read('etymology'),
       phonetics: _mapPhonetics(id, phonetics),
       meanings: _mapMeanings(id, meanings, definitions),
     );

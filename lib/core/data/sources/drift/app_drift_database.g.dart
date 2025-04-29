@@ -1700,28 +1700,19 @@ class $WordMetadatasTable extends WordMetadatas
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _originMeta = const VerificationMeta('origin');
-  @override
-  late final GeneratedColumn<String> origin = GeneratedColumn<String>(
-    'origin',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _phoneticMeta = const VerificationMeta(
-    'phonetic',
+  static const VerificationMeta _etymologyMeta = const VerificationMeta(
+    'etymology',
   );
   @override
-  late final GeneratedColumn<String> phonetic = GeneratedColumn<String>(
-    'phonetic',
+  late final GeneratedColumn<String> etymology = GeneratedColumn<String>(
+    'etymology',
     aliasedName,
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
   @override
-  List<GeneratedColumn> get $columns => [id, word, origin, phonetic];
+  List<GeneratedColumn> get $columns => [id, word, etymology];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1745,21 +1736,13 @@ class $WordMetadatasTable extends WordMetadatas
     } else if (isInserting) {
       context.missing(_wordMeta);
     }
-    if (data.containsKey('origin')) {
+    if (data.containsKey('etymology')) {
       context.handle(
-        _originMeta,
-        origin.isAcceptableOrUnknown(data['origin']!, _originMeta),
+        _etymologyMeta,
+        etymology.isAcceptableOrUnknown(data['etymology']!, _etymologyMeta),
       );
     } else if (isInserting) {
-      context.missing(_originMeta);
-    }
-    if (data.containsKey('phonetic')) {
-      context.handle(
-        _phoneticMeta,
-        phonetic.isAcceptableOrUnknown(data['phonetic']!, _phoneticMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_phoneticMeta);
+      context.missing(_etymologyMeta);
     }
     return context;
   }
@@ -1780,15 +1763,10 @@ class $WordMetadatasTable extends WordMetadatas
             DriftSqlType.string,
             data['${effectivePrefix}word'],
           )!,
-      origin:
+      etymology:
           attachedDatabase.typeMapping.read(
             DriftSqlType.string,
-            data['${effectivePrefix}origin'],
-          )!,
-      phonetic:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}phonetic'],
+            data['${effectivePrefix}etymology'],
           )!,
     );
   }
@@ -1803,21 +1781,18 @@ class DriftWordMetadata extends DataClass
     implements Insertable<DriftWordMetadata> {
   final int id;
   final String word;
-  final String origin;
-  final String phonetic;
+  final String etymology;
   const DriftWordMetadata({
     required this.id,
     required this.word,
-    required this.origin,
-    required this.phonetic,
+    required this.etymology,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['word'] = Variable<String>(word);
-    map['origin'] = Variable<String>(origin);
-    map['phonetic'] = Variable<String>(phonetic);
+    map['etymology'] = Variable<String>(etymology);
     return map;
   }
 
@@ -1825,8 +1800,7 @@ class DriftWordMetadata extends DataClass
     return WordMetadatasCompanion(
       id: Value(id),
       word: Value(word),
-      origin: Value(origin),
-      phonetic: Value(phonetic),
+      etymology: Value(etymology),
     );
   }
 
@@ -1838,8 +1812,7 @@ class DriftWordMetadata extends DataClass
     return DriftWordMetadata(
       id: serializer.fromJson<int>(json['id']),
       word: serializer.fromJson<String>(json['word']),
-      origin: serializer.fromJson<String>(json['origin']),
-      phonetic: serializer.fromJson<String>(json['phonetic']),
+      etymology: serializer.fromJson<String>(json['etymology']),
     );
   }
   @override
@@ -1848,28 +1821,21 @@ class DriftWordMetadata extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'word': serializer.toJson<String>(word),
-      'origin': serializer.toJson<String>(origin),
-      'phonetic': serializer.toJson<String>(phonetic),
+      'etymology': serializer.toJson<String>(etymology),
     };
   }
 
-  DriftWordMetadata copyWith({
-    int? id,
-    String? word,
-    String? origin,
-    String? phonetic,
-  }) => DriftWordMetadata(
-    id: id ?? this.id,
-    word: word ?? this.word,
-    origin: origin ?? this.origin,
-    phonetic: phonetic ?? this.phonetic,
-  );
+  DriftWordMetadata copyWith({int? id, String? word, String? etymology}) =>
+      DriftWordMetadata(
+        id: id ?? this.id,
+        word: word ?? this.word,
+        etymology: etymology ?? this.etymology,
+      );
   DriftWordMetadata copyWithCompanion(WordMetadatasCompanion data) {
     return DriftWordMetadata(
       id: data.id.present ? data.id.value : this.id,
       word: data.word.present ? data.word.value : this.word,
-      origin: data.origin.present ? data.origin.value : this.origin,
-      phonetic: data.phonetic.present ? data.phonetic.value : this.phonetic,
+      etymology: data.etymology.present ? data.etymology.value : this.etymology,
     );
   }
 
@@ -1878,68 +1844,58 @@ class DriftWordMetadata extends DataClass
     return (StringBuffer('DriftWordMetadata(')
           ..write('id: $id, ')
           ..write('word: $word, ')
-          ..write('origin: $origin, ')
-          ..write('phonetic: $phonetic')
+          ..write('etymology: $etymology')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, word, origin, phonetic);
+  int get hashCode => Object.hash(id, word, etymology);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is DriftWordMetadata &&
           other.id == this.id &&
           other.word == this.word &&
-          other.origin == this.origin &&
-          other.phonetic == this.phonetic);
+          other.etymology == this.etymology);
 }
 
 class WordMetadatasCompanion extends UpdateCompanion<DriftWordMetadata> {
   final Value<int> id;
   final Value<String> word;
-  final Value<String> origin;
-  final Value<String> phonetic;
+  final Value<String> etymology;
   const WordMetadatasCompanion({
     this.id = const Value.absent(),
     this.word = const Value.absent(),
-    this.origin = const Value.absent(),
-    this.phonetic = const Value.absent(),
+    this.etymology = const Value.absent(),
   });
   WordMetadatasCompanion.insert({
     this.id = const Value.absent(),
     required String word,
-    required String origin,
-    required String phonetic,
+    required String etymology,
   }) : word = Value(word),
-       origin = Value(origin),
-       phonetic = Value(phonetic);
+       etymology = Value(etymology);
   static Insertable<DriftWordMetadata> custom({
     Expression<int>? id,
     Expression<String>? word,
-    Expression<String>? origin,
-    Expression<String>? phonetic,
+    Expression<String>? etymology,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (word != null) 'word': word,
-      if (origin != null) 'origin': origin,
-      if (phonetic != null) 'phonetic': phonetic,
+      if (etymology != null) 'etymology': etymology,
     });
   }
 
   WordMetadatasCompanion copyWith({
     Value<int>? id,
     Value<String>? word,
-    Value<String>? origin,
-    Value<String>? phonetic,
+    Value<String>? etymology,
   }) {
     return WordMetadatasCompanion(
       id: id ?? this.id,
       word: word ?? this.word,
-      origin: origin ?? this.origin,
-      phonetic: phonetic ?? this.phonetic,
+      etymology: etymology ?? this.etymology,
     );
   }
 
@@ -1952,11 +1908,8 @@ class WordMetadatasCompanion extends UpdateCompanion<DriftWordMetadata> {
     if (word.present) {
       map['word'] = Variable<String>(word.value);
     }
-    if (origin.present) {
-      map['origin'] = Variable<String>(origin.value);
-    }
-    if (phonetic.present) {
-      map['phonetic'] = Variable<String>(phonetic.value);
+    if (etymology.present) {
+      map['etymology'] = Variable<String>(etymology.value);
     }
     return map;
   }
@@ -1966,8 +1919,7 @@ class WordMetadatasCompanion extends UpdateCompanion<DriftWordMetadata> {
     return (StringBuffer('WordMetadatasCompanion(')
           ..write('id: $id, ')
           ..write('word: $word, ')
-          ..write('origin: $origin, ')
-          ..write('phonetic: $phonetic')
+          ..write('etymology: $etymology')
           ..write(')'))
         .toString();
   }
@@ -4781,15 +4733,13 @@ typedef $$WordMetadatasTableCreateCompanionBuilder =
     WordMetadatasCompanion Function({
       Value<int> id,
       required String word,
-      required String origin,
-      required String phonetic,
+      required String etymology,
     });
 typedef $$WordMetadatasTableUpdateCompanionBuilder =
     WordMetadatasCompanion Function({
       Value<int> id,
       Value<String> word,
-      Value<String> origin,
-      Value<String> phonetic,
+      Value<String> etymology,
     });
 
 final class $$WordMetadatasTableReferences
@@ -4867,13 +4817,8 @@ class $$WordMetadatasTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get origin => $composableBuilder(
-    column: $table.origin,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get phonetic => $composableBuilder(
-    column: $table.phonetic,
+  ColumnFilters<String> get etymology => $composableBuilder(
+    column: $table.etymology,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -4947,13 +4892,8 @@ class $$WordMetadatasTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get origin => $composableBuilder(
-    column: $table.origin,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get phonetic => $composableBuilder(
-    column: $table.phonetic,
+  ColumnOrderings<String> get etymology => $composableBuilder(
+    column: $table.etymology,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -4973,11 +4913,8 @@ class $$WordMetadatasTableAnnotationComposer
   GeneratedColumn<String> get word =>
       $composableBuilder(column: $table.word, builder: (column) => column);
 
-  GeneratedColumn<String> get origin =>
-      $composableBuilder(column: $table.origin, builder: (column) => column);
-
-  GeneratedColumn<String> get phonetic =>
-      $composableBuilder(column: $table.phonetic, builder: (column) => column);
+  GeneratedColumn<String> get etymology =>
+      $composableBuilder(column: $table.etymology, builder: (column) => column);
 
   Expression<T> phoneticsRefs<T extends Object>(
     Expression<T> Function($$PhoneticsTableAnnotationComposer a) f,
@@ -5066,25 +5003,21 @@ class $$WordMetadatasTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> word = const Value.absent(),
-                Value<String> origin = const Value.absent(),
-                Value<String> phonetic = const Value.absent(),
+                Value<String> etymology = const Value.absent(),
               }) => WordMetadatasCompanion(
                 id: id,
                 word: word,
-                origin: origin,
-                phonetic: phonetic,
+                etymology: etymology,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String word,
-                required String origin,
-                required String phonetic,
+                required String etymology,
               }) => WordMetadatasCompanion.insert(
                 id: id,
                 word: word,
-                origin: origin,
-                phonetic: phonetic,
+                etymology: etymology,
               ),
           withReferenceMapper:
               (p0) =>

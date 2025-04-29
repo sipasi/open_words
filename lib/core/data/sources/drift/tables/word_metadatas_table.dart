@@ -7,8 +7,7 @@ class WordMetadatas extends Table {
 
   TextColumn get word => text()();
 
-  TextColumn get origin => text()();
-  TextColumn get phonetic => text()();
+  TextColumn get etymology => text()();
 }
 
 @DataClassName('DriftPhonetic')
