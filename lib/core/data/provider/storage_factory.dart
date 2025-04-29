@@ -3,6 +3,7 @@ import 'package:open_words/core/data/repository/folder_repository.dart';
 import 'package:open_words/core/data/repository/word_group_repository.dart';
 import 'package:open_words/core/data/repository/word_metadata_repository.dart';
 import 'package:open_words/core/data/repository/word_repository.dart';
+import 'package:open_words/core/data/repository/word_web_lookup_repository.dart';
 import 'package:open_words/core/data/sources/app_database.dart';
 import 'package:open_words/core/data/sources/drift/app_drift_database.dart';
 
@@ -12,6 +13,7 @@ class StorageSet {
   final WordGroupRepository groupRepository;
   final WordRepository wordRepository;
   final WordMetadataRepository wordMetadataRepository;
+  final WordWebLookupRepository webLookupRepository;
   final ExplorerRepository explorerRepository;
 
   StorageSet({
@@ -20,6 +22,7 @@ class StorageSet {
     required this.groupRepository,
     required this.wordRepository,
     required this.wordMetadataRepository,
+    required this.webLookupRepository,
     required this.explorerRepository,
   });
 }
@@ -37,6 +40,7 @@ class StorageFactory {
       groupRepository: groups,
       wordRepository: WordRepositoryImpl(database),
       wordMetadataRepository: WordMetadataRepositoryImpl(database),
+      webLookupRepository: WordWebLookupRepositoryImpl(database),
       explorerRepository: ExplorerRepositoryImpl(database, groups, folders),
     );
   }
