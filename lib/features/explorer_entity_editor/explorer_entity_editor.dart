@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/repository/folder_repository.dart';
 import 'package:open_words/core/data/repository/word_group_repository.dart';
@@ -36,17 +37,14 @@ class ExplorerEntityEditor extends StatefulWidget {
   static Future show({
     required BuildContext context,
     required Id parentFolder,
-    required LanguageInfoService languageService,
-    required FolderRepository folderRepository,
-    required WordGroupRepository groupRepository,
     ExplorerEntityUnion? entityUnion,
   }) {
     return context.pushSmoothSheet((context) {
       return ExplorerEntityEditor(
-        languageService: languageService,
         parentFolder: parentFolder,
-        folderRepository: folderRepository,
-        groupRepository: groupRepository,
+        languageService: GetIt.I.get(),
+        folderRepository: GetIt.I.get(),
+        groupRepository: GetIt.I.get(),
 
         entityUnion: entityUnion,
       );
