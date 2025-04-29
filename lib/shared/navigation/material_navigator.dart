@@ -1,16 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/core/result/result.dart';
-import 'package:open_words/shared/navigation/material_bloc_navigator.dart';
+import 'package:smooth_sheets/smooth_sheets.dart';
+
+part 'material_bloc_navigator.dart';
 
 sealed class MaterialNavigator {
   static AsyncResult<T> push<T extends Object?>(
     BuildContext context,
     WidgetBuilder builder,
   ) async {
-    final result = await Navigator.push<Result<T>?>(
+    final result = await Navigator.push(
       context,
       MaterialPageRoute(builder: builder),
+    );
+
+    if (result is! Result<T>) {
+      return Result.empty();
+    }
+
+    return result;
+  }
+
+  static AsyncResult<T> pushSmoothSheet<T>(
+    BuildContext context,
+    WidgetBuilder builder,
+  ) async {
+    final result = await Navigator.push(
+      context,
+      ModalSheetRoute(
+        swipeDismissible: true,
+        viewportPadding: EdgeInsets.only(
+          // Add a top padding to avoid the status bar.
+          top: MediaQuery.viewPaddingOf(context).top,
+        ),
+        builder: builder,
+      ),
     );
 
     if (result is! Result<T>) {
@@ -26,8 +51,12 @@ sealed class MaterialNavigator {
     }
   }
 
-  static void popWith<T>(BuildContext context, T value) {
+  static void popSuccess<T>(BuildContext context, T value) {
     Navigator.pop(context, Result.success(value));
+  }
+
+  static void popWith<T>(BuildContext context, Result<T> value) {
+    Navigator.pop(context, value);
   }
 
   static Future<Result> popAndPush<T extends Object?>(
@@ -41,26 +70,27 @@ sealed class MaterialNavigator {
 }
 
 extension MaterialNavigatorExtension on BuildContext {
-  Future<Result> push<T extends Object?>(WidgetBuilder builder) {
+  AsyncResult<T> push<T extends Object?>(WidgetBuilder builder) {
     return MaterialNavigator.push(this, builder);
   }
 
-  Future<Result> pushBlocValue<T extends Object?, TBloc extends BlocBase>(
-    TBloc bloc,
-    WidgetBuilder builder,
-  ) {
-    return MaterialBlocNavigator.pushBlocValue(this, bloc, builder);
+  AsyncResult<T> pushSmoothSheet<T extends Object?>(WidgetBuilder builder) {
+    return MaterialNavigator.pushSmoothSheet(this, builder);
   }
 
   void pop<T>({int times = 1}) {
     MaterialNavigator.pop(this, times: times);
   }
 
-  void popWith<T>(T value) {
-    MaterialNavigator.popWith(this, Result.success(value));
+  void popSuccess<T>(T value) {
+    MaterialNavigator.popSuccess(this, Result.success(value));
   }
 
-  Future<Result> popAndPush<T extends Object?>(WidgetBuilder builder) {
+  void popWith<T>(Result<T> value) {
+    MaterialNavigator.popWith(this, value);
+  }
+
+  AsyncResult<T> popAndPush<T extends Object?>(WidgetBuilder builder) {
     pop();
 
     return push(builder);
