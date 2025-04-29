@@ -15,6 +15,8 @@ sealed class WordRepository {
   });
 
   Future createAll({required Id groupId, required List<WordDraft> drafts});
+
+  Future delete(Id id);
 }
 
 class WordRepositoryImpl extends WordRepository {
@@ -70,5 +72,16 @@ class WordRepositoryImpl extends WordRepository {
         );
       }),
     );
+  }
+
+  @override
+  Future delete(Id id) {
+    if (id.isEmpty) {
+      return Future.value();
+    }
+
+    return database.managers.words
+        .filter((f) => f.id.equals(id.valueOrThrow()))
+        .delete();
   }
 }
