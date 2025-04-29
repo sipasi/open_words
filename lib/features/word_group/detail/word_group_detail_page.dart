@@ -4,7 +4,7 @@ import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
 import 'package:open_words/features/word_group/detail/cubit/word_group_detail_cubit.dart';
-import 'package:open_words/features/word_group/detail/widgets/word_grid_view.dart';
+import 'package:open_words/features/word_group/detail/widgets/word_group_detail_body.dart';
 import 'package:open_words/features/word_group/detail/widgets/word_group_detail_fab.dart';
 import 'package:open_words/features/word_group/detail/widgets/word_group_title.dart';
 
@@ -34,7 +34,7 @@ class WordGroupDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: WordGroupTitle()),
-      body: WordGridView(),
+      body: WordGroupDetailBody(),
       floatingActionButtonLocation: ExpandableFab.location,
       floatingActionButton: WordGroupDetailFab(),
     );

@@ -48,10 +48,11 @@ class WordGroupDetailFab extends StatelessWidget {
 
     final bloc = context.read<WordGroupDetailCubit>();
 
-    await context.pushBlocValue(
-      bloc,
+    await context.push(
       (context) => WordListCreatePage(group: bloc.state.group),
     );
+
+    await bloc.init();
   }
 
   Future _onUpdateMetadata(BuildContext context) async {
