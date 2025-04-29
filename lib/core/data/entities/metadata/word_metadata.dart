@@ -6,9 +6,7 @@ import 'package:open_words/core/data/entities/metadata/phonetic.dart';
 class WordMetadata extends Entity {
   final String word;
 
-  final String origin;
-
-  final String phonetic;
+  final String etymology;
 
   final List<Phonetic> phonetics;
 
@@ -17,8 +15,7 @@ class WordMetadata extends Entity {
   const WordMetadata({
     required super.id,
     required this.word,
-    required this.origin,
-    required this.phonetic,
+    required this.etymology,
     required this.phonetics,
     required this.meanings,
   });
@@ -26,8 +23,7 @@ class WordMetadata extends Entity {
     : this(
         id: const Id.empty(),
         word: '',
-        origin: '',
-        phonetic: '',
+        etymology: '',
         phonetics: const [],
         meanings: const [],
       );

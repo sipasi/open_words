@@ -13,4 +13,13 @@ class Phonetic extends Entity {
     required this.value,
     required this.audio,
   });
+
+  Phonetic copyWith({Id? id, Id? metadataId, String? value, String? audio}) {
+    return Phonetic(
+      id: id ?? this.id,
+      metadataId: metadataId ?? this.metadataId,
+      value: value ?? this.value,
+      audio: audio ?? this.audio,
+    );
+  }
 }

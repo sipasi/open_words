@@ -13,4 +13,28 @@ class Definition extends Entity {
     required this.value,
     required this.example,
   });
+
+  Definition copyWith({Id? id, Id? meaningId, String? value, String? example}) {
+    return Definition(
+      id: id ?? this.id,
+      meaningId: meaningId ?? this.meaningId,
+      value: value ?? this.value,
+      example: example ?? this.example,
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is Definition &&
+        other.id == id &&
+        other.meaningId == meaningId &&
+        other.value == value &&
+        other.example == example;
+  }
+
+  @override
+  int get hashCode =>
+      id.hashCode ^ meaningId.hashCode ^ value.hashCode ^ example.hashCode;
 }
