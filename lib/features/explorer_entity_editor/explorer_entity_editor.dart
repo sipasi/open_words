@@ -13,8 +13,8 @@ import 'package:open_words/shared/bottom_sheet/pop_scope_bottom_sheet.dart';
 import 'package:open_words/shared/input_fields/text_edit_controller.dart';
 import 'package:open_words/shared/input_fields/text_edit_field.dart';
 import 'package:open_words/shared/modal/folder_list_modal.dart';
+import 'package:open_words/shared/navigation/material_navigator.dart';
 import 'package:open_words/shared/tiles/language_selector_tile.dart';
-import 'package:smooth_sheets/smooth_sheets.dart';
 
 class ExplorerEntityEditor extends StatefulWidget {
   final Id parentFolder;
@@ -41,36 +41,16 @@ class ExplorerEntityEditor extends StatefulWidget {
     required WordGroupRepository groupRepository,
     ExplorerEntityUnion? entityUnion,
   }) {
-    return _pushModalSheetRoute(
-      context: context,
-      builder: (context) {
-        return ExplorerEntityEditor(
-          languageService: languageService,
-          parentFolder: parentFolder,
-          folderRepository: folderRepository,
-          groupRepository: groupRepository,
+    return context.pushSmoothSheet((context) {
+      return ExplorerEntityEditor(
+        languageService: languageService,
+        parentFolder: parentFolder,
+        folderRepository: folderRepository,
+        groupRepository: groupRepository,
 
-          entityUnion: entityUnion,
-        );
-      },
-    );
-  }
-
-  static Future _pushModalSheetRoute({
-    required BuildContext context,
-    required WidgetBuilder builder,
-  }) {
-    return Navigator.push(
-      context,
-      ModalSheetRoute(
-        swipeDismissible: true,
-        viewportPadding: EdgeInsets.only(
-          // Add a top padding to avoid the status bar.
-          top: MediaQuery.viewPaddingOf(context).top,
-        ),
-        builder: builder,
-      ),
-    );
+        entityUnion: entityUnion,
+      );
+    });
   }
 
   @override
