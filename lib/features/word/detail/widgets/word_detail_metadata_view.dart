@@ -18,7 +18,7 @@ class WordDetailMetadataView extends StatelessWidget {
     if (loadStatus.isLoading) {
       return WordMetadataLoadingView();
     }
-    if (loadStatus.isFailure) {
+    if (loadStatus.isLookupBefore || loadStatus.isFailure) {
       return MetadataNotFoundView();
     }
 

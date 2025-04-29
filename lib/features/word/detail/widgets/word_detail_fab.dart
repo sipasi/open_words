@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:open_words/core/result/result.dart';
 import 'package:open_words/features/word/detail/cubit/word_detail_page_cubit.dart';
 import 'package:open_words/features/word/edit/word_edit_page.dart';
 import 'package:open_words/shared/fab/expandable_fab_default.dart';
@@ -44,8 +45,7 @@ class WordDetailFab extends StatelessWidget {
 
     _toggle();
 
-    context.pushBlocValue(
-      cubit,
+    context.push(
       (context) => WordEditPage(
         id: cubit.wordId,
         origin: origin,
@@ -53,9 +53,17 @@ class WordDetailFab extends StatelessWidget {
         metadata: metadata,
       ),
     );
+
+    cubit.refresh();
   }
 
-  void _onDelete(BuildContext context) => _toggle();
+  void _onDelete(BuildContext context) {
+    _toggle();
+
+    final cubit = context.read<WordDetailPageCubit>();
+
+    context.popWith(CrudResult.deleted(cubit.wordId));
+  }
 
   void _toggle() => _key.currentState?.toggle();
 }

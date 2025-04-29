@@ -1,10 +1,11 @@
 part of 'word_detail_page_cubit.dart';
 
-enum MetadataLoadStatus { loading, success, failure }
+enum MetadataLoadStatus { loading, success, lookupBefore, failure }
 
 extension MetadataLoadStatusExtension on MetadataLoadStatus {
   bool get isLoading => this == MetadataLoadStatus.loading;
   bool get isSuccess => this == MetadataLoadStatus.success;
+  bool get isLookupBefore => this == MetadataLoadStatus.lookupBefore;
   bool get isFailure => this == MetadataLoadStatus.failure;
 }
 

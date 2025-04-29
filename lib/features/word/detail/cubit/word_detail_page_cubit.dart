@@ -20,22 +20,14 @@ class WordDetailPageCubit extends Cubit<WordDetailPageState> {
        super(WordDetailPageState.initial(group: group, word: word));
 
   Future init() async {
-    emit(state.copyWith(metadataLoadStatus: MetadataLoadStatus.loading));
-
-    WordMetadata? loaded = await metadataService.localOrWeb(state.origin);
-
-    emit(
-      state.copyWith(
-        metadataLoadStatus:
-            loaded == null
-                ? MetadataLoadStatus.failure
-                : MetadataLoadStatus.success,
-        metadata: loaded,
-      ),
-    );
+    return loading();
   }
 
-  Future refresh() async {
+  Future refresh() {
+    return loading();
+  }
+
+  Future loading() async {
     emit(state.copyWith(metadataLoadStatus: MetadataLoadStatus.loading));
 
     WordMetadata? loaded = await metadataService.localOrWeb(state.origin);
