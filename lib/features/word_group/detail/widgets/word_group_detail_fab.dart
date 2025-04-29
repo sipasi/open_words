@@ -4,7 +4,7 @@ import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
 import 'package:open_words/features/word/create_list/word_list_create_page.dart';
 import 'package:open_words/features/word_group/detail/cubit/word_group_detail_cubit.dart';
 import 'package:open_words/features/word_metadata/update/word_metadata_update_page.dart';
-import 'package:open_words/shared/constants/hero_tag_constants.dart';
+import 'package:open_words/shared/fab/expandable_fab_default.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 
 class WordGroupDetailFab extends StatelessWidget {
@@ -14,19 +14,8 @@ class WordGroupDetailFab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpandableFab(
-      key: _key,
-      openButtonBuilder: RotateFloatingActionButtonBuilder(
-        child: const Icon(Icons.menu),
-        fabSize: ExpandableFabSize.regular,
-        heroTag: HeroTagConstants.fabDefaultTag,
-      ),
-      overlayStyle: ExpandableFabOverlayStyle(
-        // color: context.colorScheme.primary.withValues(alpha: .01),
-        blur: 5,
-      ),
-      type: ExpandableFabType.up,
-      distance: 80,
+    return ExpandableFabDefault.up(
+      fabKey: _key,
       children: [
         FloatingActionButton.extended(
           heroTag: null,
