@@ -13,7 +13,7 @@ class ExplorerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<ExplorerBloc>().state;
 
-    if (state.isEmpty) {
+    if (state.isEmpty && state.loadStatus.isLoaded) {
       return AddFirstFolderOrGroupCard();
     }
 

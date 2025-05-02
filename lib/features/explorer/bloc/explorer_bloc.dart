@@ -21,6 +21,8 @@ class ExplorerBloc extends Bloc<ExplorerEvent, ExplorerState> {
     required this.folderRepository,
   }) : super(ExplorerState.initial()) {
     on<ExplorerStarted>((event, emit) async {
+      emit(state.copyWith(loadStatus: ExplorerLoadStatus.loading));
+
       final data = await explorerRepository.allByFolder(const Id.empty());
 
       emit(
@@ -28,10 +30,13 @@ class ExplorerBloc extends Bloc<ExplorerEvent, ExplorerState> {
           exploredFolder: () => null,
           folders: data.folders,
           groups: data.groups,
+          loadStatus: ExplorerLoadStatus.loaded,
         ),
       );
     });
     on<ExplorerNavigateRequested>((event, emit) async {
+      emit(state.copyWith(loadStatus: ExplorerLoadStatus.loading));
+
       final data = await explorerRepository.allByFolder(event.folder.id);
 
       emit(
@@ -39,10 +44,13 @@ class ExplorerBloc extends Bloc<ExplorerEvent, ExplorerState> {
           exploredFolder: () => event.folder,
           folders: data.folders,
           groups: data.groups,
+          loadStatus: ExplorerLoadStatus.loaded,
         ),
       );
     });
     on<ExplorerNavigateBackRequested>((event, emit) async {
+      emit(state.copyWith(loadStatus: ExplorerLoadStatus.loading));
+
       final exploredBefore = state.exploredFolder;
 
       if (exploredBefore == null) {
@@ -57,17 +65,22 @@ class ExplorerBloc extends Bloc<ExplorerEvent, ExplorerState> {
         exploredBefore.parentId,
       );
 
-      final exploredNow = await folderRepository.oneById(exploredBefore.parentId);
+      final exploredNow = await folderRepository.oneById(
+        exploredBefore.parentId,
+      );
 
       emit(
         state.copyWith(
           exploredFolder: () => exploredNow,
           folders: data.folders,
           groups: data.groups,
+          loadStatus: ExplorerLoadStatus.loaded,
         ),
       );
     });
     on<ExplorerRefreshRequested>((event, emit) async {
+      emit(state.copyWith(loadStatus: ExplorerLoadStatus.loading));
+
       final data = await explorerRepository.allByFolder(state.exploredId);
 
       emit(
@@ -75,6 +88,7 @@ class ExplorerBloc extends Bloc<ExplorerEvent, ExplorerState> {
           exploredFolder: () => state.exploredFolder,
           folders: data.folders,
           groups: data.groups,
+          loadStatus: ExplorerLoadStatus.loaded,
         ),
       );
     });
