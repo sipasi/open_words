@@ -22,6 +22,20 @@ sealed class MaterialNavigator {
     return result;
   }
 
+  static AsyncResult<T> pushDelayed<T extends Object?>({
+    required BuildContext context,
+    required WidgetBuilder builder,
+    required Duration duration,
+  }) async {
+    await Future.delayed(duration);
+
+    if (!context.mounted) {
+      return Result.empty();
+    }
+
+    return push(context, builder);
+  }
+
   static AsyncResult<T> pushSmoothSheet<T>(
     BuildContext context,
     WidgetBuilder builder,
@@ -72,6 +86,17 @@ sealed class MaterialNavigator {
 extension MaterialNavigatorExtension on BuildContext {
   AsyncResult<T> push<T extends Object?>(WidgetBuilder builder) {
     return MaterialNavigator.push(this, builder);
+  }
+
+  AsyncResult<T> pushDelayed<T extends Object?>(
+    WidgetBuilder builder, {
+    required Duration duration,
+  }) {
+    return MaterialNavigator.pushDelayed(
+      context: this,
+      builder: builder,
+      duration: duration,
+    );
   }
 
   AsyncResult<T> pushSmoothSheet<T extends Object?>(WidgetBuilder builder) {
