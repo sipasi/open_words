@@ -47,6 +47,8 @@ class MetadataNotFoundView extends StatelessWidget {
                   metadata: metadata,
                 ),
               );
+
+              cubit.refresh();
             },
           ),
         ),
