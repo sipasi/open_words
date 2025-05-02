@@ -23,7 +23,7 @@ final class VibrationServiceImpl extends VibrationService {
   @override
   Future tap() async {
     if (await canVibrate()) {
-      await Vibration.vibrate(duration: 100, amplitude: 25);
+      await lightImpact(VibrationDuration.short);
     }
   }
 
