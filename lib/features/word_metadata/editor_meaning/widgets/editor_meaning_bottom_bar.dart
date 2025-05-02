@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_words/core/data/entities/metadata/meaning.dart';
 import 'package:open_words/core/result/result.dart';
 import 'package:open_words/features/word_metadata/editor_definition/editor_definition_bottom_sheet.dart';
 import 'package:open_words/features/word_metadata/editor_meaning/cubit/editor_meaning_cubit.dart';
+import 'package:open_words/features/word_metadata/editor_meaning/utils/editor_meaning_mapper.dart';
 import 'package:open_words/shared/bottom_sheet/editor/editor_bottom_bar.dart';
-import 'package:open_words/shared/builders/value_builder_extension.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 
 class EditorMeaningBottomBar extends StatelessWidget {
@@ -57,22 +56,7 @@ class EditorMeaningBottomBar extends StatelessWidget {
       return;
     }
 
-    final state = bloc.state;
-
-    final entity = Meaning(
-      id: bloc.meaningId,
-      metadataId: bloc.metadataId,
-      partOfSpeech: state.partOfSpeech,
-      definitions: state.definitions,
-      synonyms: state.synonyms.isNotEmptyBuilderOr(
-        builder: (value) => value.split(',').map((e) => e.trim()).toList(),
-        or: () => [],
-      ),
-      antonyms: state.antonyms.isNotEmptyBuilderOr(
-        builder: (value) => value.split(',').map((e) => e.trim()).toList(),
-        or: () => [],
-      ),
-    );
+    final entity = EditorMeaningMapper.fromCubit(bloc);
 
     final result =
         bloc.isCreate
