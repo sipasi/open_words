@@ -151,7 +151,9 @@ extension _Queries on AppDriftDatabase {
     final query =
         'SELECT * '
         'FROM meanings '
-        'WHERE metadata_id = ?;';
+        'WHERE metadata_id = ? '
+        'ORDER BY part_of_speech'
+        ;
 
     return customSelect(query, variables: [Variable.withInt(metadataId)]).get();
   }
