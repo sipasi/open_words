@@ -14,7 +14,6 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.only(top: 10.0),
       children: [
         ThankYouTile(),
         const Divider(),
