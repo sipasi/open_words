@@ -7,6 +7,7 @@ import 'package:open_words/features/word/detail/word_detail_page.dart';
 import 'package:open_words/features/word_group/detail/cubit/word_group_detail_cubit.dart';
 import 'package:open_words/shared/constants/list_padding_constans.dart';
 import 'package:open_words/shared/layout/adaptive_grid_view.dart';
+import 'package:open_words/shared/layout/extensions/list_padding_extension.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 import 'package:open_words/shared/tiles/word_tile.dart';
 
@@ -21,8 +22,8 @@ class WordGridView extends StatelessWidget {
       builder: (context) {
         return AdaptiveGridView(
           maxCrossAxisExtent: 300,
-          padding: const EdgeInsets.only(
-            bottom: ListPaddingConstans.bottomForFab,
+          padding: context.safeListViewPadding(
+            extraBottom: ListPaddingConstans.bottomForFab,
           ),
           itemCount: words.length,
 

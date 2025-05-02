@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
+import 'package:open_words/features/game/list/game_list_page.dart';
 import 'package:open_words/features/word/create_list/word_list_create_page.dart';
 import 'package:open_words/features/word_group/detail/cubit/word_group_detail_cubit.dart';
 import 'package:open_words/features/word_metadata/update/word_metadata_update_page.dart';
@@ -41,6 +42,15 @@ class WordGroupDetailFab extends StatelessWidget {
 
   void _onPlayGames(BuildContext context) {
     _key.currentState?.toggle();
+
+    final bloc = context.read<WordGroupDetailCubit>();
+
+    context.push(
+      (context) => GameListPage(
+        groupName: bloc.state.group.name,
+        words: bloc.state.words,
+      ),
+    );
   }
 
   Future _onWordAdd(BuildContext context) async {
