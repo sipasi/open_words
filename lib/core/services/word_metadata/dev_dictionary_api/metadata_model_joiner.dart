@@ -2,6 +2,16 @@ import 'package:open_words/core/services/word_metadata/dev_dictionary_api/models
 
 sealed class MetadataModelJoiner {
   static WordMetadataModel? join(List<WordMetadataModel> list) {
+    final joined = _join(list);
+
+    if (joined == null) {
+      return null;
+    }
+
+    return joined;
+  }
+
+  static WordMetadataModel? _join(List<WordMetadataModel> list) {
     if (list.isEmpty) {
       return null;
     }
@@ -12,11 +22,8 @@ sealed class MetadataModelJoiner {
 
     return WordMetadataModel(
       word: list[0].word,
-      origin: list
-          .map((e) => e.origin)
-          .firstWhere((element) => element != null, orElse: () => null),
-      phonetic: list
-          .map((e) => e.phonetic)
+      etymology: list
+          .map((e) => e.etymology)
           .firstWhere((element) => element != null, orElse: () => null),
       phonetics: list.expand((e) => e.phonetics).toList(),
       meanings: list.expand((e) => e.meanings).toList(),

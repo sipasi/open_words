@@ -3,30 +3,27 @@ import 'package:open_words/core/services/word_metadata/dev_dictionary_api/models
 
 class WordMetadataModel {
   final String? word;
-  final String? origin;
-  final String? phonetic;
+  final String? etymology;
   final List<PhoneticModel> phonetics;
   final List<MeaningModel> meanings;
 
   WordMetadataModel({
     required this.word,
-    required this.phonetic,
     required this.phonetics,
-    required this.origin,
+    required this.etymology,
     required this.meanings,
   });
 
   factory WordMetadataModel.fromJson(Map<String, dynamic> json) {
     return WordMetadataModel(
       word: json["word"],
-      phonetic: json["phonetic"],
       phonetics:
           json["phonetics"] == null
               ? const []
               : List<PhoneticModel>.from(
                 json["phonetics"]!.map((x) => PhoneticModel.fromJson(x)),
               ),
-      origin: json["origin"],
+      etymology: json["origin"],
       meanings:
           json["meanings"] == null
               ? const []
@@ -38,9 +35,8 @@ class WordMetadataModel {
 
   Map<String, dynamic> toJson() => {
     "word": word,
-    "phonetic": phonetic,
     "phonetics": phonetics.map((x) => x.toJson()).toList(),
-    "origin": origin,
+    "origin": etymology,
     "meanings": meanings.map((x) => x.toJson()).toList(),
   };
 }

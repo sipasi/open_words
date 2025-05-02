@@ -1,6 +1,7 @@
 import 'package:open_words/core/data/draft/metadata/word_metadata_draft.dart';
 import 'package:open_words/core/services/word_metadata/dev_dictionary_api/mappers/metadata_model_mapper.dart';
 import 'package:open_words/core/services/word_metadata/dev_dictionary_api/metadata_model_joiner.dart';
+import 'package:open_words/core/services/word_metadata/dev_dictionary_api/metadata_model_merger.dart';
 import 'package:open_words/core/services/word_metadata/dev_dictionary_api/models/word_metadata_model.dart';
 import 'package:open_words/core/services/word_metadata/metadata_parcer.dart';
 
@@ -13,7 +14,7 @@ class DevDictionaryApiParcer extends MetadataParcer {
       _ => null,
     };
 
-    return MetadataModelMapper.map(result);
+    return result.merge().map();
   }
 
   WordMetadataModel? _parceList(List<dynamic> list) {
