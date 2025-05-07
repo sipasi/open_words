@@ -1,0 +1,1 @@
+enum PairsMatchType { wordToWord, audioToWord }
