@@ -131,7 +131,15 @@ class GameListBodyView extends StatelessWidget {
           description: 'Create words from given parts or letters',
           words: words.length,
           wordsNeed: 5,
-          // route: (builder) => WordConstructorPage.constructTranslations(group: group),
+          route: (builder) {
+            return WordConstructorPage(
+              sessionBuilder:
+                  WordConstructorSessionBuilder.translationQuestionSide(
+                    words: words,
+                    quizSize: getQuizSize(bloc: bloc, allowedMin: 5),
+                  ),
+            );
+          },
         ),
       ],
     );

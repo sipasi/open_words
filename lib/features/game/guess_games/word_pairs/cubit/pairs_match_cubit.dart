@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_words/features/game/guess_games/guess_game_status.dart';
 import 'package:open_words/features/game/guess_games/word_pairs/models/matched_pairs_set.dart';
-import 'package:open_words/features/game/guess_games/word_pairs/models/pairs_match_game_status.dart';
 import 'package:open_words/features/game/guess_games/word_pairs/models/pairs_match_selection.dart';
 import 'package:open_words/features/game/guess_games/word_pairs/models/pairs_match_session.dart';
 import 'package:open_words/features/game/guess_games/word_pairs/models/pairs_match_type.dart';
@@ -132,10 +132,10 @@ class PairsMatchCubit extends Cubit<PairsMatchState> {
       return;
     }
 
-    emit(state.copyWith(session: state.session.updateWithNextQuiz()));
+    emit(state.copyWith(session: state.session.copyWithNextQuiz()));
 
     if (state.session.allQuizFinished) {
-      emit(state.copyWith(gameStatus: PairsMatchGameStatus.finished));
+      emit(state.copyWith(gameStatus: GuessGameStatus.gameEnd));
       return;
     }
 

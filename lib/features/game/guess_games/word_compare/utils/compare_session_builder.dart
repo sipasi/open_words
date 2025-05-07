@@ -49,10 +49,10 @@ final class CompareSessionBuilder {
 
       GetIt.I.get<AppLogger>().f(error);
 
-      return CompareSession.initial();
+      return CompareSession();
     }
 
-    final session = CompareSession.start(
+    final session = CompareSession(
       repository: createRepository(
         questionsRange: words.getRandom(count: quizSize.preferredSize),
         answersRange: words,

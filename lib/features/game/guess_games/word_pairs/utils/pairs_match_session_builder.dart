@@ -38,10 +38,10 @@ final class PairsMatchSessionBuilder {
 
       GetIt.I.get<AppLogger>().f(error);
 
-      return const PairsMatchSession.initial();
+      return const PairsMatchSession();
     }
 
-    final session = PairsMatchSession.start(
+    final session = PairsMatchSession(
       repository: createRepository(
         words: words,
         questionSide: questionSide,

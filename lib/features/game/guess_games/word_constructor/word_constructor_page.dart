@@ -29,7 +29,7 @@ class WordConstructorPage extends StatelessWidget {
   }
 
   void _listener(BuildContext context, WordConstructorState state) async {
-    if (state.gameStatus.isFinished) {
+    if (state.gameStatus.isGameEnd) {
       final bloc = context.read<WordConstructorCubit>();
 
       final result = await context.pushDelayed<QuizEndResult>(

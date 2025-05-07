@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_words/features/game/guess_games/word_constructor/models/word_constructor_game_status.dart';
+import 'package:open_words/features/game/guess_games/guess_game_status.dart';
 import 'package:open_words/features/game/guess_games/word_constructor/models/word_constructor_session.dart';
 import 'package:open_words/features/game/guess_games/word_constructor/models/word_part.dart';
 import 'package:open_words/features/game/guess_games/word_constructor/models/word_part_constructor.dart';
@@ -57,7 +57,7 @@ class WordConstructorCubit extends Cubit<WordConstructorState> {
     );
 
     if (state.session.allQuizFinished) {
-      emit(state.copyWith(gameStatus: WordConstructorGameStatus.finished));
+      emit(state.copyWith(gameStatus: GuessGameStatus.gameEnd));
 
       return;
     }

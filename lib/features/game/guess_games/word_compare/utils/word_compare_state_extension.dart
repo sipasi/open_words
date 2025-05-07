@@ -10,7 +10,7 @@ extension WordCompareStateExtension on WordCompareState {
     required QuizScoreUpdater scoreUpdater,
   }) {
     return copyWith(
-      session: session.updateWithNextQuiz(),
+      session: session.copyWithNextQuiz(),
       score: scoreUpdater.copyWithAnswer(score, isCorrect),
       answerHistory: answerHistory.add(
         CompareAnswerRecord(

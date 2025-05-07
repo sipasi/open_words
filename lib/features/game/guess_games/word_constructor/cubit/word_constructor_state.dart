@@ -9,7 +9,7 @@ class WordConstructorState {
 
   final AnswerHistory answerHistory;
 
-  final WordConstructorGameStatus gameStatus;
+  final GuessGameStatus gameStatus;
 
   bool get answerConstructed => answerConstructor.constructed;
   bool get answerNotConstructed => !answerConstructed;
@@ -24,24 +24,24 @@ class WordConstructorState {
 
   WordConstructorState.initial()
     : score = const QuizScore.initial(),
-      session = const WordConstructorSession.initial(),
+      session = const WordConstructorSession(),
       answerConstructor = const WordPartConstructor.empty(),
       answerHistory = const AnswerHistory.empty(),
-      gameStatus = WordConstructorGameStatus.notStarted;
+      gameStatus = GuessGameStatus.notStarted;
   WordConstructorState.started(this.session)
     : score = QuizScore.start(totalQuestions: session.quizCount),
       answerConstructor = WordPartConstructor.withCorrectCount(
         session.currentQuiz.answerParts.length,
       ),
       answerHistory = const AnswerHistory.empty(),
-      gameStatus = WordConstructorGameStatus.playing;
+      gameStatus = GuessGameStatus.playing;
 
   WordConstructorState copyWith({
     QuizScore? score,
     WordConstructorSession? session,
     WordPartConstructor? answerConstructor,
     AnswerHistory? answerHistory,
-    WordConstructorGameStatus? gameStatus,
+    GuessGameStatus? gameStatus,
   }) {
     return WordConstructorState(
       score: score ?? this.score,

@@ -29,10 +29,10 @@ class WordConstructorSessionBuilder {
 
       GetIt.I.get<AppLogger>().f(error);
 
-      return const WordConstructorSession.initial();
+      return const WordConstructorSession();
     }
 
-    final session = WordConstructorSession.start(
+    final session = WordConstructorSession(
       repository: createRepository(
         words: words,
         questionSide: questionSide,

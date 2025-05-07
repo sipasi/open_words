@@ -39,7 +39,7 @@ class PairsMatchPage extends StatelessWidget {
   }
 
   void _listener(BuildContext context, PairsMatchState state) async {
-    if (state.gameStatus.isFinished) {
+    if (state.gameStatus.isGameEnd) {
       final bloc = context.read<PairsMatchCubit>();
 
       final result = await context.pushDelayed<QuizEndResult>(

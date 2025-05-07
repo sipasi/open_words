@@ -4,7 +4,7 @@ class WordCompareState {
   final QuizScore score;
   final CompareSession session;
   final AnswerHistory answerHistory;
-  final CompareGameStatus gameStatus;
+  final GuessGameStatus gameStatus;
 
   WordCompareState({
     required this.score,
@@ -15,15 +15,15 @@ class WordCompareState {
 
   WordCompareState.initial()
     : score = const QuizScore.initial(),
-      session = const CompareSession.initial(),
+      session = const CompareSession(),
       answerHistory = AnswerHistory.empty(),
-      gameStatus = CompareGameStatus.notStarted;
+      gameStatus = GuessGameStatus.notStarted;
 
   WordCompareState copyWith({
     QuizScore? score,
     CompareSession? session,
     AnswerHistory? answerHistory,
-    CompareGameStatus? gameStatus,
+    GuessGameStatus? gameStatus,
   }) {
     return WordCompareState(
       score: score ?? this.score,

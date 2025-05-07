@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/core/data/entities/word/word.dart';
-import 'package:open_words/features/game/guess_games/word_compare/models/compare_game_status.dart';
+import 'package:open_words/features/game/guess_games/guess_game_status.dart';
 import 'package:open_words/features/game/guess_games/word_compare/models/compare_session.dart';
 import 'package:open_words/features/game/guess_games/word_compare/models/word_compare_answer_event.dart';
 import 'package:open_words/features/game/guess_games/word_compare/models/word_compare_game_event.dart';
@@ -40,13 +40,13 @@ class WordCompareBloc extends Bloc<WordCompareEvent, WordCompareState> {
         state.copyWith(
           score: score,
           session: session,
-          gameStatus: CompareGameStatus.playing,
+          gameStatus: GuessGameStatus.playing,
         ),
       );
     });
 
     on<WordCompareAnswerRequested>((event, emit) {
-      if (state.gameStatus.isFinished) {
+      if (state.gameStatus.isGameEnd) {
         return;
       }
 
@@ -66,7 +66,7 @@ class WordCompareBloc extends Bloc<WordCompareEvent, WordCompareState> {
       );
 
       if (state.session.allQuizFinished) {
-        emit(state.copyWith(gameStatus: CompareGameStatus.finished));
+        emit(state.copyWith(gameStatus: GuessGameStatus.gameEnd));
 
         return;
       }

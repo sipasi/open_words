@@ -31,7 +31,7 @@ class WordCompareGamePage extends StatelessWidget {
   }
 
   void _listener(BuildContext context, WordCompareState state) async {
-    if (state.gameStatus.isFinished) {
+    if (state.gameStatus.isGameEnd) {
       final bloc = context.read<WordCompareBloc>();
 
       final result = await context.pushDelayed<QuizEndResult>(

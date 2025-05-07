@@ -10,7 +10,7 @@ class PairsMatchState {
 
   final AnswerHistory answerHistory;
 
-  final PairsMatchGameStatus gameStatus;
+  final GuessGameStatus gameStatus;
 
   final PairsMatchType matchType;
 
@@ -26,11 +26,11 @@ class PairsMatchState {
 
   PairsMatchState.initial()
     : score = const QuizScore.initial(),
-      session = const PairsMatchSession.initial(),
+      session = const PairsMatchSession(),
       selection = const PairsMatchSelection.empty(),
       matchedPairs = const MatchedPairsSet.empty(),
       answerHistory = const AnswerHistory.empty(),
-      gameStatus = PairsMatchGameStatus.notStarted,
+      gameStatus = GuessGameStatus.notStarted,
       matchType = PairsMatchType.wordToWord;
 
   PairsMatchState.started(this.session, this.matchType)
@@ -38,7 +38,7 @@ class PairsMatchState {
       selection = const PairsMatchSelection.empty(),
       matchedPairs = const MatchedPairsSet.empty(),
       answerHistory = const AnswerHistory.empty(),
-      gameStatus = PairsMatchGameStatus.playing;
+      gameStatus = GuessGameStatus.playing;
 
   PairsMatchState copyWith({
     QuizScore? score,
@@ -46,7 +46,7 @@ class PairsMatchState {
     PairsMatchSelection? selection,
     MatchedPairsSet? matchedPairs,
     AnswerHistory? answerHistory,
-    PairsMatchGameStatus? gameStatus,
+    GuessGameStatus? gameStatus,
     PairsMatchType? matchType,
   }) {
     return PairsMatchState(
