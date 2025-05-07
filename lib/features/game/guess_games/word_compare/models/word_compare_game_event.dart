@@ -1,0 +1,1 @@
+enum WordCompareGameEvent { gameEnd }
