@@ -11,7 +11,7 @@ import 'package:open_words/features/game/guess_games/word_pairs/utils/pairs_matc
 import 'package:open_words/features/game/list/cubit/game_list_cubit.dart';
 import 'package:open_words/features/game/list/widgets/game_list_tile.dart';
 import 'package:open_words/features/game/list/widgets/game_list_tile_section.dart';
-import 'package:open_words/features/game/shared/quiz/quiz_size.dart';
+import 'package:open_words/features/game/shared/quiz/quiz_exports.dart';
 
 class GameListBodyView extends StatelessWidget {
   const GameListBodyView({super.key});
@@ -43,9 +43,10 @@ class GameListBodyView extends StatelessWidget {
           wordsNeed: 8,
           route: (builder) {
             return WordCompareGamePage(
-              sessionBuilder: CompareSessionBuilder.originQuestionSide(
+              sessionBuilder: CompareSessionBuilder(
                 words: words,
                 quizSize: getQuizSize(bloc: bloc, allowedMin: 8),
+                questionSide: QuizQuestionSide.origin,
               ),
             );
           },
@@ -57,9 +58,10 @@ class GameListBodyView extends StatelessWidget {
           wordsNeed: 8,
           route: (builder) {
             return WordCompareGamePage(
-              sessionBuilder: CompareSessionBuilder.translationQuestionSide(
+              sessionBuilder: CompareSessionBuilder(
                 words: words,
                 quizSize: getQuizSize(bloc: bloc, allowedMin: 8),
+                questionSide: QuizQuestionSide.translation,
               ),
             );
           },
@@ -81,9 +83,10 @@ class GameListBodyView extends StatelessWidget {
           wordsNeed: 5,
           route: (builder) {
             return PairsMatchPage.wordPairs(
-              sessionBuilder: PairsMatchSessionBuilder.originQuestionSide(
+              sessionBuilder: PairsMatchSessionBuilder(
                 words: words,
                 quizSize: getQuizSize(bloc: bloc, allowedMin: 5),
+                questionSide: QuizQuestionSide.origin,
               ),
             );
           },
@@ -95,9 +98,10 @@ class GameListBodyView extends StatelessWidget {
           wordsNeed: 5,
           route: (builder) {
             return PairsMatchPage.audioPairs(
-              sessionBuilder: PairsMatchSessionBuilder.originQuestionSide(
+              sessionBuilder: PairsMatchSessionBuilder(
                 words: words,
                 quizSize: getQuizSize(bloc: bloc, allowedMin: 5),
+                questionSide: QuizQuestionSide.translation,
               ),
             );
           },
@@ -119,9 +123,10 @@ class GameListBodyView extends StatelessWidget {
           wordsNeed: 5,
           route: (builder) {
             return WordConstructorPage(
-              sessionBuilder: WordConstructorSessionBuilder.originQuestionSide(
+              sessionBuilder: WordConstructorSessionBuilder(
                 words: words,
                 quizSize: getQuizSize(bloc: bloc, allowedMin: 5),
+                questionSide: QuizQuestionSide.origin,
               ),
             );
           },
@@ -133,11 +138,11 @@ class GameListBodyView extends StatelessWidget {
           wordsNeed: 5,
           route: (builder) {
             return WordConstructorPage(
-              sessionBuilder:
-                  WordConstructorSessionBuilder.translationQuestionSide(
-                    words: words,
-                    quizSize: getQuizSize(bloc: bloc, allowedMin: 5),
-                  ),
+              sessionBuilder: WordConstructorSessionBuilder(
+                words: words,
+                quizSize: getQuizSize(bloc: bloc, allowedMin: 5),
+                questionSide: QuizQuestionSide.translation,
+              ),
             );
           },
         ),
