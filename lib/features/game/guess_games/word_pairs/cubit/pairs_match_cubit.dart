@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_words/features/game/guess_games/guess_game_status.dart';
+import 'package:open_words/features/game/guess_games/shared/guess_game_status.dart';
 import 'package:open_words/features/game/guess_games/word_pairs/models/matched_pairs_set.dart';
 import 'package:open_words/features/game/guess_games/word_pairs/models/pairs_match_selection.dart';
 import 'package:open_words/features/game/guess_games/word_pairs/models/pairs_match_session.dart';
@@ -50,7 +50,7 @@ class PairsMatchCubit extends Cubit<PairsMatchState> {
   }
 
   Future started() async {
-    final session = await sessionBuilder.build();
+    final session = sessionBuilder.build();
 
     emit(PairsMatchState.started(session, matchType));
   }

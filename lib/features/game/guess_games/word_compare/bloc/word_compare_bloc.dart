@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/core/data/entities/word/word.dart';
-import 'package:open_words/features/game/guess_games/guess_game_status.dart';
+import 'package:open_words/features/game/guess_games/shared/guess_game_status.dart';
 import 'package:open_words/features/game/guess_games/word_compare/models/compare_session.dart';
 import 'package:open_words/features/game/guess_games/word_compare/utils/compare_answer_evaluator.dart';
 import 'package:open_words/features/game/guess_games/word_compare/utils/compare_session_builder.dart';
@@ -23,7 +23,7 @@ class WordCompareBloc extends Bloc<WordCompareEvent, WordCompareState> {
     this.scoreUpdater = const QuizScoreUpdater.allowsIncorrectCompletion(),
   }) : super(WordCompareState.initial()) {
     on<WordCompareStarted>((event, emit) async {
-      final session = await sessionBuilder.build();
+      final session = sessionBuilder.build();
       final score = QuizScore.start(totalQuestions: session.quizCount);
 
       emit(

@@ -1,4 +1,4 @@
-import 'package:open_words/features/game/guess_games/guess_game_session.dart';
+import 'package:open_words/features/game/guess_games/shared/guess_game_session.dart';
 import 'package:open_words/features/game/guess_games/word_compare/models/compare_quiz_item.dart';
 import 'package:open_words/features/game/shared/quiz/quiz_position.dart';
 import 'package:open_words/features/game/shared/quiz/quiz_repository.dart';
