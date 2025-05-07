@@ -1,11 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/core/data/entities/word/word.dart';
 import 'package:open_words/features/game/guess_games/guess_game_status.dart';
 import 'package:open_words/features/game/guess_games/word_compare/models/compare_session.dart';
-import 'package:open_words/features/game/guess_games/word_compare/models/word_compare_answer_event.dart';
-import 'package:open_words/features/game/guess_games/word_compare/models/word_compare_game_event.dart';
 import 'package:open_words/features/game/guess_games/word_compare/utils/compare_answer_evaluator.dart';
 import 'package:open_words/features/game/guess_games/word_compare/utils/compare_session_builder.dart';
 import 'package:open_words/features/game/guess_games/word_compare/utils/word_compare_state_extension.dart';
@@ -17,12 +13,6 @@ part 'word_compare_event.dart';
 part 'word_compare_state.dart';
 
 class WordCompareBloc extends Bloc<WordCompareEvent, WordCompareState> {
-  final _answerEvent = StreamController<WordCompareAnswerEvent>.broadcast();
-  final _gameEndEvent = StreamController<WordCompareGameEvent>.broadcast();
-
-  Stream<WordCompareAnswerEvent> get answerEvents => _answerEvent.stream;
-  Stream<WordCompareGameEvent> get gameEvents => _gameEndEvent.stream;
-
   final CompareSessionBuilder sessionBuilder;
   final CompareAnswerEvaluator answerEvaluator;
   final QuizScoreUpdater scoreUpdater;
@@ -55,8 +45,6 @@ class WordCompareBloc extends Bloc<WordCompareEvent, WordCompareState> {
         answer: event.value,
       );
 
-      _answerEvent.add(WordCompareAnswerEvent.from(isCorrect));
-
       emit(
         state.withNextQuiz(
           scoreUpdater: scoreUpdater,
@@ -71,13 +59,5 @@ class WordCompareBloc extends Bloc<WordCompareEvent, WordCompareState> {
         return;
       }
     });
-  }
-
-  @override
-  Future<void> close() async {
-    await _answerEvent.close();
-    await _gameEndEvent.close();
-
-    return super.close();
   }
 }

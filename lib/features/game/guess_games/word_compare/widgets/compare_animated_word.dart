@@ -1,11 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_words/core/services/vibration/vibration_service.dart';
 import 'package:open_words/features/game/guess_games/word_compare/bloc/word_compare_bloc.dart';
-import 'package:open_words/features/game/guess_games/word_compare/models/word_compare_answer_event.dart';
 import 'package:open_words/features/game/shared/animated_word/animated_word_controller.dart';
 import 'package:open_words/features/game/shared/animated_word/animated_word_switcher.dart';
 
@@ -27,8 +24,6 @@ class CompareAnimatedWord extends StatefulWidget {
 
 class _CompareAnimatedWordState extends State<CompareAnimatedWord>
     with TickerProviderStateMixin {
-  late final StreamSubscription<WordCompareAnswerEvent> _answerSubscription;
-
   late final AnimatedWordController controller;
 
   @override
@@ -42,33 +37,38 @@ class _CompareAnimatedWordState extends State<CompareAnimatedWord>
       onCorrect: () => vibration.lightImpact(VibrationDuration.short),
       onIncorrect: () => vibration.lightImpact(VibrationDuration.medium),
     );
-
-    _answerSubscription = context.read<WordCompareBloc>().answerEvents.listen((
-      event,
-    ) {
-      event == WordCompareAnswerEvent.correct
-          ? controller.startCorrect()
-          : controller.startIncorect();
-    });
   }
 
   @override
   void dispose() {
-    _answerSubscription.cancel();
     controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(16),
-      child: AnimatedWordSwitcher(
-        controller: controller,
-        arrivedWord: widget.arrivedWord,
-        previousWord: widget.leavedWord,
-        lastWord: widget.lastWord,
-        alignment: Alignment.center,
+    return BlocListener<WordCompareBloc, WordCompareState>(
+      listenWhen: (previous, current) {
+        return previous.answerHistory != current.answerHistory;
+      },
+      listener: (context, state) {
+        final last = state.answerHistory.lastOrNull;
+
+        if (last == null) {
+          return;
+        }
+
+        last.correct ? controller.startCorrect() : controller.startIncorect();
+      },
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: AnimatedWordSwitcher(
+          controller: controller,
+          arrivedWord: widget.arrivedWord,
+          previousWord: widget.leavedWord,
+          lastWord: widget.lastWord,
+          alignment: Alignment.center,
+        ),
       ),
     );
   }
