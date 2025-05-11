@@ -12,4 +12,10 @@ class FolderPath {
     required this.path,
     required this.name,
   });
+
+  const FolderPath.root()
+    : folderId = const Id.empty(),
+      parentId = const Id.empty(),
+      name = "Root",
+      path = './';
 }
