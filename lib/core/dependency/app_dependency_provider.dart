@@ -2,6 +2,10 @@ import 'package:get_it/get_it.dart';
 import 'package:open_words/core/dependency/app_dependency.dart';
 import 'package:open_words/core/dependency/clipboard_service_dependency.dart';
 import 'package:open_words/core/dependency/directories_dependency.dart';
+import 'package:open_words/core/dependency/file_local_save_service_dependency.dart';
+import 'package:open_words/core/dependency/file_picker_service_dependency.dart';
+import 'package:open_words/core/dependency/file_share_service_dependency.dart';
+import 'package:open_words/core/dependency/file_temporary_service_dependency.dart';
 import 'package:open_words/core/dependency/language_info_service_dependency.dart';
 import 'package:open_words/core/dependency/logger_dependency.dart';
 import 'package:open_words/core/dependency/repository_dependency.dart';
@@ -24,6 +28,10 @@ abstract class AppDependencyProvider {
   static List<AppDependency> _getDependencies() {
     return [
       DirectoriesDependency(),
+      FileLocalSaveServiceDependency(),
+      FileTemporaryServiceDependency(),
+      FileShareServiceDependency(),
+      FilePickerServiceDependency(),
       LoggerDependency(),
       ThemeStorageDependency(),
       RepositoryDependency(),
