@@ -11,6 +11,7 @@ import 'package:open_words/core/data/repository/folder_repository.dart';
 import 'package:open_words/core/data/repository/word_group_repository.dart';
 import 'package:open_words/core/data/repository/word_repository.dart';
 import 'package:open_words/features/explorer/bloc/explorer_bloc.dart';
+import 'package:open_words/features/settings/widgets/settings_tile_button.dart';
 import 'package:open_words/shared/modal/waiting_dialog.dart';
 
 class AddPreinstalledTile extends StatelessWidget {
@@ -18,18 +19,16 @@ class AddPreinstalledTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(Icons.install_desktop),
-      title: OutlinedButton(
-        onPressed: () {
-          WaitingDialog.show(
-            context: context,
-            future: _addPreinstalled(context),
-            title: 'Adding',
-          );
-        },
-        child: Text('Add preinstalled'),
-      ),
+    return SettingsTileButton(
+      title: 'Add preinstalled',
+      icon: Icons.install_desktop,
+      onTap: () {
+        WaitingDialog.show(
+          context: context,
+          future: _addPreinstalled(context),
+          title: 'Adding',
+        );
+      },
     );
   }
 
