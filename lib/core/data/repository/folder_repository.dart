@@ -100,20 +100,26 @@ class FolderRepositoryImpl extends FolderRepository {
   }
 
   @override
-  Future<List<FolderPath>> allPath() {
-    return database.allPath().map(FolderSqlMapper.folderPath).get();
+  Future<List<FolderPath>> allPath() async {
+    final result =
+        await database.allPath().map(FolderSqlMapper.folderPath).get();
+
+    return [const FolderPath.root(), ...result];
   }
 
   @override
-  Future<List<FolderPath>> allMovablePathBy(Id id) {
+  Future<List<FolderPath>> allMovablePathBy(Id id) async {
     if (id.isEmpty) {
       return Future.value([]);
     }
 
-    return database
-        .allMovablePath(id.valueOrThrow())
-        .map(FolderSqlMapper.folderPath)
-        .get();
+    final result =
+        await database
+            .allMovablePath(id.valueOrThrow())
+            .map(FolderSqlMapper.folderPath)
+            .get();
+
+    return [const FolderPath.root(), ...result];
   }
 
   @override
