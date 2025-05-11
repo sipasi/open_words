@@ -6,12 +6,23 @@ final class AppDirectoryProvider {
   final AppDirectory documents;
   final AppDirectory cache;
 
+  final AppDirectory? downloads;
+
   final List<AppDirectory> all;
+
+  AppDirectory get downloadsOrDocuments => downloads ?? documents;
 
   AppDirectoryProvider({
     required this.temporary,
     required this.support,
     required this.documents,
     required this.cache,
-  }) : all = List.unmodifiable([temporary, support, documents, cache]);
+    required this.downloads,
+  }) : all = List.unmodifiable([
+         temporary,
+         support,
+         documents,
+         cache,
+         downloads,
+       ]);
 }

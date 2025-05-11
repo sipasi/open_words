@@ -1,11 +1,11 @@
 import 'dart:io';
 
 final class AppDirectory {
-  final String lable;
+  final String label;
   final String path;
 
-  const AppDirectory({required this.lable, required this.path});
+  const AppDirectory({required this.label, required this.path});
 
-  AppDirectory.fromDirectory(this.lable, Directory directory)
+  AppDirectory.fromDirectory(this.label, Directory directory)
     : path = directory.path;
 }
