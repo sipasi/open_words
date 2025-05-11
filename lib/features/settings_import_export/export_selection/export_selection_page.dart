@@ -12,7 +12,9 @@ class ExportSelectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ExportSelectionCubit(groupRepository: GetIt.I.get())..init(),
+      create: (context) {
+        return ExportSelectionCubit(groupRepository: GetIt.I.get())..init();
+      },
       child: ExportSelectionView(),
     );
   }
