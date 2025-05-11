@@ -31,3 +31,7 @@ final class ExportSelectedPdfChanged extends ExportSelectedEvent {
     this.colorScheme,
   });
 }
+
+final class ExportSelectedShareRequested extends ExportSelectedEvent {}
+
+final class ExportSelectedDownloadRequested extends ExportSelectedEvent {}

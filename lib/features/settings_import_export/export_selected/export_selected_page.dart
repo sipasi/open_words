@@ -8,6 +8,8 @@ import 'package:open_words/features/settings_import_export/export_selected/widge
 import 'package:open_words/features/settings_import_export/export_selected/widgets/export_selected_fab.dart';
 import 'package:open_words/features/settings_import_export/export_selected/widgets/export_selected_name_input.dart';
 import 'package:open_words/features/settings_import_export/export_selected/widgets/extension_properies/extension_properies.dart';
+import 'package:open_words/shared/modal/loading_dialog.dart';
+import 'package:open_words/shared/navigation/material_navigator.dart';
 
 class ExportSelectedPage extends StatelessWidget {
   final List<WordGroup> selected;
@@ -18,11 +20,33 @@ class ExportSelectedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create:
-          (context) =>
-              ExportSelectedBloc(themeStorage: GetIt.I.get())
-                ..add(ExportSelectedStarded(selected)),
-      child: ExportSelectedView(),
+          (context) => ExportSelectedBloc(
+            themeStorage: GetIt.I.get(),
+            shareFileService: GetIt.I.get(),
+            localFileService: GetIt.I.get(),
+            wordRepository: GetIt.I.get(),
+          )..add(ExportSelectedStarded(selected)),
+      child: BlocListener<ExportSelectedBloc, ExportSelectedState>(
+        listenWhen: _listenWhen,
+        listener: _listener,
+        child: ExportSelectedView(),
+      ),
     );
+  }
+
+  bool _listenWhen(ExportSelectedState previous, ExportSelectedState current) {
+    return previous.executingStatus != current.executingStatus;
+  }
+
+  void _listener(BuildContext context, ExportSelectedState state) async {
+    if (state.executingStatus.isExecuting) {
+      LoadingDialog.show(context: context, title: "Exporting");
+    }
+    if (state.executingStatus.isFinished) {
+      await Future.delayed(Duration(milliseconds: 500));
+
+      if (context.mounted) context.pop(times: 3);
+    }
   }
 }
 

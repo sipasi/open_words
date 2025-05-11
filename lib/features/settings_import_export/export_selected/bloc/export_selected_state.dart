@@ -10,6 +10,15 @@ class ExportSelectedState {
 
   final PdfExtensionProperties pdfProperties;
 
+  final ExportExecutingStatus executingStatus;
+
+  String get fileNameOrDefault =>
+      fileName.isNotEmpty
+          ? fileName
+          : fileDefaultName.isNotEmpty
+          ? fileDefaultName
+          : 'WordGroups';
+
   const ExportSelectedState({
     required this.selected,
     required this.fileName,
@@ -17,6 +26,7 @@ class ExportSelectedState {
     required this.exportExtension,
     required this.exportDestination,
     required this.pdfProperties,
+    required this.executingStatus,
   });
   const ExportSelectedState.initial()
     : selected = const [],
@@ -24,7 +34,8 @@ class ExportSelectedState {
       fileDefaultName = '',
       exportExtension = ExportExtension.pdf,
       exportDestination = ExportDestination.share,
-      pdfProperties = const PdfExtensionProperties.initial();
+      pdfProperties = const PdfExtensionProperties.initial(),
+      executingStatus = ExportExecutingStatus.notStarted;
 
   ExportSelectedState copyWith({
     List<WordGroup>? selected,
@@ -33,6 +44,7 @@ class ExportSelectedState {
     ExportExtension? exportExtension,
     ExportDestination? exportDestination,
     PdfExtensionProperties? pdfProperties,
+    ExportExecutingStatus? executingStatus,
   }) {
     return ExportSelectedState(
       selected: selected ?? this.selected,
@@ -41,6 +53,7 @@ class ExportSelectedState {
       exportExtension: exportExtension ?? this.exportExtension,
       exportDestination: exportDestination ?? this.exportDestination,
       pdfProperties: pdfProperties ?? this.pdfProperties,
+      executingStatus: executingStatus ?? this.executingStatus,
     );
   }
 }

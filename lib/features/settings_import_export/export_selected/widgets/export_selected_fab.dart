@@ -12,13 +12,23 @@ class ExportSelectedFab extends StatelessWidget {
       (ExportSelectedBloc value) => value.state.exportDestination,
     );
 
-    return FloatingActionButton.extended(
-      onPressed: () {},
-      icon: switch (destination) {
-        ExportDestination.onDevice => Icon(Icons.file_download_outlined),
-        _ => Icon(Icons.share_outlined),
-      },
-      label: Text(destination.name),
-    );
+    final bloc = context.read<ExportSelectedBloc>();
+
+    return switch (destination) {
+      ExportDestination.onDevice => FloatingActionButton.extended(
+        icon: const Icon(Icons.file_download_outlined),
+        label: Text(destination.name),
+        onPressed: () {
+          bloc.add(ExportSelectedDownloadRequested());
+        },
+      ),
+      ExportDestination.share => FloatingActionButton.extended(
+        icon: const Icon(Icons.share_outlined),
+        label: Text(destination.name),
+        onPressed: () {
+          bloc.add(ExportSelectedShareRequested());
+        },
+      ),
+    };
   }
 }
