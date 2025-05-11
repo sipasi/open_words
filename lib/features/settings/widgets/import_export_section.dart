@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:open_words/features/settings_import_export/export_selection/export_selection_page.dart';
-import 'package:open_words/features/settings_import_export/import/import_page.dart';
+import 'package:open_words/features/settings_import_export/import_picker/import_picker_page.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 
 class ImportExportSection extends StatelessWidget {
@@ -13,7 +13,7 @@ class ImportExportSection extends StatelessWidget {
         ListTile(
           leading: Icon(Icons.file_download_outlined),
           title: OutlinedButton(
-            onPressed: () => context.push((context) => ImportPage()),
+            onPressed: () => context.push((context) => ImportPickerPage()),
             child: Text('Import'),
           ),
         ),
