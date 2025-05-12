@@ -38,12 +38,7 @@ class WordDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: WordDetailTitle(),
-        actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.delete_outline)),
-        ],
-      ),
+      appBar: AppBar(title: WordDetailTitle()),
       body: ListView(
         padding: EdgeInsets.only(bottom: ListPaddingConstans.bottomForFab),
         children: [
