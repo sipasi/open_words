@@ -48,3 +48,4 @@ flutter:
   uses-material-design: true
   assets:
     - assets/json/build_in_dictionaries.json
+    - assets/json/locales.json
