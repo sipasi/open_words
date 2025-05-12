@@ -108,7 +108,7 @@ extension MaterialNavigatorExtension on BuildContext {
   }
 
   void popSuccess<T>(T value) {
-    MaterialNavigator.popSuccess(this, Result.success(value));
+    MaterialNavigator.popSuccess(this, value);
   }
 
   void popWith<T>(Result<T> value) {
