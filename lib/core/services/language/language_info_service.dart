@@ -1,8 +1,8 @@
-import 'dart:collection';
-
 import 'package:open_words/core/data/entities/language_info.dart';
 
 sealed class LanguageInfoService {
+  const LanguageInfoService();
+
   int get count;
 
   LanguageInfo get english;
@@ -10,52 +10,57 @@ sealed class LanguageInfoService {
 
   LanguageInfo get(int index);
 
-  UnmodifiableListView<LanguageInfo> getSupported();
+  List<LanguageInfo> getSupported();
 
-  LanguageInfo getByCode(String code);
+  LanguageInfo? getByCode(String code);
+  LanguageInfo? getByName(String code);
+
+  bool containsCode(String code);
+  bool containsName(String name);
 }
 
 final class LanguageInfoServiceImpl extends LanguageInfoService {
-  static const List<LanguageInfo> _languages = [
-    LanguageInfo(code: 'en', name: 'English', native: 'English'),
-    LanguageInfo(code: 'uk', name: 'Ukrainian', native: 'Українська'),
-    LanguageInfo(code: 'no', name: 'Norwegian', native: 'Norsk'),
-    LanguageInfo(code: 'fi', name: 'Finnish', native: 'Suomi, suomen kieli'),
-    LanguageInfo(code: 'pl', name: 'Polish', native: 'Polski'),
-    LanguageInfo(code: 'it', name: 'Italian', native: 'Italiano'),
-    LanguageInfo(code: 'de', name: 'German', native: 'Deutsch'),
-    LanguageInfo(
-      code: 'fr',
-      name: 'French',
-      native: 'Français, langue française',
-    ),
-    LanguageInfo(
-      code: 'es',
-      name: 'Spanish; Castilian',
-      native: 'Español, Castellano',
-    ),
-  ];
+  final List<LanguageInfo> languages;
+  final Map<String, LanguageInfo> codeMap;
+  final Map<String, LanguageInfo> nameMap;
+
+  const LanguageInfoServiceImpl({
+    required this.languages,
+    required this.codeMap,
+    required this.nameMap,
+  });
 
   @override
-  LanguageInfo get english => getByCode('en');
+  LanguageInfo get english => getByCode('en')!;
   @override
-  LanguageInfo get ukrainian => getByCode('uk');
+  LanguageInfo get ukrainian => getByCode('uk')!;
 
   @override
-  int get count => _languages.length;
+  int get count => languages.length;
 
   @override
-  LanguageInfo get(int index) => _languages[index];
+  LanguageInfo get(int index) => languages[index];
 
   @override
-  UnmodifiableListView<LanguageInfo> getSupported() =>
-      UnmodifiableListView(_languages);
+  List<LanguageInfo> getSupported() => languages;
 
   @override
-  LanguageInfo getByCode(String code) {
-    return _languages.firstWhere(
-      (element) => element.code == code,
-      orElse: () => _languages[0],
-    );
+  LanguageInfo? getByCode(String code) {
+    return codeMap[code];
+  }
+
+  @override
+  LanguageInfo? getByName(String code) {
+    return nameMap[code];
+  }
+
+  @override
+  bool containsCode(String code) {
+    return codeMap.containsKey(code);
+  }
+
+  @override
+  bool containsName(String name) {
+    return nameMap.containsKey(name);
   }
 }
