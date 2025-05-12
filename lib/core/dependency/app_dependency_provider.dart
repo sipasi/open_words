@@ -9,6 +9,7 @@ import 'package:open_words/core/dependency/file_temporary_service_dependency.dar
 import 'package:open_words/core/dependency/language_info_service_dependency.dart';
 import 'package:open_words/core/dependency/logger_dependency.dart';
 import 'package:open_words/core/dependency/repository_dependency.dart';
+import 'package:open_words/core/dependency/text_to_speech_service_dependency.dart';
 import 'package:open_words/core/dependency/theme_storage_dependency.dart';
 import 'package:open_words/core/dependency/translator_services_dependency.dart';
 import 'package:open_words/core/dependency/vibration_service_dependency.dart';
@@ -37,6 +38,7 @@ abstract class AppDependencyProvider {
       RepositoryDependency(),
       VibrationServiceDependency(),
       LanguageInfoServiceDependency(),
+      TextToSpeechServiceDependency(),
       TranslatorServicesDependency(),
       ClipboardServiceDependency(),
       WordMetadataServiceDependency(),
