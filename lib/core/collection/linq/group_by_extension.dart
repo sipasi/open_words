@@ -11,11 +11,11 @@ extension GroupByExtension<T> on Iterable<T> {
     return sum;
   }
 
-  Map<Key, List<T>> groupBy<Key>(PropertyGetter<T, Key> ketSelector) {
+  Map<Key, List<T>> groupBy<Key>(PropertyGetter<T, Key> keySelector) {
     var map = <Key, List<T>>{};
 
     for (var element in this) {
-      final key = ketSelector(element);
+      final key = keySelector(element);
 
       (map[key] ??= []).add(element);
     }
