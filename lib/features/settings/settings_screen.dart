@@ -5,6 +5,7 @@ import 'package:open_words/features/settings/widgets/tiles/database_info_open_ti
 import 'package:open_words/features/settings/widgets/tiles/delete_all_tile.dart';
 import 'package:open_words/features/settings/widgets/tiles/export_tile.dart';
 import 'package:open_words/features/settings/widgets/tiles/import_tile.dart';
+import 'package:open_words/features/settings/widgets/tiles/text_to_speech_tile.dart';
 import 'package:open_words/features/settings/widgets/tiles/thank_you_tile.dart';
 import 'package:open_words/features/settings/widgets/tiles/theme_color_tile.dart';
 import 'package:open_words/features/settings/widgets/tiles/theme_mode_tile.dart';
@@ -23,6 +24,7 @@ class SettingsScreen extends StatelessWidget {
         SettingsTileGroup.many(children: [ThemeModeTile(), ThemeColorTile()]),
 
         SettingsTileGroup.single(child: TranslatorTile()),
+        SettingsTileGroup.single(child: TextToSpeechTile()),
 
         SettingsTileGroup.many(children: [ImportTile(), ExportTile()]),
 
