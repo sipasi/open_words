@@ -10,7 +10,7 @@ class WordMetadataView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column( 
+    return Column(
       children: [
         if (metadata.etymology.isNotEmpty)
           Card.filled(

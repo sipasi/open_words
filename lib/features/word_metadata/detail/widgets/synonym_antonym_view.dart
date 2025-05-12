@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:open_words/core/services/text_to_speech/text_to_speech_service.dart';
+import 'package:open_words/features/word/detail/cubit/word_detail_page_cubit.dart';
 import 'package:open_words/shared/theme/theme_extension.dart';
 
 class SynonymAntonymView extends StatelessWidget {
@@ -33,7 +37,7 @@ class SynonymAntonymView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 4.0),
               child: Text('$text;', style: details),
             ),
-            onTap: () => onTap(text),
+            onTap: () => onTap(context, text),
             onLongPress: () => onLongPress(text),
           );
         }),
@@ -41,6 +45,13 @@ class SynonymAntonymView extends StatelessWidget {
     );
   }
 
-  void onTap(String value) {}
+  void onTap(BuildContext context, String value) {
+    final tts = GetIt.I.get<TextToSpeechService>();
+
+    final bloc = context.read<WordDetailPageCubit>();
+
+    tts.stopAndSpeek(text: value, language: bloc.group.origin);
+  }
+
   void onLongPress(String value) {}
 }
