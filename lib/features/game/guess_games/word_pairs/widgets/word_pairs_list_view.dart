@@ -83,6 +83,7 @@ class WordPairsListView extends StatelessWidget {
             partId: index,
             isQuestionPart: isQuestionColumn,
             onTap: () {
+              cubit.speechOrigin(part.text);
               stateSetter(index);
             },
           );

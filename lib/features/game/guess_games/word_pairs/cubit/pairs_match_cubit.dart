@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_words/core/data/entities/language_info.dart';
+import 'package:open_words/core/services/text_to_speech/text_to_speech_service.dart';
 import 'package:open_words/features/game/guess_games/shared/guess_game_status.dart';
 import 'package:open_words/features/game/guess_games/word_pairs/models/matched_pairs_set.dart';
 import 'package:open_words/features/game/guess_games/word_pairs/models/pairs_match_selection.dart';
@@ -31,17 +33,24 @@ class PairsMatchCubit extends Cubit<PairsMatchState> {
 
   Stream<PairsMatchEvaluateEvent> get answerEvents => _answerEvent.stream;
 
+  final LanguageInfo origin;
+  final LanguageInfo translation;
+  final TextToSpeechService textToSpeech;
+
   final PairsMatchSessionBuilder sessionBuilder;
   final PairsMatchEvaluator matchEvaluator;
   final QuizScoreUpdater scoreUpdater;
   final PairsMatchType matchType;
 
   PairsMatchCubit({
+    required this.origin,
+    required this.translation,
+    required this.textToSpeech,
     required this.sessionBuilder,
     required this.matchEvaluator,
-    this.scoreUpdater = const QuizScoreUpdater.allowsCorrectOnlyCompletion(),
     required this.matchType,
-  }) : super(PairsMatchState.initial());
+  }) : scoreUpdater = const QuizScoreUpdater.allowsCorrectOnlyCompletion(),
+       super(PairsMatchState.initial());
 
   @override
   Future<void> close() async {
@@ -52,7 +61,14 @@ class PairsMatchCubit extends Cubit<PairsMatchState> {
   Future started() async {
     final session = sessionBuilder.build();
 
-    emit(PairsMatchState.started(session, matchType));
+    emit(
+      PairsMatchState.started(
+        origin: origin,
+        translation: translation,
+        session: session,
+        matchType: matchType,
+      ),
+    );
   }
 
   void selectQuestion(int index) {
@@ -102,6 +118,8 @@ class PairsMatchCubit extends Cubit<PairsMatchState> {
       ),
     );
 
+    await Future.delayed(Duration(milliseconds: 300));
+
     emit(state.copyWith(selection: state.selection.copyWithDeselection()));
 
     emit(
@@ -140,5 +158,9 @@ class PairsMatchCubit extends Cubit<PairsMatchState> {
     }
 
     emit(state.copyWith(matchedPairs: state.matchedPairs.clear()));
+  }
+
+  void speechOrigin(String text) {
+    textToSpeech.stopAndSpeek(text: text, language: origin);
   }
 }

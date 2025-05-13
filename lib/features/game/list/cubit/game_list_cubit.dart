@@ -1,15 +1,20 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_words/core/data/entities/language_info.dart';
 import 'package:open_words/core/data/entities/word/word.dart';
 
 part 'game_list_state.dart';
 
 class GameListCubit extends Cubit<GameListState> {
   final String groupName;
+  final LanguageInfo origin;
+  final LanguageInfo translation;
   final List<Word> words;
   final int minWordCountUpperLimit;
 
   GameListCubit({
     required this.groupName,
+    required this.origin,
+    required this.translation,
     required this.words,
     required this.minWordCountUpperLimit,
   }) : super(GameListState.initial());

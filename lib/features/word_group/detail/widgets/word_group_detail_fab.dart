@@ -46,10 +46,8 @@ class WordGroupDetailFab extends StatelessWidget {
     final bloc = context.read<WordGroupDetailCubit>();
 
     context.push(
-      (context) => GameListPage(
-        groupName: bloc.state.group.name,
-        words: bloc.state.words,
-      ),
+      (context) =>
+          GameListPage(group: bloc.state.group, words: bloc.state.words),
     );
   }
 

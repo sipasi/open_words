@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:open_words/core/data/entities/language_info.dart';
 import 'package:open_words/features/game/guess_games/word_pairs/cubit/pairs_match_cubit.dart';
 import 'package:open_words/features/game/guess_games/word_pairs/models/pairs_match_type.dart';
 import 'package:open_words/features/game/guess_games/word_pairs/utils/pairs_match_evaluator.dart';
@@ -12,20 +14,32 @@ import 'package:open_words/shared/appbar/app_bar_title.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 
 class PairsMatchPage extends StatelessWidget {
+  final LanguageInfo origin;
+  final LanguageInfo translation;
+
   final PairsMatchSessionBuilder sessionBuilder;
 
   final PairsMatchType matchType;
 
   const PairsMatchPage.wordPairs({super.key, required this.sessionBuilder})
-    : matchType = PairsMatchType.wordToWord;
-  const PairsMatchPage.audioPairs({super.key, required this.sessionBuilder})
-    : matchType = PairsMatchType.audioToWord;
+    : matchType = PairsMatchType.wordToWord,
+      origin = const LanguageInfo.empty(),
+      translation = const LanguageInfo.empty();
+  const PairsMatchPage.audioPairs({
+    super.key,
+    required this.sessionBuilder,
+    required this.origin,
+    required this.translation,
+  }) : matchType = PairsMatchType.audioToWord;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
         return PairsMatchCubit(
+          origin: origin,
+          translation: translation,
+          textToSpeech: GetIt.I.get(),
           sessionBuilder: sessionBuilder,
           matchEvaluator: const PairsMatchEvaluator(),
           matchType: matchType,

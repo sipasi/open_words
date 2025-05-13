@@ -98,10 +98,12 @@ class GameListBodyView extends StatelessWidget {
           wordsNeed: 5,
           route: (builder) {
             return PairsMatchPage.audioPairs(
+              origin: bloc.origin,
+              translation: bloc.translation,
               sessionBuilder: PairsMatchSessionBuilder(
                 words: words,
                 quizSize: getQuizSize(bloc: bloc, allowedMin: 5),
-                questionSide: QuizQuestionSide.translation,
+                questionSide: QuizQuestionSide.origin,
               ),
             );
           },
