@@ -60,8 +60,8 @@ final class TextToSpeechServiceDependency extends AppDependency {
           (e) => TextToSpeechVoice(
             name: e['name'] as String,
             locale: e['locale'] as String,
-            gender: e['gender'] as String?,
-            quality: e['quality'] as String?,
+            gender: e['gender'] as String? ?? '',
+            quality: e['quality'] as String? ?? '',
           ),
         )
         .groupBy((item) => item.code);

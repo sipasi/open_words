@@ -4,8 +4,8 @@ class TextToSpeechVoice {
   final String name;
   final String locale;
   final String code;
-  final String? gender;
-  final String? quality;
+  final String gender;
+  final String quality;
 
   TextToSpeechVoice({
     required this.name,
@@ -17,10 +17,10 @@ class TextToSpeechVoice {
   String description() {
     String text = 'locale: $locale';
 
-    if (gender != null) {
+    if (gender.isNotEmpty) {
       text += ', gender: $gender';
     }
-    if (quality != null) {
+    if (quality.isNotEmpty) {
       text += ', quality: $quality';
     }
 
@@ -52,8 +52,8 @@ class TextToSpeechVoice {
     return {
       'name': name,
       'locale': locale,
-      'gender': gender ?? '',
-      'quality': quality ?? '',
+      'gender': gender,
+      'quality': quality,
     };
   }
 
@@ -61,8 +61,8 @@ class TextToSpeechVoice {
     return TextToSpeechVoice(
       name: map['name'] ?? '',
       locale: map['locale'] ?? '',
-      gender: map['gender'],
-      quality: map['quality'],
+      gender: map['gender'] ?? '',
+      quality: map['quality'] ?? '',
     );
   }
 
