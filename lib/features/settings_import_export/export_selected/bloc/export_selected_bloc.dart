@@ -36,7 +36,6 @@ class ExportSelectedBloc
       emit(
         state.copyWith(
           selected: selected,
-          fileDefaultName: selected.length == 1 ? selected[0].name : 'Groups',
           pdfProperties: state.pdfProperties.copyWith(
             darkBackground:
                 PlatformDispatcher.instance.platformBrightness ==
@@ -45,6 +44,9 @@ class ExportSelectedBloc
           ),
         ),
       );
+    });
+    on<ExportSelectedFileNameChanged>((event, emit) {
+      emit(state.copyWith(fileName: event.value));
     });
     on<ExportSelectedDestinationChanged>((event, emit) {
       emit(state.copyWith(exportDestination: event.value));

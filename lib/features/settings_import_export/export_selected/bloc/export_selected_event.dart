@@ -8,6 +8,12 @@ final class ExportSelectedStarded extends ExportSelectedEvent {
   ExportSelectedStarded(this.selected);
 }
 
+final class ExportSelectedFileNameChanged extends ExportSelectedEvent {
+  final String value;
+
+  ExportSelectedFileNameChanged(this.value);
+}
+
 final class ExportSelectedDestinationChanged extends ExportSelectedEvent {
   final ExportDestination value;
 
