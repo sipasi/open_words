@@ -30,7 +30,11 @@ class WordDetailPageCubit extends Cubit<WordDetailPageState> {
   Future loading() async {
     emit(state.copyWith(metadataLoadStatus: MetadataLoadStatus.loading));
 
-    WordMetadata? loaded = await metadataService.localOrWeb(state.origin);
+    // Currently supports only English language ):
+    WordMetadata? loaded = switch (group.origin.code) {
+      'en' => await metadataService.localOrWeb(state.origin),
+      _ => await metadataService.localOnly(state.origin),
+    };
 
     emit(
       state.copyWith(
