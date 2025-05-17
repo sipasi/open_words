@@ -48,7 +48,7 @@ final class TemporaryFileServiceImpl extends TemporaryFileService {
           parts: [_folderName],
         );
       },
-      name: _name(name, extension),
+      name: _name(name),
       extension: extension,
     );
 
@@ -57,7 +57,7 @@ final class TemporaryFileServiceImpl extends TemporaryFileService {
     await localFile.delete();
   }
 
-  String _name(String? name, String extension) {
-    return '${name ?? uuid.v4()}.$extension';
+  String _name(String? name) {
+    return name ?? uuid.v4();
   }
 }
