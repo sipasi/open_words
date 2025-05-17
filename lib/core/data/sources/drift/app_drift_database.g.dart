@@ -1408,12 +1408,12 @@ class WordsCompanion extends UpdateCompanion<DriftWord> {
   }
 }
 
-class $WordAnswerStatsTable extends WordAnswerStats
-    with TableInfo<$WordAnswerStatsTable, DriftWordGameTracker> {
+class $WordStatisticsTable extends WordStatistics
+    with TableInfo<$WordStatisticsTable, DriftWordAnswerStats> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $WordAnswerStatsTable(this.attachedDatabase, [this._alias]);
+  $WordStatisticsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _wordMeta = const VerificationMeta('word');
   @override
   late final GeneratedColumn<String> word = GeneratedColumn<String>(
@@ -1452,10 +1452,10 @@ class $WordAnswerStatsTable extends WordAnswerStats
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'word_answer_stats';
+  static const String $name = 'word_statistics';
   @override
   VerificationContext validateIntegrity(
-    Insertable<DriftWordGameTracker> instance, {
+    Insertable<DriftWordAnswerStats> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -1490,9 +1490,9 @@ class $WordAnswerStatsTable extends WordAnswerStats
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  DriftWordGameTracker map(Map<String, dynamic> data, {String? tablePrefix}) {
+  DriftWordAnswerStats map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return DriftWordGameTracker(
+    return DriftWordAnswerStats(
       word:
           attachedDatabase.typeMapping.read(
             DriftSqlType.string,
@@ -1512,17 +1512,17 @@ class $WordAnswerStatsTable extends WordAnswerStats
   }
 
   @override
-  $WordAnswerStatsTable createAlias(String alias) {
-    return $WordAnswerStatsTable(attachedDatabase, alias);
+  $WordStatisticsTable createAlias(String alias) {
+    return $WordStatisticsTable(attachedDatabase, alias);
   }
 }
 
-class DriftWordGameTracker extends DataClass
-    implements Insertable<DriftWordGameTracker> {
+class DriftWordAnswerStats extends DataClass
+    implements Insertable<DriftWordAnswerStats> {
   final String word;
   final int correct;
   final int incorrect;
-  const DriftWordGameTracker({
+  const DriftWordAnswerStats({
     required this.word,
     required this.correct,
     required this.incorrect,
@@ -1536,20 +1536,20 @@ class DriftWordGameTracker extends DataClass
     return map;
   }
 
-  WordAnswerStatsCompanion toCompanion(bool nullToAbsent) {
-    return WordAnswerStatsCompanion(
+  WordStatisticsCompanion toCompanion(bool nullToAbsent) {
+    return WordStatisticsCompanion(
       word: Value(word),
       correct: Value(correct),
       incorrect: Value(incorrect),
     );
   }
 
-  factory DriftWordGameTracker.fromJson(
+  factory DriftWordAnswerStats.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return DriftWordGameTracker(
+    return DriftWordAnswerStats(
       word: serializer.fromJson<String>(json['word']),
       correct: serializer.fromJson<int>(json['correct']),
       incorrect: serializer.fromJson<int>(json['incorrect']),
@@ -1565,14 +1565,14 @@ class DriftWordGameTracker extends DataClass
     };
   }
 
-  DriftWordGameTracker copyWith({String? word, int? correct, int? incorrect}) =>
-      DriftWordGameTracker(
+  DriftWordAnswerStats copyWith({String? word, int? correct, int? incorrect}) =>
+      DriftWordAnswerStats(
         word: word ?? this.word,
         correct: correct ?? this.correct,
         incorrect: incorrect ?? this.incorrect,
       );
-  DriftWordGameTracker copyWithCompanion(WordAnswerStatsCompanion data) {
-    return DriftWordGameTracker(
+  DriftWordAnswerStats copyWithCompanion(WordStatisticsCompanion data) {
+    return DriftWordAnswerStats(
       word: data.word.present ? data.word.value : this.word,
       correct: data.correct.present ? data.correct.value : this.correct,
       incorrect: data.incorrect.present ? data.incorrect.value : this.incorrect,
@@ -1581,7 +1581,7 @@ class DriftWordGameTracker extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('DriftWordGameTracker(')
+    return (StringBuffer('DriftWordAnswerStats(')
           ..write('word: $word, ')
           ..write('correct: $correct, ')
           ..write('incorrect: $incorrect')
@@ -1594,24 +1594,24 @@ class DriftWordGameTracker extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is DriftWordGameTracker &&
+      (other is DriftWordAnswerStats &&
           other.word == this.word &&
           other.correct == this.correct &&
           other.incorrect == this.incorrect);
 }
 
-class WordAnswerStatsCompanion extends UpdateCompanion<DriftWordGameTracker> {
+class WordStatisticsCompanion extends UpdateCompanion<DriftWordAnswerStats> {
   final Value<String> word;
   final Value<int> correct;
   final Value<int> incorrect;
   final Value<int> rowid;
-  const WordAnswerStatsCompanion({
+  const WordStatisticsCompanion({
     this.word = const Value.absent(),
     this.correct = const Value.absent(),
     this.incorrect = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  WordAnswerStatsCompanion.insert({
+  WordStatisticsCompanion.insert({
     required String word,
     required int correct,
     required int incorrect,
@@ -1619,7 +1619,7 @@ class WordAnswerStatsCompanion extends UpdateCompanion<DriftWordGameTracker> {
   }) : word = Value(word),
        correct = Value(correct),
        incorrect = Value(incorrect);
-  static Insertable<DriftWordGameTracker> custom({
+  static Insertable<DriftWordAnswerStats> custom({
     Expression<String>? word,
     Expression<int>? correct,
     Expression<int>? incorrect,
@@ -1633,13 +1633,13 @@ class WordAnswerStatsCompanion extends UpdateCompanion<DriftWordGameTracker> {
     });
   }
 
-  WordAnswerStatsCompanion copyWith({
+  WordStatisticsCompanion copyWith({
     Value<String>? word,
     Value<int>? correct,
     Value<int>? incorrect,
     Value<int>? rowid,
   }) {
-    return WordAnswerStatsCompanion(
+    return WordStatisticsCompanion(
       word: word ?? this.word,
       correct: correct ?? this.correct,
       incorrect: incorrect ?? this.incorrect,
@@ -1667,7 +1667,7 @@ class WordAnswerStatsCompanion extends UpdateCompanion<DriftWordGameTracker> {
 
   @override
   String toString() {
-    return (StringBuffer('WordAnswerStatsCompanion(')
+    return (StringBuffer('WordStatisticsCompanion(')
           ..write('word: $word, ')
           ..write('correct: $correct, ')
           ..write('incorrect: $incorrect, ')
@@ -3254,9 +3254,7 @@ abstract class _$AppDriftDatabase extends GeneratedDatabase {
   late final $FoldersTable folders = $FoldersTable(this);
   late final $WordGroupsTable wordGroups = $WordGroupsTable(this);
   late final $WordsTable words = $WordsTable(this);
-  late final $WordAnswerStatsTable wordAnswerStats = $WordAnswerStatsTable(
-    this,
-  );
+  late final $WordStatisticsTable wordStatistics = $WordStatisticsTable(this);
   late final $WordMetadatasTable wordMetadatas = $WordMetadatasTable(this);
   late final $WordMetadataWebLookupsTable wordMetadataWebLookups =
       $WordMetadataWebLookupsTable(this);
@@ -3297,19 +3295,19 @@ abstract class _$AppDriftDatabase extends GeneratedDatabase {
   );
   late final Index indexWord = Index(
     'index_word',
-    'CREATE INDEX index_word ON word_answer_stats (word)',
+    'CREATE INDEX index_word ON word_statistics (word)',
   );
   late final Index indexCorrect = Index(
     'index_correct',
-    'CREATE INDEX index_correct ON word_answer_stats (correct)',
+    'CREATE INDEX index_correct ON word_statistics (correct)',
   );
   late final Index indexIncorrect = Index(
     'index_incorrect',
-    'CREATE INDEX index_incorrect ON word_answer_stats (incorrect)',
+    'CREATE INDEX index_incorrect ON word_statistics (incorrect)',
   );
   late final Index indexWordCorrectIncorrect = Index(
     'index_word_correct_incorrect',
-    'CREATE INDEX index_word_correct_incorrect ON word_answer_stats (word, correct, incorrect)',
+    'CREATE INDEX index_word_correct_incorrect ON word_statistics (word, correct, incorrect)',
   );
   late final Index metadataWordIndex = Index(
     'metadata_word_index',
@@ -3327,7 +3325,7 @@ abstract class _$AppDriftDatabase extends GeneratedDatabase {
     folders,
     wordGroups,
     words,
-    wordAnswerStats,
+    wordStatistics,
     wordMetadatas,
     wordMetadataWebLookups,
     phonetics,
@@ -4623,24 +4621,24 @@ typedef $$WordsTableProcessedTableManager =
       DriftWord,
       PrefetchHooks Function({bool groupId})
     >;
-typedef $$WordAnswerStatsTableCreateCompanionBuilder =
-    WordAnswerStatsCompanion Function({
+typedef $$WordStatisticsTableCreateCompanionBuilder =
+    WordStatisticsCompanion Function({
       required String word,
       required int correct,
       required int incorrect,
       Value<int> rowid,
     });
-typedef $$WordAnswerStatsTableUpdateCompanionBuilder =
-    WordAnswerStatsCompanion Function({
+typedef $$WordStatisticsTableUpdateCompanionBuilder =
+    WordStatisticsCompanion Function({
       Value<String> word,
       Value<int> correct,
       Value<int> incorrect,
       Value<int> rowid,
     });
 
-class $$WordAnswerStatsTableFilterComposer
-    extends Composer<_$AppDriftDatabase, $WordAnswerStatsTable> {
-  $$WordAnswerStatsTableFilterComposer({
+class $$WordStatisticsTableFilterComposer
+    extends Composer<_$AppDriftDatabase, $WordStatisticsTable> {
+  $$WordStatisticsTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -4663,9 +4661,9 @@ class $$WordAnswerStatsTableFilterComposer
   );
 }
 
-class $$WordAnswerStatsTableOrderingComposer
-    extends Composer<_$AppDriftDatabase, $WordAnswerStatsTable> {
-  $$WordAnswerStatsTableOrderingComposer({
+class $$WordStatisticsTableOrderingComposer
+    extends Composer<_$AppDriftDatabase, $WordStatisticsTable> {
+  $$WordStatisticsTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -4688,9 +4686,9 @@ class $$WordAnswerStatsTableOrderingComposer
   );
 }
 
-class $$WordAnswerStatsTableAnnotationComposer
-    extends Composer<_$AppDriftDatabase, $WordAnswerStatsTable> {
-  $$WordAnswerStatsTableAnnotationComposer({
+class $$WordStatisticsTableAnnotationComposer
+    extends Composer<_$AppDriftDatabase, $WordStatisticsTable> {
+  $$WordStatisticsTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -4707,45 +4705,42 @@ class $$WordAnswerStatsTableAnnotationComposer
       $composableBuilder(column: $table.incorrect, builder: (column) => column);
 }
 
-class $$WordAnswerStatsTableTableManager
+class $$WordStatisticsTableTableManager
     extends
         RootTableManager<
           _$AppDriftDatabase,
-          $WordAnswerStatsTable,
-          DriftWordGameTracker,
-          $$WordAnswerStatsTableFilterComposer,
-          $$WordAnswerStatsTableOrderingComposer,
-          $$WordAnswerStatsTableAnnotationComposer,
-          $$WordAnswerStatsTableCreateCompanionBuilder,
-          $$WordAnswerStatsTableUpdateCompanionBuilder,
+          $WordStatisticsTable,
+          DriftWordAnswerStats,
+          $$WordStatisticsTableFilterComposer,
+          $$WordStatisticsTableOrderingComposer,
+          $$WordStatisticsTableAnnotationComposer,
+          $$WordStatisticsTableCreateCompanionBuilder,
+          $$WordStatisticsTableUpdateCompanionBuilder,
           (
-            DriftWordGameTracker,
+            DriftWordAnswerStats,
             BaseReferences<
               _$AppDriftDatabase,
-              $WordAnswerStatsTable,
-              DriftWordGameTracker
+              $WordStatisticsTable,
+              DriftWordAnswerStats
             >,
           ),
-          DriftWordGameTracker,
+          DriftWordAnswerStats,
           PrefetchHooks Function()
         > {
-  $$WordAnswerStatsTableTableManager(
+  $$WordStatisticsTableTableManager(
     _$AppDriftDatabase db,
-    $WordAnswerStatsTable table,
+    $WordStatisticsTable table,
   ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer:
-              () =>
-                  $$WordAnswerStatsTableFilterComposer($db: db, $table: table),
+              () => $$WordStatisticsTableFilterComposer($db: db, $table: table),
           createOrderingComposer:
-              () => $$WordAnswerStatsTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
+              () =>
+                  $$WordStatisticsTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer:
-              () => $$WordAnswerStatsTableAnnotationComposer(
+              () => $$WordStatisticsTableAnnotationComposer(
                 $db: db,
                 $table: table,
               ),
@@ -4755,7 +4750,7 @@ class $$WordAnswerStatsTableTableManager
                 Value<int> correct = const Value.absent(),
                 Value<int> incorrect = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => WordAnswerStatsCompanion(
+              }) => WordStatisticsCompanion(
                 word: word,
                 correct: correct,
                 incorrect: incorrect,
@@ -4767,7 +4762,7 @@ class $$WordAnswerStatsTableTableManager
                 required int correct,
                 required int incorrect,
                 Value<int> rowid = const Value.absent(),
-              }) => WordAnswerStatsCompanion.insert(
+              }) => WordStatisticsCompanion.insert(
                 word: word,
                 correct: correct,
                 incorrect: incorrect,
@@ -4788,25 +4783,25 @@ class $$WordAnswerStatsTableTableManager
       );
 }
 
-typedef $$WordAnswerStatsTableProcessedTableManager =
+typedef $$WordStatisticsTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDriftDatabase,
-      $WordAnswerStatsTable,
-      DriftWordGameTracker,
-      $$WordAnswerStatsTableFilterComposer,
-      $$WordAnswerStatsTableOrderingComposer,
-      $$WordAnswerStatsTableAnnotationComposer,
-      $$WordAnswerStatsTableCreateCompanionBuilder,
-      $$WordAnswerStatsTableUpdateCompanionBuilder,
+      $WordStatisticsTable,
+      DriftWordAnswerStats,
+      $$WordStatisticsTableFilterComposer,
+      $$WordStatisticsTableOrderingComposer,
+      $$WordStatisticsTableAnnotationComposer,
+      $$WordStatisticsTableCreateCompanionBuilder,
+      $$WordStatisticsTableUpdateCompanionBuilder,
       (
-        DriftWordGameTracker,
+        DriftWordAnswerStats,
         BaseReferences<
           _$AppDriftDatabase,
-          $WordAnswerStatsTable,
-          DriftWordGameTracker
+          $WordStatisticsTable,
+          DriftWordAnswerStats
         >,
       ),
-      DriftWordGameTracker,
+      DriftWordAnswerStats,
       PrefetchHooks Function()
     >;
 typedef $$WordMetadatasTableCreateCompanionBuilder =
@@ -6416,8 +6411,8 @@ class $AppDriftDatabaseManager {
       $$WordGroupsTableTableManager(_db, _db.wordGroups);
   $$WordsTableTableManager get words =>
       $$WordsTableTableManager(_db, _db.words);
-  $$WordAnswerStatsTableTableManager get wordAnswerStats =>
-      $$WordAnswerStatsTableTableManager(_db, _db.wordAnswerStats);
+  $$WordStatisticsTableTableManager get wordStatistics =>
+      $$WordStatisticsTableTableManager(_db, _db.wordStatistics);
   $$WordMetadatasTableTableManager get wordMetadatas =>
       $$WordMetadatasTableTableManager(_db, _db.wordMetadatas);
   $$WordMetadataWebLookupsTableTableManager get wordMetadataWebLookups =>

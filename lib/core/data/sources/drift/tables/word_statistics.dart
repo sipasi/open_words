@@ -8,7 +8,7 @@ part of '../app_drift_database.dart';
   columns: {#word, #correct, #incorrect},
 )
 @DataClassName('DriftWordAnswerStats')
-class WordAnswerStats extends Table {
+class WordStatistics extends Table {
   TextColumn get word => text().unique()();
 
   IntColumn get correct => integer()();

@@ -11,7 +11,7 @@ extension DriftWordGroupsQuery on AppDriftDatabase {
       'GROUP BY g.id '
       'ORDER BY g.name',
       variables: [Variable.withInt(id)],
-      readsFrom: {wordGroups},
+      readsFrom: {wordGroups, words},
     );
   }
 
@@ -22,7 +22,7 @@ extension DriftWordGroupsQuery on AppDriftDatabase {
       'LEFT JOIN words AS w ON w.group_id = g.id '
       'GROUP BY g.id '
       'ORDER BY g.name',
-      readsFrom: {wordGroups},
+      readsFrom: {wordGroups, words},
     );
   }
 
@@ -34,7 +34,7 @@ extension DriftWordGroupsQuery on AppDriftDatabase {
       'WHERE g.folder_id IS NULL '
       'GROUP BY g.id '
       'ORDER BY g.name',
-      readsFrom: {wordGroups},
+      readsFrom: {wordGroups, words},
     );
   }
 
@@ -47,7 +47,7 @@ extension DriftWordGroupsQuery on AppDriftDatabase {
       'GROUP BY g.id '
       'ORDER BY g.name',
       variables: [Variable.withInt(folderId)],
-      readsFrom: {wordGroups},
+      readsFrom: {wordGroups, words},
     );
   }
 }

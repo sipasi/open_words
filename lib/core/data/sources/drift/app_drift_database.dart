@@ -5,10 +5,10 @@ import 'package:path_provider/path_provider.dart';
 
 part 'app_drift_database.g.dart';
 part 'tables/folders_table.dart';
-part 'tables/word_answer_stats.dart';
 part 'tables/word_groups_table.dart';
 part 'tables/word_metadata_web_lookups.dart';
 part 'tables/word_metadatas_table.dart';
+part 'tables/word_statistics.dart';
 part 'tables/words_table.dart';
 
 @DriftDatabase(
@@ -16,7 +16,7 @@ part 'tables/words_table.dart';
     Folders,
     WordGroups,
     Words,
-    WordAnswerStats,
+    WordStatistics,
     WordMetadatas,
     WordMetadataWebLookups,
     Phonetics,
