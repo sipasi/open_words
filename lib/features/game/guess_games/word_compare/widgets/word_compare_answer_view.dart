@@ -15,26 +15,29 @@ class WordCompareAnswerView extends StatelessWidget {
     final quiz = session.currentQuiz;
     final variants = quiz.variants.length;
 
-    return GridView(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 16,
-        mainAxisSpacing: 16,
-        childAspectRatio: 4 / 2,
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      shrinkWrap: true,
-      children: List.generate(variants, (index) {
-        final bloc = context.read<WordCompareBloc>();
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 600),
+      child: GridView(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+          childAspectRatio: 4 / 2,
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        shrinkWrap: true,
+        children: List.generate(variants, (index) {
+          final bloc = context.read<WordCompareBloc>();
 
-        return _button(
-          context: context,
-          text: quiz.getVariantTextAt(index),
-          onTap: () {
-            bloc.add(WordCompareAnswerRequested(quiz.variants[index]));
-          },
-        );
-      }),
+          return _button(
+            context: context,
+            text: quiz.getVariantTextAt(index),
+            onTap: () {
+              bloc.add(WordCompareAnswerRequested(quiz.variants[index]));
+            },
+          );
+        }),
+      ),
     );
   }
 

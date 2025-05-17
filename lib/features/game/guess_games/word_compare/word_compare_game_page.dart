@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/features/game/guess_games/word_compare/bloc/word_compare_bloc.dart';
 import 'package:open_words/features/game/guess_games/word_compare/utils/compare_session_builder.dart';
 import 'package:open_words/features/game/guess_games/word_compare/widgets/word_compare_answer_view.dart';
-import 'package:open_words/features/game/guess_games/word_compare/widgets/word_compare_help_view.dart';
 import 'package:open_words/features/game/guess_games/word_compare/widgets/word_compare_question_view.dart';
 import 'package:open_words/features/game/guess_games/word_compare/widgets/word_compare_score_view.dart';
 import 'package:open_words/features/game/quiz_end/models/quiz_end_result.dart';
@@ -76,10 +75,10 @@ class WordCompareGameView extends StatelessWidget {
       body: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             WordCompareScoreView(),
-            WordCompareHelpView(),
+            const Spacer(),
             WordCompareQuestionView(),
             WordCompareAnswerView(),
           ],
