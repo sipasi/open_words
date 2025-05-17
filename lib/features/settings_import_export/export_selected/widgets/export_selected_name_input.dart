@@ -8,12 +8,16 @@ class ExportSelectedNameInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final name = context.select(
-      (ExportSelectedBloc value) => value.state.fileDefaultName,
-    );
-
     return ListTile(
-      title: TextEditField(border: OutlineInputBorder(), hint: name),
+      title: TextEditField(
+        border: OutlineInputBorder(),
+        hint: 'WordGroups',
+        onChanged: (value) {
+          context.read<ExportSelectedBloc>().add(
+            ExportSelectedFileNameChanged(value),
+          );
+        },
+      ),
     );
   }
 }
