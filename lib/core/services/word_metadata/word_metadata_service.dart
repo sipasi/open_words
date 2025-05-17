@@ -40,4 +40,8 @@ class WordMetadataService {
 
     return null;
   }
+
+  Future<WordMetadata?> localOnly(String word) {
+    return _repository.byWord(word);
+  }
 }
