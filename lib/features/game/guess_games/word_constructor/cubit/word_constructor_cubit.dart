@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_words/core/data/repository/word_statistic_repository.dart';
 import 'package:open_words/features/game/guess_games/shared/guess_game_status.dart';
 import 'package:open_words/features/game/guess_games/word_constructor/models/word_constructor_session.dart';
 import 'package:open_words/features/game/guess_games/word_constructor/models/word_part.dart';
@@ -15,11 +16,15 @@ part 'word_constructor_state.dart';
 class WordConstructorCubit extends Cubit<WordConstructorState> {
   WordConstructorSessionBuilder sessionBuilder;
 
+  final WordStatisticRepository wordStatisticRepository;
+
   final scoreUpdater = const QuizScoreUpdater(QuizCompletionPolicy.anyAttempt);
   final constructorEvaluator = const WordConstructorEvaluator();
 
-  WordConstructorCubit({required this.sessionBuilder})
-    : super(WordConstructorState.initial());
+  WordConstructorCubit({
+    required this.sessionBuilder,
+    required this.wordStatisticRepository,
+  }) : super(WordConstructorState.initial());
 
   Future started() async {
     emit(WordConstructorState.started(sessionBuilder.build()));
@@ -39,6 +44,11 @@ class WordConstructorCubit extends Cubit<WordConstructorState> {
     final isCorrect = constructorEvaluator.isCorrectAnswer(
       correctAnswer: state.session.currentQuiz.correctAnswer,
       userAnswer: state.answerConstructor.constructedString,
+    );
+
+    wordStatisticRepository.addDependsTo(
+      state.session.currentQuiz.word.origin,
+      isCorrect,
     );
 
     emit(

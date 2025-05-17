@@ -26,6 +26,7 @@ final class WordConstructorQuizItemGenerator {
       final answerParts = _spitWord(variant);
 
       return WordConstructorQuizItem(
+        word: word,
         question: questionSide.question(word),
         correctAnswer: variant,
         answerParts: answerParts..randomize(),

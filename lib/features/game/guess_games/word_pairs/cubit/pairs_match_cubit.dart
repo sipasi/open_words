@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/core/data/entities/language_info.dart';
+import 'package:open_words/core/data/repository/word_statistic_repository.dart';
 import 'package:open_words/core/services/text_to_speech/text_to_speech_service.dart';
 import 'package:open_words/features/game/guess_games/shared/guess_game_status.dart';
 import 'package:open_words/features/game/guess_games/word_pairs/models/matched_pairs_set.dart';
@@ -33,6 +34,8 @@ class PairsMatchCubit extends Cubit<PairsMatchState> {
 
   Stream<PairsMatchEvaluateEvent> get answerEvents => _answerEvent.stream;
 
+  final WordStatisticRepository wordStatisticRepository;
+
   final LanguageInfo origin;
   final LanguageInfo translation;
   final TextToSpeechService textToSpeech;
@@ -43,6 +46,7 @@ class PairsMatchCubit extends Cubit<PairsMatchState> {
   final PairsMatchType matchType;
 
   PairsMatchCubit({
+    required this.wordStatisticRepository,
     required this.origin,
     required this.translation,
     required this.textToSpeech,
@@ -111,6 +115,9 @@ class PairsMatchCubit extends Cubit<PairsMatchState> {
       question: question,
       answer: answer,
     );
+
+    wordStatisticRepository.addDependsTo(question.word.origin, isCorrect);
+    wordStatisticRepository.addDependsTo(answer.word.origin, isCorrect);
 
     emit(
       state.copyWith(

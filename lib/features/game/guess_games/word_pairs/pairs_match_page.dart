@@ -37,6 +37,7 @@ class PairsMatchPage extends StatelessWidget {
     return BlocProvider(
       create: (context) {
         return PairsMatchCubit(
+          wordStatisticRepository: GetIt.I.get(),
           origin: origin,
           translation: translation,
           textToSpeech: GetIt.I.get(),

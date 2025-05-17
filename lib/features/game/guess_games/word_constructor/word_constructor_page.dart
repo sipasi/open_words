@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:open_words/features/game/guess_games/word_constructor/cubit/word_constructor_cubit.dart';
 import 'package:open_words/features/game/guess_games/word_constructor/utils/word_constructor_session_builder.dart';
 import 'package:open_words/features/game/guess_games/word_constructor/widgets/variant_parts_view.dart';
@@ -19,7 +20,10 @@ class WordConstructorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return WordConstructorCubit(sessionBuilder: sessionBuilder)..started();
+        return WordConstructorCubit(
+          wordStatisticRepository: GetIt.I.get(),
+          sessionBuilder: sessionBuilder,
+        )..started();
       },
       child: BlocListener<WordConstructorCubit, WordConstructorState>(
         listener: _listener,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:open_words/features/game/guess_games/word_compare/bloc/word_compare_bloc.dart';
 import 'package:open_words/features/game/guess_games/word_compare/utils/compare_session_builder.dart';
 import 'package:open_words/features/game/guess_games/word_compare/widgets/word_compare_answer_view.dart';
@@ -19,8 +20,10 @@ class WordCompareGamePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return WordCompareBloc(sessionBuilder: sessionBuilder)
-          ..add(WordCompareStarted());
+        return WordCompareBloc(
+          wordStatisticRepository: GetIt.I.get(),
+          sessionBuilder: sessionBuilder,
+        )..add(WordCompareStarted());
       },
       child: BlocListener<WordCompareBloc, WordCompareState>(
         listener: _listener,
