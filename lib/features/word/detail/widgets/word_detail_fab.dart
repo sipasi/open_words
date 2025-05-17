@@ -36,7 +36,7 @@ class WordDetailFab extends StatelessWidget {
     );
   }
 
-  void _onEdit(BuildContext context) {
+  Future _onEdit(BuildContext context) async {
     final cubit = context.read<WordDetailPageCubit>();
     final state = cubit.state;
     final origin = state.origin;
@@ -45,7 +45,7 @@ class WordDetailFab extends StatelessWidget {
 
     _toggle();
 
-    context.push(
+    await context.push(
       (context) => WordEditPage(
         id: cubit.wordId,
         origin: origin,

@@ -10,6 +10,7 @@ import 'package:open_words/features/word/detail/widgets/word_detail_fab.dart';
 import 'package:open_words/features/word/detail/widgets/word_detail_metadata_view.dart';
 import 'package:open_words/features/word/detail/widgets/word_detail_title.dart';
 import 'package:open_words/features/word/detail/widgets/word_info_card.dart';
+import 'package:open_words/features/word/detail/widgets/word_statistic_card.dart';
 import 'package:open_words/shared/constants/list_padding_constans.dart';
 
 class WordDetailPage extends StatelessWidget {
@@ -24,6 +25,7 @@ class WordDetailPage extends StatelessWidget {
       create:
           (context) => WordDetailPageCubit(
             metadataService: GetIt.I.get(),
+            statisticRepository: GetIt.I.get(),
             group: group,
             word: word,
           )..init(),
@@ -44,6 +46,7 @@ class WordDetailView extends StatelessWidget {
         children: [
           WordInfoCard(),
           const SizedBox(height: 12),
+          WordStatisticCard(),
           TextToSpeechCard(),
           WordDetailMetadataView(),
         ],
