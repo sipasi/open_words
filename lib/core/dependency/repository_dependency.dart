@@ -11,6 +11,7 @@ class RepositoryDependency extends AppDependency {
     container.registerSingleton(storage.folderRepository);
     container.registerSingleton(storage.groupRepository);
     container.registerSingleton(storage.wordRepository);
+    container.registerSingleton(storage.wordStatisticRepository);
     container.registerSingleton(storage.wordMetadataRepository);
     container.registerSingleton(storage.webLookupRepository);
     container.registerSingleton(storage.explorerRepository);
