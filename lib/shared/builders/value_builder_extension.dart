@@ -26,4 +26,10 @@ extension ValueBuilderExtension<T, U> on T? {
   }) {
     return valueBuilder(when: when, builder: builder, or: or)!;
   }
+
+  U? isNotNullBuilder(ValueBuilder<U, T> builder) {
+    final value = this;
+
+    return value == null ? null : builder(value);
+  }
 }
