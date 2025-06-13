@@ -72,7 +72,7 @@ MIT — free to use, modify, and share ❤️
 
   ### 📚 Build Vocabulary
 
-  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/group_detail_page_dark.png?raw=true" width="30%"><img/> 
+  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/group_detail_page_light.png?raw=true" width="30%"><img/> 
   <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/word_detail_page_dark.png?raw=true" width="30%"><img/> 
 
   > metadata web loading supports only english words
