@@ -25,6 +25,13 @@ class _WordEditEtymologyEditorState extends State<WordEditEtymologyEditor> {
   }
 
   @override
+  void dispose() {
+    translation.dispose();
+    
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ListTile(
       title: TextEditField(

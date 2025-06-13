@@ -26,12 +26,11 @@ class WordListCreatePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<WordListCreateCubit>(
       lazy: false,
-      create:
-          (context) => WordListCreateCubit(
-            group: group,
-            groupRepository: GetIt.I.get(),
-            wordRepository: GetIt.I.get(),
-          ),
+      create: (context) => WordListCreateCubit(
+        group: group,
+        groupRepository: GetIt.I.get(),
+        wordRepository: GetIt.I.get(),
+      ),
       child: WordListCreateView(),
     );
   }
@@ -78,6 +77,10 @@ class _WordListCreateViewState extends State<WordListCreateView> {
   void dispose() {
     _clearInputSubscription.cancel();
     _daraftRemovedSubscription.cancel();
+
+    origin.dispose();
+    translation.dispose();
+
     super.dispose();
   }
 
@@ -85,8 +88,8 @@ class _WordListCreateViewState extends State<WordListCreateView> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult:
-          (didPop, result) => _onPopHandler(context, didPop, result),
+      onPopInvokedWithResult: (didPop, result) =>
+          _onPopHandler(context, didPop, result),
       child: Scaffold(
         appBar: AppBar(
           title: WordListCreateTitle(),

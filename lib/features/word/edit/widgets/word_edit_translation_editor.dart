@@ -25,6 +25,13 @@ class _WordEditTranslationEditorState extends State<WordEditTranslationEditor> {
   }
 
   @override
+  void dispose() {
+    translation.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ListTile(
       title: TextEditField(
