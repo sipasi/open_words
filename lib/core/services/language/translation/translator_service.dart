@@ -26,6 +26,6 @@ final class TranslatorServiceImpl extends TranslatorService {
   Future launch(TranslatorOption option, TranslationRequest request) {
     final uri = get(option).build(request);
 
-    return launchUrl(uri);
+    return launchUrl(uri, mode: LaunchMode.inAppWebView);
   }
 }
