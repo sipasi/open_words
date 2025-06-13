@@ -30,6 +30,7 @@ class WordListCreatePage extends StatelessWidget {
         group: group,
         groupRepository: GetIt.I.get(),
         wordRepository: GetIt.I.get(),
+        translatorService: GetIt.I.get(),
       ),
       child: WordListCreateView(),
     );

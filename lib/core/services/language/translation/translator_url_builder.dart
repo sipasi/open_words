@@ -1,8 +1,8 @@
 import 'package:open_words/core/data/entities/language_info.dart';
 
 final class TranslationRequest {
-  final String source;
-  final String target;
+  final LanguageInfo source;
+  final LanguageInfo target;
   final String word;
 
   const TranslationRequest({
@@ -10,18 +10,18 @@ final class TranslationRequest {
     required this.target,
     required this.word,
   });
-  TranslationRequest.languageInfo({
-    required LanguageInfo source,
-    required LanguageInfo target,
-    required this.word,
-  }) : source = source.code,
-       target = target.code;
 }
 
 sealed class TranslatorUrlBuilder {
   const TranslatorUrlBuilder();
 
   Uri build(TranslationRequest request);
+
+  (String sourceCode, String targetCode, String word) deconstruct(
+    TranslationRequest request,
+  ) {
+    return (request.source.code, request.target.code, request.word);
+  }
 }
 
 final class GoogleTranslatorBuilder extends TranslatorUrlBuilder {
@@ -29,11 +29,13 @@ final class GoogleTranslatorBuilder extends TranslatorUrlBuilder {
 
   @override
   Uri build(TranslationRequest request) {
+    final (source, target, word) = deconstruct(request);
+
     // https://translate.google.com.ua/?sl=en&tl=uk&text=best%0A&op=translate
     final address = Uri.https('translate.google.com', '/', {
-      'sl': request.source,
-      'tl': request.target,
-      'text': request.word,
+      'sl': source,
+      'tl': target,
+      'text': word,
       'op': 'translate',
     });
 
@@ -46,11 +48,7 @@ final class DeeplTranslatorBuilder extends TranslatorUrlBuilder {
 
   @override
   Uri build(TranslationRequest request) {
-    final (source, target, word) = (
-      request.source,
-      request.target,
-      request.word,
-    );
+    final (source, target, word) = deconstruct(request);
 
     // https://www.deepl.com/en/translator#en/uk/best
     final address = Uri(
@@ -69,16 +67,13 @@ final class ReversoTranslatorBuilder extends TranslatorUrlBuilder {
 
   @override
   Uri build(TranslationRequest request) {
-    final (source, target, word) = (
-      request.source,
-      request.target,
-      request.word,
-    );
+    final (source, target, word) = deconstruct(request);
 
     // https://www.reverso.net/text-translation#sl=en&tl=uk&text=best
-    final address =
-        'https://www.reverso.net/text-translation#sl=$source&tl=$target&text=$word';
+    final address = Uri.parse(
+      'https://www.reverso.net/text-translation#sl=$source&tl=$target&text=$word',
+    );
 
-    return Uri.parse(address);
+    return address;
   }
 }

@@ -5,6 +5,9 @@ import 'package:open_words/core/data/draft/word_draft.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
 import 'package:open_words/core/data/repository/word_group_repository.dart';
 import 'package:open_words/core/data/repository/word_repository.dart';
+import 'package:open_words/core/services/language/translation/translator_option.dart';
+import 'package:open_words/core/services/language/translation/translator_service.dart';
+import 'package:open_words/core/services/language/translation/translator_url_builder.dart';
 
 part 'word_list_create_state.dart';
 
@@ -21,6 +24,7 @@ class WordListCreateCubit extends Cubit<WordListCreateState> {
 
   final WordGroupRepository groupRepository;
   final WordRepository wordRepository;
+  final TranslatorService translatorService;
 
   Stream<WordListUiEvent> get uiEvents => _uiEvent.stream;
   Stream<WordDraft> get draftRemovedEvent => _draftRemovedEvent.stream;
@@ -29,6 +33,7 @@ class WordListCreateCubit extends Cubit<WordListCreateState> {
     required this.group,
     required this.groupRepository,
     required this.wordRepository,
+    required this.translatorService,
   }) : super(WordListCreateState.initial());
 
   void setOrigin(String value) {
@@ -37,6 +42,20 @@ class WordListCreateCubit extends Cubit<WordListCreateState> {
 
   void setTranslation(String value) {
     emit(state.copyWith(translationDraft: value));
+  }
+
+  Future launchTranslator(TranslatorOption option) async {
+    if (state.originDraft.isEmpty) {
+      return;
+    }
+
+    final request = TranslationRequest(
+      source: group.origin,
+      target: group.translation,
+      word: state.originDraft,
+    );
+
+    await translatorService.launch(option, request);
   }
 
   void addDraft() {
