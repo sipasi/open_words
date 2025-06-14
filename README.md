@@ -6,6 +6,20 @@ This app is the **next generation** of my earlier [.NET MAUI](https://github.com
 
 > For the best results, use **English** as the base language along with the language you're learning.
 
+## Table of Contents
+- [Open Words](#open-words)
+  - [Table of Contents](#table-of-contents)
+  - [Features](#features)
+  - [Data Format (Import/Export Json)](#data-format-importexport-json)
+  - [Data Sources](#data-sources)
+  - [Supported Platforms](#supported-platforms)
+  - [Getting Started](#getting-started)
+    - [Requirements](#requirements)
+    - [Install and Run](#install-and-run)
+  - [Bug Reporting](#bug-reporting)
+  - [License](#license)
+  - [Screenshots](#screenshots)
+
 ## Features
 All features are **designed** to help you **stay organized** and make **learning** more **interactive** and **fun**.
 
@@ -75,8 +89,18 @@ Each dictionary is represented as an object within a Json array:
   * `translation`: Its translation in the target language.
 
 This clean and minimal structure makes it easy to back up, share, and transfer your vocabulary across devices.
+ 
+## Data Sources
 
-## 🖥️📱 Supported Platforms
+Open Words fetches English word metadata — including definitions, phonetics, synonyms, and antonyms — from the [Dictionary API](https://dictionaryapi.dev/), a free and open-source dictionary API.
+
+Example API request for the word "advice":  
+[https://api.dictionaryapi.dev/api/v2/entries/en/advice](https://api.dictionaryapi.dev/api/v2/entries/en/advice)
+
+You can find their source code and documentation here:  
+[GitHub - meetDeveloper/freeDictionaryAPI](https://github.com/meetDeveloper/freeDictionaryAPI)
+
+## Supported Platforms
 
 | Platform  | Status                | Notes                                                   |
 | --------- | --------------------- | ------------------------------------------------------- |
@@ -89,14 +113,14 @@ This clean and minimal structure makes it easy to back up, share, and transfer y
 
 > 🧪 If you test on an unverified platform, feel free to [open an issue](https://github.com/sipasi/open_words/issues) or contribute!
 
-## 🚀 Getting Started
+## Getting Started
 
-### 🧰 Requirements
+### Requirements
 
 * [Flutter SDK](https://flutter.dev/docs/get-started/install)
 * A device or emulator (Android, iOS, Windows, macOS, or Linux)
 
-### 📥 Install and Run
+### Install and Run
 
 Clone the repository:
 
@@ -119,7 +143,7 @@ flutter run
 
 Make sure you have the appropriate platform toolchains installed. Refer to the [official Flutter docs](https://docs.flutter.dev/get-started/install) if needed.
   
-## 🐞 Bug Reporting
+## Bug Reporting
 
 Found a bug or want to request a feature?
 
@@ -139,30 +163,30 @@ Your feedback helps make Open Words better — thank you! 💛
 
 MIT — free to use, modify, and share ❤️
 
----
+## Screenshots
 
 <details>
-  <summary>Screenshots</summary> 
+  <summary>expand</summary> 
 
-  ### 🌗 Dark and Light
+  ### Dark and Light
 
   <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/explorer_page_dark.png?raw=true" width="30%"/>
   <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/explorer_page_light.png?raw=true" width="30%"/>
 
-  ### 📚 Build Vocabulary
+  ### Build Vocabulary
 
   <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/group_detail_page_light.png?raw=true" width="30%"/>
   <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/word_detail_page_dark.png?raw=true" width="30%"/>
 
   > metadata web loading supports only english words
  
-  ### 📤 Export your Dictionaries
+  ### Export your Dictionaries
 
   <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/export_page_dark.png?raw=true" width="30%"/>
 
   > supports formats: json, text and pdf (will be available in future releases)
  
-  ### 🎮 Play Games
+  ### Play Games
 
   <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/game_list_page_light.png?raw=true" width="30%"/>
   <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/game_compare_dark.png?raw=true" width="30%"/>
@@ -170,7 +194,7 @@ MIT — free to use, modify, and share ❤️
   <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/game_match_audios_dark.png?raw=true" width="30%"/>
   <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/game_match_words_dark.png?raw=true" width="30%"/>
 
-  ### 💻 Desktop or 📱 Tablet
+  ### Desktop or Tablet
 
   <img src="https://github.com/sipasi/open_words/blob/main/screenshots/desktop/explorer_page_dark.png?raw=true"/>
   <img src="https://github.com/sipasi/open_words/blob/main/screenshots/desktop/group_detail_page_dark.png?raw=true"/>
