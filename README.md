@@ -45,7 +45,20 @@ The app uses a clean and simple **JSON** format for **importing** and **exportin
 Internally, Open Words stores data in a **local SQL database** for performance and scalability.
 
 ### Example JSON
+The JSON data can be provided in two forms:
 
+**A single dictionary object:**
+```json
+{
+  "name": "Nature",
+  "origin": "en",
+  "translation": "uk",
+  "words": [
+    { "origin": "tree", "translation": "дерево" }
+  ]
+}
+```
+**Or an array of dictionary objects:**
 ```json
 [
   {
@@ -57,16 +70,25 @@ Internally, Open Words stores data in a **local SQL database** for performance a
       { "origin": "garden", "translation": "сад" },
       { "origin": "mountain", "translation": "гора" }
     ]
+  },
+  {
+    "name": "Animals",
+    "origin": "en",
+    "translation": "uk",
+    "words": [
+      { "origin": "cat", "translation": "кіт" }
+    ]
   }
 ]
 ```
+The app will automatically detect and handle either format during import.
 
 ### Structure
 
 Each dictionary (or word group) is represented as an object inside a JSON array:
 
 - **`name`**: The title of the word group (e.g., `"Nature"`).
-- **`origin`**: Either an ISO language code (e.g., `"en", "uk"`)
+- **`origin`**: The ISO language code (e.g., `"en", "uk"`)
 - **`translation`**: Same as `origin`, but for the target language.
 - **`words`**: An array of word pairs:
   - `origin`: Word in the source language
@@ -95,7 +117,7 @@ You can find their source code and documentation here:
 | 🍏 iOS     | ❓ Untested            | Expected to work, but not yet tested                    |
 | 🍏 macOS   | ❓ Untested            | Expected to work, but not yet tested                    |
 
-> 🧪 If you test on an unverified platform, feel free to [open an issue](https://github.com/sipasi/open_words/issues) or contribute!
+> 🧪 If you test on an unverified platform, feel free to [open an issue](https://github.com/sipasi/open_words/issues)!
 
 ## Getting Started
 
