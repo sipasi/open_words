@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 class RectangleStyle {
   const RectangleStyle._();
 
-  static filled({double radius = 8}) {
+  static ButtonStyle filled({double radius = 8}) {
     return FilledButton.styleFrom(shape: _radius(radius));
   }
 
-  static outlined({double radius = 8}) {
+  static ButtonStyle outlined({double radius = 8}) {
     return OutlinedButton.styleFrom(shape: _radius(radius));
   }
 
-  static _radius(double radius) {
+  static RoundedRectangleBorder _radius(double radius) {
     return RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(radius)),
     );

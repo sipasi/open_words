@@ -35,10 +35,9 @@ class WordMetadataUpdateCubit extends Cubit<WordMetadataUpdateState> {
 
     emit(
       state.copyWith(
-        needDownload:
-            downloads
-                .where((element) => element.downloadStatus.isNotExist)
-                .toList(),
+        needDownload: downloads
+            .where((element) => element.downloadStatus.isNotExist)
+            .toList(),
       ),
     );
 
@@ -71,10 +70,9 @@ class WordMetadataUpdateCubit extends Cubit<WordMetadataUpdateState> {
     await _delayBasedOnResult(apiResult);
 
     return download.copyWith(
-      downloadStatus:
-          apiResult == null
-              ? DownloadInfoStatus.notFound
-              : DownloadInfoStatus.downloaded,
+      downloadStatus: apiResult == null
+          ? DownloadInfoStatus.notFound
+          : DownloadInfoStatus.downloaded,
     );
   }
 
@@ -99,7 +97,7 @@ class WordMetadataUpdateCubit extends Cubit<WordMetadataUpdateState> {
     await Future.delayed(const Duration(milliseconds: 500));
   }
 
-  Future<void> _delayBasedOnResult(result) async {
+  Future<void> _delayBasedOnResult(dynamic result) async {
     await Future.delayed(Duration(milliseconds: result == null ? 800 : 400));
   }
 }
