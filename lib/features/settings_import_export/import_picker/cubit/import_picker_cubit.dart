@@ -4,8 +4,10 @@ import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_words/core/services/file/picker/file_picker_service.dart';
+import 'package:open_words/core/services/language/language_info_service.dart';
 import 'package:open_words/core/services/logger/app_logger.dart';
-import 'package:open_words/features/settings_import_export/export_selected/models/word_group_export.dart';
+import 'package:open_words/features/settings_import_export/models/language_info_resolver.dart';
+import 'package:open_words/features/settings_import_export/models/word_group_export.dart';
 import 'package:open_words/shared/builders/value_builder_extension.dart';
 
 part 'import_picker_state.dart';
@@ -15,9 +17,14 @@ class ImportPickerCubit extends Cubit<ImportPickerState> {
 
   final FilePickerService filePicker;
 
-  ImportPickerCubit({required this.filePicker})
-    : logger = GetIt.I.get<AppLogger>(),
-      super(ImportPickerState.initial());
+  final LanguageInfoResolver languageResolver;
+
+  ImportPickerCubit({
+    required this.filePicker,
+    required LanguageInfoService languageInfoService,
+  }) : logger = GetIt.I.get<AppLogger>(),
+       languageResolver = LanguageInfoResolver(service: languageInfoService),
+       super(ImportPickerState.initial());
 
   Future started() async {
     emit(state.copyWith(filePickingStatus: FilePickingStatus.picking));
@@ -63,10 +70,19 @@ class ImportPickerCubit extends Cubit<ImportPickerState> {
     final decoded = json.decode(text);
 
     if (decoded case List<dynamic> list) {
-      return list.map((e) => WordGroupExport.fromMap(e)).toList();
+      return list
+          .map(
+            (e) => WordGroupExport.fromMap(
+              languageResolver: languageResolver,
+              map: e,
+            ),
+          )
+          .toList();
     }
 
-    return [WordGroupExport.fromMap(decoded)];
+    return [
+      WordGroupExport.fromMap(languageResolver: languageResolver, map: decoded),
+    ];
   }
 
   void toggle(WordGroupExport group) {

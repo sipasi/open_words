@@ -3,8 +3,8 @@ import 'package:open_words/core/data/repository/word_repository.dart';
 import 'package:open_words/core/services/file/local_save/local_file_service.dart';
 import 'package:open_words/features/settings_import_export/export_selected/bloc/export_selected_bloc.dart';
 import 'package:open_words/features/settings_import_export/export_selected/logic/word_group_formatter_factory.dart';
-import 'package:open_words/features/settings_import_export/export_selected/models/word_export.dart';
-import 'package:open_words/features/settings_import_export/export_selected/models/word_group_export.dart';
+import 'package:open_words/features/settings_import_export/models/word_export.dart';
+import 'package:open_words/features/settings_import_export/models/word_group_export.dart';
 
 final class LoadFileToDeviceUseCase {
   final LocalFileService localFileService;

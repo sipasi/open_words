@@ -13,8 +13,10 @@ class ImportPickerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create:
-          (context) => ImportPickerCubit(filePicker: GetIt.I.get())..started(),
+      create: (context) => ImportPickerCubit(
+        filePicker: GetIt.I.get(),
+        languageInfoService: GetIt.I.get(),
+      )..started(),
       child: ImportPickerView(),
     );
   }

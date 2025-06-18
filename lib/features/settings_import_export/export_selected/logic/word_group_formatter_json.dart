@@ -2,7 +2,7 @@ import 'dart:convert' as convert;
 import 'dart:typed_data';
 
 import 'package:open_words/features/settings_import_export/export_selected/logic/word_group_formatter.dart';
-import 'package:open_words/features/settings_import_export/export_selected/models/word_group_export.dart';
+import 'package:open_words/features/settings_import_export/models/word_group_export.dart';
 
 final class WordGroupFormatterJson extends WordGroupFormatter {
   const WordGroupFormatterJson();

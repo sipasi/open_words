@@ -5,7 +5,7 @@ import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/repository/folder_repository.dart';
 import 'package:open_words/core/data/repository/word_group_repository.dart';
 import 'package:open_words/core/data/repository/word_repository.dart';
-import 'package:open_words/features/settings_import_export/export_selected/models/word_group_export.dart';
+import 'package:open_words/features/settings_import_export/models/word_group_export.dart';
 
 part 'import_picked_state.dart';
 

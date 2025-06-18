@@ -11,6 +11,8 @@ This app is the **next generation** of my earlier [.NET MAUI](https://github.com
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Data Format (Import/Export Json)](#data-format-importexport-json)
+    - [Example JSON](#example-json)
+    - [Structure](#structure)
   - [Data Sources](#data-sources)
   - [Supported Platforms](#supported-platforms)
   - [Getting Started](#getting-started)
@@ -36,59 +38,41 @@ All features are **designed** to help you **stay organized** and make **learning
 -   🔍 **Fetch metadata for English words** — get meanings, definitions, phonetics, synonyms, and antonyms (English only for now).
     
 -   📤📥 **Export and import dictionaries** — share or save them locally.
+ 
+## Data Format (Import/Export JSON)
 
-## Data Format (Import/Export Json)
-The app uses a clean and simple **Json** format for **importing** and **exporting** **dictionaries**. 
+The app uses a clean and simple **JSON** format for **importing** and **exporting** dictionaries.
 Internally, Open Words stores data in a **local SQL database** for performance and scalability.
 
-Example **Json**:
+### Example JSON
+
 ```json
 [
   {
     "name": "Nature",
-    "origin": {
-      "code": "en",
-      "name": "English",
-      "native": "English"
-    },
-    "translation": {
-      "code": "uk",
-      "name": "Ukrainian",
-      "native": "Українська"
-    },
+    "origin": "en",
+    "translation": "uk",
     "words": [
-      {
-        "origin": "tree",
-        "translation": "дерево"
-      },
-      {
-        "origin": "garden",
-        "translation": "сад"
-      },
-      {
-        "origin": "mountain",
-        "translation": "гора"
-      }
+      { "origin": "tree", "translation": "дерево" },
+      { "origin": "garden", "translation": "сад" },
+      { "origin": "mountain", "translation": "гора" }
     ]
   }
 ]
 ```
 
-Each dictionary is represented as an object within a Json array:
+### Structure
 
-* **`name`**: The title of the dictionary or word group (e.g., `"Nature"`).
-* **`origin`**: An object describing the source language:
+Each dictionary (or word group) is represented as an object inside a JSON array:
 
-  * `code`: ISO language code (e.g., `"en"` for English).
-  * `name`: Language name in English.
-  * `native`: Language name in its native form.
-* **`translation`**: An object describing the target language, structured the same as `origin`.
-* **`words`**: An array of word pairs:
+- **`name`**: The title of the word group (e.g., `"Nature"`).
+- **`origin`**: Either an ISO language code (e.g., `"en", "uk"`)
+- **`translation`**: Same as `origin`, but for the target language.
+- **`words`**: An array of word pairs:
+  - `origin`: Word in the source language
+  - `translation`: Corresponding word in the target language
 
-  * `origin`: The word in the source language.
-  * `translation`: Its translation in the target language.
-
-This clean and minimal structure makes it easy to back up, share, and transfer your vocabulary across devices.
+This flexible and minimal structure makes it easy to back up, share, and transfer your vocabulary across devices.
  
 ## Data Sources
 

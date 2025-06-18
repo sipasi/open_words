@@ -4,7 +4,7 @@ import 'package:open_words/features/settings_import_export/export_selected/logic
 import 'package:open_words/features/settings_import_export/export_selected/logic/word_group_formatter_json.dart';
 import 'package:open_words/features/settings_import_export/export_selected/logic/word_group_formatter_text.dart';
 import 'package:open_words/features/settings_import_export/export_selected/models/export_extension.dart';
-import 'package:open_words/features/settings_import_export/export_selected/models/word_group_export.dart';
+import 'package:open_words/features/settings_import_export/models/word_group_export.dart';
 
 sealed class WordGroupFormatterFactory {
   static WordGroupFormatter get(ExportExtension extension) {
