@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class ExplorerGridTile extends StatelessWidget {
   final String title;
   final TextStyle? titleStyle;
-  final int titleLines;
   final Icon icon;
+  final Color iconBackground;
   final Widget? trailing;
 
   final void Function() onTap;
@@ -14,8 +14,8 @@ class ExplorerGridTile extends StatelessWidget {
     super.key,
     required this.title,
     this.titleStyle,
-    required this.titleLines,
     required this.icon,
+    required this.iconBackground,
     this.trailing,
     required this.onTap,
     required this.onLongPress,
@@ -26,11 +26,17 @@ class ExplorerGridTile extends StatelessWidget {
     return ListTile(
       title: Text(
         title,
-        maxLines: titleLines,
+        maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: titleStyle,
       ),
-      leading: icon,
+      leading: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(6)),
+        child: ColoredBox(
+          color: iconBackground,
+          child: SizedBox(width: 36, height: 36, child: icon),
+        ),
+      ),
       trailing: trailing,
       onTap: onTap,
       onLongPress: onLongPress,

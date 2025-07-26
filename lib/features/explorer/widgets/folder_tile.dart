@@ -16,14 +16,16 @@ class FolderTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = context.colorScheme;
+
     return ExplorerGridTile(
       title: folder.name,
       titleStyle: TextStyle(
         fontWeight: FontWeight.bold,
-        color: context.colorScheme.secondary,
+        color: colorScheme.secondary,
       ),
-      titleLines: 1,
-      icon: Icon(Icons.folder, color: context.colorScheme.secondary),
+      icon: Icon(Icons.folder, color: colorScheme.secondary),
+      iconBackground: colorScheme.secondaryContainer,
       onTap: () => onTap(context, folder),
       onLongPress: () => onLongPress(context, folder),
     );
@@ -40,7 +42,7 @@ class FolderTile extends StatelessWidget {
 
     ExplorerEntityEditor.show(
       context: context,
-      parentFolder: context.read<ExplorerBloc>().state.exploredId, 
+      parentFolder: context.read<ExplorerBloc>().state.exploredId,
       entityUnion: ExplorerEntityUnion.folder(value),
     );
   }

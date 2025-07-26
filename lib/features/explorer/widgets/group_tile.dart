@@ -18,12 +18,14 @@ class GroupTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = context.colorScheme;
+
     return ExplorerGridTile(
       title: group.name,
-      titleLines: 1,
-      titleStyle: TextStyle(color: context.colorScheme.primary),
+      titleStyle: TextStyle(color: colorScheme.primary),
       trailing: Text(group.words.toString()),
-      icon: Icon(Icons.book_outlined, color: context.colorScheme.primary),
+      icon: Icon(Icons.book_outlined, color: colorScheme.primary),
+      iconBackground: colorScheme.secondaryContainer,
       onTap: () => onTap(context, group),
       onLongPress: () => onLongPress(context, group),
     );
@@ -38,7 +40,7 @@ class GroupTile extends StatelessWidget {
 
     return ExplorerEntityEditor.show(
       context: context,
-      parentFolder: context.read<ExplorerBloc>().state.exploredId, 
+      parentFolder: context.read<ExplorerBloc>().state.exploredId,
       entityUnion: ExplorerEntityUnion.group(value),
     );
   }
