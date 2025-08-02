@@ -29,11 +29,11 @@ class OpenWordsApp extends StatelessWidget {
         ),
         BlocProvider(
           lazy: false,
-          create:
-              (context) => SettingsBloc(
-                themeStorage: GetIt.I.get(),
-                translatorOptionStorage: GetIt.I.get(),
-              )..add(SettingsInitRequested()),
+          create: (context) => SettingsBloc(
+            themeStorage: GetIt.I.get(),
+            translatorStorage: GetIt.I.get(),
+            aiBridgeProvider: GetIt.I.get(),
+          )..add(SettingsInitRequested()),
         ),
       ],
       child: BlocBuilder<OpenWordsAppCubit, OpenWordsAppState>(
