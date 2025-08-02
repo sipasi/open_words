@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:open_words/core/dependency/app_dependency.dart';
+import 'package:open_words/core/dependency/artificial_intelligence_dependency.dart';
 import 'package:open_words/core/dependency/clipboard_service_dependency.dart';
 import 'package:open_words/core/dependency/directories_dependency.dart';
 import 'package:open_words/core/dependency/file_local_save_service_dependency.dart';
@@ -42,6 +43,7 @@ abstract class AppDependencyProvider {
       TranslatorServicesDependency(),
       ClipboardServiceDependency(),
       WordMetadataServiceDependency(),
+      ArtificialIntelligenceDependency(),
     ];
   }
 }
