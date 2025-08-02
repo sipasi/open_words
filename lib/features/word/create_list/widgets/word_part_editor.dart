@@ -45,15 +45,14 @@ class WordPartEditor extends StatelessWidget {
             ),
             Row(
               children: [
-                IconButton.filledTonal(
+                FilledButton.tonal(
                   onPressed: _clearText,
-                  icon: Icon(Icons.delete_outline),
+                  child: Icon(Icons.delete_outline),
                 ),
                 const Spacer(),
-                OutlinedButton.icon(
+                OutlinedButton(
                   onPressed: _copyToClipboard,
-                  icon: Icon(Icons.copy_outlined),
-                  label: Text('Copy'),
+                  child: Icon(Icons.copy_outlined),
                 ),
                 const SizedBox(width: 12),
                 OutlinedButton.icon(
@@ -71,16 +70,11 @@ class WordPartEditor extends StatelessWidget {
 
   Future _pastFromClipboard() async {
     final value = await clipboard.getText();
-    final trimmed = controller.textTrim;
 
-    if (value.isEmpty) {
-      return;
+    if (controller.addText(value)) {
+      vibration.tap();
+      onChanged(controller.text);
     }
-
-    vibration.tap();
-    controller.setText(trimmed.isEmpty ? value : '$trimmed, $value');
-
-    onChanged(controller.text);
   }
 
   Future _copyToClipboard() {

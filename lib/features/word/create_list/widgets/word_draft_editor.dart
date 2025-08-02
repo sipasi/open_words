@@ -25,13 +25,13 @@ class WordDraftEditor extends StatelessWidget {
       children: [
         WordPartEditor(
           controller: origin,
-          label: 'Origin',
+          label: bloc.group.origin.native,
           hint: 'Enter origin here',
           onChanged: bloc.setOrigin,
         ),
         WordPartEditor(
           controller: translation,
-          label: 'Translation',
+          label: bloc.group.translation.native,
           hint: 'Enter translation here',
           onChanged: bloc.setTranslation,
         ),

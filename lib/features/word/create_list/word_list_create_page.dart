@@ -31,7 +31,8 @@ class WordListCreatePage extends StatelessWidget {
         groupRepository: GetIt.I.get(),
         wordRepository: GetIt.I.get(),
         translatorService: GetIt.I.get(),
-      ),
+        aiBridgeProvider: GetIt.I.get(),
+      )..init(),
       child: WordListCreateView(),
     );
   }
@@ -113,7 +114,10 @@ class _WordListCreateViewState extends State<WordListCreateView> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: WordListCreateFab(),
-        bottomNavigationBar: WordListCreateBottomBar(),
+        bottomNavigationBar: WordListCreateBottomBar(
+          origin: origin,
+          translation: translation,
+        ),
       ),
     );
   }

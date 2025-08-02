@@ -5,8 +5,9 @@ import 'package:open_words/core/data/draft/word_draft.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
 import 'package:open_words/core/data/repository/word_group_repository.dart';
 import 'package:open_words/core/data/repository/word_repository.dart';
-import 'package:open_words/core/services/language/translation/translator_option.dart';
+import 'package:open_words/core/services/ai_bridge/ai_bridge_provider.dart';
 import 'package:open_words/core/services/language/translation/translator_service.dart';
+import 'package:open_words/core/services/language/translation/translator_template.dart';
 import 'package:open_words/core/services/language/translation/translator_url_builder.dart';
 
 part 'word_list_create_state.dart';
@@ -25,6 +26,7 @@ class WordListCreateCubit extends Cubit<WordListCreateState> {
   final WordGroupRepository groupRepository;
   final WordRepository wordRepository;
   final TranslatorService translatorService;
+  final AiBridgeProvider aiBridgeProvider;
 
   Stream<WordListUiEvent> get uiEvents => _uiEvent.stream;
   Stream<WordDraft> get draftRemovedEvent => _draftRemovedEvent.stream;
@@ -34,7 +36,18 @@ class WordListCreateCubit extends Cubit<WordListCreateState> {
     required this.groupRepository,
     required this.wordRepository,
     required this.translatorService,
+    required this.aiBridgeProvider,
   }) : super(WordListCreateState.initial());
+
+  Future init() async {
+    final isConnected = await aiBridgeProvider.isConnected;
+
+    if (isClosed) {
+      return;
+    }
+
+    emit(state.copyWith(aiAvailable: isConnected));
+  }
 
   void setOrigin(String value) {
     emit(state.copyWith(originDraft: value));
@@ -44,7 +57,7 @@ class WordListCreateCubit extends Cubit<WordListCreateState> {
     emit(state.copyWith(translationDraft: value));
   }
 
-  Future launchTranslator(TranslatorOption option) async {
+  Future launchTranslator(TranslatorTemplate option) async {
     if (state.originDraft.isEmpty) {
       return;
     }
