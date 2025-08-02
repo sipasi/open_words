@@ -23,6 +23,19 @@ class TextEditController {
   void setText(String? text) => controller.text = text ?? '';
   void setError(String? text) => _error = text;
 
+  bool addText(String? text, {String separator = ", "}) {
+    if (text == null || text.isEmpty) {
+      return false;
+    }
+
+    final trimmed = textTrim;
+    final textTrimmed = text.trim();
+
+    setText(trimmed.isEmpty ? textTrimmed : '$trimmed$separator$textTrimmed');
+
+    return true;
+  }
+
   void setErrorIfEmpty([String message = 'can\'t be empty']) {
     if (textTrim.isNotEmpty) {
       if (error != null) {

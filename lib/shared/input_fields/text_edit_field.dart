@@ -20,6 +20,8 @@ class TextEditField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final int? maxLines;
 
+  final Widget? suffix;
+
   final void Function(String value)? onChanged;
   final void Function(String value)? onSubmit;
   final void Function()? onEditingComplete;
@@ -35,6 +37,7 @@ class TextEditField extends StatelessWidget {
     this.keyboardType,
     this.textInputAction,
     this.maxLines,
+    this.suffix,
     this.inputFormatters,
     this.onChanged,
     this.onSubmit,
@@ -56,6 +59,7 @@ class TextEditField extends StatelessWidget {
         hintText: hint,
         errorText: controller?.error,
         border: border,
+        suffix: suffix,
       ),
       inputFormatters: inputFormatters,
       onChanged: onChanged,
