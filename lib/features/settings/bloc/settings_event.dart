@@ -5,7 +5,13 @@ sealed class SettingsEvent {}
 final class SettingsInitRequested extends SettingsEvent {}
 
 final class SettingsTranslatorChanged extends SettingsEvent {
-  final TranslatorOption value;
+  final TranslatorTemplate value;
 
   SettingsTranslatorChanged(this.value);
+}
+
+final class SettingsAiBridgeChanged extends SettingsEvent {
+  final AiBridgeTemplate value;
+
+  SettingsAiBridgeChanged(this.value);
 }

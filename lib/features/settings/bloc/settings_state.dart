@@ -3,28 +3,33 @@ part of 'settings_bloc.dart';
 class SettingsState {
   final ColorSeed themeSeed;
   final ThemeMode themeMode;
-  final TranslatorOption translatorOption;
+  final TranslatorTemplate translatorTemplate;
+  final AiBridgeTemplate aiBridgeTemplate;
 
   SettingsState({
     required this.themeSeed,
     required this.themeMode,
-    required this.translatorOption,
+    required this.translatorTemplate,
+    required this.aiBridgeTemplate,
   });
 
   SettingsState.initial()
     : themeSeed = ColorSeed.blue,
       themeMode = ThemeMode.dark,
-      translatorOption = TranslatorOption.google;
+      translatorTemplate = const TranslatorTemplate.google(),
+      aiBridgeTemplate = const AiBridgeTemplate.empty();
 
   SettingsState copyWith({
     ColorSeed? themeSeed,
     ThemeMode? themeMode,
-    TranslatorOption? translatorOption,
+    TranslatorTemplate? translatorTemplate,
+    AiBridgeTemplate? aiBridgeTemplate,
   }) {
     return SettingsState(
       themeSeed: themeSeed ?? this.themeSeed,
       themeMode: themeMode ?? this.themeMode,
-      translatorOption: translatorOption ?? this.translatorOption,
+      translatorTemplate: translatorTemplate ?? this.translatorTemplate,
+      aiBridgeTemplate: aiBridgeTemplate ?? this.aiBridgeTemplate,
     );
   }
 }

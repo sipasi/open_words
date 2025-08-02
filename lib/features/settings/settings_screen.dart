@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:open_words/features/settings/widgets/settings_tile_group.dart';
 import 'package:open_words/features/settings/widgets/tiles/add_preinstalled_tile.dart';
+import 'package:open_words/features/settings/widgets/tiles/ai_provider_tile.dart';
 import 'package:open_words/features/settings/widgets/tiles/database_info_open_tile.dart';
 import 'package:open_words/features/settings/widgets/tiles/delete_all_tile.dart';
 import 'package:open_words/features/settings/widgets/tiles/export_tile.dart';
@@ -23,6 +24,7 @@ class SettingsScreen extends StatelessWidget {
 
         SettingsTileGroup.many(children: [ThemeModeTile(), ThemeColorTile()]),
 
+        SettingsTileGroup.single(child: AiProviderTile()),
         SettingsTileGroup.single(child: TranslatorTile()),
         SettingsTileGroup.single(child: TextToSpeechTile()),
 

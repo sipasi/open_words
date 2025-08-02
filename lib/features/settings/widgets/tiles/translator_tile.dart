@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_words/core/services/language/translation/translator_option.dart';
 import 'package:open_words/features/settings/bloc/settings_bloc.dart';
-import 'package:open_words/shared/modal/translator_list_modal.dart';
+import 'package:open_words/features/translator/edit/translator_template_edit_page.dart';
+import 'package:open_words/shared/navigation/material_navigator.dart';
 
 class TranslatorTile extends StatelessWidget {
   const TranslatorTile({super.key});
@@ -11,28 +11,15 @@ class TranslatorTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsBloc, SettingsState>(
       builder: (context, state) {
-        final translator = state.translatorOption;
+        final translator = state.translatorTemplate;
 
         return ListTile(
           title: Text('Translator'),
-          subtitle: Text(translator.name),
+          subtitle: Text(translator.brand.name),
           trailing: Icon(Icons.translate_outlined),
-          onTap: () => _onTap(context, translator),
+          onTap: () => context.push((context) => TranslatorTemplateEditPage()),
         );
       },
     );
-  }
-
-  Future _onTap(BuildContext context, TranslatorOption current) async {
-    final selected = await TranslatorListModal.dialog(
-      context: context,
-      current: current,
-    );
-
-    if (selected == null || !context.mounted) {
-      return;
-    }
-
-    context.read<SettingsBloc>().add(SettingsTranslatorChanged(selected));
   }
 }
