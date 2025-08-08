@@ -17,11 +17,11 @@ class WordDraftAiTranslateButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final aiAvailable = context.select(
-      (WordListCreateCubit value) => value.state.aiAvailable,
+    final aiNotAvailable = context.select(
+      (WordListCreateCubit value) => value.state.aiNotAvailable,
     );
 
-    if (aiAvailable) {
+    if (aiNotAvailable) {
       return const SizedBox.shrink();
     }
 

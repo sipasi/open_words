@@ -8,6 +8,8 @@ class WordListCreateState {
 
   final bool aiAvailable;
 
+  bool get aiNotAvailable => aiAvailable == false;
+
   const WordListCreateState({
     required this.originDraft,
     required this.translationDraft,
