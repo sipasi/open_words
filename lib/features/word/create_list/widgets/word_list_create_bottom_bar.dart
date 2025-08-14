@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/core/services/language/translation/translator_template.dart';
-import 'package:open_words/features/settings/bloc/settings_bloc.dart';
-import 'package:open_words/features/translator/edit/translator_template_edit_modal.dart';
+import 'package:open_words/features/settings/list/bloc/settings_bloc.dart';
+import 'package:open_words/features/settings/translator_edit/translator_template_edit_modal.dart';
 import 'package:open_words/features/word/create_list/cubit/word_list_create_cubit.dart';
 import 'package:open_words/features/word/create_list/widgets/word_draft_ai_translate_button.dart';
 import 'package:open_words/shared/input_fields/text_edit_controller.dart';

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/entities/word/word.dart';
 import 'package:open_words/core/result/result.dart';
-import 'package:open_words/features/explorer/bloc/explorer_bloc.dart';
+import 'package:open_words/features/explorer/list/bloc/explorer_bloc.dart';
 import 'package:open_words/features/word/detail/word_detail_page.dart';
 import 'package:open_words/features/word_group/detail/cubit/word_group_detail_cubit.dart';
 import 'package:open_words/shared/constants/list_padding_constans.dart';
