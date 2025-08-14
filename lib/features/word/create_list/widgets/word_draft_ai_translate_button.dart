@@ -27,16 +27,25 @@ class WordDraftAiTranslateButton extends StatelessWidget {
 
     final bloc = context.read<WordListCreateCubit>();
 
-    return AiTranslatorButton(
-      translator: AiTranslator(
-        bridge: bloc.aiBridgeProvider.get(),
-        source: bloc.group.origin.name,
-        target: bloc.group.translation.name,
-      ),
-      text: () => origin.text,
-      onSuccess: (response) {
-        translation.addText(response);
-        bloc.setTranslation(translation.text);
+    return FutureBuilder(
+      future: bloc.aiBridgeProvider.get(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return AiTranslatorButton(
+            translator: AiTranslator(
+              bridge: snapshot.data!,
+              source: bloc.group.origin.name,
+              target: bloc.group.translation.name,
+            ),
+            text: () => origin.text,
+            onSuccess: (response) {
+              translation.addText(response);
+              bloc.setTranslation(translation.text);
+            },
+          );
+        }
+
+        return Text('conecting ai');
       },
     );
   }
