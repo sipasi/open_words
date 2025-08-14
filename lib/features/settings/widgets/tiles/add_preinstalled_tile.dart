@@ -10,6 +10,7 @@ import 'package:open_words/core/data/entities/language_info.dart';
 import 'package:open_words/core/data/repository/folder_repository.dart';
 import 'package:open_words/core/data/repository/word_group_repository.dart';
 import 'package:open_words/core/data/repository/word_repository.dart';
+import 'package:open_words/core/generated/assets/assets.gen.dart';
 import 'package:open_words/features/explorer/bloc/explorer_bloc.dart';
 import 'package:open_words/features/settings/widgets/settings_tile_button.dart';
 import 'package:open_words/shared/modal/waiting_dialog.dart';
@@ -38,7 +39,7 @@ class AddPreinstalledTile extends StatelessWidget {
     final wordRepository = GetIt.I.get<WordRepository>();
 
     final jsonData = await rootBundle.loadString(
-      'assets/json/build_in_dictionaries.json',
+      Assets.json.dictionary.ukrainian.common,
     );
 
     final jsonResult = jsonDecode(jsonData);
@@ -62,13 +63,12 @@ class AddPreinstalledTile extends StatelessWidget {
 
       await wordRepository.createAll(
         groupId: group.id,
-        drafts:
-            List.of(node['words']).map((e) {
-              return WordDraft(
-                origin: e['origin'],
-                translation: e['translation'],
-              );
-            }).toList(),
+        drafts: List.of(node['words']).map((e) {
+          return WordDraft(
+            origin: e['origin'],
+            translation: e['translation'],
+          );
+        }).toList(),
       );
     }
 
