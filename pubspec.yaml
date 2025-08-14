@@ -46,6 +46,12 @@ dev_dependencies:
 
   drift_dev: ^2.28.1
 
+flutter_gen:
+  output: lib/core/generated/assets
+  assets:
+    outputs:
+      directory_path_enabled: true
+
 flutter:
   uses-material-design: true
   assets:
