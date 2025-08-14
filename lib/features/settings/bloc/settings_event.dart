@@ -11,7 +11,7 @@ final class SettingsTranslatorChanged extends SettingsEvent {
 }
 
 final class SettingsAiBridgeChanged extends SettingsEvent {
-  final AiBridgeTemplate value;
+  final AiTemplate value;
 
   SettingsAiBridgeChanged(this.value);
 }

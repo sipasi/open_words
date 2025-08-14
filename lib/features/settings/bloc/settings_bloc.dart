@@ -20,17 +20,17 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
     required this.translatorStorage,
     required this.aiBridgeProvider,
   }) : super(SettingsState.initial()) {
-    on<SettingsInitRequested>((event, emit) {
+    on<SettingsInitRequested>((event, emit) async {
       final theme = themeStorage.get();
       final translator = translatorStorage.getOrDefault();
-      final aiBridge = aiBridgeProvider.get();
+      final aiBridge = await aiBridgeProvider.get();
 
       emit(
         state.copyWith(
           themeSeed: theme.seed,
           themeMode: theme.mode,
           translatorTemplate: translator,
-          aiBridgeTemplate: AiBridgeTemplate.from(aiBridge),
+          aiBridgeTemplate: aiBridge.template,
         ),
       );
     });

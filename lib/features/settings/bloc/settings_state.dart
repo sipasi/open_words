@@ -4,7 +4,7 @@ class SettingsState {
   final ColorSeed themeSeed;
   final ThemeMode themeMode;
   final TranslatorTemplate translatorTemplate;
-  final AiBridgeTemplate aiBridgeTemplate;
+  final AiTemplate aiBridgeTemplate;
 
   SettingsState({
     required this.themeSeed,
@@ -17,13 +17,13 @@ class SettingsState {
     : themeSeed = ColorSeed.blue,
       themeMode = ThemeMode.dark,
       translatorTemplate = const TranslatorTemplate.google(),
-      aiBridgeTemplate = const AiBridgeTemplate.empty();
+      aiBridgeTemplate = const AiTemplate.empty();
 
   SettingsState copyWith({
     ColorSeed? themeSeed,
     ThemeMode? themeMode,
     TranslatorTemplate? translatorTemplate,
-    AiBridgeTemplate? aiBridgeTemplate,
+    AiTemplate? aiBridgeTemplate,
   }) {
     return SettingsState(
       themeSeed: themeSeed ?? this.themeSeed,
