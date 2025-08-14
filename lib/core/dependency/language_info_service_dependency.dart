@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:open_words/core/collection/linq/map_by_extension.dart';
 import 'package:open_words/core/data/entities/language_info.dart';
 import 'package:open_words/core/dependency/app_dependency.dart';
+import 'package:open_words/core/generated/assets/assets.gen.dart';
 import 'package:open_words/core/services/language/language_info_service.dart';
 
 final class LanguageInfoServiceDependency extends AppDependency {
@@ -24,7 +25,9 @@ final class LanguageInfoServiceDependency extends AppDependency {
   }
 
   Future<List<LanguageInfo>> _getLanguages() async {
-    final content = await rootBundle.loadString('assets/json/locales.json');
+    final content = await rootBundle.loadString(
+      Assets.json.language.languageMetadata,
+    );
 
     final list = json.decode(content) as List;
 
