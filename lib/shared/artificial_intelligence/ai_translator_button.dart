@@ -55,7 +55,7 @@ class _AiTranslatorButtonState extends State<AiTranslatorButton> {
 
     setState(() => _executing = false);
 
-    if (response != null) {
+    if (response.isNotEmpty) {
       widget.onSuccess(response);
     }
   }
