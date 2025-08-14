@@ -2,63 +2,50 @@ import 'package:open_words/core/artificial_intelligence/bridge/ai_bridge.dart';
 import 'package:open_words/core/artificial_intelligence/bridge/ai_bridge_empty.dart';
 import 'package:open_words/core/artificial_intelligence/bridge/ai_bridge_template.dart';
 import 'package:open_words/core/artificial_intelligence/bridge/ai_bridge_type.dart';
-import 'package:open_words/core/artificial_intelligence/bridge/lan/ai_lan_bridge.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:open_words/core/artificial_intelligence/bridge/lm_studio/lm_studio_bridge.dart';
+import 'package:open_words/core/services/secure_storage/secure_storage.dart';
 
 abstract class AiBridgeProvider {
   Future<bool> get isConnected;
 
-  AiBridgeTemplate getInfo();
+  Future<AiTemplate> getInfo();
 
-  Future set(AiBridgeTemplate bridge);
-  AiBridge get();
+  Future set(AiTemplate bridge);
+
+  Future<AiBridge> get();
 }
 
 final class AiBridgeProviderImpl extends AiBridgeProvider {
   static const String _keyJson = "_ai_bridge_info_";
 
-  final SharedPreferences preferences;
+  final SecureStorage secure;
 
   @override
-  Future<bool> get isConnected => get().isConnected();
+  Future<bool> get isConnected async => (await get()).isConnected();
 
-  AiBridgeProviderImpl({required this.preferences});
+  AiBridgeProviderImpl({required this.secure});
 
   @override
-  AiBridgeTemplate getInfo() {
-    final text = preferences.getString(_keyJson);
+  Future<AiTemplate> getInfo() async {
+    final text = await secure.read(_keyJson);
 
-    return text == null
-        ? AiBridgeTemplate.empty()
-        : AiBridgeTemplate.fromJson(text);
+    return text == null ? AiTemplate.empty() : AiTemplate.fromJson(text);
   }
 
   @override
-  Future set(AiBridgeTemplate bridge) async {
-    await preferences.setString(_keyJson, bridge.toJson());
-  }
-
-  @override
-  AiBridge get() {
-    final info = getInfo();
+  Future<AiBridge> get() async {
+    final info = await getInfo();
 
     return switch (info.type) {
-      AiBridgeType.lan => AiLanBridge(
-        tamplateId: info.id,
-        uri: Uri.parse(info.uri),
-        model: info.model,
-      ),
-      AiBridgeType.local => AiLanBridge(
-        tamplateId: info.id,
-        uri: Uri.parse(info.uri),
-        model: info.model,
-      ),
-      AiBridgeType.remote => AiLanBridge(
-        tamplateId: info.id,
-        uri: Uri.parse(info.uri),
-        model: info.model,
-      ),
+      AiBridgeType.lan => LmStudioBridge(info),
+      AiBridgeType.local => LmStudioBridge(info),
+      AiBridgeType.remote => LmStudioBridge(info),
       _ => AiBridgeEmpty.instance,
     };
+  }
+
+  @override
+  Future set(AiTemplate bridge) async {
+    await secure.write(key: _keyJson, value: bridge.toJson());
   }
 }

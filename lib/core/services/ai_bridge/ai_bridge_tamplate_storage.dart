@@ -1,15 +1,17 @@
+import 'dart:convert' as convert;
+
 import 'package:open_words/core/artificial_intelligence/bridge/ai_bridge_template.dart';
 import 'package:open_words/core/collection/linq/sort_by.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:open_words/core/services/secure_storage/secure_storage.dart';
 
 abstract class AiBridgeTamplateStorage {
-  Future add(AiBridgeTemplate info);
+  Future add(AiTemplate info);
 
-  List<AiBridgeTemplate> getAll();
+  Future<List<AiTemplate>> getAll();
 
   Future remove(String id);
 
-  Future replace({required String id, required AiBridgeTemplate value});
+  Future replace({required String id, required AiTemplate value});
 
   Future clear();
 }
@@ -17,35 +19,35 @@ abstract class AiBridgeTamplateStorage {
 final class AiBridgeTamplateStorageImpl extends AiBridgeTamplateStorage {
   static const String _keyJson = "_ai_bridge_tamplates_";
 
-  final SharedPreferences preferences;
+  final SecureStorage secure;
 
-  AiBridgeTamplateStorageImpl({required this.preferences});
+  AiBridgeTamplateStorageImpl({required this.secure});
 
   @override
-  Future add(AiBridgeTemplate info) {
-    final all = getAll();
+  Future add(AiTemplate info) async {
+    final all = await getAll();
 
-    return preferences.setStringList(
-      _keyJson,
-      [...all, info].map((e) => e.toJson()).toList(),
-    );
+    await _write([...all, info]);
   }
 
   @override
-  List<AiBridgeTemplate> getAll() {
-    final all = preferences
-        .getStringList(_keyJson)
-        ?.map(AiBridgeTemplate.fromJson)
-        .toList();
+  Future<List<AiTemplate>> getAll() async {
+    final json = await secure.read(_keyJson);
 
-    all?.sortAscBy((item) => item.model);
+    final allRaw = json == null
+        ? const []
+        : convert.json.decode(json) as List<dynamic>;
 
-    return all ?? const [];
+    final all = allRaw.map((e) => AiTemplate.fromJson(e)).toList();
+
+    all.sortAscBy((item) => item.model);
+
+    return all;
   }
 
   @override
-  Future replace({required String id, required AiBridgeTemplate value}) async {
-    final all = getAll();
+  Future replace({required String id, required AiTemplate value}) async {
+    final all = await getAll();
 
     final index = all.indexWhere((element) => element.id == id);
 
@@ -62,26 +64,29 @@ final class AiBridgeTamplateStorageImpl extends AiBridgeTamplateStorage {
       uri: value.uri,
     );
 
-    await preferences.setStringList(
-      _keyJson,
-      [...all, updated].map((e) => e.toJson()).toList(),
-    );
+    await _write([...all, updated]);
   }
 
   @override
-  Future remove(String id) {
-    final all = getAll();
+  Future remove(String id) async {
+    final all = await getAll();
 
     all.removeWhere((element) => element.id == id);
 
-    return preferences.setStringList(
-      _keyJson,
-      all.map((e) => e.toJson()).toList(),
-    );
+    await _write(all);
   }
 
   @override
   Future clear() {
-    return preferences.setStringList(_keyJson, const []);
+    return _write(const []);
+  }
+
+  Future _write(List<AiTemplate> templates) {
+    final json = convert.json.encode(templates.map((e) => e.toJson()).toList());
+
+    return secure.write(
+      key: _keyJson,
+      value: json,
+    );
   }
 }
