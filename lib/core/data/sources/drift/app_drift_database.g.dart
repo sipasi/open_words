@@ -103,25 +103,22 @@ class $FoldersTable extends Folders with TableInfo<$FoldersTable, DriftFolder> {
   DriftFolder map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return DriftFolder(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}id'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
       parentId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}parent_id'],
       ),
-      created:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}created'],
-          )!,
-      name:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}name'],
-          )!,
+      created: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
     );
   }
 
@@ -157,10 +154,9 @@ class DriftFolder extends DataClass implements Insertable<DriftFolder> {
   FoldersCompanion toCompanion(bool nullToAbsent) {
     return FoldersCompanion(
       id: Value(id),
-      parentId:
-          parentId == null && nullToAbsent
-              ? const Value.absent()
-              : Value(parentId),
+      parentId: parentId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(parentId),
       created: Value(created),
       name: Value(name),
     );
@@ -572,60 +568,50 @@ class $WordGroupsTable extends WordGroups
   DriftWordGroup map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return DriftWordGroup(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}id'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
       folderId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}folder_id'],
       ),
-      created:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}created'],
-          )!,
-      modified:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}modified'],
-          )!,
-      name:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}name'],
-          )!,
-      languageOriginCode:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}language_origin_code'],
-          )!,
-      languageOriginName:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}language_origin_name'],
-          )!,
-      languageOriginNative:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}language_origin_native'],
-          )!,
-      languageTranslationCode:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}language_translation_code'],
-          )!,
-      languageTranslationName:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}language_translation_name'],
-          )!,
-      languageTranslationNative:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}language_translation_native'],
-          )!,
+      created: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created'],
+      )!,
+      modified: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}modified'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      languageOriginCode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language_origin_code'],
+      )!,
+      languageOriginName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language_origin_name'],
+      )!,
+      languageOriginNative: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language_origin_native'],
+      )!,
+      languageTranslationCode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language_translation_code'],
+      )!,
+      languageTranslationName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language_translation_name'],
+      )!,
+      languageTranslationNative: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language_translation_native'],
+      )!,
     );
   }
 
@@ -688,10 +674,9 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
   WordGroupsCompanion toCompanion(bool nullToAbsent) {
     return WordGroupsCompanion(
       id: Value(id),
-      folderId:
-          folderId == null && nullToAbsent
-              ? const Value.absent()
-              : Value(folderId),
+      folderId: folderId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(folderId),
       created: Value(created),
       modified: Value(modified),
       name: Value(name),
@@ -794,30 +779,24 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
       created: data.created.present ? data.created.value : this.created,
       modified: data.modified.present ? data.modified.value : this.modified,
       name: data.name.present ? data.name.value : this.name,
-      languageOriginCode:
-          data.languageOriginCode.present
-              ? data.languageOriginCode.value
-              : this.languageOriginCode,
-      languageOriginName:
-          data.languageOriginName.present
-              ? data.languageOriginName.value
-              : this.languageOriginName,
-      languageOriginNative:
-          data.languageOriginNative.present
-              ? data.languageOriginNative.value
-              : this.languageOriginNative,
-      languageTranslationCode:
-          data.languageTranslationCode.present
-              ? data.languageTranslationCode.value
-              : this.languageTranslationCode,
-      languageTranslationName:
-          data.languageTranslationName.present
-              ? data.languageTranslationName.value
-              : this.languageTranslationName,
-      languageTranslationNative:
-          data.languageTranslationNative.present
-              ? data.languageTranslationNative.value
-              : this.languageTranslationNative,
+      languageOriginCode: data.languageOriginCode.present
+          ? data.languageOriginCode.value
+          : this.languageOriginCode,
+      languageOriginName: data.languageOriginName.present
+          ? data.languageOriginName.value
+          : this.languageOriginName,
+      languageOriginNative: data.languageOriginNative.present
+          ? data.languageOriginNative.value
+          : this.languageOriginNative,
+      languageTranslationCode: data.languageTranslationCode.present
+          ? data.languageTranslationCode.value
+          : this.languageTranslationCode,
+      languageTranslationName: data.languageTranslationName.present
+          ? data.languageTranslationName.value
+          : this.languageTranslationName,
+      languageTranslationNative: data.languageTranslationNative.present
+          ? data.languageTranslationNative.value
+          : this.languageTranslationNative,
     );
   }
 
@@ -1177,31 +1156,26 @@ class $WordsTable extends Words with TableInfo<$WordsTable, DriftWord> {
   DriftWord map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return DriftWord(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}id'],
-          )!,
-      groupId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}group_id'],
-          )!,
-      created:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}created'],
-          )!,
-      origin:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}origin'],
-          )!,
-      translation:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}translation'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      groupId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}group_id'],
+      )!,
+      created: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created'],
+      )!,
+      origin: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}origin'],
+      )!,
+      translation: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}translation'],
+      )!,
     );
   }
 
@@ -1289,8 +1263,9 @@ class DriftWord extends DataClass implements Insertable<DriftWord> {
       groupId: data.groupId.present ? data.groupId.value : this.groupId,
       created: data.created.present ? data.created.value : this.created,
       origin: data.origin.present ? data.origin.value : this.origin,
-      translation:
-          data.translation.present ? data.translation.value : this.translation,
+      translation: data.translation.present
+          ? data.translation.value
+          : this.translation,
     );
   }
 
@@ -1493,21 +1468,18 @@ class $WordStatisticsTable extends WordStatistics
   DriftWordAnswerStats map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return DriftWordAnswerStats(
-      word:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}word'],
-          )!,
-      correct:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}correct'],
-          )!,
-      incorrect:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}incorrect'],
-          )!,
+      word: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}word'],
+      )!,
+      correct: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}correct'],
+      )!,
+      incorrect: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}incorrect'],
+      )!,
     );
   }
 
@@ -1758,21 +1730,18 @@ class $WordMetadatasTable extends WordMetadatas
   DriftWordMetadata map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return DriftWordMetadata(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}id'],
-          )!,
-      word:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}word'],
-          )!,
-      etymology:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}etymology'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      word: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}word'],
+      )!,
+      etymology: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}etymology'],
+      )!,
     );
   }
 
@@ -2044,26 +2013,22 @@ class $WordMetadataWebLookupsTable extends WordMetadataWebLookups
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return DriftWordMetadataWebLookup(
-      word:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}word'],
-          )!,
-      firstAttemp:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}first_attemp'],
-          )!,
-      lastAttemp:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.dateTime,
-            data['${effectivePrefix}last_attemp'],
-          )!,
-      attemps:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}attemps'],
-          )!,
+      word: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}word'],
+      )!,
+      firstAttemp: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}first_attemp'],
+      )!,
+      lastAttemp: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}last_attemp'],
+      )!,
+      attemps: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}attemps'],
+      )!,
     );
   }
 
@@ -2143,10 +2108,12 @@ class DriftWordMetadataWebLookup extends DataClass
   ) {
     return DriftWordMetadataWebLookup(
       word: data.word.present ? data.word.value : this.word,
-      firstAttemp:
-          data.firstAttemp.present ? data.firstAttemp.value : this.firstAttemp,
-      lastAttemp:
-          data.lastAttemp.present ? data.lastAttemp.value : this.lastAttemp,
+      firstAttemp: data.firstAttemp.present
+          ? data.firstAttemp.value
+          : this.firstAttemp,
+      lastAttemp: data.lastAttemp.present
+          ? data.lastAttemp.value
+          : this.lastAttemp,
       attemps: data.attemps.present ? data.attemps.value : this.attemps,
     );
   }
@@ -2365,26 +2332,22 @@ class $PhoneticsTable extends Phonetics
   DriftPhonetic map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return DriftPhonetic(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}id'],
-          )!,
-      metadataId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}metadata_id'],
-          )!,
-      value:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}value'],
-          )!,
-      audio:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}audio'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      metadataId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}metadata_id'],
+      )!,
+      value: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value'],
+      )!,
+      audio: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}audio'],
+      )!,
     );
   }
 
@@ -2461,8 +2424,9 @@ class DriftPhonetic extends DataClass implements Insertable<DriftPhonetic> {
   DriftPhonetic copyWithCompanion(PhoneticsCompanion data) {
     return DriftPhonetic(
       id: data.id.present ? data.id.value : this.id,
-      metadataId:
-          data.metadataId.present ? data.metadataId.value : this.metadataId,
+      metadataId: data.metadataId.present
+          ? data.metadataId.value
+          : this.metadataId,
       value: data.value.present ? data.value.value : this.value,
       audio: data.audio.present ? data.audio.value : this.audio,
     );
@@ -2681,21 +2645,18 @@ class $MeaningsTable extends Meanings
   DriftMeaning map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return DriftMeaning(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}id'],
-          )!,
-      metadataId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}metadata_id'],
-          )!,
-      partOfSpeech:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}part_of_speech'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      metadataId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}metadata_id'],
+      )!,
+      partOfSpeech: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}part_of_speech'],
+      )!,
       synonyms: $MeaningsTable.$convertersynonyms.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
@@ -2813,12 +2774,12 @@ class DriftMeaning extends DataClass implements Insertable<DriftMeaning> {
   DriftMeaning copyWithCompanion(MeaningsCompanion data) {
     return DriftMeaning(
       id: data.id.present ? data.id.value : this.id,
-      metadataId:
-          data.metadataId.present ? data.metadataId.value : this.metadataId,
-      partOfSpeech:
-          data.partOfSpeech.present
-              ? data.partOfSpeech.value
-              : this.partOfSpeech,
+      metadataId: data.metadataId.present
+          ? data.metadataId.value
+          : this.metadataId,
+      partOfSpeech: data.partOfSpeech.present
+          ? data.partOfSpeech.value
+          : this.partOfSpeech,
       synonyms: data.synonyms.present ? data.synonyms.value : this.synonyms,
       antonyms: data.antonyms.present ? data.antonyms.value : this.antonyms,
     );
@@ -3046,26 +3007,22 @@ class $DefinitionsTable extends Definitions
   DriftDefinition map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return DriftDefinition(
-      id:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}id'],
-          )!,
-      meaningId:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.int,
-            data['${effectivePrefix}meaning_id'],
-          )!,
-      value:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}value'],
-          )!,
-      example:
-          attachedDatabase.typeMapping.read(
-            DriftSqlType.string,
-            data['${effectivePrefix}example'],
-          )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      meaningId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}meaning_id'],
+      )!,
+      value: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value'],
+      )!,
+      example: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example'],
+      )!,
     );
   }
 
@@ -3656,12 +3613,12 @@ class $$FoldersTableTableManager
         TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => $$FoldersTableFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => $$FoldersTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => $$FoldersTableAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () =>
+              $$FoldersTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$FoldersTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$FoldersTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
@@ -3686,50 +3643,50 @@ class $$FoldersTableTableManager
                 created: created,
                 name: name,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          $$FoldersTableReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$FoldersTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
           prefetchHooksCallback: ({parentId = false, wordGroupsRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [if (wordGroupsRefs) db.wordGroups],
-              addJoins: <
-                T extends TableManagerState<
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic
-                >
-              >(state) {
-                if (parentId) {
-                  state =
-                      state.withJoin(
-                            currentTable: table,
-                            currentColumn: table.parentId,
-                            referencedTable: $$FoldersTableReferences
-                                ._parentIdTable(db),
-                            referencedColumn:
-                                $$FoldersTableReferences._parentIdTable(db).id,
-                          )
-                          as T;
-                }
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (parentId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.parentId,
+                                referencedTable: $$FoldersTableReferences
+                                    ._parentIdTable(db),
+                                referencedColumn: $$FoldersTableReferences
+                                    ._parentIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
 
-                return state;
-              },
+                    return state;
+                  },
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (wordGroupsRefs)
@@ -3741,17 +3698,13 @@ class $$FoldersTableTableManager
                       currentTable: table,
                       referencedTable: $$FoldersTableReferences
                           ._wordGroupsRefsTable(db),
-                      managerFromTypedResult:
-                          (p0) =>
-                              $$FoldersTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).wordGroupsRefs,
-                      referencedItemsForCurrentItem:
-                          (item, referencedItems) => referencedItems.where(
-                            (e) => e.folderId == item.id,
-                          ),
+                      managerFromTypedResult: (p0) => $$FoldersTableReferences(
+                        db,
+                        table,
+                        p0,
+                      ).wordGroupsRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.folderId == item.id),
                       typedResults: items,
                     ),
                 ];
@@ -4158,12 +4111,12 @@ class $$WordGroupsTableTableManager
         TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => $$WordGroupsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => $$WordGroupsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => $$WordGroupsTableAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () =>
+              $$WordGroupsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$WordGroupsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$WordGroupsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
@@ -4216,52 +4169,50 @@ class $$WordGroupsTableTableManager
                 languageTranslationName: languageTranslationName,
                 languageTranslationNative: languageTranslationNative,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          $$WordGroupsTableReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$WordGroupsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
           prefetchHooksCallback: ({folderId = false, wordsRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [if (wordsRefs) db.words],
-              addJoins: <
-                T extends TableManagerState<
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic
-                >
-              >(state) {
-                if (folderId) {
-                  state =
-                      state.withJoin(
-                            currentTable: table,
-                            currentColumn: table.folderId,
-                            referencedTable: $$WordGroupsTableReferences
-                                ._folderIdTable(db),
-                            referencedColumn:
-                                $$WordGroupsTableReferences
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (folderId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.folderId,
+                                referencedTable: $$WordGroupsTableReferences
+                                    ._folderIdTable(db),
+                                referencedColumn: $$WordGroupsTableReferences
                                     ._folderIdTable(db)
                                     .id,
-                          )
-                          as T;
-                }
+                              )
+                              as T;
+                    }
 
-                return state;
-              },
+                    return state;
+                  },
               getPrefetchedDataCallback: (items) async {
                 return [
                   if (wordsRefs)
@@ -4273,17 +4224,10 @@ class $$WordGroupsTableTableManager
                       currentTable: table,
                       referencedTable: $$WordGroupsTableReferences
                           ._wordsRefsTable(db),
-                      managerFromTypedResult:
-                          (p0) =>
-                              $$WordGroupsTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).wordsRefs,
-                      referencedItemsForCurrentItem:
-                          (item, referencedItems) => referencedItems.where(
-                            (e) => e.groupId == item.id,
-                          ),
+                      managerFromTypedResult: (p0) =>
+                          $$WordGroupsTableReferences(db, table, p0).wordsRefs,
+                      referencedItemsForCurrentItem: (item, referencedItems) =>
+                          referencedItems.where((e) => e.groupId == item.id),
                       typedResults: items,
                     ),
                 ];
@@ -4520,12 +4464,12 @@ class $$WordsTableTableManager
         TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => $$WordsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => $$WordsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => $$WordsTableAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () =>
+              $$WordsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$WordsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$WordsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
@@ -4554,50 +4498,48 @@ class $$WordsTableTableManager
                 origin: origin,
                 translation: translation,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          $$WordsTableReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) =>
+                    (e.readTable(table), $$WordsTableReferences(db, table, e)),
+              )
+              .toList(),
           prefetchHooksCallback: ({groupId = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
-              addJoins: <
-                T extends TableManagerState<
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic
-                >
-              >(state) {
-                if (groupId) {
-                  state =
-                      state.withJoin(
-                            currentTable: table,
-                            currentColumn: table.groupId,
-                            referencedTable: $$WordsTableReferences
-                                ._groupIdTable(db),
-                            referencedColumn:
-                                $$WordsTableReferences._groupIdTable(db).id,
-                          )
-                          as T;
-                }
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (groupId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.groupId,
+                                referencedTable: $$WordsTableReferences
+                                    ._groupIdTable(db),
+                                referencedColumn: $$WordsTableReferences
+                                    ._groupIdTable(db)
+                                    .id,
+                              )
+                              as T;
+                    }
 
-                return state;
-              },
+                    return state;
+                  },
               getPrefetchedDataCallback: (items) async {
                 return [];
               },
@@ -4734,16 +4676,12 @@ class $$WordStatisticsTableTableManager
         TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => $$WordStatisticsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () =>
-                  $$WordStatisticsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => $$WordStatisticsTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
+          createFilteringComposer: () =>
+              $$WordStatisticsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$WordStatisticsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$WordStatisticsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<String> word = const Value.absent(),
@@ -4768,16 +4706,9 @@ class $$WordStatisticsTableTableManager
                 incorrect: incorrect,
                 rowid: rowid,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -5064,16 +4995,12 @@ class $$WordMetadatasTableTableManager
         TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => $$WordMetadatasTableFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () =>
-                  $$WordMetadatasTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => $$WordMetadatasTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
+          createFilteringComposer: () =>
+              $$WordMetadatasTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$WordMetadatasTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$WordMetadatasTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
@@ -5094,77 +5021,71 @@ class $$WordMetadatasTableTableManager
                 word: word,
                 etymology: etymology,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          $$WordMetadatasTableReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
-          prefetchHooksCallback: ({
-            phoneticsRefs = false,
-            meaningsRefs = false,
-          }) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [
-                if (phoneticsRefs) db.phonetics,
-                if (meaningsRefs) db.meanings,
-              ],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (phoneticsRefs)
-                    await $_getPrefetchedData<
-                      DriftWordMetadata,
-                      $WordMetadatasTable,
-                      DriftPhonetic
-                    >(
-                      currentTable: table,
-                      referencedTable: $$WordMetadatasTableReferences
-                          ._phoneticsRefsTable(db),
-                      managerFromTypedResult:
-                          (p0) =>
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$WordMetadatasTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({phoneticsRefs = false, meaningsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (phoneticsRefs) db.phonetics,
+                    if (meaningsRefs) db.meanings,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (phoneticsRefs)
+                        await $_getPrefetchedData<
+                          DriftWordMetadata,
+                          $WordMetadatasTable,
+                          DriftPhonetic
+                        >(
+                          currentTable: table,
+                          referencedTable: $$WordMetadatasTableReferences
+                              ._phoneticsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
                               $$WordMetadatasTableReferences(
                                 db,
                                 table,
                                 p0,
                               ).phoneticsRefs,
-                      referencedItemsForCurrentItem:
-                          (item, referencedItems) => referencedItems.where(
-                            (e) => e.metadataId == item.id,
-                          ),
-                      typedResults: items,
-                    ),
-                  if (meaningsRefs)
-                    await $_getPrefetchedData<
-                      DriftWordMetadata,
-                      $WordMetadatasTable,
-                      DriftMeaning
-                    >(
-                      currentTable: table,
-                      referencedTable: $$WordMetadatasTableReferences
-                          ._meaningsRefsTable(db),
-                      managerFromTypedResult:
-                          (p0) =>
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.metadataId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (meaningsRefs)
+                        await $_getPrefetchedData<
+                          DriftWordMetadata,
+                          $WordMetadatasTable,
+                          DriftMeaning
+                        >(
+                          currentTable: table,
+                          referencedTable: $$WordMetadatasTableReferences
+                              ._meaningsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
                               $$WordMetadatasTableReferences(
                                 db,
                                 table,
                                 p0,
                               ).meaningsRefs,
-                      referencedItemsForCurrentItem:
-                          (item, referencedItems) => referencedItems.where(
-                            (e) => e.metadataId == item.id,
-                          ),
-                      typedResults: items,
-                    ),
-                ];
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.metadataId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -5315,18 +5236,18 @@ class $$WordMetadataWebLookupsTableTableManager
         TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => $$WordMetadataWebLookupsTableFilterComposer(
+          createFilteringComposer: () =>
+              $$WordMetadataWebLookupsTableFilterComposer(
                 $db: db,
                 $table: table,
               ),
-          createOrderingComposer:
-              () => $$WordMetadataWebLookupsTableOrderingComposer(
+          createOrderingComposer: () =>
+              $$WordMetadataWebLookupsTableOrderingComposer(
                 $db: db,
                 $table: table,
               ),
-          createComputedFieldComposer:
-              () => $$WordMetadataWebLookupsTableAnnotationComposer(
+          createComputedFieldComposer: () =>
+              $$WordMetadataWebLookupsTableAnnotationComposer(
                 $db: db,
                 $table: table,
               ),
@@ -5358,16 +5279,9 @@ class $$WordMetadataWebLookupsTableTableManager
                 attemps: attemps,
                 rowid: rowid,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          BaseReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
           prefetchHooksCallback: null,
         ),
       );
@@ -5591,12 +5505,12 @@ class $$PhoneticsTableTableManager
         TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => $$PhoneticsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => $$PhoneticsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => $$PhoneticsTableAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () =>
+              $$PhoneticsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PhoneticsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PhoneticsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
@@ -5621,52 +5535,50 @@ class $$PhoneticsTableTableManager
                 value: value,
                 audio: audio,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          $$PhoneticsTableReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$PhoneticsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
           prefetchHooksCallback: ({metadataId = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
-              addJoins: <
-                T extends TableManagerState<
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic
-                >
-              >(state) {
-                if (metadataId) {
-                  state =
-                      state.withJoin(
-                            currentTable: table,
-                            currentColumn: table.metadataId,
-                            referencedTable: $$PhoneticsTableReferences
-                                ._metadataIdTable(db),
-                            referencedColumn:
-                                $$PhoneticsTableReferences
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (metadataId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.metadataId,
+                                referencedTable: $$PhoneticsTableReferences
+                                    ._metadataIdTable(db),
+                                referencedColumn: $$PhoneticsTableReferences
                                     ._metadataIdTable(db)
                                     .id,
-                          )
-                          as T;
-                }
+                              )
+                              as T;
+                    }
 
-                return state;
-              },
+                    return state;
+                  },
               getPrefetchedDataCallback: (items) async {
                 return [];
               },
@@ -5974,12 +5886,12 @@ class $$MeaningsTableTableManager
         TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => $$MeaningsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => $$MeaningsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () => $$MeaningsTableAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () =>
+              $$MeaningsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MeaningsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MeaningsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
@@ -6008,83 +5920,80 @@ class $$MeaningsTableTableManager
                 synonyms: synonyms,
                 antonyms: antonyms,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          $$MeaningsTableReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
-          prefetchHooksCallback: ({
-            metadataId = false,
-            definitionsRefs = false,
-          }) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (definitionsRefs) db.definitions],
-              addJoins: <
-                T extends TableManagerState<
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic
-                >
-              >(state) {
-                if (metadataId) {
-                  state =
-                      state.withJoin(
-                            currentTable: table,
-                            currentColumn: table.metadataId,
-                            referencedTable: $$MeaningsTableReferences
-                                ._metadataIdTable(db),
-                            referencedColumn:
-                                $$MeaningsTableReferences
-                                    ._metadataIdTable(db)
-                                    .id,
-                          )
-                          as T;
-                }
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$MeaningsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({metadataId = false, definitionsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (definitionsRefs) db.definitions,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (metadataId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.metadataId,
+                                    referencedTable: $$MeaningsTableReferences
+                                        ._metadataIdTable(db),
+                                    referencedColumn: $$MeaningsTableReferences
+                                        ._metadataIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
 
-                return state;
-              },
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (definitionsRefs)
-                    await $_getPrefetchedData<
-                      DriftMeaning,
-                      $MeaningsTable,
-                      DriftDefinition
-                    >(
-                      currentTable: table,
-                      referencedTable: $$MeaningsTableReferences
-                          ._definitionsRefsTable(db),
-                      managerFromTypedResult:
-                          (p0) =>
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (definitionsRefs)
+                        await $_getPrefetchedData<
+                          DriftMeaning,
+                          $MeaningsTable,
+                          DriftDefinition
+                        >(
+                          currentTable: table,
+                          referencedTable: $$MeaningsTableReferences
+                              ._definitionsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
                               $$MeaningsTableReferences(
                                 db,
                                 table,
                                 p0,
                               ).definitionsRefs,
-                      referencedItemsForCurrentItem:
-                          (item, referencedItems) => referencedItems.where(
-                            (e) => e.meaningId == item.id,
-                          ),
-                      typedResults: items,
-                    ),
-                ];
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.meaningId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -6301,13 +6210,12 @@ class $$DefinitionsTableTableManager
         TableManagerState(
           db: db,
           table: table,
-          createFilteringComposer:
-              () => $$DefinitionsTableFilterComposer($db: db, $table: table),
-          createOrderingComposer:
-              () => $$DefinitionsTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer:
-              () =>
-                  $$DefinitionsTableAnnotationComposer($db: db, $table: table),
+          createFilteringComposer: () =>
+              $$DefinitionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$DefinitionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$DefinitionsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
@@ -6332,52 +6240,50 @@ class $$DefinitionsTableTableManager
                 value: value,
                 example: example,
               ),
-          withReferenceMapper:
-              (p0) =>
-                  p0
-                      .map(
-                        (e) => (
-                          e.readTable(table),
-                          $$DefinitionsTableReferences(db, table, e),
-                        ),
-                      )
-                      .toList(),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$DefinitionsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
           prefetchHooksCallback: ({meaningId = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
-              addJoins: <
-                T extends TableManagerState<
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic,
-                  dynamic
-                >
-              >(state) {
-                if (meaningId) {
-                  state =
-                      state.withJoin(
-                            currentTable: table,
-                            currentColumn: table.meaningId,
-                            referencedTable: $$DefinitionsTableReferences
-                                ._meaningIdTable(db),
-                            referencedColumn:
-                                $$DefinitionsTableReferences
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (meaningId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.meaningId,
+                                referencedTable: $$DefinitionsTableReferences
+                                    ._meaningIdTable(db),
+                                referencedColumn: $$DefinitionsTableReferences
                                     ._meaningIdTable(db)
                                     .id,
-                          )
-                          as T;
-                }
+                              )
+                              as T;
+                    }
 
-                return state;
-              },
+                    return state;
+                  },
               getPrefetchedDataCallback: (items) async {
                 return [];
               },
