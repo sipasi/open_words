@@ -6,9 +6,10 @@ import 'package:open_words/core/result/result.dart';
 import 'package:open_words/core/services/ai_bridge/ai_bridge_provider.dart';
 import 'package:open_words/core/services/ai_bridge/ai_bridge_tamplate_storage.dart';
 import 'package:open_words/core/services/vibration/vibration_service.dart';
-import 'package:open_words/features/artificial_intelligence/ai_bridge_tamplate_create/ai_bridge_template_create_sheet.dart';
+import 'package:open_words/features/artificial_intelligence/ai_bridge_tamplate_create/ai_bridge_template_create_page.dart';
 import 'package:open_words/features/settings/bloc/settings_bloc.dart';
 import 'package:open_words/shared/card/radio_card.dart';
+import 'package:open_words/shared/navigation/material_navigator.dart';
 
 class AiBridgeConfigPage extends StatefulWidget {
   const AiBridgeConfigPage({super.key});
@@ -25,15 +26,28 @@ class _AiBridgeConfigPageState extends State<AiBridgeConfigPage> {
 
   String connectionStatus = "";
 
-  AiBridgeTemplate? selected;
-  List<AiBridgeTemplate> templates = const [];
+  AiTemplate? selected;
+  List<AiTemplate> templates = const [];
 
   @override
   void initState() {
     super.initState();
 
-    selected = AiBridgeTemplate.from(aiBridgeProvider.get());
-    templates = aiBridgeTemplateStorage.getAll();
+    aiBridgeProvider.getInfo().then(
+      (value) {
+        if (mounted) {
+          setState(() => selected = value);
+        }
+      },
+    );
+
+    aiBridgeTemplateStorage.getAll().then(
+      (value) {
+        if (mounted) {
+          setState(() => templates = value);
+        }
+      },
+    );
   }
 
   @override
@@ -82,15 +96,13 @@ class _AiBridgeConfigPageState extends State<AiBridgeConfigPage> {
 
     await aiBridgeTemplateStorage.clear();
 
-    sendToSettingsBloc(const AiBridgeTemplate.empty());
+    sendToSettingsBloc(const AiTemplate.empty());
 
     setState(() => templates = const []);
   }
 
-  void _onTap(AiBridgeTemplate value) {
-    final next = selected?.id == value.id
-        ? const AiBridgeTemplate.empty()
-        : value;
+  void _onTap(AiTemplate value) {
+    final next = selected?.id == value.id ? const AiTemplate.empty() : value;
 
     vibration.mediumImpact(VibrationDuration.medium);
 
@@ -99,10 +111,11 @@ class _AiBridgeConfigPageState extends State<AiBridgeConfigPage> {
     sendToSettingsBloc(next);
   }
 
-  Future _onLongPress(BuildContext context, AiBridgeTemplate value) async {
-    final result = await AiBridgeTemplateCreateSheet.showSheet(
-      context: context,
-      tamplate: value,
+  Future _onLongPress(BuildContext context, AiTemplate value) async {
+    final result = await context.push<AiTemplate>(
+      (context) => AiTemplateCreatePage(
+        template: value,
+      ),
     );
 
     result.onModified((value) async {
@@ -127,7 +140,7 @@ class _AiBridgeConfigPageState extends State<AiBridgeConfigPage> {
       }
 
       _changeSettingsIfSelectedIdEquals(
-        const AiBridgeTemplate.empty(),
+        const AiTemplate.empty(),
       );
 
       _reloadTemplates();
@@ -135,8 +148,8 @@ class _AiBridgeConfigPageState extends State<AiBridgeConfigPage> {
   }
 
   Future _onCreateTamplate(BuildContext context) async {
-    final result = await AiBridgeTemplateCreateSheet.showSheet(
-      context: context,
+    final result = await context.push<AiTemplate>(
+      (context) => AiTemplateCreatePage(),
     );
 
     result.onCreated((value) {
@@ -146,19 +159,21 @@ class _AiBridgeConfigPageState extends State<AiBridgeConfigPage> {
     });
   }
 
-  void _changeSettingsIfSelectedIdEquals(AiBridgeTemplate template) {
+  void _changeSettingsIfSelectedIdEquals(AiTemplate template) {
     if (template.id == selected?.id) {
       sendToSettingsBloc(template);
     }
   }
 
-  void sendToSettingsBloc(AiBridgeTemplate template) {
+  void sendToSettingsBloc(AiTemplate template) {
     context.read<SettingsBloc>().add(
       SettingsAiBridgeChanged(template),
     );
   }
 
-  void _reloadTemplates() {
-    setState(() => templates = aiBridgeTemplateStorage.getAll());
+  void _reloadTemplates() async {
+    final all = await aiBridgeTemplateStorage.getAll();
+
+    setState(() => templates = all);
   }
 }
