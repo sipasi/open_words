@@ -1,10 +1,8 @@
 import 'dart:convert';
-
-import 'package:open_words/core/artificial_intelligence/bridge/ai_bridge.dart';
 import 'package:open_words/core/artificial_intelligence/bridge/ai_bridge_type.dart';
 import 'package:uuid/v4.dart';
 
-class AiBridgeTemplate {
+class AiTemplate {
   final String id;
 
   final String uri;
@@ -12,41 +10,35 @@ class AiBridgeTemplate {
   final AiBridgeType type;
   final String apiKey;
 
-  AiBridgeTemplate({
+  AiTemplate({
     required this.id,
     required this.uri,
     required this.model,
     required this.type,
     required this.apiKey,
   });
-  AiBridgeTemplate.uuid({
+  AiTemplate.uuid({
     required this.uri,
     required this.model,
     required this.type,
     required this.apiKey,
   }) : id = UuidV4().generate();
 
-  const AiBridgeTemplate.empty()
+  const AiTemplate.empty()
     : id = '',
       uri = '',
       model = '',
       type = AiBridgeType.notConfigured,
       apiKey = '';
-  AiBridgeTemplate.from(AiBridge bridge)
-    : id = bridge.tamplateId,
-      uri = bridge.uri.toString(),
-      model = bridge.model,
-      type = bridge.type,
-      apiKey = bridge.apiKey;
 
-  AiBridgeTemplate copyWith({
+  AiTemplate copyWith({
     String? id,
     String? uri,
     String? model,
     AiBridgeType? type,
     String? apiKey,
   }) {
-    return AiBridgeTemplate(
+    return AiTemplate(
       id: id ?? this.id,
       uri: uri ?? this.uri,
       model: model ?? this.model,
@@ -65,8 +57,8 @@ class AiBridgeTemplate {
     };
   }
 
-  factory AiBridgeTemplate.fromMap(Map<String, dynamic> map) {
-    return AiBridgeTemplate(
+  factory AiTemplate.fromMap(Map<String, dynamic> map) {
+    return AiTemplate(
       id: map['id'] ?? '',
       uri: map['uri'] ?? '',
       model: map['model'] ?? '',
@@ -77,6 +69,6 @@ class AiBridgeTemplate {
 
   String toJson() => json.encode(toMap());
 
-  factory AiBridgeTemplate.fromJson(String source) =>
-      AiBridgeTemplate.fromMap(json.decode(source));
+  factory AiTemplate.fromJson(String source) =>
+      AiTemplate.fromMap(json.decode(source));
 }

@@ -1,7 +1,5 @@
-import 'dart:convert' as convert;
-
-import 'package:http/http.dart' as http;
 import 'package:open_words/core/artificial_intelligence/bridge/ai_bridge.dart';
+import 'package:open_words/core/artificial_intelligence/bridge/ai_request.dart';
 
 class AiTranslator {
   static const _noTranslation = "__nothing__";
@@ -19,48 +17,35 @@ class AiTranslator {
        _source = source,
        _target = target;
 
-  Future<String?> translate(String text) async {
+  Future<String> translate(String text) async {
     if (await _bridge.isConnected() == false) {
-      return null;
+      return '';
     }
 
-    final prompt = _translatePromt(text);
-
-    final response = await _bridge.send(
-      message: prompt,
-      maxTokens: 500,
-      temperature: .3,
+    final answer = await _bridge.ask(
+      AiRequest(
+        message: _translatePrompt(text),
+        temperature: .3,
+        maxTokens: 100,
+      ),
     );
 
-    if (response == null) {
-      return null;
-    }
+    final trimmed = answer.trim();
 
-    return _extractTranslation(response);
+    return trimmed == _noTranslation ? '' : trimmed;
   }
 
-  String? _extractTranslation(http.Response response) {
-    if (response.statusCode != 200) {
-      return null;
-    }
+  String _translatePrompt(String word) {
+    return '''
+You are a translation engine.
 
-    final json = convert.jsonDecode(response.body);
+Translate the word "$word" from $_source to $_target.
 
-    final text = switch (json?["choices"]?[0]?['text']) {
-      String value => value.trim(),
-      _ => null,
-    };
+Return only the translated word.
+Do not include explanations, formatting, or additional text.
+Do not say "The correct translation is..." or any similar phrasing.
 
-    return text == _noTranslation ? null : text;
-  }
-
-  String _translatePromt(String word) {
-    return """
-Translate the given $_source word to $_target with high accuracy
-If no reliable translation exist, return "$_noTranslation"
-Return the result strictly in pure text format
-Do not include any explanations, comments, or extra text
-Word to translate: "$word"
-""";
+If a reliable translation does not exist, return: $_noTranslation
+''';
   }
 }

@@ -1,27 +1,14 @@
-import 'package:http/http.dart' as http;
-import 'package:open_words/core/artificial_intelligence/bridge/ai_bridge_type.dart';
+import 'package:open_words/core/artificial_intelligence/bridge/ai_bridge_template.dart';
+import 'package:open_words/core/artificial_intelligence/bridge/ai_request.dart';
 
 abstract class AiBridge {
-  final String tamplateId;
+  final AiTemplate template;
 
-  final Uri uri;
-  final String model;
-  final AiBridgeType type;
-  final String apiKey;
+  const AiBridge(this.template);
 
-  const AiBridge({
-    required this.tamplateId,
-    required this.uri,
-    required this.model,
-    required this.type,
-    required this.apiKey,
-  });
+  Future<List<String>> models();
 
   Future<bool> isConnected();
 
-  Future<http.Response?> send({
-    required String message,
-    required double temperature,
-    required int maxTokens,
-  });
+  Future<String> ask(AiRequest request);
 }

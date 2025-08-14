@@ -8,4 +8,6 @@ enum AiBridgeType {
   bool get isLocal => this == local;
   bool get isLan => this == lan;
   bool get isRemote => this == remote;
+
+  bool get isLanOrLocal => this == lan || this == local;
 }

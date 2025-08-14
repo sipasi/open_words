@@ -1,25 +1,16 @@
-import 'package:http/http.dart' as http;
 import 'package:open_words/core/artificial_intelligence/bridge/ai_bridge.dart';
-import 'package:open_words/core/artificial_intelligence/bridge/ai_bridge_type.dart';
+import 'package:open_words/core/artificial_intelligence/bridge/ai_bridge_template.dart';
+import 'package:open_words/core/artificial_intelligence/bridge/ai_request.dart';
 
 final class AiBridgeEmpty extends AiBridge {
   static final instance = AiBridgeEmpty._();
 
-  AiBridgeEmpty._()
-    : super(
-        tamplateId: '',
-        uri: Uri(),
-        model: '',
-        type: AiBridgeType.notConfigured,
-        apiKey: '',
-      );
+  const AiBridgeEmpty._() : super(const AiTemplate.empty());
 
   @override
   Future<bool> isConnected() => Future.value(false);
   @override
-  Future<http.Response?> send({
-    required String message,
-    required double temperature,
-    required int maxTokens,
-  }) => Future.value(null);
+  Future<String> ask(AiRequest request) => Future.value('');
+  @override
+  Future<List<String>> models() => Future.value(const []);
 }
