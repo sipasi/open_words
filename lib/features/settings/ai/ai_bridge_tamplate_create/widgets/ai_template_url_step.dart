@@ -23,7 +23,6 @@ class AiTemplateUrlStep extends StatelessWidget {
     final localAddress = cubit.state.localIp;
 
     return Column(
-      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFieldWithPaste(

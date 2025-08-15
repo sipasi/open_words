@@ -8,6 +8,7 @@ import 'package:open_words/features/settings/import_export/export_selected/widge
 import 'package:open_words/features/settings/import_export/export_selected/widgets/export_selected_fab.dart';
 import 'package:open_words/features/settings/import_export/export_selected/widgets/export_selected_name_input.dart';
 import 'package:open_words/features/settings/import_export/export_selected/widgets/extension_properies/extension_properies.dart';
+import 'package:open_words/shared/layout/constrained_align.dart';
 import 'package:open_words/shared/modal/loading_dialog.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 
@@ -57,14 +58,16 @@ class ExportSelectedView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       floatingActionButton: ExportSelectedFab(),
-      body: ListView(
-        children: [
-          ExportSelectedNameInput(),
-          ExportDestinationSelector(),
-          Divider(),
-          ExportExtensionSelector(),
-          ExtensionProperies(),
-        ],
+      body: ConstrainedAlign(
+        child: ListView(
+          children: [
+            ExportSelectedNameInput(),
+            ExportDestinationSelector(),
+            Divider(),
+            ExportExtensionSelector(),
+            ExtensionProperies(),
+          ],
+        ),
       ),
     );
   }

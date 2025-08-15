@@ -7,6 +7,7 @@ import 'package:open_words/features/game/list/widgets/game_list_body_view.dart';
 import 'package:open_words/features/game/list/widgets/game_list_bottom_bar.dart';
 import 'package:open_words/shared/appbar/app_bar_title.dart';
 import 'package:open_words/shared/constants/hero_tag_constants.dart';
+import 'package:open_words/shared/layout/constrained_align.dart';
 
 class GameListPage extends StatelessWidget {
   final WordGroup group;
@@ -17,14 +18,13 @@ class GameListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create:
-          (context) => GameListCubit(
-            groupName: group.name,
-            origin: group.origin,
-            translation: group.translation,
-            words: words,
-            minWordCountUpperLimit: 8,
-          )..init(),
+      create: (context) => GameListCubit(
+        groupName: group.name,
+        origin: group.origin,
+        translation: group.translation,
+        words: words,
+        minWordCountUpperLimit: 8,
+      )..init(),
       child: GameListView(),
     );
   }
@@ -44,7 +44,7 @@ class GameListView extends StatelessWidget {
           title: bloc.groupName,
         ),
       ),
-      body: GameListBodyView(),
+      body: ConstrainedAlign(child: GameListBodyView()),
       bottomSheet: GameListBottomBar(),
     );
   }

@@ -14,6 +14,7 @@ import 'package:open_words/features/word/create_list/widgets/word_list_create_bo
 import 'package:open_words/features/word/create_list/widgets/word_list_create_fab.dart';
 import 'package:open_words/features/word/create_list/widgets/word_list_create_title.dart';
 import 'package:open_words/shared/input_fields/text_edit_controller.dart';
+import 'package:open_words/shared/layout/constrained_align.dart';
 import 'package:open_words/shared/modal/discard_changes_modal.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 
@@ -103,13 +104,15 @@ class _WordListCreateViewState extends State<WordListCreateView> {
           ],
         ),
         body: SingleChildScrollView(
-          child: Column(
-            children: [
-              WordDraftEditor(origin: origin, translation: translation),
-              const SizedBox(height: 8),
-              WordDraftListView(),
-              const SizedBox(height: 16),
-            ],
+          child: ConstrainedAlign(
+            child: Column(
+              children: [
+                WordDraftEditor(origin: origin, translation: translation),
+                const SizedBox(height: 8),
+                WordDraftListView(),
+                const SizedBox(height: 16),
+              ],
+            ),
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

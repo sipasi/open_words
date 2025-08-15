@@ -8,6 +8,7 @@ import 'package:open_words/features/settings/ai/ai_bridge_tamplate_create/widget
 import 'package:open_words/features/settings/ai/ai_bridge_tamplate_create/widgets/ai_template_model_step.dart';
 import 'package:open_words/features/settings/ai/ai_bridge_tamplate_create/widgets/ai_template_url_step.dart';
 import 'package:open_words/shared/input_fields/text_edit_controller.dart';
+import 'package:open_words/shared/layout/constrained_align.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 
 class AiTemplateCreatePage extends StatelessWidget {
@@ -125,7 +126,7 @@ class _AiTemplateCreateViewState extends State<AiTemplateCreateView> {
       child: Scaffold(
         appBar: AppBar(title: Text(step.label)),
         floatingActionButton: isValidStep ? AiTemplateCreateViewFab() : null,
-        body: pages[step],
+        body: ConstrainedAlign(child: pages[step]!),
       ),
     );
   }

@@ -9,6 +9,7 @@ import 'package:open_words/core/services/vibration/vibration_service.dart';
 import 'package:open_words/features/settings/_main_screen/bloc/settings_bloc.dart';
 import 'package:open_words/features/settings/ai/ai_bridge_tamplate_create/ai_bridge_template_create_page.dart';
 import 'package:open_words/shared/card/radio_card.dart';
+import 'package:open_words/shared/layout/constrained_align.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 
 class AiBridgeConfigPage extends StatefulWidget {
@@ -68,21 +69,23 @@ class _AiBridgeConfigPageState extends State<AiBridgeConfigPage> {
         label: Text("Create"),
         icon: Icon(Icons.account_tree_outlined),
       ),
-      body: ListView.builder(
-        itemCount: templates.length,
-        itemBuilder: (context, index) {
-          final item = templates[index];
+      body: ConstrainedAlign(
+        child: ListView.builder(
+          itemCount: templates.length,
+          itemBuilder: (context, index) {
+            final item = templates[index];
 
-          return RadioCard(
-            title: Text(item.model),
-            subtitle: Text('${item.type.name} ${item.uri}'),
-            data: item,
-            id: item.id,
-            groupId: selected?.id,
-            onTap: _onTap,
-            onLongPress: (data) => _onLongPress(context, data),
-          );
-        },
+            return RadioCard(
+              title: Text(item.model),
+              subtitle: Text('${item.type.name} ${item.uri}'),
+              data: item,
+              id: item.id,
+              groupId: selected?.id,
+              onTap: _onTap,
+              onLongPress: (data) => _onLongPress(context, data),
+            );
+          },
+        ),
       ),
     );
   }

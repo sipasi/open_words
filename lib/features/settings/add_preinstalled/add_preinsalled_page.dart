@@ -5,7 +5,7 @@ import 'package:open_words/features/explorer/_main_screen/bloc/explorer_bloc.dar
 import 'package:open_words/features/settings/add_preinstalled/bloc/add_preinstalled_bloc.dart';
 import 'package:open_words/features/settings/add_preinstalled/widgets/add_preinsalled_fab.dart';
 import 'package:open_words/features/settings/add_preinstalled/widgets/add_preinsalled_list_view.dart';
-import 'package:open_words/shared/layout/constrained_center.dart';
+import 'package:open_words/shared/layout/constrained_align.dart';
 import 'package:open_words/shared/modal/loading_dialog.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 
@@ -56,7 +56,7 @@ class AddPreinsalledView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(),
       floatingActionButton: AddPreinsalledFab(),
-      body: ConstrainedCenter(
+      body: ConstrainedAlign(
         child: AddPreinsalledListView(),
       ),
     );

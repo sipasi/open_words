@@ -11,31 +11,34 @@ import 'package:open_words/features/settings/_main_screen/widgets/tiles/thank_yo
 import 'package:open_words/features/settings/_main_screen/widgets/tiles/theme_color_tile.dart';
 import 'package:open_words/features/settings/_main_screen/widgets/tiles/theme_mode_tile.dart';
 import 'package:open_words/features/settings/_main_screen/widgets/tiles/translator_tile.dart';
+import 'package:open_words/shared/layout/constrained_align.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.only(bottom: 40),
-      children: [
-        ThankYouTile(),
+    return ConstrainedAlign(
+      child: ListView(
+        padding: const EdgeInsets.only(bottom: 40),
+        children: [
+          ThankYouTile(),
 
-        SettingsTileGroup.many(children: [ThemeModeTile(), ThemeColorTile()]),
+          SettingsTileGroup.many(children: [ThemeModeTile(), ThemeColorTile()]),
 
-        SettingsTileGroup.single(child: AiProviderTile()),
-        SettingsTileGroup.single(child: TranslatorTile()),
-        SettingsTileGroup.single(child: TextToSpeechTile()),
+          SettingsTileGroup.single(child: AiProviderTile()),
+          SettingsTileGroup.single(child: TranslatorTile()),
+          SettingsTileGroup.single(child: TextToSpeechTile()),
 
-        SettingsTileGroup.many(children: [ImportTile(), ExportTile()]),
+          SettingsTileGroup.many(children: [ImportTile(), ExportTile()]),
 
-        SettingsTileGroup.many(
-          children: [AddPreinstalledTile(), DeleteAllTile()],
-        ),
+          SettingsTileGroup.many(
+            children: [AddPreinstalledTile(), DeleteAllTile()],
+          ),
 
-        SettingsTileGroup.single(child: DatabaseInfoOpenTile()),
-      ],
+          SettingsTileGroup.single(child: DatabaseInfoOpenTile()),
+        ],
+      ),
     );
   }
 }

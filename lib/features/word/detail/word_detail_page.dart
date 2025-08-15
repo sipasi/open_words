@@ -12,6 +12,7 @@ import 'package:open_words/features/word/detail/widgets/word_detail_title.dart';
 import 'package:open_words/features/word/detail/widgets/word_info_card.dart';
 import 'package:open_words/features/word/detail/widgets/word_statistic_card.dart';
 import 'package:open_words/shared/constants/list_padding_constans.dart';
+import 'package:open_words/shared/layout/constrained_align.dart';
 
 class WordDetailPage extends StatelessWidget {
   final WordGroup group;
@@ -22,13 +23,12 @@ class WordDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create:
-          (context) => WordDetailPageCubit(
-            metadataService: GetIt.I.get(),
-            statisticRepository: GetIt.I.get(),
-            group: group,
-            word: word,
-          )..init(),
+      create: (context) => WordDetailPageCubit(
+        metadataService: GetIt.I.get(),
+        statisticRepository: GetIt.I.get(),
+        group: group,
+        word: word,
+      )..init(),
       child: WordDetailView(),
     );
   }
@@ -41,15 +41,17 @@ class WordDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: WordDetailTitle()),
-      body: ListView(
-        padding: EdgeInsets.only(bottom: ListPaddingConstans.bottomForFab),
-        children: [
-          WordInfoCard(),
-          const SizedBox(height: 12),
-          WordStatisticCard(),
-          TextToSpeechCard(),
-          WordDetailMetadataView(),
-        ],
+      body: ConstrainedAlign(
+        child: ListView(
+          padding: EdgeInsets.only(bottom: ListPaddingConstans.bottomForFab),
+          children: [
+            WordInfoCard(),
+            const SizedBox(height: 12),
+            WordStatisticCard(),
+            TextToSpeechCard(),
+            WordDetailMetadataView(),
+          ],
+        ),
       ),
       floatingActionButtonLocation: ExpandableFab.location,
       floatingActionButton: WordDetailFab(),

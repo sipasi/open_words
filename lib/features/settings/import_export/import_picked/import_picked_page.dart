@@ -6,6 +6,7 @@ import 'package:open_words/features/settings/import_export/import_picked/cubit/i
 import 'package:open_words/features/settings/import_export/import_picked/widgets/create_sub_folder_tile.dart';
 import 'package:open_words/features/settings/import_export/import_picked/widgets/select_folder_tile.dart';
 import 'package:open_words/features/settings/import_export/models/word_group_export.dart';
+import 'package:open_words/shared/layout/constrained_align.dart';
 import 'package:open_words/shared/modal/loading_dialog.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 
@@ -52,7 +53,9 @@ class ImportPickedView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: ListView(children: [SelectFolderTile(), CreateSubFolderTile()]),
+      body: ConstrainedAlign(
+        child: ListView(children: [SelectFolderTile(), CreateSubFolderTile()]),
+      ),
       floatingActionButton: FloatingActionButton.extended(
         icon: Icon(Icons.file_download_outlined),
         label: Text('Import'),

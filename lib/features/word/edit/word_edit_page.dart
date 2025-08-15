@@ -12,6 +12,7 @@ import 'package:open_words/features/word/edit/widgets/word_edit_fab.dart';
 import 'package:open_words/features/word/edit/widgets/word_edit_title.dart';
 import 'package:open_words/features/word/edit/widgets/word_edit_translation_editor.dart';
 import 'package:open_words/shared/constants/list_padding_constans.dart';
+import 'package:open_words/shared/layout/constrained_align.dart';
 import 'package:open_words/shared/modal/discard_changes_modal.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 
@@ -32,15 +33,14 @@ class WordEditPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create:
-          (context) => WordEditBloc(
-            metadataRepository: GetIt.I.get(),
-            wordId: id,
-            metadataId: metadata.id,
-            initialMetadata: metadata,
-            initialOrigin: origin,
-            initialTranslation: translation,
-          )..add(WordEditStarted(translation: translation, metadata: metadata)),
+      create: (context) => WordEditBloc(
+        metadataRepository: GetIt.I.get(),
+        wordId: id,
+        metadataId: metadata.id,
+        initialMetadata: metadata,
+        initialOrigin: origin,
+        initialTranslation: translation,
+      )..add(WordEditStarted(translation: translation, metadata: metadata)),
       child: WordEditView(),
     );
   }
@@ -64,16 +64,18 @@ class WordEditView extends StatelessWidget {
         },
         child: Scaffold(
           appBar: AppBar(title: WordEditTitle()),
-          body: ListView(
-            padding: const EdgeInsets.only(
-              bottom: ListPaddingConstans.bottomForFab,
+          body: ConstrainedAlign(
+            child: ListView(
+              padding: const EdgeInsets.only(
+                bottom: ListPaddingConstans.bottomForFab,
+              ),
+              children: [
+                WordEditTranslationEditor(),
+                WordEditEtymologyEditor(),
+                EditablePhoneticTile(),
+                EditableMeaningTile(),
+              ],
             ),
-            children: [
-              WordEditTranslationEditor(),
-              WordEditEtymologyEditor(),
-              EditablePhoneticTile(),
-              EditableMeaningTile(),
-            ],
           ),
           floatingActionButton: WordEditFab(),
         ),
