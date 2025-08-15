@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_words/features/explorer/list/bloc/explorer_bloc.dart';
-import 'package:open_words/features/explorer/list/widgets/add_first_folder_or_group_card.dart';
-import 'package:open_words/features/explorer/list/widgets/explorer_grid_view.dart';
+import 'package:open_words/features/explorer/_main_screen/bloc/explorer_bloc.dart';
+import 'package:open_words/features/explorer/_main_screen/widgets/add_first_folder_or_group_card.dart';
+import 'package:open_words/features/explorer/_main_screen/widgets/explorer_grid_view.dart';
 
 class ExplorerScreen extends StatelessWidget {
   const ExplorerScreen({super.key});

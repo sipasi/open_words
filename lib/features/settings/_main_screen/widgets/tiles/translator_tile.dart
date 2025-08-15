@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_words/features/settings/list/bloc/settings_bloc.dart';
+import 'package:open_words/features/settings/_main_screen/bloc/settings_bloc.dart';
 import 'package:open_words/features/settings/translator_edit/translator_template_edit_page.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 

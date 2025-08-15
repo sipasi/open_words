@@ -11,8 +11,8 @@ import 'package:open_words/core/data/repository/folder_repository.dart';
 import 'package:open_words/core/data/repository/word_group_repository.dart';
 import 'package:open_words/core/data/repository/word_repository.dart';
 import 'package:open_words/core/generated/assets/assets.gen.dart';
-import 'package:open_words/features/explorer/list/bloc/explorer_bloc.dart';
-import 'package:open_words/features/settings/list/widgets/settings_tile_button.dart';
+import 'package:open_words/features/explorer/_main_screen/bloc/explorer_bloc.dart';
+import 'package:open_words/features/settings/_main_screen/widgets/settings_tile_button.dart';
 import 'package:open_words/shared/modal/waiting_dialog.dart';
 
 class AddPreinstalledTile extends StatelessWidget {

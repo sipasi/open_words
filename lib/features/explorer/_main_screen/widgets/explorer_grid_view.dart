@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:open_words/core/data/entities/folder/folder.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
-import 'package:open_words/features/explorer/list/widgets/folder_tile.dart';
-import 'package:open_words/features/explorer/list/widgets/group_tile.dart';
+import 'package:open_words/features/explorer/_main_screen/widgets/folder_tile.dart';
+import 'package:open_words/features/explorer/_main_screen/widgets/group_tile.dart';
 import 'package:open_words/shared/constants/list_padding_constans.dart';
 import 'package:open_words/shared/layout/adaptive_grid_view.dart';
 

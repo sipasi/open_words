@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_words/features/app/cubit/open_words_app_cubit.dart';
-import 'package:open_words/features/explorer/list/bloc/explorer_bloc.dart';
+import 'package:open_words/features/explorer/_main_screen/bloc/explorer_bloc.dart';
 import 'package:open_words/features/home/cubit/home_cubit.dart';
 import 'package:open_words/features/home/home_page.dart';
-import 'package:open_words/features/settings/list/bloc/settings_bloc.dart';
+import 'package:open_words/features/settings/_main_screen/bloc/settings_bloc.dart';
 
 class OpenWordsApp extends StatelessWidget {
   const OpenWordsApp({super.key});

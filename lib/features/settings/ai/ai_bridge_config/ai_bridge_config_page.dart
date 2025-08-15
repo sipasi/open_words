@@ -6,8 +6,8 @@ import 'package:open_words/core/result/result.dart';
 import 'package:open_words/core/services/ai_bridge/ai_bridge_provider.dart';
 import 'package:open_words/core/services/ai_bridge/ai_bridge_tamplate_storage.dart';
 import 'package:open_words/core/services/vibration/vibration_service.dart';
+import 'package:open_words/features/settings/_main_screen/bloc/settings_bloc.dart';
 import 'package:open_words/features/settings/ai/ai_bridge_tamplate_create/ai_bridge_template_create_page.dart';
-import 'package:open_words/features/settings/list/bloc/settings_bloc.dart';
 import 'package:open_words/shared/card/radio_card.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 

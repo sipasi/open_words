@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_words/features/explorer/list/bloc/explorer_bloc.dart';
+import 'package:open_words/features/explorer/_main_screen/bloc/explorer_bloc.dart';
 import 'package:open_words/shared/appbar/app_bar_title.dart';
 
 class ExplorerTitle extends StatelessWidget {

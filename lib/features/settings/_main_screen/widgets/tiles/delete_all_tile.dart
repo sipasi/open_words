@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:open_words/core/data/sources/app_database.dart';
-import 'package:open_words/features/explorer/list/bloc/explorer_bloc.dart';
-import 'package:open_words/features/settings/list/widgets/settings_tile_button.dart';
+import 'package:open_words/features/explorer/_main_screen/bloc/explorer_bloc.dart';
+import 'package:open_words/features/settings/_main_screen/widgets/settings_tile_button.dart';
 import 'package:open_words/shared/modal/waiting_dialog.dart';
 
 class DeleteAllTile extends StatelessWidget {

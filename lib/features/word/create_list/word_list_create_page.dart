@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:open_words/core/data/draft/word_draft.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
 import 'package:open_words/core/services/vibration/vibration_service.dart';
-import 'package:open_words/features/explorer/list/bloc/explorer_bloc.dart';
+import 'package:open_words/features/explorer/_main_screen/bloc/explorer_bloc.dart';
 import 'package:open_words/features/word/create_list/cubit/word_list_create_cubit.dart';
 import 'package:open_words/features/word/create_list/widgets/word_draft_editor.dart';
 import 'package:open_words/features/word/create_list/widgets/word_draft_list_view.dart';

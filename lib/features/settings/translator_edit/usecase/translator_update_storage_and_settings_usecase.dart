@@ -1,6 +1,6 @@
 import 'package:open_words/core/services/language/translation/translator_template.dart';
 import 'package:open_words/core/services/language/translation/translator_template_storage.dart';
-import 'package:open_words/features/settings/list/bloc/settings_bloc.dart';
+import 'package:open_words/features/settings/_main_screen/bloc/settings_bloc.dart';
 
 sealed class TranslatorUpdateStorageAndSettingsUsecase {
   static Future invoke({
