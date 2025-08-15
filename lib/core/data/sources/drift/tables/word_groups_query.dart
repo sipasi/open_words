@@ -2,6 +2,16 @@ import 'package:drift/drift.dart';
 import 'package:open_words/core/data/sources/drift/app_drift_database.dart';
 
 extension DriftWordGroupsQuery on AppDriftDatabase {
+  Selectable<QueryRow> existByName(String name) {
+    return customSelect(
+      'SELECT g.name '
+      'FROM word_groups g '
+      'WHERE g.name = ?1',
+      variables: [Variable.withString(name)],
+      readsFrom: {wordGroups},
+    );
+  }
+
   Selectable<QueryRow> oneGroupById(int id) {
     return customSelect(
       'SELECT g.*, COUNT(w.id) words_count '

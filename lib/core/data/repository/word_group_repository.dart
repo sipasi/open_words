@@ -5,7 +5,9 @@ import 'package:open_words/core/data/repository/mappers/word_group_sql_mapper.da
 import 'package:open_words/core/data/sources/drift/app_drift_database.dart';
 import 'package:open_words/core/data/sources/drift/tables/word_groups_query.dart';
 
-sealed class WordGroupRepository {
+abstract class WordGroupRepository {
+  Future<bool> existByName(String originName);
+
   Future<List<WordGroup>> all();
   Future<List<WordGroup>> allByFolder(Id folderId);
   Future<WordGroup?> oneById(Id id);
@@ -32,6 +34,11 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
   final AppDriftDatabase database;
 
   WordGroupRepositoryImpl(this.database);
+
+  @override
+  Future<bool> existByName(String name) async {
+    return (await database.existByName(name).getSingleOrNull()) != null;
+  }
 
   @override
   Future<List<WordGroup>> all() {
