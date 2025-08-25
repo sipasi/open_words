@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/core/artificial_intelligence/bridge/ai_bridge_template.dart';
-import 'package:open_words/core/result/result.dart';
 import 'package:open_words/features/settings/ai/ai_bridge_tamplate_create/cubit/ai_bridge_template_create_cubit.dart';
 import 'package:open_words/features/settings/ai/ai_bridge_tamplate_create/models/ai_bridge_template_create_step.dart';
 import 'package:open_words/features/settings/ai/ai_bridge_tamplate_create/widgets/ai_template_connection_step.dart';
+import 'package:open_words/features/settings/ai/ai_bridge_tamplate_create/widgets/ai_template_create_view_fab.dart';
 import 'package:open_words/features/settings/ai/ai_bridge_tamplate_create/widgets/ai_template_model_step.dart';
 import 'package:open_words/features/settings/ai/ai_bridge_tamplate_create/widgets/ai_template_url_step.dart';
 import 'package:open_words/shared/input_fields/text_edit_controller.dart';
@@ -37,47 +37,6 @@ class AiTemplateCreateView extends StatefulWidget {
 
   @override
   State<AiTemplateCreateView> createState() => _AiTemplateCreateViewState();
-}
-
-class AiTemplateCreateViewFab extends StatelessWidget {
-  const AiTemplateCreateViewFab({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final bloc = context.read<AiBridgeTemplateCreateCubit>();
-
-    if (bloc.state.isLastStep) {
-      return FloatingActionButton.extended(
-        onPressed: () => _onSave(context),
-        icon: Icon(Icons.done),
-        label: Text('Finish'),
-      );
-    }
-
-    return FloatingActionButton.extended(
-      onPressed: () => _onNextStep(context),
-      icon: Icon(Icons.navigate_next),
-      label: Text('Next'),
-    );
-  }
-
-  void _onNextStep(BuildContext context) {
-    final bloc = context.read<AiBridgeTemplateCreateCubit>();
-
-    bloc.nextStep();
-  }
-
-  void _onSave(BuildContext context) {
-    final bloc = context.read<AiBridgeTemplateCreateCubit>();
-
-    final isEdit = bloc.initial.id != '';
-
-    final resultType = isEdit ? CrudResult.modified : CrudResult.created;
-
-    final tamplate = bloc.createTemplate();
-
-    context.popWith(resultType(tamplate));
-  }
 }
 
 class _AiTemplateCreateViewState extends State<AiTemplateCreateView> {
