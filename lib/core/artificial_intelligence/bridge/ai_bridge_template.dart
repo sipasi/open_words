@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:open_words/core/artificial_intelligence/bridge/ai_bridge_type.dart';
 import 'package:uuid/v4.dart';
 
@@ -71,4 +72,24 @@ class AiTemplate {
 
   factory AiTemplate.fromJson(String source) =>
       AiTemplate.fromMap(json.decode(source));
+
+  @override
+  bool operator ==(covariant AiTemplate other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.uri == uri &&
+        other.model == model &&
+        other.type == type &&
+        other.apiKey == apiKey;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        uri.hashCode ^
+        model.hashCode ^
+        type.hashCode ^
+        apiKey.hashCode;
+  }
 }
