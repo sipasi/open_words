@@ -36,12 +36,8 @@ class DatabaseAddCubit extends Cubit<DatabaseAddState> {
         return o(
           created: now,
           modified: now,
-          languageOriginCode: 'code',
-          languageOriginName: 'name',
-          languageOriginNative: 'native',
-          languageTranslationCode: 'code',
-          languageTranslationName: 'name',
-          languageTranslationNative: 'native',
+          originCode: 'code',
+          translationCode: 'code',
           name: 'Group',
         );
       });

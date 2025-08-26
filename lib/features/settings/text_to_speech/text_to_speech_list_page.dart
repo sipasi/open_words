@@ -16,6 +16,7 @@ class TextToSpeechListPage extends StatelessWidget {
         languageInfoService: GetIt.I.get(),
         textToSpeech: GetIt.I.get(),
         voiceStorage: GetIt.I.get(),
+        groupRepository: GetIt.I.get(),
       )..init(),
       child: TextToSpeechListView(),
     );

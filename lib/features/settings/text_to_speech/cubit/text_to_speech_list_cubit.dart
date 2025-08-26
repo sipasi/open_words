@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/core/data/entities/language_info.dart';
+import 'package:open_words/core/data/repository/word_group_repository.dart';
 import 'package:open_words/core/services/language/language_info_service.dart';
 import 'package:open_words/core/services/text_to_speech/text_to_speech_service.dart';
 import 'package:open_words/core/services/text_to_speech/text_to_speech_voice.dart';
@@ -11,27 +12,38 @@ class TextToSpeechListCubit extends Cubit<TextToSpeechListState> {
   final TextToSpeechService textToSpeech;
   final TextToSpeechVoiceStorage voiceStorage;
   final LanguageInfoService languageInfoService;
+  final WordGroupRepository groupRepository;
 
   TextToSpeechListCubit({
     required this.textToSpeech,
     required this.voiceStorage,
     required this.languageInfoService,
+    required this.groupRepository,
   }) : super(TextToSpeechListState.initial());
 
   Future init() async {
-    final languages = textToSpeech.languages;
-
+    final uniqueLanguages = await groupRepository.allUniqueLanguages();
     final selectedVoice = <LanguageInfo, TextToSpeechVoice>{};
 
-    for (var element in languages) {
-      final voice = voiceStorage.getByLanguage(element);
+    for (var unique in uniqueLanguages) {
+      bool supported = textToSpeech.languages.contains(unique);
+
+      if (supported == false) {
+        selectedVoice[unique] = const TextToSpeechVoice.notSupported();
+
+        continue;
+      }
+
+      final voice = voiceStorage.getByLanguage(unique);
 
       if (voice != null) {
-        selectedVoice[element] = voice;
+        selectedVoice[unique] = voice;
       }
     }
 
-    emit(state.copyWith(languages: languages, selectedVoice: selectedVoice));
+    emit(
+      state.copyWith(languages: uniqueLanguages, selectedVoice: selectedVoice),
+    );
   }
 
   Future rememberVoice(LanguageInfo language, TextToSpeechVoice voice) async {
