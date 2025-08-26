@@ -2,10 +2,23 @@ import 'package:drift/drift.dart';
 import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/entities/language_info.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
+import 'package:open_words/core/data/repository/mappers/language_info_sql_mapper.dart';
 import 'package:open_words/core/data/sources/drift/app_drift_database.dart';
+import 'package:open_words/core/services/language/language_info_service.dart';
+import 'package:open_words/core/services/logger/app_logger.dart';
 
-sealed class WordGroupSqlMapper {
-  static WordGroup from(QueryRow row) {
+final class WordGroupSqlMapper {
+  final LanguageInfoSqlMapper languageMapper;
+
+  WordGroupSqlMapper({
+    required AppLogger logger,
+    required LanguageInfoService languages,
+  }) : languageMapper = LanguageInfoSqlMapper(
+         logger: logger,
+         languages: languages,
+       );
+
+  WordGroup from(QueryRow row) {
     return WordGroup(
       id: Id.exist(row.read('id')),
       folderId: Id.emptyIfNull(row.readNullable('folder_id')),
@@ -13,20 +26,12 @@ sealed class WordGroupSqlMapper {
       modified: row.read('modified'),
       name: row.read('name'),
       words: row.readNullable<int>('words_count') ?? 0,
-      origin: LanguageInfo(
-        code: row.data['language_origin_code'],
-        name: row.data['language_origin_name'],
-        native: row.data['language_origin_native'],
-      ),
-      translation: LanguageInfo(
-        code: row.data['language_translation_code'],
-        name: row.data['language_translation_name'],
-        native: row.data['language_translation_native'],
-      ),
+      origin: languageMapper.originFrom(row),
+      translation: languageMapper.translationFrom(row),
     );
   }
 
-  static Insertable<DriftWordGroup> toCreate({
+  Insertable<DriftWordGroup> toCreate({
     required Id folderId,
     required String name,
     required LanguageInfo origin,
@@ -39,16 +44,12 @@ sealed class WordGroupSqlMapper {
       created: now,
       modified: now,
       name: name,
-      languageOriginCode: origin.code,
-      languageOriginName: origin.name,
-      languageOriginNative: origin.native,
-      languageTranslationCode: translation.code,
-      languageTranslationName: translation.name,
-      languageTranslationNative: translation.native,
+      originCode: origin.code,
+      translationCode: translation.code,
     );
   }
 
-  static Insertable<DriftWordGroup> toUpdate({
+  Insertable<DriftWordGroup> toUpdate({
     Id? folderId,
     String? name,
     LanguageInfo? origin,
@@ -61,12 +62,8 @@ sealed class WordGroupSqlMapper {
       folderId: Value.absentIfNull(folderId?.valueOrNull()),
       modified: Value(now),
       name: Value.absentIfNull(name),
-      languageOriginCode: Value.absentIfNull(origin?.code),
-      languageOriginName: Value.absentIfNull(origin?.name),
-      languageOriginNative: Value.absentIfNull(origin?.native),
-      languageTranslationCode: Value.absentIfNull(translation?.code),
-      languageTranslationName: Value.absentIfNull(translation?.name),
-      languageTranslationNative: Value.absentIfNull(translation?.native),
+      originCode: Value.absentIfNull(origin?.code),
+      translationCode: Value.absentIfNull(translation?.code),
     );
   }
 }

@@ -5,7 +5,10 @@ import 'package:open_words/core/dependency/app_dependency.dart';
 class RepositoryDependency extends AppDependency {
   @override
   Future inject(GetIt container) async {
-    final storage = await StorageFactory.createDefault();
+    final storage = await StorageFactory.createDefault(
+      languages: container.get(),
+      logger: container.get(),
+    );
 
     container.registerSingleton(storage.database);
     container.registerSingleton(storage.folderRepository);

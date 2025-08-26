@@ -368,72 +368,28 @@ class $WordGroupsTable extends WordGroups
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _languageOriginCodeMeta =
-      const VerificationMeta('languageOriginCode');
+  static const VerificationMeta _originCodeMeta = const VerificationMeta(
+    'originCode',
+  );
   @override
-  late final GeneratedColumn<String> languageOriginCode =
-      GeneratedColumn<String>(
-        'language_origin_code',
-        aliasedName,
-        false,
-        type: DriftSqlType.string,
-        requiredDuringInsert: true,
-      );
-  static const VerificationMeta _languageOriginNameMeta =
-      const VerificationMeta('languageOriginName');
+  late final GeneratedColumn<String> originCode = GeneratedColumn<String>(
+    'origin_code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _translationCodeMeta = const VerificationMeta(
+    'translationCode',
+  );
   @override
-  late final GeneratedColumn<String> languageOriginName =
-      GeneratedColumn<String>(
-        'language_origin_name',
-        aliasedName,
-        false,
-        type: DriftSqlType.string,
-        requiredDuringInsert: true,
-      );
-  static const VerificationMeta _languageOriginNativeMeta =
-      const VerificationMeta('languageOriginNative');
-  @override
-  late final GeneratedColumn<String> languageOriginNative =
-      GeneratedColumn<String>(
-        'language_origin_native',
-        aliasedName,
-        false,
-        type: DriftSqlType.string,
-        requiredDuringInsert: true,
-      );
-  static const VerificationMeta _languageTranslationCodeMeta =
-      const VerificationMeta('languageTranslationCode');
-  @override
-  late final GeneratedColumn<String> languageTranslationCode =
-      GeneratedColumn<String>(
-        'language_translation_code',
-        aliasedName,
-        false,
-        type: DriftSqlType.string,
-        requiredDuringInsert: true,
-      );
-  static const VerificationMeta _languageTranslationNameMeta =
-      const VerificationMeta('languageTranslationName');
-  @override
-  late final GeneratedColumn<String> languageTranslationName =
-      GeneratedColumn<String>(
-        'language_translation_name',
-        aliasedName,
-        false,
-        type: DriftSqlType.string,
-        requiredDuringInsert: true,
-      );
-  static const VerificationMeta _languageTranslationNativeMeta =
-      const VerificationMeta('languageTranslationNative');
-  @override
-  late final GeneratedColumn<String> languageTranslationNative =
-      GeneratedColumn<String>(
-        'language_translation_native',
-        aliasedName,
-        false,
-        type: DriftSqlType.string,
-        requiredDuringInsert: true,
-      );
+  late final GeneratedColumn<String> translationCode = GeneratedColumn<String>(
+    'translation_code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -441,12 +397,8 @@ class $WordGroupsTable extends WordGroups
     created,
     modified,
     name,
-    languageOriginCode,
-    languageOriginName,
-    languageOriginNative,
-    languageTranslationCode,
-    languageTranslationName,
-    languageTranslationNative,
+    originCode,
+    translationCode,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -493,71 +445,24 @@ class $WordGroupsTable extends WordGroups
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
-    if (data.containsKey('language_origin_code')) {
+    if (data.containsKey('origin_code')) {
       context.handle(
-        _languageOriginCodeMeta,
-        languageOriginCode.isAcceptableOrUnknown(
-          data['language_origin_code']!,
-          _languageOriginCodeMeta,
-        ),
+        _originCodeMeta,
+        originCode.isAcceptableOrUnknown(data['origin_code']!, _originCodeMeta),
       );
     } else if (isInserting) {
-      context.missing(_languageOriginCodeMeta);
+      context.missing(_originCodeMeta);
     }
-    if (data.containsKey('language_origin_name')) {
+    if (data.containsKey('translation_code')) {
       context.handle(
-        _languageOriginNameMeta,
-        languageOriginName.isAcceptableOrUnknown(
-          data['language_origin_name']!,
-          _languageOriginNameMeta,
+        _translationCodeMeta,
+        translationCode.isAcceptableOrUnknown(
+          data['translation_code']!,
+          _translationCodeMeta,
         ),
       );
     } else if (isInserting) {
-      context.missing(_languageOriginNameMeta);
-    }
-    if (data.containsKey('language_origin_native')) {
-      context.handle(
-        _languageOriginNativeMeta,
-        languageOriginNative.isAcceptableOrUnknown(
-          data['language_origin_native']!,
-          _languageOriginNativeMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_languageOriginNativeMeta);
-    }
-    if (data.containsKey('language_translation_code')) {
-      context.handle(
-        _languageTranslationCodeMeta,
-        languageTranslationCode.isAcceptableOrUnknown(
-          data['language_translation_code']!,
-          _languageTranslationCodeMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_languageTranslationCodeMeta);
-    }
-    if (data.containsKey('language_translation_name')) {
-      context.handle(
-        _languageTranslationNameMeta,
-        languageTranslationName.isAcceptableOrUnknown(
-          data['language_translation_name']!,
-          _languageTranslationNameMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_languageTranslationNameMeta);
-    }
-    if (data.containsKey('language_translation_native')) {
-      context.handle(
-        _languageTranslationNativeMeta,
-        languageTranslationNative.isAcceptableOrUnknown(
-          data['language_translation_native']!,
-          _languageTranslationNativeMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_languageTranslationNativeMeta);
+      context.missing(_translationCodeMeta);
     }
     return context;
   }
@@ -588,29 +493,13 @@ class $WordGroupsTable extends WordGroups
         DriftSqlType.string,
         data['${effectivePrefix}name'],
       )!,
-      languageOriginCode: attachedDatabase.typeMapping.read(
+      originCode: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}language_origin_code'],
+        data['${effectivePrefix}origin_code'],
       )!,
-      languageOriginName: attachedDatabase.typeMapping.read(
+      translationCode: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}language_origin_name'],
-      )!,
-      languageOriginNative: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}language_origin_native'],
-      )!,
-      languageTranslationCode: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}language_translation_code'],
-      )!,
-      languageTranslationName: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}language_translation_name'],
-      )!,
-      languageTranslationNative: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}language_translation_native'],
+        data['${effectivePrefix}translation_code'],
       )!,
     );
   }
@@ -627,24 +516,16 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
   final DateTime created;
   final DateTime modified;
   final String name;
-  final String languageOriginCode;
-  final String languageOriginName;
-  final String languageOriginNative;
-  final String languageTranslationCode;
-  final String languageTranslationName;
-  final String languageTranslationNative;
+  final String originCode;
+  final String translationCode;
   const DriftWordGroup({
     required this.id,
     this.folderId,
     required this.created,
     required this.modified,
     required this.name,
-    required this.languageOriginCode,
-    required this.languageOriginName,
-    required this.languageOriginNative,
-    required this.languageTranslationCode,
-    required this.languageTranslationName,
-    required this.languageTranslationNative,
+    required this.originCode,
+    required this.translationCode,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -656,18 +537,8 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
     map['created'] = Variable<DateTime>(created);
     map['modified'] = Variable<DateTime>(modified);
     map['name'] = Variable<String>(name);
-    map['language_origin_code'] = Variable<String>(languageOriginCode);
-    map['language_origin_name'] = Variable<String>(languageOriginName);
-    map['language_origin_native'] = Variable<String>(languageOriginNative);
-    map['language_translation_code'] = Variable<String>(
-      languageTranslationCode,
-    );
-    map['language_translation_name'] = Variable<String>(
-      languageTranslationName,
-    );
-    map['language_translation_native'] = Variable<String>(
-      languageTranslationNative,
-    );
+    map['origin_code'] = Variable<String>(originCode);
+    map['translation_code'] = Variable<String>(translationCode);
     return map;
   }
 
@@ -680,12 +551,8 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
       created: Value(created),
       modified: Value(modified),
       name: Value(name),
-      languageOriginCode: Value(languageOriginCode),
-      languageOriginName: Value(languageOriginName),
-      languageOriginNative: Value(languageOriginNative),
-      languageTranslationCode: Value(languageTranslationCode),
-      languageTranslationName: Value(languageTranslationName),
-      languageTranslationNative: Value(languageTranslationNative),
+      originCode: Value(originCode),
+      translationCode: Value(translationCode),
     );
   }
 
@@ -700,24 +567,8 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
       created: serializer.fromJson<DateTime>(json['created']),
       modified: serializer.fromJson<DateTime>(json['modified']),
       name: serializer.fromJson<String>(json['name']),
-      languageOriginCode: serializer.fromJson<String>(
-        json['languageOriginCode'],
-      ),
-      languageOriginName: serializer.fromJson<String>(
-        json['languageOriginName'],
-      ),
-      languageOriginNative: serializer.fromJson<String>(
-        json['languageOriginNative'],
-      ),
-      languageTranslationCode: serializer.fromJson<String>(
-        json['languageTranslationCode'],
-      ),
-      languageTranslationName: serializer.fromJson<String>(
-        json['languageTranslationName'],
-      ),
-      languageTranslationNative: serializer.fromJson<String>(
-        json['languageTranslationNative'],
-      ),
+      originCode: serializer.fromJson<String>(json['originCode']),
+      translationCode: serializer.fromJson<String>(json['translationCode']),
     );
   }
   @override
@@ -729,18 +580,8 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
       'created': serializer.toJson<DateTime>(created),
       'modified': serializer.toJson<DateTime>(modified),
       'name': serializer.toJson<String>(name),
-      'languageOriginCode': serializer.toJson<String>(languageOriginCode),
-      'languageOriginName': serializer.toJson<String>(languageOriginName),
-      'languageOriginNative': serializer.toJson<String>(languageOriginNative),
-      'languageTranslationCode': serializer.toJson<String>(
-        languageTranslationCode,
-      ),
-      'languageTranslationName': serializer.toJson<String>(
-        languageTranslationName,
-      ),
-      'languageTranslationNative': serializer.toJson<String>(
-        languageTranslationNative,
-      ),
+      'originCode': serializer.toJson<String>(originCode),
+      'translationCode': serializer.toJson<String>(translationCode),
     };
   }
 
@@ -750,27 +591,16 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
     DateTime? created,
     DateTime? modified,
     String? name,
-    String? languageOriginCode,
-    String? languageOriginName,
-    String? languageOriginNative,
-    String? languageTranslationCode,
-    String? languageTranslationName,
-    String? languageTranslationNative,
+    String? originCode,
+    String? translationCode,
   }) => DriftWordGroup(
     id: id ?? this.id,
     folderId: folderId.present ? folderId.value : this.folderId,
     created: created ?? this.created,
     modified: modified ?? this.modified,
     name: name ?? this.name,
-    languageOriginCode: languageOriginCode ?? this.languageOriginCode,
-    languageOriginName: languageOriginName ?? this.languageOriginName,
-    languageOriginNative: languageOriginNative ?? this.languageOriginNative,
-    languageTranslationCode:
-        languageTranslationCode ?? this.languageTranslationCode,
-    languageTranslationName:
-        languageTranslationName ?? this.languageTranslationName,
-    languageTranslationNative:
-        languageTranslationNative ?? this.languageTranslationNative,
+    originCode: originCode ?? this.originCode,
+    translationCode: translationCode ?? this.translationCode,
   );
   DriftWordGroup copyWithCompanion(WordGroupsCompanion data) {
     return DriftWordGroup(
@@ -779,24 +609,12 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
       created: data.created.present ? data.created.value : this.created,
       modified: data.modified.present ? data.modified.value : this.modified,
       name: data.name.present ? data.name.value : this.name,
-      languageOriginCode: data.languageOriginCode.present
-          ? data.languageOriginCode.value
-          : this.languageOriginCode,
-      languageOriginName: data.languageOriginName.present
-          ? data.languageOriginName.value
-          : this.languageOriginName,
-      languageOriginNative: data.languageOriginNative.present
-          ? data.languageOriginNative.value
-          : this.languageOriginNative,
-      languageTranslationCode: data.languageTranslationCode.present
-          ? data.languageTranslationCode.value
-          : this.languageTranslationCode,
-      languageTranslationName: data.languageTranslationName.present
-          ? data.languageTranslationName.value
-          : this.languageTranslationName,
-      languageTranslationNative: data.languageTranslationNative.present
-          ? data.languageTranslationNative.value
-          : this.languageTranslationNative,
+      originCode: data.originCode.present
+          ? data.originCode.value
+          : this.originCode,
+      translationCode: data.translationCode.present
+          ? data.translationCode.value
+          : this.translationCode,
     );
   }
 
@@ -808,12 +626,8 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
           ..write('created: $created, ')
           ..write('modified: $modified, ')
           ..write('name: $name, ')
-          ..write('languageOriginCode: $languageOriginCode, ')
-          ..write('languageOriginName: $languageOriginName, ')
-          ..write('languageOriginNative: $languageOriginNative, ')
-          ..write('languageTranslationCode: $languageTranslationCode, ')
-          ..write('languageTranslationName: $languageTranslationName, ')
-          ..write('languageTranslationNative: $languageTranslationNative')
+          ..write('originCode: $originCode, ')
+          ..write('translationCode: $translationCode')
           ..write(')'))
         .toString();
   }
@@ -825,12 +639,8 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
     created,
     modified,
     name,
-    languageOriginCode,
-    languageOriginName,
-    languageOriginNative,
-    languageTranslationCode,
-    languageTranslationName,
-    languageTranslationNative,
+    originCode,
+    translationCode,
   );
   @override
   bool operator ==(Object other) =>
@@ -841,12 +651,8 @@ class DriftWordGroup extends DataClass implements Insertable<DriftWordGroup> {
           other.created == this.created &&
           other.modified == this.modified &&
           other.name == this.name &&
-          other.languageOriginCode == this.languageOriginCode &&
-          other.languageOriginName == this.languageOriginName &&
-          other.languageOriginNative == this.languageOriginNative &&
-          other.languageTranslationCode == this.languageTranslationCode &&
-          other.languageTranslationName == this.languageTranslationName &&
-          other.languageTranslationNative == this.languageTranslationNative);
+          other.originCode == this.originCode &&
+          other.translationCode == this.translationCode);
 }
 
 class WordGroupsCompanion extends UpdateCompanion<DriftWordGroup> {
@@ -855,24 +661,16 @@ class WordGroupsCompanion extends UpdateCompanion<DriftWordGroup> {
   final Value<DateTime> created;
   final Value<DateTime> modified;
   final Value<String> name;
-  final Value<String> languageOriginCode;
-  final Value<String> languageOriginName;
-  final Value<String> languageOriginNative;
-  final Value<String> languageTranslationCode;
-  final Value<String> languageTranslationName;
-  final Value<String> languageTranslationNative;
+  final Value<String> originCode;
+  final Value<String> translationCode;
   const WordGroupsCompanion({
     this.id = const Value.absent(),
     this.folderId = const Value.absent(),
     this.created = const Value.absent(),
     this.modified = const Value.absent(),
     this.name = const Value.absent(),
-    this.languageOriginCode = const Value.absent(),
-    this.languageOriginName = const Value.absent(),
-    this.languageOriginNative = const Value.absent(),
-    this.languageTranslationCode = const Value.absent(),
-    this.languageTranslationName = const Value.absent(),
-    this.languageTranslationNative = const Value.absent(),
+    this.originCode = const Value.absent(),
+    this.translationCode = const Value.absent(),
   });
   WordGroupsCompanion.insert({
     this.id = const Value.absent(),
@@ -880,33 +678,21 @@ class WordGroupsCompanion extends UpdateCompanion<DriftWordGroup> {
     required DateTime created,
     required DateTime modified,
     required String name,
-    required String languageOriginCode,
-    required String languageOriginName,
-    required String languageOriginNative,
-    required String languageTranslationCode,
-    required String languageTranslationName,
-    required String languageTranslationNative,
+    required String originCode,
+    required String translationCode,
   }) : created = Value(created),
        modified = Value(modified),
        name = Value(name),
-       languageOriginCode = Value(languageOriginCode),
-       languageOriginName = Value(languageOriginName),
-       languageOriginNative = Value(languageOriginNative),
-       languageTranslationCode = Value(languageTranslationCode),
-       languageTranslationName = Value(languageTranslationName),
-       languageTranslationNative = Value(languageTranslationNative);
+       originCode = Value(originCode),
+       translationCode = Value(translationCode);
   static Insertable<DriftWordGroup> custom({
     Expression<int>? id,
     Expression<int>? folderId,
     Expression<DateTime>? created,
     Expression<DateTime>? modified,
     Expression<String>? name,
-    Expression<String>? languageOriginCode,
-    Expression<String>? languageOriginName,
-    Expression<String>? languageOriginNative,
-    Expression<String>? languageTranslationCode,
-    Expression<String>? languageTranslationName,
-    Expression<String>? languageTranslationNative,
+    Expression<String>? originCode,
+    Expression<String>? translationCode,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -914,18 +700,8 @@ class WordGroupsCompanion extends UpdateCompanion<DriftWordGroup> {
       if (created != null) 'created': created,
       if (modified != null) 'modified': modified,
       if (name != null) 'name': name,
-      if (languageOriginCode != null)
-        'language_origin_code': languageOriginCode,
-      if (languageOriginName != null)
-        'language_origin_name': languageOriginName,
-      if (languageOriginNative != null)
-        'language_origin_native': languageOriginNative,
-      if (languageTranslationCode != null)
-        'language_translation_code': languageTranslationCode,
-      if (languageTranslationName != null)
-        'language_translation_name': languageTranslationName,
-      if (languageTranslationNative != null)
-        'language_translation_native': languageTranslationNative,
+      if (originCode != null) 'origin_code': originCode,
+      if (translationCode != null) 'translation_code': translationCode,
     });
   }
 
@@ -935,12 +711,8 @@ class WordGroupsCompanion extends UpdateCompanion<DriftWordGroup> {
     Value<DateTime>? created,
     Value<DateTime>? modified,
     Value<String>? name,
-    Value<String>? languageOriginCode,
-    Value<String>? languageOriginName,
-    Value<String>? languageOriginNative,
-    Value<String>? languageTranslationCode,
-    Value<String>? languageTranslationName,
-    Value<String>? languageTranslationNative,
+    Value<String>? originCode,
+    Value<String>? translationCode,
   }) {
     return WordGroupsCompanion(
       id: id ?? this.id,
@@ -948,15 +720,8 @@ class WordGroupsCompanion extends UpdateCompanion<DriftWordGroup> {
       created: created ?? this.created,
       modified: modified ?? this.modified,
       name: name ?? this.name,
-      languageOriginCode: languageOriginCode ?? this.languageOriginCode,
-      languageOriginName: languageOriginName ?? this.languageOriginName,
-      languageOriginNative: languageOriginNative ?? this.languageOriginNative,
-      languageTranslationCode:
-          languageTranslationCode ?? this.languageTranslationCode,
-      languageTranslationName:
-          languageTranslationName ?? this.languageTranslationName,
-      languageTranslationNative:
-          languageTranslationNative ?? this.languageTranslationNative,
+      originCode: originCode ?? this.originCode,
+      translationCode: translationCode ?? this.translationCode,
     );
   }
 
@@ -978,31 +743,11 @@ class WordGroupsCompanion extends UpdateCompanion<DriftWordGroup> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
-    if (languageOriginCode.present) {
-      map['language_origin_code'] = Variable<String>(languageOriginCode.value);
+    if (originCode.present) {
+      map['origin_code'] = Variable<String>(originCode.value);
     }
-    if (languageOriginName.present) {
-      map['language_origin_name'] = Variable<String>(languageOriginName.value);
-    }
-    if (languageOriginNative.present) {
-      map['language_origin_native'] = Variable<String>(
-        languageOriginNative.value,
-      );
-    }
-    if (languageTranslationCode.present) {
-      map['language_translation_code'] = Variable<String>(
-        languageTranslationCode.value,
-      );
-    }
-    if (languageTranslationName.present) {
-      map['language_translation_name'] = Variable<String>(
-        languageTranslationName.value,
-      );
-    }
-    if (languageTranslationNative.present) {
-      map['language_translation_native'] = Variable<String>(
-        languageTranslationNative.value,
-      );
+    if (translationCode.present) {
+      map['translation_code'] = Variable<String>(translationCode.value);
     }
     return map;
   }
@@ -1015,12 +760,8 @@ class WordGroupsCompanion extends UpdateCompanion<DriftWordGroup> {
           ..write('created: $created, ')
           ..write('modified: $modified, ')
           ..write('name: $name, ')
-          ..write('languageOriginCode: $languageOriginCode, ')
-          ..write('languageOriginName: $languageOriginName, ')
-          ..write('languageOriginNative: $languageOriginNative, ')
-          ..write('languageTranslationCode: $languageTranslationCode, ')
-          ..write('languageTranslationName: $languageTranslationName, ')
-          ..write('languageTranslationNative: $languageTranslationNative')
+          ..write('originCode: $originCode, ')
+          ..write('translationCode: $translationCode')
           ..write(')'))
         .toString();
   }
@@ -3226,25 +2967,13 @@ abstract class _$AppDriftDatabase extends GeneratedDatabase {
     'folder_name',
     'CREATE INDEX folder_name ON folders (name)',
   );
-  late final Index groupCreated = Index(
-    'group_created',
-    'CREATE INDEX group_created ON word_groups (created)',
-  );
   late final Index groupName = Index(
     'group_name',
     'CREATE INDEX group_name ON word_groups (name)',
   );
-  late final Index groupLanguageOriginCode = Index(
-    'group_language_origin_code',
-    'CREATE INDEX group_language_origin_code ON word_groups (language_origin_code)',
-  );
-  late final Index groupLanguageTranslationCode = Index(
-    'group_language_translation_code',
-    'CREATE INDEX group_language_translation_code ON word_groups (language_translation_code)',
-  );
-  late final Index groupLanguageOriginTranslationCode = Index(
-    'group_language_origin_translation_code',
-    'CREATE INDEX group_language_origin_translation_code ON word_groups (language_origin_code, language_translation_code)',
+  late final Index groupCreated = Index(
+    'group_created',
+    'CREATE INDEX group_created ON word_groups (created)',
   );
   late final Index wordCreated = Index(
     'word_created',
@@ -3290,11 +3019,8 @@ abstract class _$AppDriftDatabase extends GeneratedDatabase {
     definitions,
     folderCreated,
     folderName,
-    groupCreated,
     groupName,
-    groupLanguageOriginCode,
-    groupLanguageTranslationCode,
-    groupLanguageOriginTranslationCode,
+    groupCreated,
     wordCreated,
     indexWord,
     indexCorrect,
@@ -3736,12 +3462,8 @@ typedef $$WordGroupsTableCreateCompanionBuilder =
       required DateTime created,
       required DateTime modified,
       required String name,
-      required String languageOriginCode,
-      required String languageOriginName,
-      required String languageOriginNative,
-      required String languageTranslationCode,
-      required String languageTranslationName,
-      required String languageTranslationNative,
+      required String originCode,
+      required String translationCode,
     });
 typedef $$WordGroupsTableUpdateCompanionBuilder =
     WordGroupsCompanion Function({
@@ -3750,12 +3472,8 @@ typedef $$WordGroupsTableUpdateCompanionBuilder =
       Value<DateTime> created,
       Value<DateTime> modified,
       Value<String> name,
-      Value<String> languageOriginCode,
-      Value<String> languageOriginName,
-      Value<String> languageOriginNative,
-      Value<String> languageTranslationCode,
-      Value<String> languageTranslationName,
-      Value<String> languageTranslationNative,
+      Value<String> originCode,
+      Value<String> translationCode,
     });
 
 final class $$WordGroupsTableReferences
@@ -3829,33 +3547,13 @@ class $$WordGroupsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get languageOriginCode => $composableBuilder(
-    column: $table.languageOriginCode,
+  ColumnFilters<String> get originCode => $composableBuilder(
+    column: $table.originCode,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get languageOriginName => $composableBuilder(
-    column: $table.languageOriginName,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get languageOriginNative => $composableBuilder(
-    column: $table.languageOriginNative,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get languageTranslationCode => $composableBuilder(
-    column: $table.languageTranslationCode,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get languageTranslationName => $composableBuilder(
-    column: $table.languageTranslationName,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get languageTranslationNative => $composableBuilder(
-    column: $table.languageTranslationNative,
+  ColumnFilters<String> get translationCode => $composableBuilder(
+    column: $table.translationCode,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -3937,33 +3635,13 @@ class $$WordGroupsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get languageOriginCode => $composableBuilder(
-    column: $table.languageOriginCode,
+  ColumnOrderings<String> get originCode => $composableBuilder(
+    column: $table.originCode,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get languageOriginName => $composableBuilder(
-    column: $table.languageOriginName,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get languageOriginNative => $composableBuilder(
-    column: $table.languageOriginNative,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get languageTranslationCode => $composableBuilder(
-    column: $table.languageTranslationCode,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get languageTranslationName => $composableBuilder(
-    column: $table.languageTranslationName,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get languageTranslationNative => $composableBuilder(
-    column: $table.languageTranslationNative,
+  ColumnOrderings<String> get translationCode => $composableBuilder(
+    column: $table.translationCode,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -4012,33 +3690,13 @@ class $$WordGroupsTableAnnotationComposer
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
 
-  GeneratedColumn<String> get languageOriginCode => $composableBuilder(
-    column: $table.languageOriginCode,
+  GeneratedColumn<String> get originCode => $composableBuilder(
+    column: $table.originCode,
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get languageOriginName => $composableBuilder(
-    column: $table.languageOriginName,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get languageOriginNative => $composableBuilder(
-    column: $table.languageOriginNative,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get languageTranslationCode => $composableBuilder(
-    column: $table.languageTranslationCode,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get languageTranslationName => $composableBuilder(
-    column: $table.languageTranslationName,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get languageTranslationNative => $composableBuilder(
-    column: $table.languageTranslationNative,
+  GeneratedColumn<String> get translationCode => $composableBuilder(
+    column: $table.translationCode,
     builder: (column) => column,
   );
 
@@ -4124,24 +3782,16 @@ class $$WordGroupsTableTableManager
                 Value<DateTime> created = const Value.absent(),
                 Value<DateTime> modified = const Value.absent(),
                 Value<String> name = const Value.absent(),
-                Value<String> languageOriginCode = const Value.absent(),
-                Value<String> languageOriginName = const Value.absent(),
-                Value<String> languageOriginNative = const Value.absent(),
-                Value<String> languageTranslationCode = const Value.absent(),
-                Value<String> languageTranslationName = const Value.absent(),
-                Value<String> languageTranslationNative = const Value.absent(),
+                Value<String> originCode = const Value.absent(),
+                Value<String> translationCode = const Value.absent(),
               }) => WordGroupsCompanion(
                 id: id,
                 folderId: folderId,
                 created: created,
                 modified: modified,
                 name: name,
-                languageOriginCode: languageOriginCode,
-                languageOriginName: languageOriginName,
-                languageOriginNative: languageOriginNative,
-                languageTranslationCode: languageTranslationCode,
-                languageTranslationName: languageTranslationName,
-                languageTranslationNative: languageTranslationNative,
+                originCode: originCode,
+                translationCode: translationCode,
               ),
           createCompanionCallback:
               ({
@@ -4150,24 +3800,16 @@ class $$WordGroupsTableTableManager
                 required DateTime created,
                 required DateTime modified,
                 required String name,
-                required String languageOriginCode,
-                required String languageOriginName,
-                required String languageOriginNative,
-                required String languageTranslationCode,
-                required String languageTranslationName,
-                required String languageTranslationNative,
+                required String originCode,
+                required String translationCode,
               }) => WordGroupsCompanion.insert(
                 id: id,
                 folderId: folderId,
                 created: created,
                 modified: modified,
                 name: name,
-                languageOriginCode: languageOriginCode,
-                languageOriginName: languageOriginName,
-                languageOriginNative: languageOriginNative,
-                languageTranslationCode: languageTranslationCode,
-                languageTranslationName: languageTranslationName,
-                languageTranslationNative: languageTranslationNative,
+                originCode: originCode,
+                translationCode: translationCode,
               ),
           withReferenceMapper: (p0) => p0
               .map(

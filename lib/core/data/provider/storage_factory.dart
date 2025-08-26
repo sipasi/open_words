@@ -7,6 +7,8 @@ import 'package:open_words/core/data/repository/word_statistic_repository.dart';
 import 'package:open_words/core/data/repository/word_web_lookup_repository.dart';
 import 'package:open_words/core/data/sources/app_database.dart';
 import 'package:open_words/core/data/sources/drift/app_drift_database.dart';
+import 'package:open_words/core/services/language/language_info_service.dart';
+import 'package:open_words/core/services/logger/app_logger.dart';
 
 class StorageSet {
   final AppDatabase database;
@@ -31,10 +33,17 @@ class StorageSet {
 }
 
 class StorageFactory {
-  static Future<StorageSet> _drift() async {
+  static Future<StorageSet> _drift({
+    required AppLogger logger,
+    required LanguageInfoService languages,
+  }) async {
     final database = AppDriftDatabase();
 
-    final groups = WordGroupRepositoryImpl(database);
+    final groups = WordGroupRepositoryImpl(
+      database,
+      languages: languages,
+      logger: logger,
+    );
     final folders = FolderRepositoryImpl(database);
 
     return StorageSet(
@@ -49,5 +58,8 @@ class StorageFactory {
     );
   }
 
-  static Future<StorageSet> createDefault() => _drift();
+  static Future<StorageSet> createDefault({
+    required AppLogger logger,
+    required LanguageInfoService languages,
+  }) => _drift(logger: logger, languages: languages);
 }

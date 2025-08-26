@@ -25,6 +25,18 @@ extension DriftWordGroupsQuery on AppDriftDatabase {
     );
   }
 
+  Selectable<QueryRow> allUniqueLanguages() {
+    return customSelect(
+      'SELECT g.origin_code AS origin_code '
+      'FROM word_groups g '
+      'UNION '
+      'SELECT g.translation_code AS origin_code '
+      'FROM word_groups g '
+      'ORDER BY g.origin_code',
+      readsFrom: {wordGroups},
+    );
+  }
+
   Selectable<QueryRow> allGroups() {
     return customSelect(
       'SELECT g.*, COUNT(w.id) words_count '

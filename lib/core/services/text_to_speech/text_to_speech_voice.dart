@@ -7,6 +7,8 @@ class TextToSpeechVoice {
   final String gender;
   final String quality;
 
+  bool get isNotSupported => this == const TextToSpeechVoice.notSupported();
+
   TextToSpeechVoice({
     required this.name,
     required this.locale,
@@ -14,7 +16,18 @@ class TextToSpeechVoice {
     required this.quality,
   }) : code = locale.substring(0, 2);
 
+  const TextToSpeechVoice.notSupported()
+    : name = '',
+      locale = '',
+      code = '',
+      gender = '',
+      quality = '';
+
   String description() {
+    if (isNotSupported) {
+      return 'system is not supported';
+    }
+
     String text = 'locale: $locale';
 
     if (gender.isNotEmpty) {

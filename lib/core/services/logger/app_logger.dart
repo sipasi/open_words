@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:open_words/core/services/path/app_directory_provider.dart';
-
 import 'package:path/path.dart' as path;
 
 sealed class AppLogger {

@@ -1,16 +1,22 @@
 import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/entities/language_info.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
+import 'package:open_words/core/data/repository/mappers/language_info_sql_mapper.dart';
 import 'package:open_words/core/data/repository/mappers/word_group_sql_mapper.dart';
 import 'package:open_words/core/data/sources/drift/app_drift_database.dart';
 import 'package:open_words/core/data/sources/drift/tables/word_groups_query.dart';
+import 'package:open_words/core/services/language/language_info_service.dart';
+import 'package:open_words/core/services/logger/app_logger.dart';
 
 abstract class WordGroupRepository {
   Future<bool> existByName(String originName);
 
   Future<List<WordGroup>> all();
   Future<List<WordGroup>> allByFolder(Id folderId);
+
   Future<WordGroup?> oneById(Id id);
+
+  Future<List<LanguageInfo>> allUniqueLanguages();
 
   Future delete(Id id);
 
@@ -32,8 +38,21 @@ abstract class WordGroupRepository {
 
 class WordGroupRepositoryImpl extends WordGroupRepository {
   final AppDriftDatabase database;
+  final WordGroupSqlMapper groupMapper;
+  final LanguageInfoSqlMapper languageMapper;
 
-  WordGroupRepositoryImpl(this.database);
+  WordGroupRepositoryImpl(
+    this.database, {
+    required AppLogger logger,
+    required LanguageInfoService languages,
+  }) : groupMapper = WordGroupSqlMapper(
+         logger: logger,
+         languages: languages,
+       ),
+       languageMapper = LanguageInfoSqlMapper(
+         logger: logger,
+         languages: languages,
+       );
 
   @override
   Future<bool> existByName(String name) async {
@@ -42,21 +61,18 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
 
   @override
   Future<List<WordGroup>> all() {
-    return database.allGroups().map(WordGroupSqlMapper.from).get();
+    return database.allGroups().map(groupMapper.from).get();
   }
 
   @override
   Future<List<WordGroup>> allByFolder(Id folderId) {
     if (folderId.isEmpty) {
-      return database
-          .allGroupsByFolderRoot()
-          .map(WordGroupSqlMapper.from)
-          .get();
+      return database.allGroupsByFolderRoot().map(groupMapper.from).get();
     }
 
     return database
         .allGroupsByFolder(folderId.valueOrThrow())
-        .map(WordGroupSqlMapper.from)
+        .map(groupMapper.from)
         .get();
   }
 
@@ -68,8 +84,16 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
 
     return database
         .oneGroupById(id.valueOrThrow())
-        .map(WordGroupSqlMapper.from)
+        .map(groupMapper.from)
         .getSingleOrNull();
+  }
+
+  @override
+  Future<List<LanguageInfo>> allUniqueLanguages() async {
+    return database
+        .allUniqueLanguages()
+        .map(languageMapper.originOrTranslationFrom)
+        .get();
   }
 
   @override
@@ -82,7 +106,7 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
     final id = await database
         .into(database.wordGroups)
         .insert(
-          WordGroupSqlMapper.toCreate(
+          groupMapper.toCreate(
             folderId: folderId,
             name: name,
             origin: origin,
@@ -106,7 +130,7 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
     await database.managers.wordGroups
         .filter((f) => f.id.equals(id.valueOrNull()))
         .update(
-          (_) => WordGroupSqlMapper.toUpdate(
+          (_) => groupMapper.toUpdate(
             folderId: folderId,
             name: name,
             origin: origin,
