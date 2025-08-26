@@ -11,9 +11,9 @@ class ExplorerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = context.watch<ExplorerBloc>().state;
 
-    if (state.isEmpty && state.loadStatus.isLoaded) {
-      return AddFirstFolderOrGroupCard();
-    }
+    final body = state.isEmpty && state.loadStatus.isLoaded
+        ? AddFirstFolderOrGroupCard()
+        : ExplorerGridView(folders: state.folders, groups: state.groups);
 
     return PopScope(
       canPop: state.isRootFolder,
@@ -22,7 +22,7 @@ class ExplorerScreen extends StatelessWidget {
 
         bloc.add(ExplorerNavigateBackRequested());
       },
-      child: ExplorerGridView(folders: state.folders, groups: state.groups),
+      child: body,
     );
   }
 }
