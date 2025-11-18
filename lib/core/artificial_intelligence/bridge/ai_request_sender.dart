@@ -24,12 +24,7 @@ sealed class AiRequestSender {
       response = await http.post(
         url,
         headers: {"Content-Type": "application/json"},
-        body: convert.jsonEncode({
-          'model': template.model,
-          'prompt': request.message,
-          'temperature': request.temperature,
-          'max_tokens': request.maxTokens,
-        }),
+        body: _generateJsonBody(template, request),
         encoding: _encoding,
       );
 
@@ -63,6 +58,15 @@ sealed class AiRequestSender {
     }
 
     return response;
+  }
+
+  static String _generateJsonBody(AiTemplate template, AiRequest request) {
+    final body = {
+      'model': template.model,
+      ...request.toMap(),
+    };
+
+    return convert.jsonEncode(body);
   }
 
   static void _log({http.Response? response, Object? error}) {

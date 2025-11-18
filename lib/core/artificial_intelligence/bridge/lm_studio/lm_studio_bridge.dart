@@ -45,7 +45,7 @@ class LmStudioBridge extends AiBridge {
     final response = await AiRequestSender.post(
       template: template,
       request: request,
-      endpoint: AiEndpoint.completions,
+      endpoint: AiEndpoint.chat,
     );
 
     if (response == null || response.statusCode != 200) {
@@ -56,7 +56,8 @@ class LmStudioBridge extends AiBridge {
       final decoded = convert.json.decode(response.body);
 
       final choices = decoded['choices'];
-      final text = choices[0]['text'] as String;
+      final content = choices[0]?['message']?['content'];
+      final text = (content ?? '') as String;
 
       return text.trim();
     } catch (e) {
