@@ -177,33 +177,33 @@ MIT — free to use, modify, and share ❤️
 
 ### Dark and Light
 
-  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/explorer_page_dark.png?raw=true" width="30%"/>
-  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/explorer_page_light.png?raw=true" width="30%"/>
+  <img src="docs/screenshots/phone/explorer_page_dark.png?raw=true" width="30%"/>
+  <img src="docs/screenshots/phone/explorer_page_light.png?raw=true" width="30%"/>
 
 ### Build Vocabulary
 
-  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/group_detail_page_light.png?raw=true" width="30%"/>
-  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/word_detail_page_dark.png?raw=true" width="30%"/>
+  <img src="docs/screenshots/phone/group_detail_page_light.png?raw=true" width="30%"/>
+  <img src="docs/screenshots/phone/word_detail_page_dark.png?raw=true" width="30%"/>
 
   > metadata web loading supports only english words
 
 ### Export your Dictionaries
 
-  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/export_page_dark.png?raw=true" width="30%"/>
+  <img src="docs/screenshots/phone/export_page_dark.png?raw=true" width="30%"/>
 
   > supports formats: json, text and pdf (will be available in future releases)
 
 ### Play Games
 
-  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/game_list_page_light.png?raw=true" width="30%"/>
-  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/game_compare_dark.png?raw=true" width="30%"/>
-  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/game_constructor_dark.png?raw=true" width="30%"/>
-  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/game_match_audios_dark.png?raw=true" width="30%"/>
-  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/phone/game_match_words_dark.png?raw=true" width="30%"/>
+  <img src="docs/screenshots/phone/game_list_page_light.png?raw=true" width="30%"/>
+  <img src="docs/screenshots/phone/game_compare_dark.png?raw=true" width="30%"/>
+  <img src="docs/screenshots/phone/game_constructor_dark.png?raw=true" width="30%"/>
+  <img src="docs/screenshots/phone/game_match_audios_dark.png?raw=true" width="30%"/>
+  <img src="docs/screenshots/phone/game_match_words_dark.png?raw=true" width="30%"/>
 
 ### Desktop or Tablet
 
-  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/desktop/explorer_page_dark.png?raw=true"/>
-  <img src="https://github.com/sipasi/open_words/blob/main/screenshots/desktop/group_detail_page_dark.png?raw=true"/>
+  <img src="docs/screenshots/desktop/explorer_page_dark.png?raw=true"/>
+  <img src="docs/screenshots/desktop/group_detail_page_dark.png?raw=true"/>
 
 </details>
