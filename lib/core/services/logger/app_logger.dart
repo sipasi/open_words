@@ -41,7 +41,7 @@ final class AppLoggerImpl extends AppLogger {
         path.join(
           directories.documents.path,
           'OpenWordsLogs',
-          '${DateTime.now().toIso8601String()}.txt',
+          '${DateTime.now().toIso8601String().replaceAll(':', '-')}.txt',
         ),
       );
 
