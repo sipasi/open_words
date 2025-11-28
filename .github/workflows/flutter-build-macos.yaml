@@ -1,0 +1,34 @@
+name: Build macOS
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build-macos:
+    name: Build macOS
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Flutter Build
+        uses: ./.github/actions/flutter-build
+        with:
+          build-arguments: macos --release
+
+      - name: Create artifacts directory
+        run: mkdir -p artifacts
+
+      - name: Zip build
+        run: |
+          (cd build/macos/Build/Products/Release/ && zip -r macos-release.zip open_words.app)
+          cp build/macos/Build/Products/Release/macos-release.zip artifacts
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: macos-release
+          path: artifacts/macos-release.zip
+          compression-level: 0 # no compression

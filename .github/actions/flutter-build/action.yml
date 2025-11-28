@@ -1,0 +1,27 @@
+name: "Flutter Web Build"
+description: "Checks out code, sets up Flutter, installs dependencies, and builds web"
+inputs:
+  build-arguments:
+    description: "Flutter app type and arguments"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2.21.0
+      with:
+        channel: "stable"
+        flutter-version-file: pubspec.yaml
+
+    - name: Check Flutter Version
+      shell: bash
+      run: flutter --version
+
+    - name: Install dependencies
+      shell: bash
+      run: flutter pub get
+
+    - name: Build Flutter app
+      shell: bash
+      run: flutter build ${{ inputs.build-arguments }}

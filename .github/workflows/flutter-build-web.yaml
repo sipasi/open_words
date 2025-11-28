@@ -1,0 +1,34 @@
+name: Build Web
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build-web:
+    name: Build Web
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Flutter Build
+        uses: ./.github/actions/flutter-build
+        with:
+          build-arguments: web --release
+
+      - name: Create artifacts directory
+        run: mkdir -p artifacts
+
+      - name: Zip build
+        run: |
+          (cd build/web && zip -r web.zip *)
+          cp build/web/web.zip artifacts
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: web
+          path: artifacts/web.zip
+          compression-level: 0 # no compression

@@ -1,0 +1,78 @@
+name: Build All and Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*" # Trigger on version tags like v1.0.0
+
+permissions:
+  contents: write # Needed to create a release
+
+jobs:
+  linux:
+    uses: ./.github/workflows/flutter-build-linux.yaml
+    with: {}
+    secrets: inherit
+
+  windows:
+    uses: ./.github/workflows/flutter-build-windows.yaml
+    with: {}
+    secrets: inherit
+
+  macos:
+    uses: ./.github/workflows/flutter-build-macos.yaml
+    with: {}
+    secrets: inherit
+
+  android:
+    uses: ./.github/workflows/flutter-build-android.yaml
+    with: {}
+    secrets: inherit
+
+  ios:
+    uses: ./.github/workflows/flutter-build-ios.yaml
+    with: {}
+    secrets: inherit
+
+  web:
+    uses: ./.github/workflows/flutter-build-web.yaml
+    with: {}
+    secrets: inherit
+
+  collect-artifacts:
+    runs-on: ubuntu-latest
+    needs:
+      - linux
+      - windows
+      - macos
+      - android
+      - ios
+      - web
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Download artifact
+        uses: actions/download-artifact@v6
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Display structure of downloaded artifacts
+        run: ls -R artifacts
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2.4.2
+        if: github.ref_type == 'tag'
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: |
+            artifacts/windows-x64.zip
+            artifacts/windows-x64-setup.exe
+            artifacts/linux-x64.zip
+            artifacts/android-universal.apk
+            artifacts/android-armeabi-v7a.apk
+            artifacts/android-arm64-v8a.apk
+            artifacts/android-x86_64.apk

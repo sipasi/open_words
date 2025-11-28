@@ -1,0 +1,45 @@
+name: Build Android
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build-android:
+    name: Build Android
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Flutter Build Splitted Abi
+        uses: ./.github/actions/flutter-build
+        with:
+          build-arguments: apk --release --split-per-abi
+
+      - name: Flutter Build
+        uses: ./.github/actions/flutter-build
+        with:
+          build-arguments: apk --release
+
+      - name: Create artifacts directory
+        run: mkdir -p artifacts
+
+      - name: Prepare release assets
+        run: |
+          cp build/app/outputs/flutter-apk/app-release.apk artifacts/android-universal.apk
+          cp build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk artifacts/android-armeabi-v7a.apk
+          cp build/app/outputs/flutter-apk/app-arm64-v8a-release.apk artifacts/android-arm64-v8a.apk
+          cp build/app/outputs/flutter-apk/app-x86_64-release.apk artifacts/android-x86_64.apk
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: android-apks
+          path: |
+            artifacts/android-universal.apk
+            artifacts/android-armeabi-v7a.apk
+            artifacts/android-arm64-v8a.apk
+            artifacts/android-x86_64.apk
+          compression-level: 0 # no compression

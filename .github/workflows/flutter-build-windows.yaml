@@ -1,0 +1,56 @@
+name: Build Windows
+
+on:
+  workflow_dispatch:
+  workflow_call:
+
+jobs:
+  build-windows-x64:
+    name: Build Windows x64
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Flutter Build
+        uses: ./.github/actions/flutter-build
+        with:
+          build-arguments: windows --release
+
+      - name: Create artifacts directory
+        shell: pwsh
+        run: mkdir artifacts -Force
+
+      - name: Zip build
+        shell: pwsh
+        run: |
+          Compress-Archive `
+            -Path build/windows/x64/runner/Release/* `
+            -DestinationPath artifacts/windows-x64.zip `
+            -Force
+
+      - name: Install InnoSetup
+        shell: pwsh
+        run: |
+          winget install JRSoftware.InnoSetup -v 6.6.1 --silent --accept-package-agreements --accept-source-agreements
+          echo "$env:LOCALAPPDATA\Programs\Inno Setup 6"
+
+          $env:Path += ";$env:LOCALAPPDATA\Programs\Inno Setup 6\"
+          echo $env:Path
+
+      - name: Compile .ISS to .EXE Installer
+        shell: pwsh
+        run: |
+          iscc.exe `
+          "${{github.workspace}}/windows/packaging/innosetup/github-setup.iss" `
+          /DWorkspaceDir="${{github.workspace}}"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: windows-x64
+          path: |
+            artifacts/windows-x64.zip  
+            artifacts/windows-x64-setup.exe
+          compression-level: 0 # no compression
