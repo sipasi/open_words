@@ -18,7 +18,7 @@ final class SecureStorageImpl extends SecureStorage {
   factory SecureStorageImpl() {
     final storage = FlutterSecureStorage(
       aOptions: const AndroidOptions(
-        encryptedSharedPreferences: true,
+        migrateOnAlgorithmChange: true,
       ),
     );
 
