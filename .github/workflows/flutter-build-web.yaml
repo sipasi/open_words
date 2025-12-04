@@ -16,7 +16,7 @@ jobs:
       - name: Flutter Build
         uses: ./.github/actions/flutter-build
         with:
-          build-arguments: web --release
+          build-arguments: web --release --wasm
 
       - name: Create artifacts directory
         run: mkdir -p artifacts
