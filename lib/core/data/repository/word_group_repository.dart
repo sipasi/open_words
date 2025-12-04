@@ -10,6 +10,7 @@ import 'package:open_words/core/services/logger/app_logger.dart';
 
 abstract class WordGroupRepository {
   Future<bool> existByName(String originName);
+  Future<bool> existByNameIn(String originName, Id folder);
 
   Future<List<WordGroup>> all();
   Future<List<WordGroup>> allByFolder(Id folderId);
@@ -57,6 +58,17 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
   @override
   Future<bool> existByName(String name) async {
     return (await database.existByName(name).getSingleOrNull()) != null;
+  }
+
+  @override
+  Future<bool> existByNameIn(String name, Id folder) async {
+    int? id = folder.valueOrNull();
+
+    if (id == null) {
+      return false;
+    }
+
+    return (await database.existByNameIn(name, id).getSingleOrNull()) != null;
   }
 
   @override

@@ -12,6 +12,17 @@ extension DriftWordGroupsQuery on AppDriftDatabase {
     );
   }
 
+  Selectable<QueryRow> existByNameIn(String name, int folderId) {
+    return customSelect(
+      'SELECT g.name '
+      'FROM word_groups g '
+      'WHERE g.name = ?1 '
+      'AND g.folder_id = ?2',
+      variables: [Variable.withString(name), Variable.withInt(folderId)],
+      readsFrom: {wordGroups},
+    );
+  }
+
   Selectable<QueryRow> oneGroupById(int id) {
     return customSelect(
       'SELECT g.*, COUNT(w.id) words_count '

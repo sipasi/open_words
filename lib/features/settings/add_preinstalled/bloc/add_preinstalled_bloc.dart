@@ -48,18 +48,22 @@ class AddPreinstalledBloc
     on<AddPreinstalledAddToLibraryRequested>((event, emit) async {
       emit(state.copyWith(addToLibraryStatus: AddToLibraryStatus.adding));
 
-      final folderName = 'Open Words Collection';
-
-      final folder =
-          await folderRepository.oneByName(folderName) ??
-          await folderRepository.create(
-            parentId: const Id.empty(),
-            name: folderName,
-          );
-
       for (final pack in state.selected) {
+        final folderName =
+            '${pack.name} ${pack.origin.native} - ${pack.translation.native}';
+
+        final folder =
+            await folderRepository.oneByName(folderName) ??
+            await folderRepository.create(
+              parentId: const Id.empty(),
+              name: folderName,
+            );
+
         for (final dictionary in pack.dictionaries) {
-          if (await groupRepository.existByName(dictionary.originName)) {
+          if (await groupRepository.existByNameIn(
+            dictionary.originName,
+            folder.id,
+          )) {
             continue;
           }
 
