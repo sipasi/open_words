@@ -7,6 +7,7 @@ import 'package:open_words/core/dependency/file_local_save_service_dependency.da
 import 'package:open_words/core/dependency/file_picker_service_dependency.dart';
 import 'package:open_words/core/dependency/file_share_service_dependency.dart';
 import 'package:open_words/core/dependency/file_temporary_service_dependency.dart';
+import 'package:open_words/core/dependency/file_web_save_service_dependency.dart';
 import 'package:open_words/core/dependency/language_info_service_dependency.dart';
 import 'package:open_words/core/dependency/logger_dependency.dart';
 import 'package:open_words/core/dependency/repository_dependency.dart';
@@ -32,6 +33,7 @@ abstract class AppDependencyProvider {
     return [
       DirectoriesDependency(),
       FileLocalSaveServiceDependency(),
+      FileWebSaveServiceDependency(),
       FileTemporaryServiceDependency(),
       FileShareServiceDependency(),
       FilePickerServiceDependency(),

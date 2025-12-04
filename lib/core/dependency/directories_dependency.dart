@@ -10,7 +10,7 @@ import 'package:path_provider/path_provider.dart';
 final class DirectoriesDependency extends AppDependency {
   @override
   Future inject(GetIt container) async {
-    if (kIsWeb || kIsWasm) {
+    if (kIsWeb) {
       container.registerSingleton(AppDirectoryProvider.notSupported());
 
       return;

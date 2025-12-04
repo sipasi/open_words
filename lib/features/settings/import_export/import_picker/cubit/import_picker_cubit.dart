@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -29,8 +29,10 @@ class ImportPickerCubit extends Cubit<ImportPickerState> {
   Future started() async {
     emit(state.copyWith(filePickingStatus: FilePickingStatus.picking));
 
-    final picked = await filePicker.pickFiles(
+    final picked = await filePicker.pickFilesAsBytes(
       title: 'Select json files to import',
+      type: .custom,
+      allowedExtensions: ["json"],
     );
 
     if (picked.isEmpty) {
@@ -38,7 +40,7 @@ class ImportPickerCubit extends Cubit<ImportPickerState> {
       return;
     }
 
-    final groups = await _read(picked);
+    final groups = _read(picked);
 
     emit(
       state.copyWith(
@@ -52,10 +54,8 @@ class ImportPickerCubit extends Cubit<ImportPickerState> {
     );
   }
 
-  Future<List<WordGroupExport>> _read(List<File> files) async {
-    final filesString = await Future.wait(
-      files.map((file) => file.readAsString()),
-    );
+  List<WordGroupExport> _read(List<Uint8List> files) {
+    final filesString = files.map((file) => utf8.decode(file));
 
     try {
       return filesString.map(_parceExports).expand((e) => e).toList();

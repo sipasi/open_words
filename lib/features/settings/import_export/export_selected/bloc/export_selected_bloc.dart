@@ -5,6 +5,7 @@ import 'package:open_words/core/data/entities/word/word_group.dart';
 import 'package:open_words/core/data/repository/word_repository.dart';
 import 'package:open_words/core/services/file/local_save/local_file_service.dart';
 import 'package:open_words/core/services/file/share/file_share_service.dart';
+import 'package:open_words/core/services/file/web_file/web_file_service.dart';
 import 'package:open_words/core/services/theme/theme_storage.dart';
 import 'package:open_words/features/settings/import_export/export_selected/models/export_destination.dart';
 import 'package:open_words/features/settings/import_export/export_selected/models/export_executing_status.dart';
@@ -22,12 +23,14 @@ class ExportSelectedBloc
   final ThemeStorage themeStorage;
   final FileShareService shareFileService;
   final LocalFileService localFileService;
+  final WebFileService webFileService;
   final WordRepository wordRepository;
 
   ExportSelectedBloc({
     required this.themeStorage,
     required this.shareFileService,
     required this.localFileService,
+    required this.webFileService,
     required this.wordRepository,
   }) : super(ExportSelectedState.initial()) {
     on<ExportSelectedStarded>((event, emit) {
@@ -79,6 +82,7 @@ class ExportSelectedBloc
 
       await LoadFileToDeviceUseCase(
         localFileService: localFileService,
+        webFileService: webFileService,
         wordRepository: wordRepository,
       ).invoke(state);
 

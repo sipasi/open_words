@@ -1,6 +1,6 @@
-import 'dart:typed_data';
-
+import 'package:flutter/foundation.dart';
 import 'package:open_words/core/services/file/temporary/temporary_file_service.dart';
+import 'package:open_words/core/services/file/web_file/web_file_service.dart';
 import 'package:share_plus/share_plus.dart';
 
 /// A service responsible for sharing files, typically with other apps or users.
@@ -15,8 +15,13 @@ sealed class FileShareService {
 final class FileShareServiceImpl extends FileShareService {
   final SharePlus share;
   final TemporaryFileService fileService;
+  final WebFileService webService;
 
-  FileShareServiceImpl({required this.share, required this.fileService});
+  FileShareServiceImpl({
+    required this.share,
+    required this.fileService,
+    required this.webService,
+  });
 
   @override
   Future shareFile({
@@ -24,6 +29,14 @@ final class FileShareServiceImpl extends FileShareService {
     required String extension,
     required Uint8List data,
   }) {
+    if (kIsWeb) {
+      return webService.download(
+        name: name,
+        extension: extension,
+        bytes: data,
+      );
+    }
+
     return fileService.withTemporaryFile(
       name: name,
       extension: extension,

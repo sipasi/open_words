@@ -1,7 +1,7 @@
 import 'package:open_words/core/services/file/local_save/local_file.dart';
 import 'package:open_words/core/services/file/local_save/local_file_service.dart';
+import 'package:open_words/core/services/file/name/file_name_resolver.dart';
 import 'package:open_words/core/services/path/app_directory_extension.dart';
-import 'package:uuid/uuid.dart';
 
 /// A service for creating and managing temporary files.
 ///
@@ -30,10 +30,7 @@ final class TemporaryFileServiceImpl extends TemporaryFileService {
 
   final LocalFileService localFileService;
 
-  final Uuid uuid;
-
-  TemporaryFileServiceImpl({required this.localFileService})
-    : uuid = const Uuid();
+  TemporaryFileServiceImpl({required this.localFileService});
 
   @override
   Future withTemporaryFile({
@@ -48,16 +45,12 @@ final class TemporaryFileServiceImpl extends TemporaryFileService {
           parts: [_folderName],
         );
       },
-      name: _name(name),
+      name: FileNameResolver.nameOrUuid(name),
       extension: extension,
     );
 
     await onCreated(localFile);
 
     await localFile.delete();
-  }
-
-  String _name(String? name) {
-    return name ?? uuid.v4();
   }
 }
