@@ -1,10 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:drift/wasm.dart';
-import 'package:drift_flutter/drift_flutter.dart';
-import 'package:flutter/foundation.dart';
-import 'package:logger/logger.dart';
+import 'package:open_words/core/data/sources/drift/connections/connection.dart';
 import 'package:open_words/core/data/sources/drift/synonym_antonym_converter.dart';
-import 'package:path_provider/path_provider.dart';
 
 part 'app_drift_database.g.dart';
 part 'tables/folders_table.dart';
@@ -28,13 +24,13 @@ part 'tables/words_table.dart';
   ],
 )
 class AppDriftDatabase extends _$AppDriftDatabase {
+  static const String _name = 'open-words-drift-database';
+
   // After generating code, this class needs to define a `schemaVersion` getter
   // and a constructor telling drift where the database should be stored.
   // These are described in the getting started guide: https://drift.simonbinder.eu/setup/
   AppDriftDatabase([QueryExecutor? executor])
-    : super(executor ?? _getConnection());
-
-  static const String _name = 'open-words-drift-database';
+    : super(executor ?? createExecutor(_name));
 
   @override
   int get schemaVersion => 1;
@@ -45,43 +41,6 @@ class AppDriftDatabase extends _$AppDriftDatabase {
       beforeOpen: (details) async {
         await customStatement('PRAGMA foreign_keys = ON');
       },
-    );
-  }
-
-  static QueryExecutor _getConnection() {
-    return kIsWeb || kIsWasm ? _openConnectionOnWeb() : _openConnection();
-  }
-
-  static QueryExecutor _openConnection() {
-    return driftDatabase(
-      name: _name,
-      native: const DriftNativeOptions(
-        databaseDirectory: getApplicationSupportDirectory,
-      ),
-    );
-  }
-
-  static DatabaseConnection _openConnectionOnWeb() {
-    return DatabaseConnection.delayed(
-      Future(() async {
-        final result = await WasmDatabase.open(
-          databaseName: _name,
-          sqlite3Uri: Uri.parse('sqlite3.wasm'),
-          driftWorkerUri: Uri.parse('drift_worker.dart.js'),
-        );
-
-        if (result.missingFeatures.isNotEmpty) {
-          // Depending how central local persistence is to your app, you may want
-          // to show a warning to the user if only unrealiable implemetentations
-          // are available.
-          Logger().e(
-            'Using ${result.chosenImplementation} due to missing browser\n'
-            '  features: ${result.missingFeatures}',
-          );
-        }
-
-        return result.resolvedExecutor;
-      }),
     );
   }
 }
