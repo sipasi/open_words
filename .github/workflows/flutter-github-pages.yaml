@@ -1,0 +1,27 @@
+name: Github Pages Release
+
+on:
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Flutter Build
+        uses: ./.github/actions/flutter-build
+        with:
+          build-arguments: web --release --wasm --base-href /open_words/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web # The directory containing your built web assets
+          force_orphan: true # Recommended for clean gh-pages branch
