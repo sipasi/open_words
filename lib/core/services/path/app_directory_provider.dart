@@ -10,6 +10,8 @@ final class AppDirectoryProvider {
 
   final List<AppDirectory> all;
 
+  final bool isSupported;
+
   AppDirectory get downloadsOrDocuments => downloads ?? documents;
 
   AppDirectoryProvider({
@@ -18,11 +20,21 @@ final class AppDirectoryProvider {
     required this.documents,
     required this.cache,
     required this.downloads,
-  }) : all = List.unmodifiable([
+  }) : isSupported = true,
+       all = List.unmodifiable([
          temporary,
          support,
          documents,
          cache,
          downloads,
        ]);
+
+  const AppDirectoryProvider.notSupported()
+    : isSupported = false,
+      temporary = const .empty(),
+      support = const .empty(),
+      documents = const .empty(),
+      cache = const .empty(),
+      downloads = const .empty(),
+      all = const [];
 }

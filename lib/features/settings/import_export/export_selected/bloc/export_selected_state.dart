@@ -11,7 +11,11 @@ class ExportSelectedState {
 
   final ExportExecutingStatus executingStatus;
 
-  String get fileNameOrDefault => fileName.isNotEmpty ? fileName : 'WordGroups';
+  String get fileNameOrDefault => fileName.isNotEmpty
+      ? fileName
+      : selected.length == 1
+      ? selected[0].name
+      : 'WordGroups';
 
   const ExportSelectedState({
     required this.selected,

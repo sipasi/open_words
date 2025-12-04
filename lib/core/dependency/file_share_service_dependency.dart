@@ -10,6 +10,7 @@ final class FileShareServiceDependency extends AppDependency {
       FileShareServiceImpl(
         share: SharePlus.instance,
         fileService: container.get(),
+        webService: container.get(),
       ),
     );
   }
