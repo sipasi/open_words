@@ -1,7 +1,7 @@
 name: open_words
 description: "Simple implementation of a dictionary that allows you to write, group and repeat words in games."
 publish_to: "none"
-version: 0.1.0
+version: 0.1.1
 
 environment:
   sdk: ^3.10.0
