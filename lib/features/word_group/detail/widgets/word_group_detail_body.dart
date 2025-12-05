@@ -9,14 +9,12 @@ class WordGroupDetailBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final words = context.select(
-      (WordGroupDetailCubit value) => value.state.words,
-    );
+    final state = context.watch<WordGroupDetailCubit>().state;
 
-    if (words.isEmpty) {
+    if (state.words.isEmpty && state.loadingState.isLoaded) {
       return AddFirstWordsView();
     }
 
-    return WordGridView(words: words);
+    return WordGridView(words: state.words);
   }
 }

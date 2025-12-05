@@ -1,6 +1,13 @@
 part of 'word_group_detail_cubit.dart';
 
-enum LoadingState { loading, loaded }
+enum LoadingState {
+  loading,
+  loaded
+  ;
+
+  bool get isLoaded => this == .loaded;
+  bool get isLoading => this == .loading;
+}
 
 class WordGroupDetailState {
   final WordGroup group;
