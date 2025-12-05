@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_words/features/app/cubit/open_words_app_cubit.dart';
 import 'package:open_words/features/home/widgets/app_navigation/home_navigation_bar.dart';
 import 'package:open_words/features/home/widgets/app_navigation/home_screen_builder.dart';
 import 'package:open_words/shared/layout/constraints_adaptive_layout.dart';
@@ -17,11 +19,17 @@ class HomeScaffoldBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return ConstraintsAdaptiveLayout(
       portrait: (context) {
+        final oledBackground = context.select(
+          (OpenWordsAppCubit value) => value.state.theme.oledBackground,
+        );
+
         return Scaffold(
           appBar: screenBuilder.appBar.call(),
           floatingActionButton: screenBuilder.fab?.call(),
           body: screenBuilder.body.call(),
-          bottomNavigationBar: navigationBar.asBottom(),
+          bottomNavigationBar: navigationBar.asBottom(
+            oledBackground,
+          ),
         );
       },
       landscape: (context) {

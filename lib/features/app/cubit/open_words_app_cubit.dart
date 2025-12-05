@@ -12,13 +12,23 @@ class OpenWordsAppCubit extends Cubit<OpenWordsAppState> {
   OpenWordsAppCubit({required this.themeStorage})
     : super(OpenWordsAppState(theme: themeStorage.get()));
 
-  void setTheme({ColorSeed? seed, ThemeMode? mode}) {
+  void setTheme({
+    ColorSeed? seed,
+    ThemeMode? mode,
+    bool? oledBackground,
+    bool? oledBottomBar,
+  }) {
     final current = themeStorage.get();
 
     seed = seed ?? current.seed;
     mode = mode ?? current.mode;
+    oledBackground = oledBackground ?? current.oledBackground;
 
-    AppTheme theme = AppTheme(mode: mode, seed: seed);
+    AppTheme theme = AppTheme(
+      mode: mode,
+      seed: seed,
+      oledBackground: oledBackground,
+    );
 
     themeStorage.set(theme);
 

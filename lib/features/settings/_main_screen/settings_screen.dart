@@ -10,6 +10,7 @@ import 'package:open_words/features/settings/_main_screen/widgets/tiles/text_to_
 import 'package:open_words/features/settings/_main_screen/widgets/tiles/thank_you_tile.dart';
 import 'package:open_words/features/settings/_main_screen/widgets/tiles/theme_color_tile.dart';
 import 'package:open_words/features/settings/_main_screen/widgets/tiles/theme_mode_tile.dart';
+import 'package:open_words/features/settings/_main_screen/widgets/tiles/theme_oled_tile.dart';
 import 'package:open_words/features/settings/_main_screen/widgets/tiles/translator_tile.dart';
 import 'package:open_words/shared/layout/constrained_align.dart';
 
@@ -24,7 +25,9 @@ class SettingsScreen extends StatelessWidget {
         children: [
           ThankYouTile(),
 
-          SettingsTileGroup.many(children: [ThemeModeTile(), ThemeColorTile()]),
+          SettingsTileGroup.many(
+            children: [ThemeModeTile(), ThemeColorTile(), ThemeOledTile()],
+          ),
 
           SettingsTileGroup.single(child: AiProviderTile()),
           SettingsTileGroup.single(child: TranslatorTile()),

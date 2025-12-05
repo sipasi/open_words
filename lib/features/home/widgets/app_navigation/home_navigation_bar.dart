@@ -24,11 +24,24 @@ class HomeNavigationBar {
     );
   }
 
-  NavigationBar asBottom() {
-    return NavigationBar(
+  Widget asBottom(bool oled) {
+    final navbar = NavigationBar(
       destinations: bottoms,
       selectedIndex: current,
       onDestinationSelected: selected,
+    );
+
+    if (oled == false) {
+      return navbar;
+    }
+
+    return Container(
+      decoration: BoxDecoration(
+        border: const Border(
+          top: BorderSide(width: .1, color: Colors.white),
+        ),
+      ),
+      child: navbar,
     );
   }
 }
