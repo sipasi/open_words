@@ -1,4 +1,6 @@
 # Open Words
+[![Build All and Release](https://github.com/sipasi/open_words/actions/workflows/flutter-release.yaml/badge.svg)](https://github.com/sipasi/open_words/actions/workflows/flutter-release.yaml)
+[![Github Pages Deploy](https://github.com/sipasi/open_words/actions/workflows/flutter-github-pages.yaml/badge.svg)](https://github.com/sipasi/open_words/actions/workflows/flutter-github-pages.yaml)
 
 **Open Words** is a simple yet powerful app for creating personal dictionaries, reviewing vocabulary through games, and learning foreign languages.
 
