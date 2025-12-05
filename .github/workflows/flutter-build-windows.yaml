@@ -30,19 +30,29 @@ jobs:
             -DestinationPath artifacts/windows-x64.zip `
             -Force
 
-      - name: Install InnoSetup
+      - name: Choco install innosetup
+        uses: crazy-max/ghaction-chocolatey@v3.4.0
+        with:
+          args: install innosetup --version 6.6.1 --no-progress -y
+
+      - name: Check Inno Setup installation
         shell: pwsh
         run: |
-          winget install JRSoftware.InnoSetup -v 6.6.1 --silent --accept-package-agreements --accept-source-agreements
-          echo "$env:LOCALAPPDATA\Programs\Inno Setup 6"
+          $innoPath = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
 
-          $env:Path += ";$env:LOCALAPPDATA\Programs\Inno Setup 6\"
-          echo $env:Path
+          if (Test-Path $innoPath) {
+            Write-Host "✅ Inno Setup found at $innoPath"
+          }
+          else {
+            Write-Host "❌ Inno Setup not found at $innoPath. Please install it or adjust the path."
+          }
 
       - name: Compile .ISS to .EXE Installer
         shell: pwsh
         run: |
-          iscc.exe `
+          $innoPath = "C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+
+          & $innoPath `
           "${{github.workspace}}/windows/packaging/innosetup/github-setup.iss" `
           /DWorkspaceDir="${{github.workspace}}"
 
