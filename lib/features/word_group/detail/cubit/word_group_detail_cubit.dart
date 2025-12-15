@@ -28,7 +28,7 @@ class WordGroupDetailCubit extends Cubit<WordGroupDetailState> {
 
     final words = await wordRepository.allByGroup(id);
 
-    emit(state.copyWith(words: words, loadingState: LoadingState.loading));
+    emit(state.copyWith(words: words, loadingState: LoadingState.loaded));
   }
 
   Future deleteAt(Id id, int index) async {
