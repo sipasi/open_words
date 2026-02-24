@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:open_words/shared/theme/theme_extension.dart';
 import 'package:smooth_sheets/smooth_sheets.dart';
 
 class DismissibleBottomSheet extends StatelessWidget {
@@ -28,6 +29,7 @@ class DismissibleBottomSheet extends StatelessWidget {
           ),
         ),
         child: SheetContentScaffold(
+          backgroundColor: context.colorScheme.surfaceContainerLowest,
           bottomBarVisibility: const BottomBarVisibility.always(
             // Make the bottom bar visible when the keyboard is open.
             ignoreBottomInset: true,

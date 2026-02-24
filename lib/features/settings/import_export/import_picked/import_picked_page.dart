@@ -23,6 +23,7 @@ class ImportPickedPage extends StatelessWidget {
         folderRepository: GetIt.I.get(),
         groupRepository: GetIt.I.get(),
         wordRepository: GetIt.I.get(),
+        metadataRepository: GetIt.I.get(),
       ),
       child: BlocListener<ImportPickedCubit, ImportPickedState>(
         listener: _listener,

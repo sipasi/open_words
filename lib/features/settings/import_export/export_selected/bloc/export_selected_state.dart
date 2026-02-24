@@ -8,6 +8,7 @@ class ExportSelectedState {
   final ExportDestination exportDestination;
 
   final PdfExtensionProperties pdfProperties;
+  final HtmlExtensionProperties htmlProperties;
 
   final ExportExecutingStatus executingStatus;
 
@@ -23,6 +24,7 @@ class ExportSelectedState {
     required this.exportExtension,
     required this.exportDestination,
     required this.pdfProperties,
+    required this.htmlProperties,
     required this.executingStatus,
   });
   const ExportSelectedState.initial()
@@ -31,6 +33,7 @@ class ExportSelectedState {
       exportExtension = ExportExtension.json,
       exportDestination = ExportDestination.share,
       pdfProperties = const PdfExtensionProperties.initial(),
+      htmlProperties = const HtmlExtensionProperties.initial(),
       executingStatus = ExportExecutingStatus.notStarted;
 
   ExportSelectedState copyWith({
@@ -39,6 +42,7 @@ class ExportSelectedState {
     ExportExtension? exportExtension,
     ExportDestination? exportDestination,
     PdfExtensionProperties? pdfProperties,
+    HtmlExtensionProperties? htmlProperties,
     ExportExecutingStatus? executingStatus,
   }) {
     return ExportSelectedState(
@@ -47,6 +51,7 @@ class ExportSelectedState {
       exportExtension: exportExtension ?? this.exportExtension,
       exportDestination: exportDestination ?? this.exportDestination,
       pdfProperties: pdfProperties ?? this.pdfProperties,
+      htmlProperties: htmlProperties ?? this.htmlProperties,
       executingStatus: executingStatus ?? this.executingStatus,
     );
   }

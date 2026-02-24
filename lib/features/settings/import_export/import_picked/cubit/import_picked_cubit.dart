@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_words/core/data/draft/word_draft.dart';
 import 'package:open_words/core/data/entities/folder/folder_path.dart';
 import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/repository/folder_repository.dart';
 import 'package:open_words/core/data/repository/word_group_repository.dart';
+import 'package:open_words/core/data/repository/word_metadata_repository.dart';
 import 'package:open_words/core/data/repository/word_repository.dart';
 import 'package:open_words/features/settings/import_export/models/word_group_export.dart';
 
@@ -14,12 +14,14 @@ class ImportPickedCubit extends Cubit<ImportPickedState> {
   final FolderRepository folderRepository;
   final WordGroupRepository groupRepository;
   final WordRepository wordRepository;
+  final WordMetadataRepository metadataRepository;
 
   ImportPickedCubit({
     required this.groups,
     required this.folderRepository,
     required this.groupRepository,
     required this.wordRepository,
+    required this.metadataRepository,
   }) : super(ImportPickedState.initial());
 
   void setPath(FolderPath path) {
@@ -62,11 +64,15 @@ class ImportPickedCubit extends Cubit<ImportPickedState> {
         translation: item.translation,
       );
 
+      final drafts = item.words.map((e) => e.asDraft()).toList(growable: false);
+
       await wordRepository.createAll(
         groupId: group.id,
-        drafts: item.words.map((e) {
-          return WordDraft(origin: e.origin, translation: e.translation);
-        }).toList(),
+        drafts: drafts.map((e) => e.$1).toList(growable: false),
+      );
+
+      await metadataRepository.createOrUpdateAll(
+        drafts.map((e) => e.$2).toList(growable: false),
       );
     }
   }

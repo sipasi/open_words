@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:open_words/core/environment/environment_config.dart';
 import 'package:open_words/features/settings/_main_screen/widgets/settings_tile_group.dart';
 import 'package:open_words/features/settings/_main_screen/widgets/tiles/add_preinstalled_tile.dart';
 import 'package:open_words/features/settings/_main_screen/widgets/tiles/ai_provider_tile.dart';
@@ -38,8 +39,8 @@ class SettingsScreen extends StatelessWidget {
           SettingsTileGroup.many(
             children: [AddPreinstalledTile(), DeleteAllTile()],
           ),
-
-          SettingsTileGroup.single(child: DatabaseInfoOpenTile()),
+          if (EnvironmentConfig.has.showDatabaseInfo.orDebug)
+            SettingsTileGroup.single(child: DatabaseInfoOpenTile()),
         ],
       ),
     );

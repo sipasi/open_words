@@ -1,7 +1,9 @@
 enum ExportExtension {
   pdf('Pdf', 'pdf'),
   json('Json', 'json'),
-  text('Text', 'txt');
+  html('Html', 'html'),
+  text('Text', 'txt')
+  ;
 
   final String name;
   final String extension;

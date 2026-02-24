@@ -2,17 +2,24 @@ import 'dart:convert' as convert;
 import 'dart:typed_data';
 
 import 'package:open_words/features/settings/import_export/export_selected/logic/word_group_formatter.dart';
+import 'package:open_words/features/settings/import_export/export_selected/logic/word_group_formatter_options.dart';
 import 'package:open_words/features/settings/import_export/models/word_export.dart';
 import 'package:open_words/features/settings/import_export/models/word_group_export.dart';
 
-final class WordGroupFormatterText extends WordGroupFormatter {
+final class WordGroupFormatterText
+    extends WordGroupFormatter<WordGroupFormatterOptions> {
   const WordGroupFormatterText();
 
   @override
-  Uint8List format(List<WordGroupExport> groups) {
+  Future<Uint8List> format(
+    List<WordGroupExport> groups, {
+    WordGroupFormatterOptions options = const .empty(),
+  }) {
     final text = _buildText(groups);
 
-    return Uint8List.fromList(convert.utf8.encode(text));
+    return Future.value(
+      Uint8List.fromList(convert.utf8.encode(text)),
+    );
   }
 
   String _buildText(List<WordGroupExport> groups) {

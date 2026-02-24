@@ -10,6 +10,10 @@ sealed class WordMetadataRepository {
   Future<bool> exist(String word);
   Future<WordMetadata> create(WordMetadataDraft draft);
 
+  Future createOrUpdateAll(List<WordMetadataDraft> drafts);
+
+  Future<Map<String, WordMetadata>> mapOf(List<String> words);
+
   Future delete(Id id);
 }
 
@@ -20,32 +24,42 @@ class WordMetadataRepositoryImpl extends WordMetadataRepository {
 
   @override
   Future<WordMetadata?> byWord(String word) async {
-    final result = await database.transaction(() async {
-      final rawMetadata = await database.byWord(word);
+    final rawMetadata = await database.byWord(word).getSingleOrNull();
 
-      if (rawMetadata == null) {
-        return null;
-      }
+    if (rawMetadata == null) {
+      return null;
+    }
 
-      final metadataId = rawMetadata.read<int>('id');
+    final metadataId = rawMetadata.read<int>('id');
 
-      final rawPhonetics = await database.phoneticsBy(metadataId);
-      final rawMeanings = await database.meaningsBy(metadataId);
+    final phoneticsMeanings = await Future.wait([
+      database.phoneticsBy(metadataId).get(),
+      database.meaningsBy(metadataId).get(),
+    ]);
 
-      final rawDefinitions = await database.definitionBy(
-        rawMeanings.map((e) => e.read<int>('id')),
-      );
+    final rawPhonetics = phoneticsMeanings[0];
+    final rawMeanings = phoneticsMeanings[1];
 
-      return WordMetadataRawSqlMapper.map(
-        metadataId: metadataId,
-        rawMetadata: rawMetadata,
-        phonetics: rawPhonetics,
-        meanings: rawMeanings,
-        definitions: rawDefinitions,
-      );
-    });
+    final rawDefinitions = await database
+        .definitionBy(
+          rawMeanings.map((e) => e.read<int>('id')),
+        )
+        .get();
 
-    return result;
+    return WordMetadataRawSqlMapper.map(
+      metadataId: metadataId,
+      rawMetadata: rawMetadata,
+      phonetics: rawPhonetics,
+      meanings: rawMeanings,
+      definitions: rawDefinitions,
+    );
+  }
+
+  @override
+  Future<bool> exist(String word) async {
+    final exist = await database.exist(word).getSingleOrNull();
+
+    return exist != null;
   }
 
   @override
@@ -95,10 +109,90 @@ class WordMetadataRepositoryImpl extends WordMetadataRepository {
   }
 
   @override
-  Future<bool> exist(String word) async {
-    final exist = await database.exist(word);
+  Future createOrUpdateAll(List<WordMetadataDraft> drafts) async {
+    return Future.wait(
+      drafts.map((e) => createOrUpdate(e)),
+    );
+  }
 
-    return exist != null;
+  Future createOrUpdate(WordMetadataDraft draft) async {
+    if (await exist(draft.word) == false) {
+      return create(draft);
+    }
+
+    await database.transaction(() async {
+      final metadata = (await byWord(draft.word))!;
+
+      // 1. Word
+      database.managers.wordMetadatas
+          .filter((f) => f.word.equals(draft.word))
+          .update(
+            (o) => o(etymology: Value.absentIfNull(draft.etymology)),
+          );
+
+      // 2. Phonetics
+      await Future.wait(
+        draft.phonetics.map(
+          (e) => database
+              .into(database.phonetics)
+              .insertOnConflictUpdate(
+                PhoneticsCompanion.insert(
+                  metadataId: metadata.id.valueOrThrow(),
+                  value: e.value,
+                  audio: e.audio,
+                ),
+              ),
+        ),
+      );
+
+      // 3. Meanings
+      for (final meaning in draft.meanings) {
+        final meaningId = await database
+            .into(database.meanings)
+            .insertOnConflictUpdate(
+              MeaningsCompanion.insert(
+                metadataId: metadata.id.valueOrThrow(),
+                partOfSpeech: meaning.partOfSpeech,
+                synonyms: meaning.synonyms,
+                antonyms: meaning.antonyms,
+              ),
+            );
+
+        // 4. Definitions
+        await Future.wait(
+          meaning.definitions.map(
+            (e) => database
+                .into(database.definitions)
+                .insertOnConflictUpdate(
+                  DefinitionsCompanion.insert(
+                    meaningId: meaningId,
+                    value: e.value,
+                    example: e.example,
+                  ),
+                ),
+          ),
+        );
+      }
+    });
+  }
+
+  @override
+  Future<Map<String, WordMetadata>> mapOf(List<String> words) async {
+    if (words.isEmpty) return {};
+
+    final Map<String, WordMetadata> result = {};
+
+    final res = await database.transaction(
+      () => Future.wait(words.map(byWord)),
+    );
+
+    for (var element in res) {
+      if (element != null) {
+        result[element.word] = element;
+      }
+    }
+
+    return result;
   }
 
   @override
@@ -114,7 +208,7 @@ class WordMetadataRepositoryImpl extends WordMetadataRepository {
 }
 
 extension _Queries on AppDriftDatabase {
-  Future<QueryRow?> byWord(String word) {
+  Selectable<QueryRow> byWord(String word) {
     final query =
         'SELECT * '
         'FROM word_metadatas metadata '
@@ -123,10 +217,11 @@ extension _Queries on AppDriftDatabase {
     return customSelect(
       query,
       variables: [Variable.withString(word)],
-    ).getSingleOrNull();
+      readsFrom: {wordMetadatas},
+    );
   }
 
-  Future<QueryRow?> exist(String word) {
+  Selectable<QueryRow> exist(String word) {
     final query =
         'SELECT metadata.id '
         'FROM word_metadatas metadata '
@@ -135,34 +230,38 @@ extension _Queries on AppDriftDatabase {
     return customSelect(
       query,
       variables: [Variable.withString(word)],
-    ).getSingleOrNull();
+      readsFrom: {wordMetadatas},
+    );
   }
 
-  Future<List<QueryRow>> phoneticsBy(int metadataId) {
+  Selectable<QueryRow> phoneticsBy(int metadataId) {
     final query =
         'SELECT * '
         'FROM phonetics '
         'WHERE metadata_id = ?;';
 
-    return customSelect(query, variables: [Variable.withInt(metadataId)]).get();
+    return customSelect(
+      query,
+      variables: [Variable.withInt(metadataId)],
+      readsFrom: {phonetics},
+    );
   }
 
-  Future<List<QueryRow>> meaningsBy(int metadataId) {
+  Selectable<QueryRow> meaningsBy(int metadataId) {
     final query =
         'SELECT * '
         'FROM meanings '
         'WHERE metadata_id = ? '
-        'ORDER BY part_of_speech'
-        ;
+        'ORDER BY part_of_speech';
 
-    return customSelect(query, variables: [Variable.withInt(metadataId)]).get();
+    return customSelect(
+      query,
+      variables: [Variable.withInt(metadataId)],
+      readsFrom: {meanings},
+    );
   }
 
-  Future<List<QueryRow>> definitionBy(Iterable<int> ids) {
-    if (ids.isEmpty) {
-      return Future.value([]);
-    }
-
+  Selectable<QueryRow> definitionBy(Iterable<int> ids) {
     final placeholders = ids.join(', ');
 
     final query =
@@ -170,6 +269,9 @@ extension _Queries on AppDriftDatabase {
         'FROM definitions '
         'WHERE meaning_id IN ($placeholders);';
 
-    return customSelect(query).get();
+    return customSelect(
+      query,
+      readsFrom: {definitions},
+    );
   }
 }

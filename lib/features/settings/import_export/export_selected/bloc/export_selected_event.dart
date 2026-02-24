@@ -38,6 +38,16 @@ final class ExportSelectedPdfChanged extends ExportSelectedEvent {
   });
 }
 
+final class ExportSelectedHtmlChanged extends ExportSelectedEvent {
+  final bool? removeSearchField;
+  final ColorSeed? colorScheme;
+
+  ExportSelectedHtmlChanged({
+    this.removeSearchField,
+    this.colorScheme,
+  });
+}
+
 final class ExportSelectedShareRequested extends ExportSelectedEvent {}
 
 final class ExportSelectedDownloadRequested extends ExportSelectedEvent {}

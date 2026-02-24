@@ -1,5 +1,6 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_words/core/collection/linq/distinct_by_extension.dart';
 import 'package:open_words/core/data/entities/word/word.dart';
 import 'package:open_words/core/data/repository/word_metadata_repository.dart';
 import 'package:open_words/core/services/vibration/vibration_service.dart';
@@ -78,12 +79,15 @@ class WordMetadataUpdateCubit extends Cubit<WordMetadataUpdateState> {
 
   Future<List<DownloadInfo>> _generateDownloadInfo() async {
     return await Future.wait(
-      words.map(
-        (word) async => switch (await metadataRepository.exist(word.origin)) {
-          true => DownloadInfo.fromWord(word, DownloadInfoStatus.exist),
-          _ => DownloadInfo.fromWord(word),
-        },
-      ),
+      words
+          .distinctBy((item) => item.origin)
+          .map(
+            (word) async =>
+                switch (await metadataRepository.exist(word.origin)) {
+                  true => DownloadInfo.fromWord(word, DownloadInfoStatus.exist),
+                  _ => DownloadInfo.fromWord(word),
+                },
+          ),
     );
   }
 

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
+import 'package:open_words/core/data/repository/word_metadata_repository.dart';
 import 'package:open_words/core/data/repository/word_repository.dart';
 import 'package:open_words/core/services/file/local_save/local_file_service.dart';
 import 'package:open_words/core/services/file/share/file_share_service.dart';
@@ -10,6 +11,7 @@ import 'package:open_words/core/services/theme/theme_storage.dart';
 import 'package:open_words/features/settings/import_export/export_selected/models/export_destination.dart';
 import 'package:open_words/features/settings/import_export/export_selected/models/export_executing_status.dart';
 import 'package:open_words/features/settings/import_export/export_selected/models/export_extension.dart';
+import 'package:open_words/features/settings/import_export/export_selected/models/html_extension_properties.dart';
 import 'package:open_words/features/settings/import_export/export_selected/models/pdf_extension_properties.dart';
 import 'package:open_words/features/settings/import_export/export_selected/usecase/load_file_to_device_use_case.dart';
 import 'package:open_words/features/settings/import_export/export_selected/usecase/share_file_use_case.dart';
@@ -25,6 +27,7 @@ class ExportSelectedBloc
   final LocalFileService localFileService;
   final WebFileService webFileService;
   final WordRepository wordRepository;
+  final WordMetadataRepository metadataRepository;
 
   ExportSelectedBloc({
     required this.themeStorage,
@@ -32,6 +35,7 @@ class ExportSelectedBloc
     required this.localFileService,
     required this.webFileService,
     required this.wordRepository,
+    required this.metadataRepository,
   }) : super(ExportSelectedState.initial()) {
     on<ExportSelectedStarded>((event, emit) {
       final selected = event.selected;
@@ -57,6 +61,7 @@ class ExportSelectedBloc
     on<ExportSelectedExtensionChanged>((event, emit) {
       emit(state.copyWith(exportExtension: event.value));
     });
+
     on<ExportSelectedPdfChanged>((event, emit) {
       final pdfProperties = state.pdfProperties.copyWith(
         printing: event.printing,
@@ -66,6 +71,14 @@ class ExportSelectedBloc
 
       emit(state.copyWith(pdfProperties: pdfProperties));
     });
+    on<ExportSelectedHtmlChanged>((event, emit) {
+      final htmlProperties = state.htmlProperties.copyWith(
+        removeSearchField: event.removeSearchField,
+        colorScheme: event.colorScheme,
+      );
+
+      emit(state.copyWith(htmlProperties: htmlProperties));
+    });
 
     on<ExportSelectedShareRequested>((event, emit) async {
       emit(state.copyWith(executingStatus: ExportExecutingStatus.executing));
@@ -73,6 +86,7 @@ class ExportSelectedBloc
       await ShareFileUseCase(
         shareFileService: shareFileService,
         wordRepository: wordRepository,
+        metadataRepository: metadataRepository,
       ).invoke(state);
 
       emit(state.copyWith(executingStatus: ExportExecutingStatus.finished));
@@ -84,6 +98,7 @@ class ExportSelectedBloc
         localFileService: localFileService,
         webFileService: webFileService,
         wordRepository: wordRepository,
+        metadataRepository: metadataRepository,
       ).invoke(state);
 
       emit(state.copyWith(executingStatus: ExportExecutingStatus.finished));

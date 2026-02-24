@@ -1,0 +1,415 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap');
+
+:root {
+	--font-primary: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+	--font-secondary: 'Inter', system-ui, sans-serif;
+	--font-accent: 'Inter', system-ui, sans-serif;
+}
+
+html {
+	font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+	font-kerning: normal;
+	text-rendering: optimizeLegibility;
+}
+
+.ui,
+button,
+input {
+	font-variant-numeric: tabular-nums;
+}
+
+/** --------- Moss Vale --------- */
+:root[data-theme="Moss Vale Dark"] {
+	--primary: #63d97a;
+	--on-primary: #00390e;
+	--primary-container: #005317;
+	--on-primary-container: #a0f5b1;
+
+	--secondary: #b3ccb9;
+	--on-secondary: #1f352a;
+	--secondary-container: #354b3f;
+	--on-secondary-container: #cde9d7;
+
+	--tertiary: #a3cedb;
+	--on-tertiary: #04363f;
+	--tertiary-container: #234d57;
+	--on-tertiary-container: #beeaf7;
+
+	--error: #ffb4ab;
+	--on-error: #690005;
+	--error-container: #93000a;
+	--on-error-container: #ffdad6;
+
+	--surface: #0f1724;
+	--on-surface: #dce4e0;
+
+	--on-surface-variant: #c1c9c1;
+	--outline: #8a938c;
+	--outline-variant: #414942;
+
+	--background: #07101a;
+	--on-background: #dce4e0;
+
+	--radius: 12px;
+	--shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+
+:root[data-theme="Moss Vale Light"] {
+	--primary: #0b6e3b;
+	--on-primary: #ffffff;
+	--primary-container: #c7eecf;
+	--on-primary-container: #042610;
+
+	--secondary: #52675b;
+	--on-secondary: #ffffff;
+	--secondary-container: #dae8df;
+	--on-secondary-container: #14241c;
+
+	--tertiary: #3c6370;
+	--on-tertiary: #ffffff;
+	--tertiary-container: #d1e6ee;
+	--on-tertiary-container: #06232c;
+
+	--error: #ba1a1a;
+	--on-error: #ffffff;
+	--error-container: #ffdad6;
+	--on-error-container: #410002;
+
+	/* SOFTER SURFACES */
+	--surface: #f5f6f5;
+	/* instead of #ffffff */
+	--on-surface: #1d1f1d;
+
+	--on-surface-variant: #4a5049;
+	--outline: #8a9088;
+	--outline-variant: #d1d7d0;
+
+	--background: #eceeec;
+	/* instead of #f5f7f4 */
+	--on-background: #1b1d1b;
+
+	/* softer glass + softer shadow */
+	--radius: 12px;
+	--shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/** --------- Aurora Pulse --------- */
+:root[data-theme="Aurora Pulse Dark"] {
+	--primary: #6dfcff;
+	--on-primary: #002b2e;
+	--primary-container: #004a4e;
+	--on-primary-container: #b6ffff;
+
+	--secondary: #ff79c6;
+	--on-secondary: #3a001f;
+	--secondary-container: #5e123a;
+	--on-secondary-container: #ffd6ea;
+
+	--tertiary: #ffd166;
+	--on-tertiary: #3b2b00;
+	--tertiary-container: #5a4500;
+	--on-tertiary-container: #ffe7a3;
+
+	--error: #ffb4ab;
+	--on-error: #690005;
+	--error-container: #93000a;
+	--on-error-container: #ffdad6;
+
+	--background: #060b12;
+	--on-background: #e8f1f6;
+
+	--surface: #0e1622;
+	--on-surface: #e8f1f6;
+
+	--on-surface-variant: #b6c2cc;
+	--outline: #6e7c88;
+	--outline-variant: #2b3440;
+
+	--radius: 14px;
+	--shadow: 0 8px 28px rgba(0, 0, 0, .55);
+}
+
+:root[data-theme="Aurora Pulse Light"] {
+	--primary: #007c83;
+	--on-primary: #ffffff;
+	--primary-container: #b6ffff;
+	--on-primary-container: #002b2e;
+
+	--secondary: #c2185b;
+	--on-secondary: #ffffff;
+	--secondary-container: #ffd6ea;
+	--on-secondary-container: #3a001f;
+
+	--tertiary: #8c6b00;
+	--on-tertiary: #ffffff;
+	--tertiary-container: #ffe7a3;
+	--on-tertiary-container: #3b2b00;
+
+	--error: #ba1a1a;
+	--on-error: #ffffff;
+	--error-container: #ffdad6;
+	--on-error-container: #410002;
+
+	--background: #f4fbfd;
+	--on-background: #0f1c24;
+
+	--surface: #ffffff;
+	--on-surface: #0f1c24;
+
+	--on-surface-variant: #42525e;
+	--outline: #8a9aa6;
+	--outline-variant: #d4dde4;
+
+	--radius: 14px;
+	--shadow: 0 6px 20px rgba(0, 0, 0, .12);
+}
+
+/** --------- Velvet Dusk --------- */
+:root[data-theme="Velvet Dusk Dark"] {
+	--primary: #e6b8ff;
+	--on-primary: #2b003d;
+	--primary-container: #4a1f63;
+	--on-primary-container: #f5dbff;
+
+	--secondary: #f1c27d;
+	--on-secondary: #3d2600;
+	--secondary-container: #5e3e12;
+	--on-secondary-container: #ffe3b3;
+
+	--tertiary: #9fd3c7;
+	--on-tertiary: #00332a;
+	--tertiary-container: #1f4e45;
+	--on-tertiary-container: #c7efe7;
+
+	--background: #141114;
+	--on-background: #f2eaf0;
+
+	--surface: #1d191e;
+	--on-surface: #f2eaf0;
+
+	--on-surface-variant: #cbbbc7;
+	--outline: #8f7f8c;
+	--outline-variant: #3e353d;
+
+	--radius: 16px;
+	--shadow: 0 10px 30px rgba(0, 0, 0, .5);
+}
+
+:root[data-theme="Velvet Dusk Light"] {
+	/* Primary: Deep Royal Blue */
+	--primary: #3b508f;
+	--on-primary: #ffffff;
+	--primary-container: #d9e2ff;
+	--on-primary-container: #001242;
+
+	/* Secondary: Deep Sage Green */
+	--secondary: #58634a;
+	--on-secondary: #ffffff;
+	--secondary-container: #dce8c8;
+	--on-secondary-container: #171f0b;
+
+	/* Tertiary: Muted Plum */
+	--tertiary: #755a71;
+	--on-tertiary: #ffffff;
+	--tertiary-container: #ffd7f5;
+	--on-tertiary-container: #2c182c;
+
+	/* Error: Muted Red */
+	--error: #b85c4f;
+	--on-error: #ffffff;
+	--error-container: #f8d6d1;
+	--on-error-container: #4b0c07;
+
+	/* Surface: Warm Ivory/Cream */
+	--surface: #fff8ee;
+	--on-surface: #201a18;
+
+	--on-surface-variant: #51433f;
+	--outline: #85746b;
+	--outline-variant: #d5c3b8;
+
+	/* Background: Softest Cream */
+	--background: #fffbf5;
+	--on-background: #1d1b1a;
+
+	--radius: 12px;
+	--shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/** --------- Solar Drift --------- */
+:root[data-theme="Solar Drift Dark"] {
+	--primary: #ffb703;
+	--on-primary: #402b00;
+	--primary-container: #6b4a00;
+	--on-primary-container: #ffe08a;
+
+	--secondary: #4cc9f0;
+	--on-secondary: #002e3a;
+	--secondary-container: #005163;
+	--on-secondary-container: #b8ecff;
+
+	--tertiary: #f72585;
+	--on-tertiary: #3a001d;
+	--tertiary-container: #5c1236;
+	--on-tertiary-container: #ffd6e7;
+
+	--background: #0f0f12;
+	--on-background: #f5f5f7;
+
+	--surface: #18181d;
+	--on-surface: #f5f5f7;
+
+	--outline: #7b7b86;
+	--outline-variant: #33333b;
+
+	--radius: 14px;
+	--shadow: 0 8px 26px rgba(0, 0, 0, .55);
+}
+
+:root[data-theme="Solar Drift Light"] {
+	--primary: #d48b00;
+	--on-primary: #ffffff;
+	--primary-container: #ffe08a;
+	--on-primary-container: #402b00;
+
+	--secondary: #007ea7;
+	--on-secondary: #ffffff;
+	--secondary-container: #b8ecff;
+	--on-secondary-container: #002e3a;
+
+	--tertiary: #c2185b;
+	--on-tertiary: #ffffff;
+	--tertiary-container: #ffd6e7;
+	--on-tertiary-container: #3a001d;
+
+	--background: #fffdf9;
+	--on-background: #1b1b1f;
+
+	--surface: #ffffff;
+	--on-surface: #1b1b1f;
+
+	--outline: #9a9aa3;
+	--outline-variant: #e1e1e6;
+
+	--radius: 14px;
+	--shadow: 0 6px 18px rgba(0, 0, 0, .12);
+}
+
+/** --------- Neon Ember --------- */
+:root[data-theme="Neon Ember Dark"] {
+	--primary: #ff8a5c;
+	--on-primary: #3d1400;
+	--primary-container: #6b2600;
+	--on-primary-container: #ffd6c4;
+
+	--secondary: #5ddcff;
+	--on-secondary: #002f3a;
+	--secondary-container: #004f5f;
+	--on-secondary-container: #b8f1ff;
+
+	--tertiary: #ffd166;
+	--on-tertiary: #3a2b00;
+	--tertiary-container: #5c4700;
+	--on-tertiary-container: #ffe7a3;
+
+	--background: #0f0b0a;
+	--on-background: #f7f2ef;
+
+	--surface: #181311;
+	--on-surface: #f7f2ef;
+
+	--outline: #8c7a74;
+	--outline-variant: #3a2f2b;
+
+	--radius: 14px;
+	--shadow: 0 8px 28px rgba(0, 0, 0, .55);
+}
+
+:root[data-theme="Neon Ember Light"] {
+	--primary: #d94c1a;
+	--on-primary: #ffffff;
+	--primary-container: #ffd6c4;
+	--on-primary-container: #3d1400;
+
+	--secondary: #007d9c;
+	--on-secondary: #ffffff;
+	--secondary-container: #b8f1ff;
+	--on-secondary-container: #002f3a;
+
+	--tertiary: #9c7a00;
+	--on-tertiary: #ffffff;
+	--tertiary-container: #ffe7a3;
+	--on-tertiary-container: #3a2b00;
+
+	--background: #fffaf7;
+	--on-background: #1f1613;
+
+	--surface: #ffffff;
+	--on-surface: #1f1613;
+
+	--outline: #9e8b84;
+	--outline-variant: #eadfd9;
+
+	--radius: 14px;
+	--shadow: 0 6px 18px rgba(0, 0, 0, .12);
+}
+
+/** --------- Lunar Bloom --------- */
+:root[data-theme="Lunar Bloom Dark"] {
+	--primary: #9aa7ff;
+	--on-primary: #0d143a;
+	--primary-container: #2a3568;
+	--on-primary-container: #dbe0ff;
+
+	--secondary: #8ef0c8;
+	--on-secondary: #00382a;
+	--secondary-container: #005140;
+	--on-secondary-container: #c9ffe8;
+
+	--tertiary: #f3a6ff;
+	--on-tertiary: #3a003f;
+	--tertiary-container: #5c1a63;
+	--on-tertiary-container: #f9d6ff;
+
+	--background: #0b0e14;
+	--on-background: #e9ecf4;
+
+	--surface: #121622;
+	--on-surface: #e9ecf4;
+
+	--outline: #7c8298;
+	--outline-variant: #2e3346;
+
+	--radius: 18px;
+	--shadow: 0 10px 30px rgba(0, 0, 0, .6);
+}
+
+:root[data-theme="Lunar Bloom Light"] {
+	--primary: #3f51d8;
+	--on-primary: #ffffff;
+	--primary-container: #dbe0ff;
+	--on-primary-container: #0d143a;
+
+	--secondary: #1f8f6c;
+	--on-secondary: #ffffff;
+	--secondary-container: #c9ffe8;
+	--on-secondary-container: #00382a;
+
+	--tertiary: #9c27b0;
+	--on-tertiary: #ffffff;
+	--tertiary-container: #f9d6ff;
+	--on-tertiary-container: #3a003f;
+
+	--background: #f9faff;
+	--on-background: #1a1d2b;
+
+	--surface: #ffffff;
+	--on-surface: #1a1d2b;
+
+	--outline: #9aa0b8;
+	--outline-variant: #e1e4f0;
+
+	--radius: 18px;
+	--shadow: 0 6px 20px rgba(0, 0, 0, .12);
+}

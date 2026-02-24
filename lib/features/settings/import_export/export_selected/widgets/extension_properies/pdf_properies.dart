@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/features/settings/import_export/export_selected/bloc/export_selected_bloc.dart';
-import 'package:open_words/shared/modal/color_list_modal.dart';
+import 'package:open_words/features/settings/import_export/export_selected/widgets/extension_properies/color_seed_tile.dart';
 import 'package:open_words/shared/theme/theme_extension.dart';
 
 class PdfProperies extends StatelessWidget {
@@ -44,30 +44,11 @@ class PdfProperies extends StatelessWidget {
               },
             ),
           if (!properties.printing)
-            ListTile(
-              title: Text('Document Color Scheme', style: bold),
-              subtitle: Text(
-                'Choose the overall color scheme for the document',
+            ColorSeedTile(
+              colorSeed: properties.colorScheme,
+              onChanged: (seed) => bloc.add(
+                ExportSelectedPdfChanged(colorScheme: seed),
               ),
-              trailing: Container(
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: context.colorScheme.surface,
-                ),
-                child: Icon(
-                  Icons.palette_outlined,
-                  color: properties.colorScheme.color,
-                ),
-              ),
-              onTap: () async {
-                final color = await ColorListModal.dialog(
-                  context: context,
-                  current: properties.colorScheme,
-                );
-
-                bloc.add(ExportSelectedPdfChanged(colorScheme: color));
-              },
             ),
         ],
       ),

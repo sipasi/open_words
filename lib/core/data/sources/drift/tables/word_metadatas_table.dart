@@ -5,7 +5,7 @@ part of '../app_drift_database.dart';
 class WordMetadatas extends Table {
   IntColumn get id => integer().autoIncrement()();
 
-  TextColumn get word => text()();
+  TextColumn get word => text().unique()();
 
   TextColumn get etymology => text()();
 }

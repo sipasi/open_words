@@ -10,6 +10,8 @@ import 'package:open_words/features/settings/database/widgets/database_repositor
 import 'package:open_words/features/settings/database/widgets/database_repository_test/folder/folder_repository_test_tile.dart';
 import 'package:open_words/features/settings/database/widgets/database_repository_test/groups/cubit/group_repository_test_cubit.dart';
 import 'package:open_words/features/settings/database/widgets/database_repository_test/groups/group_repository_test_tile.dart';
+import 'package:open_words/features/settings/database/widgets/database_repository_test/metadata/cubit/metadata_repository_test_cubit.dart';
+import 'package:open_words/features/settings/database/widgets/database_repository_test/metadata/metadata_repository_test_tile.dart';
 import 'package:open_words/features/settings/database/widgets/database_repository_test/words/cubit/word_repository_test_cubit.dart';
 import 'package:open_words/features/settings/database/widgets/database_repository_test/words/word_repository_test_tile.dart';
 import 'package:open_words/features/settings/database/widgets/database_summary/all_entity_measure_tile.dart';
@@ -36,6 +38,10 @@ class DatabaseInfoPage extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               WordRepositoryTestCubit(database, GetIt.I.get())..init(),
+        ),
+        BlocProvider(
+          create: (context) =>
+              MetadataRepositoryTestCubit(database, GetIt.I.get())..init(),
         ),
         BlocProvider(
           create: (context) =>
@@ -67,6 +73,7 @@ class DatabaseInfoView extends StatelessWidget {
           AllEntityMeasureTile(),
           GroupRepositoryTestTile(),
           WordRepositoryTestTile(),
+          MetadataRepositoryTestTile(),
           FolderRepositoryTestTile(),
           ExplorerTestTile(),
         ],

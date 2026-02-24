@@ -26,6 +26,7 @@ class ExportSelectedPage extends StatelessWidget {
         localFileService: GetIt.I.get(),
         webFileService: GetIt.I.get(),
         wordRepository: GetIt.I.get(),
+        metadataRepository: GetIt.I.get(),
       )..add(ExportSelectedStarded(selected)),
       child: BlocListener<ExportSelectedBloc, ExportSelectedState>(
         listenWhen: _listenWhen,

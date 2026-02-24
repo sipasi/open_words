@@ -29,11 +29,11 @@ class GameListWordsSlider extends StatelessWidget {
         max: range.max,
         divisions: range.divisions,
         onChanged: (double value) {
-          final cubut = context.read<GameListCubit>();
+          final cubit = context.read<GameListCubit>();
 
-          cubut.setSelectedRangeValue(value);
+          cubit.setSelectedRangeValue(value);
 
-          final range = cubut.state.wordRange;
+          final range = cubit.state.wordRange;
 
           if (range.selectedMin || range.selectedMax) {
             vibration.mediumImpact(VibrationDuration.medium);

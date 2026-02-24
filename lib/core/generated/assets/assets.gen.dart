@@ -9,6 +9,17 @@
 // ignore_for_file: type=lint
 // ignore_for_file: deprecated_member_use,directives_ordering,implicit_dynamic_list_literal,unnecessary_import
 
+class $AssetsExportGen {
+  const $AssetsExportGen();
+
+  /// Directory path: assets/export/html_template
+  $AssetsExportHtmlTemplateGen get htmlTemplate =>
+      const $AssetsExportHtmlTemplateGen();
+
+  /// Directory path: assets/export
+  String get path => 'assets/export';
+}
+
 class $AssetsJsonGen {
   const $AssetsJsonGen();
 
@@ -20,6 +31,21 @@ class $AssetsJsonGen {
 
   /// Directory path: assets/json
   String get path => 'assets/json';
+}
+
+class $AssetsExportHtmlTemplateGen {
+  const $AssetsExportHtmlTemplateGen();
+
+  /// Directory path: assets/export/html_template/css
+  $AssetsExportHtmlTemplateCssGen get css =>
+      const $AssetsExportHtmlTemplateCssGen();
+
+  /// Directory path: assets/export/html_template/js
+  $AssetsExportHtmlTemplateJsGen get js =>
+      const $AssetsExportHtmlTemplateJsGen();
+
+  /// Directory path: assets/export/html_template
+  String get path => 'assets/export/html_template';
 }
 
 class $AssetsJsonDictionaryGen {
@@ -46,6 +72,41 @@ class $AssetsJsonLanguageGen {
   List<String> get values => [languageMetadata];
 }
 
+class $AssetsExportHtmlTemplateCssGen {
+  const $AssetsExportHtmlTemplateCssGen();
+
+  /// File path: assets/export/html_template/css/components.css
+  String get components => 'assets/export/html_template/css/components.css';
+
+  /// File path: assets/export/html_template/css/main.css
+  String get main => 'assets/export/html_template/css/main.css';
+
+  /// File path: assets/export/html_template/css/theme.css
+  String get theme => 'assets/export/html_template/css/theme.css';
+
+  /// Directory path: assets/export/html_template/css
+  String get path => 'assets/export/html_template/css';
+
+  /// List of all assets
+  List<String> get values => [components, main, theme];
+}
+
+class $AssetsExportHtmlTemplateJsGen {
+  const $AssetsExportHtmlTemplateJsGen();
+
+  /// File path: assets/export/html_template/js/components.js
+  String get components => 'assets/export/html_template/js/components.js';
+
+  /// File path: assets/export/html_template/js/startup.js
+  String get startup => 'assets/export/html_template/js/startup.js';
+
+  /// Directory path: assets/export/html_template/js
+  String get path => 'assets/export/html_template/js';
+
+  /// List of all assets
+  List<String> get values => [components, startup];
+}
+
 class $AssetsJsonDictionaryUkrainianGen {
   const $AssetsJsonDictionaryUkrainianGen();
 
@@ -62,5 +123,6 @@ class $AssetsJsonDictionaryUkrainianGen {
 class Assets {
   const Assets._();
 
+  static const $AssetsExportGen export = $AssetsExportGen();
   static const $AssetsJsonGen json = $AssetsJsonGen();
 }
