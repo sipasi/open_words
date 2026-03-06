@@ -1,4 +1,4 @@
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/repository/explorer_repository.dart';
 import 'package:open_words/features/settings/database/bloc/measure_cubit.dart';
 import 'package:open_words/features/settings/database/models/time_measure_result.dart';
@@ -10,7 +10,7 @@ class ExplorerTestCubit extends MeasureCubit {
 
   @override
   List<TimeMeasureInfo> getMeasures() {
-    const id = Id.empty();
+    const id = EntityId.empty();
 
     return [TimeMeasureInfo('allByFolder', () => repository.allByFolder(id))];
   }

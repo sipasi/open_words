@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:open_words/core/data/draft/metadata/word_metadata_draft.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/metadata/word_metadata.dart';
 import 'package:open_words/core/data/repository/mappers/word_metadata_raw_sql_mapper.dart';
 import 'package:open_words/core/data/sources/drift/app_drift_database.dart';
@@ -14,7 +14,7 @@ sealed class WordMetadataRepository {
 
   Future<Map<String, WordMetadata>> mapOf(List<String> words);
 
-  Future delete(Id id);
+  Future delete(EntityId id);
 }
 
 class WordMetadataRepositoryImpl extends WordMetadataRepository {
@@ -196,7 +196,7 @@ class WordMetadataRepositoryImpl extends WordMetadataRepository {
   }
 
   @override
-  Future delete(Id id) {
+  Future delete(EntityId id) {
     if (id.isEmpty) {
       return Future.value();
     }

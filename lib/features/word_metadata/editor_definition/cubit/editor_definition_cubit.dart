@@ -1,12 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/metadata/definition.dart';
 
 part 'editor_definition_state.dart';
 
 class EditorDefinitionCubit extends Cubit<EditorDefinitionState> {
   final Definition? initial;
-  final Id meaningId;
+  final EntityId meaningId;
 
   bool get isEdit => initial != null;
 

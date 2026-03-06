@@ -1,4 +1,4 @@
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/repository/word_group_repository.dart';
 import 'package:open_words/features/settings/database/bloc/measure_cubit.dart';
 import 'package:open_words/features/settings/database/models/time_measure_result.dart';
@@ -10,7 +10,7 @@ class GroupRepositoryTestCubit extends MeasureCubit {
 
   @override
   List<TimeMeasureInfo> getMeasures() {
-    final root = const Id.empty();
+    final root = const EntityId.empty();
 
     return [
       TimeMeasureInfo('repository.all', () => repository.all()),
@@ -18,7 +18,7 @@ class GroupRepositoryTestCubit extends MeasureCubit {
         'repository.allByFolder',
         () => repository.allByFolder(root),
       ),
-      TimeMeasureInfo('repository.byId', () => repository.oneById(Id.exist(1))),
+      TimeMeasureInfo('repository.byId', () => repository.oneById(EntityId.exist(1))),
     ];
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:open_words/core/data/entities/entity.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/metadata/definition.dart';
 
 class Meaning extends Entity {
-  final Id metadataId;
+  final EntityId metadataId;
 
   final String partOfSpeech;
 
@@ -34,8 +34,8 @@ class Meaning extends Entity {
   }
 
   Meaning copyWith({
-    Id? id,
-    Id? metadataId,
+    EntityId? id,
+    EntityId? metadataId,
     String? partOfSpeech,
     List<Definition>? definitions,
     List<String>? synonyms,

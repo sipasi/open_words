@@ -1,8 +1,8 @@
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 
 class FolderPath {
-  final Id folderId;
-  final Id parentId;
+  final EntityId folderId;
+  final EntityId parentId;
   final String path;
   final String name;
 
@@ -14,8 +14,8 @@ class FolderPath {
   });
 
   const FolderPath.root()
-    : folderId = const Id.empty(),
-      parentId = const Id.empty(),
+    : folderId = const EntityId.empty(),
+      parentId = const EntityId.empty(),
       name = "Root",
       path = './';
 }

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/metadata/word_metadata.dart';
 import 'package:open_words/features/word/edit/bloc/word_edit_bloc.dart';
 import 'package:open_words/features/word/edit/widgets/editable_meaning_tile.dart';
@@ -17,7 +17,7 @@ import 'package:open_words/shared/modal/discard_changes_modal.dart';
 import 'package:open_words/shared/navigation/material_navigator.dart';
 
 class WordEditPage extends StatelessWidget {
-  final Id id;
+  final EntityId id;
   final String origin;
   final String translation;
   final WordMetadata metadata;

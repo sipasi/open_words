@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/game/word_statistic.dart';
-import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/entities/metadata/word_metadata.dart';
 import 'package:open_words/core/data/entities/word/word.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
@@ -12,7 +12,7 @@ import 'package:open_words/features/word/detail/models/statistic_load_status.dar
 part 'word_detail_page_state.dart';
 
 class WordDetailPageCubit extends Cubit<WordDetailPageState> {
-  final Id wordId;
+  final EntityId wordId;
   final WordGroup group;
   final WordMetadataService metadataService;
   final WordStatisticRepository statisticRepository;
@@ -61,10 +61,9 @@ class WordDetailPageCubit extends Cubit<WordDetailPageState> {
 
     emit(
       state.copyWith(
-        metadataLoadStatus:
-            loaded == null
-                ? MetadataLoadStatus.failure
-                : MetadataLoadStatus.success,
+        metadataLoadStatus: loaded == null
+            ? MetadataLoadStatus.failure
+            : MetadataLoadStatus.success,
         metadata: loaded,
       ),
     );

@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/word/word.dart';
 import 'package:open_words/core/data/sources/drift/app_drift_database.dart';
 
@@ -8,15 +8,15 @@ sealed class WordSqlMapper {
     final data = row.data;
 
     return Word(
-      id: Id.exist(data['id']),
-      groupId: Id.exist(data['group_id']),
+      id: EntityId.exist(data['id']),
+      groupId: EntityId.exist(data['group_id']),
       origin: data['origin'],
       translation: data['translation'],
     );
   }
 
   static Insertable<DriftWord> toCreate({
-    required Id groupId,
+    required EntityId groupId,
     required String origin,
     required String translation,
   }) {
@@ -31,7 +31,7 @@ sealed class WordSqlMapper {
   }
 
   static Insertable<DriftWord> toUpdate({
-    Id? groupId,
+    EntityId? groupId,
     String? origin,
     String? translation,
   }) {

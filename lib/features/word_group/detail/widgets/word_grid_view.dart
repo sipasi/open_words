@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/word/word.dart';
 import 'package:open_words/core/result/result.dart';
 import 'package:open_words/features/explorer/_main_screen/bloc/explorer_bloc.dart';
@@ -52,7 +52,7 @@ class WordGridView extends StatelessWidget {
     );
 
     result.onDeleted((value) {
-      if (value is! Id) {
+      if (value is! EntityId) {
         return;
       }
 

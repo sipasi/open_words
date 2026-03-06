@@ -1,8 +1,8 @@
 import 'package:open_words/core/data/entities/entity.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 
 class Folder extends Entity {
-  final Id parentId;
+  final EntityId parentId;
 
   final String name;
 
@@ -15,7 +15,7 @@ class Folder extends Entity {
     required this.created,
   });
 
-  Folder copyWith({Id? parentId, String? name}) {
+  Folder copyWith({EntityId? parentId, String? name}) {
     return Folder(
       id: id,
       parentId: parentId ?? this.parentId,

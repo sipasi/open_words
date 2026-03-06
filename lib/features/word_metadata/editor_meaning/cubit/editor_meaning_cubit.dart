@@ -1,15 +1,15 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/metadata/definition.dart';
 import 'package:open_words/core/data/entities/metadata/meaning.dart';
 
 part 'editor_meaning_state.dart';
 
 class EditorMeaningCubit extends Cubit<EditorMeaningState> {
-  final Id metadataId;
+  final EntityId metadataId;
   final Meaning? initial;
 
-  Id get meaningId => initial?.id ?? const Id.empty();
+  EntityId get meaningId => initial?.id ?? const EntityId.empty();
 
   bool get isCreate => initial == null;
   bool get isEdit => initial != null;

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_words/core/data/draft/metadata/word_metadata_draft.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/metadata/definition.dart';
 import 'package:open_words/core/data/entities/metadata/meaning.dart';
 import 'package:open_words/core/data/entities/metadata/phonetic.dart';
@@ -13,8 +13,8 @@ part 'word_edit_state.dart';
 class WordEditBloc extends Bloc<WordEditEvent, WordEditState> {
   final WordMetadataRepository metadataRepository;
 
-  final Id wordId;
-  final Id metadataId;
+  final EntityId wordId;
+  final EntityId metadataId;
 
   final String initialOrigin;
   final String initialTranslation;
@@ -50,7 +50,7 @@ class WordEditBloc extends Bloc<WordEditEvent, WordEditState> {
       await metadataRepository.delete(initialMetadata.id);
 
       final metadata = WordMetadata(
-        id: const Id.empty(),
+        id: const EntityId.empty(),
         word: initialOrigin,
         etymology: state.etymology,
         phonetics: state.phonetics,
@@ -75,7 +75,7 @@ class WordEditBloc extends Bloc<WordEditEvent, WordEditState> {
           phonetics: [
             ...state.phonetics,
             Phonetic(
-              id: const Id.empty(),
+              id: const EntityId.empty(),
               metadataId: metadataId,
               value: event.value,
               audio: event.audio,
@@ -87,10 +87,9 @@ class WordEditBloc extends Bloc<WordEditEvent, WordEditState> {
     on<WordEditPhoneticDeleteRequested>((event, emit) {
       final phonetics = state.phonetics.toList()..remove(event.value);
 
-      final phoneticsRemoved =
-          event.value.id.isEmpty
-              ? state.phoneticsRemoved
-              : [...state.phoneticsRemoved, event.value];
+      final phoneticsRemoved = event.value.id.isEmpty
+          ? state.phoneticsRemoved
+          : [...state.phoneticsRemoved, event.value];
 
       emit(
         state.copyWith(
@@ -124,7 +123,7 @@ class WordEditBloc extends Bloc<WordEditEvent, WordEditState> {
           meanings: [
             ...state.meanings,
             Meaning(
-              id: const Id.empty(),
+              id: const EntityId.empty(),
               metadataId: metadataId,
               partOfSpeech: event.partOfSpeech,
               definitions: event.definitions,
@@ -138,10 +137,9 @@ class WordEditBloc extends Bloc<WordEditEvent, WordEditState> {
     on<WordEditMeaningDeleteRequested>((event, emit) {
       final meanings = state.meanings.toList()..remove(event.value);
 
-      final meaningsRemoved =
-          event.value.id.isEmpty
-              ? state.meaningsRemoved
-              : [...state.meaningsRemoved, event.value];
+      final meaningsRemoved = event.value.id.isEmpty
+          ? state.meaningsRemoved
+          : [...state.meaningsRemoved, event.value];
 
       emit(
         state.copyWith(meanings: meanings, meaningsRemoved: meaningsRemoved),

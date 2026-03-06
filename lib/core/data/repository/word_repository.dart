@@ -1,22 +1,22 @@
 import 'package:open_words/core/data/draft/word_draft.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/word/word.dart';
 import 'package:open_words/core/data/repository/mappers/word_sql_mapper.dart';
 import 'package:open_words/core/data/sources/drift/app_drift_database.dart';
 import 'package:open_words/core/data/sources/drift/tables/word_query.dart';
 
 sealed class WordRepository {
-  Future<List<Word>> allByGroup(Id group);
+  Future<List<Word>> allByGroup(EntityId group);
 
   Future<int> create({
-    required Id group,
+    required EntityId group,
     required String origin,
     required String translation,
   });
 
-  Future createAll({required Id groupId, required List<WordDraft> drafts});
+  Future createAll({required EntityId groupId, required List<WordDraft> drafts});
 
-  Future delete(Id id);
+  Future delete(EntityId id);
 }
 
 class WordRepositoryImpl extends WordRepository {
@@ -25,7 +25,7 @@ class WordRepositoryImpl extends WordRepository {
   WordRepositoryImpl(this.database);
 
   @override
-  Future<List<Word>> allByGroup(Id groupId) {
+  Future<List<Word>> allByGroup(EntityId groupId) {
     if (groupId.isEmpty) {
       return Future.value([]);
     }
@@ -38,7 +38,7 @@ class WordRepositoryImpl extends WordRepository {
 
   @override
   Future<int> create({
-    required Id group,
+    required EntityId group,
     required String origin,
     required String translation,
   }) {
@@ -55,7 +55,7 @@ class WordRepositoryImpl extends WordRepository {
   }
 
   @override
-  Future createAll({required Id groupId, required List<WordDraft> drafts}) {
+  Future createAll({required EntityId groupId, required List<WordDraft> drafts}) {
     final now = DateTime.now();
 
     int id = groupId.valueOrThrow();
@@ -75,7 +75,7 @@ class WordRepositoryImpl extends WordRepository {
   }
 
   @override
-  Future delete(Id id) {
+  Future delete(EntityId id) {
     if (id.isEmpty) {
       return Future.value();
     }

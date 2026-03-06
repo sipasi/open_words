@@ -1,8 +1,8 @@
 import 'package:open_words/core/data/entities/entity.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 
 class Phonetic extends Entity {
-  final Id metadataId;
+  final EntityId metadataId;
 
   final String value;
   final String audio;
@@ -14,7 +14,12 @@ class Phonetic extends Entity {
     required this.audio,
   });
 
-  Phonetic copyWith({Id? id, Id? metadataId, String? value, String? audio}) {
+  Phonetic copyWith({
+    EntityId? id,
+    EntityId? metadataId,
+    String? value,
+    String? audio,
+  }) {
     return Phonetic(
       id: id ?? this.id,
       metadataId: metadataId ?? this.metadataId,

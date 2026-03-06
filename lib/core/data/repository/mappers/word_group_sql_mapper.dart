@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/language_info.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
 import 'package:open_words/core/data/repository/mappers/language_info_sql_mapper.dart';
@@ -20,8 +20,8 @@ final class WordGroupSqlMapper {
 
   WordGroup from(QueryRow row) {
     return WordGroup(
-      id: Id.exist(row.read('id')),
-      folderId: Id.emptyIfNull(row.readNullable('folder_id')),
+      id: EntityId.exist(row.read('id')),
+      folderId: EntityId.emptyIfNull(row.readNullable('folder_id')),
       created: row.read('created'),
       modified: row.read('modified'),
       name: row.read('name'),
@@ -32,7 +32,7 @@ final class WordGroupSqlMapper {
   }
 
   Insertable<DriftWordGroup> toCreate({
-    required Id folderId,
+    required EntityId folderId,
     required String name,
     required LanguageInfo origin,
     required LanguageInfo translation,
@@ -50,7 +50,7 @@ final class WordGroupSqlMapper {
   }
 
   Insertable<DriftWordGroup> toUpdate({
-    Id? folderId,
+    EntityId? folderId,
     String? name,
     LanguageInfo? origin,
     LanguageInfo? translation,

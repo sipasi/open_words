@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/folder/folder_path.dart';
-import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/repository/folder_repository.dart';
 import 'package:open_words/core/data/repository/word_group_repository.dart';
 import 'package:open_words/core/data/repository/word_metadata_repository.dart';
@@ -42,7 +42,7 @@ class ImportPickedCubit extends Cubit<ImportPickedState> {
     emit(state.copyWith(subfolder: value));
   }
 
-  Future<Id> _getFolderId() async {
+  Future<EntityId> _getFolderId() async {
     if (state.subfolder.isEmpty) {
       return state.folderPath.folderId;
     }
@@ -55,7 +55,7 @@ class ImportPickedCubit extends Cubit<ImportPickedState> {
     return folder.id;
   }
 
-  Future _writeToDatabase(Id folderId) async {
+  Future _writeToDatabase(EntityId folderId) async {
     for (var item in groups) {
       final group = await groupRepository.create(
         folderId: folderId,

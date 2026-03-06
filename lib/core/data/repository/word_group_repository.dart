@@ -1,4 +1,4 @@
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/language_info.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
 import 'package:open_words/core/data/repository/mappers/language_info_sql_mapper.dart';
@@ -10,27 +10,27 @@ import 'package:open_words/core/services/logger/app_logger.dart';
 
 abstract class WordGroupRepository {
   Future<bool> existByName(String originName);
-  Future<bool> existByNameIn(String originName, Id folder);
+  Future<bool> existByNameIn(String originName, EntityId folder);
 
   Future<List<WordGroup>> all();
-  Future<List<WordGroup>> allByFolder(Id folderId);
+  Future<List<WordGroup>> allByFolder(EntityId folderId);
 
-  Future<WordGroup?> oneById(Id id);
+  Future<WordGroup?> oneById(EntityId id);
 
   Future<List<LanguageInfo>> allUniqueLanguages();
 
-  Future delete(Id id);
+  Future delete(EntityId id);
 
   Future<WordGroup> create({
-    required Id folderId,
+    required EntityId folderId,
     required String name,
     required LanguageInfo origin,
     required LanguageInfo translation,
   });
 
   Future<WordGroup> update({
-    required Id id,
-    Id? folderId,
+    required EntityId id,
+    EntityId? folderId,
     String? name,
     LanguageInfo? origin,
     LanguageInfo? translation,
@@ -61,7 +61,7 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
   }
 
   @override
-  Future<bool> existByNameIn(String name, Id folder) async {
+  Future<bool> existByNameIn(String name, EntityId folder) async {
     int? id = folder.valueOrNull();
 
     if (id == null) {
@@ -77,7 +77,7 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
   }
 
   @override
-  Future<List<WordGroup>> allByFolder(Id folderId) {
+  Future<List<WordGroup>> allByFolder(EntityId folderId) {
     if (folderId.isEmpty) {
       return database.allGroupsByFolderRoot().map(groupMapper.from).get();
     }
@@ -89,7 +89,7 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
   }
 
   @override
-  Future<WordGroup?> oneById(Id id) {
+  Future<WordGroup?> oneById(EntityId id) {
     if (id.isEmpty) {
       return Future.value();
     }
@@ -110,7 +110,7 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
 
   @override
   Future<WordGroup> create({
-    required Id folderId,
+    required EntityId folderId,
     required String name,
     required LanguageInfo origin,
     required LanguageInfo translation,
@@ -126,15 +126,15 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
           ),
         );
 
-    final entity = await oneById(Id.exist(id));
+    final entity = await oneById(EntityId.exist(id));
 
     return entity!;
   }
 
   @override
   Future<WordGroup> update({
-    required Id id,
-    Id? folderId,
+    required EntityId id,
+    EntityId? folderId,
     String? name,
     LanguageInfo? origin,
     LanguageInfo? translation,
@@ -156,7 +156,7 @@ class WordGroupRepositoryImpl extends WordGroupRepository {
   }
 
   @override
-  Future delete(Id id) {
+  Future delete(EntityId id) {
     return database.managers.wordGroups
         .filter((f) => f.id.equals(id.valueOrNull()))
         .delete();

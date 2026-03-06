@@ -1,25 +1,25 @@
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/folder/folder.dart';
 import 'package:open_words/core/data/entities/folder/folder_path.dart';
-import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/repository/mappers/folder_sql_mapper.dart';
 import 'package:open_words/core/data/sources/drift/app_drift_database.dart';
 import 'package:open_words/core/data/sources/drift/tables/folders_query.dart';
 
 sealed class FolderRepository {
   Future<List<Folder>> all();
-  Future<List<Folder>> allByParent(Id parent);
+  Future<List<Folder>> allByParent(EntityId parent);
 
-  Future<Folder?> oneById(Id id);
+  Future<Folder?> oneById(EntityId id);
   Future<Folder?> oneByName(String name);
 
-  Future delete(Id id);
+  Future delete(EntityId id);
 
-  Future<Folder> create({required Id parentId, required String name});
-  Future<Folder> update({required Id id, Id parentId, String name});
+  Future<Folder> create({required EntityId parentId, required String name});
+  Future<Folder> update({required EntityId id, EntityId parentId, String name});
 
   Future<List<FolderPath>> allPath();
-  Future<List<FolderPath>> allMovablePathBy(Id id);
-  Future<FolderPath?> onePath(Id id);
+  Future<List<FolderPath>> allMovablePathBy(EntityId id);
+  Future<FolderPath?> onePath(EntityId id);
 }
 
 class FolderRepositoryImpl extends FolderRepository {
@@ -33,7 +33,7 @@ class FolderRepositoryImpl extends FolderRepository {
   }
 
   @override
-  Future<List<Folder>> allByParent(Id parentId) {
+  Future<List<Folder>> allByParent(EntityId parentId) {
     if (parentId.isEmpty) {
       return database.allFoldersByRoot().map(FolderSqlMapper.from).get();
     }
@@ -45,7 +45,7 @@ class FolderRepositoryImpl extends FolderRepository {
   }
 
   @override
-  Future<Folder?> oneById(Id id) {
+  Future<Folder?> oneById(EntityId id) {
     if (id.isEmpty) {
       return Future.value();
     }
@@ -65,18 +65,18 @@ class FolderRepositoryImpl extends FolderRepository {
   }
 
   @override
-  Future<Folder> create({Id? parentId, required String name}) async {
+  Future<Folder> create({EntityId? parentId, required String name}) async {
     final id = await database
         .into(database.folders)
         .insert(FolderSqlMapper.toCreate(parentId: parentId, name: name));
 
-    final entity = await oneById(Id.exist(id));
+    final entity = await oneById(EntityId.exist(id));
 
     return entity!;
   }
 
   @override
-  Future<Folder> update({required Id id, Id? parentId, String? name}) async {
+  Future<Folder> update({required EntityId id, EntityId? parentId, String? name}) async {
     if (id.isEmpty) {
       throw '[FolderRepositoryImpl.update] update not existed entity';
     }
@@ -93,7 +93,7 @@ class FolderRepositoryImpl extends FolderRepository {
   }
 
   @override
-  Future delete(Id id) {
+  Future delete(EntityId id) {
     return database.managers.folders
         .filter((f) => f.id.equals(id.valueOrNull()))
         .delete();
@@ -108,7 +108,7 @@ class FolderRepositoryImpl extends FolderRepository {
   }
 
   @override
-  Future<List<FolderPath>> allMovablePathBy(Id id) async {
+  Future<List<FolderPath>> allMovablePathBy(EntityId id) async {
     if (id.isEmpty) {
       return Future.value([]);
     }
@@ -123,7 +123,7 @@ class FolderRepositoryImpl extends FolderRepository {
   }
 
   @override
-  Future<FolderPath?> onePath(Id id) {
+  Future<FolderPath?> onePath(EntityId id) {
     if (id.isEmpty) {
       return Future.value();
     }

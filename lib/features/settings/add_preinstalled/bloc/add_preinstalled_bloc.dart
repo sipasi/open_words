@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/repository/folder_repository.dart';
 import 'package:open_words/core/data/repository/word_group_repository.dart';
 import 'package:open_words/core/data/repository/word_repository.dart';
@@ -55,7 +55,7 @@ class AddPreinstalledBloc
         final folder =
             await folderRepository.oneByName(folderName) ??
             await folderRepository.create(
-              parentId: const Id.empty(),
+              parentId: const EntityId.empty(),
               name: folderName,
             );
 

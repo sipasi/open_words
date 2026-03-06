@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/metadata/definition.dart';
 import 'package:open_words/core/result/result.dart';
 import 'package:open_words/features/word_metadata/editor_definition/cubit/editor_definition_cubit.dart';
@@ -41,16 +41,15 @@ class EditorDefinitionBottomBar extends StatelessWidget {
     }
 
     final entity = Definition(
-      id: bloc.initial?.id ?? const Id.empty(),
+      id: bloc.initial?.id ?? const EntityId.empty(),
       meaningId: bloc.meaningId,
       value: bloc.state.value,
       example: bloc.state.example,
     );
 
-    final Result<Definition> result =
-        bloc.isCreate
-            ? CrudResult.created(entity)
-            : CrudResult.modified(entity);
+    final Result<Definition> result = bloc.isCreate
+        ? CrudResult.created(entity)
+        : CrudResult.modified(entity);
 
     return context.popWith(result);
   }

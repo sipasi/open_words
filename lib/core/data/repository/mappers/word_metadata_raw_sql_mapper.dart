@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/metadata/definition.dart';
 import 'package:open_words/core/data/entities/metadata/meaning.dart';
 import 'package:open_words/core/data/entities/metadata/phonetic.dart';
@@ -16,7 +16,7 @@ sealed class WordMetadataRawSqlMapper {
     required List<QueryRow> meanings,
     required List<QueryRow> definitions,
   }) {
-    final id = Id.exist(metadataId);
+    final id = EntityId.exist(metadataId);
 
     return WordMetadata(
       id: id,
@@ -27,11 +27,14 @@ sealed class WordMetadataRawSqlMapper {
     );
   }
 
-  static List<Phonetic> _mapPhonetics(Id metadataId, List<QueryRow> phonetics) {
+  static List<Phonetic> _mapPhonetics(
+    EntityId metadataId,
+    List<QueryRow> phonetics,
+  ) {
     return phonetics
         .map(
           (e) => Phonetic(
-            id: Id.exist(e.read('id')),
+            id: EntityId.exist(e.read('id')),
             metadataId: metadataId,
             value: e.read('value'),
             audio: e.read('audio'),
@@ -41,12 +44,12 @@ sealed class WordMetadataRawSqlMapper {
   }
 
   static List<Meaning> _mapMeanings(
-    Id metadataId,
+    EntityId metadataId,
     List<QueryRow> meanings,
     List<QueryRow> definitions,
   ) {
     return meanings.map((e) {
-      final meaningId = Id.exist(e.read('id'));
+      final meaningId = EntityId.exist(e.read('id'));
 
       return Meaning(
         id: meaningId,
@@ -60,7 +63,7 @@ sealed class WordMetadataRawSqlMapper {
   }
 
   static List<Definition> _mapDefinitions(
-    Id meaningId,
+    EntityId meaningId,
     List<QueryRow> meanings,
     List<QueryRow> definitions,
   ) {
@@ -71,7 +74,7 @@ sealed class WordMetadataRawSqlMapper {
         )
         .map(
           (e) => Definition(
-            id: Id.exist(e.read('id')),
+            id: EntityId.exist(e.read('id')),
             meaningId: meaningId,
             value: e.read('value'),
             example: e.read('example'),

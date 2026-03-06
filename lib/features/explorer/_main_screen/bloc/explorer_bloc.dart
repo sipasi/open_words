@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/folder/folder.dart';
-import 'package:open_words/core/data/entities/id.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
 import 'package:open_words/core/data/repository/explorer_repository.dart';
 import 'package:open_words/core/data/repository/folder_repository.dart';
@@ -23,7 +23,7 @@ class ExplorerBloc extends Bloc<ExplorerEvent, ExplorerState> {
     on<ExplorerStarted>((event, emit) async {
       emit(state.copyWith(loadStatus: ExplorerLoadStatus.loading));
 
-      final data = await explorerRepository.allByFolder(const Id.empty());
+      final data = await explorerRepository.allByFolder(const EntityId.empty());
 
       emit(
         state.copyWith(

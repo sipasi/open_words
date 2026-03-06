@@ -1,9 +1,9 @@
 import 'package:open_words/core/data/entities/entity.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/language_info.dart';
 
 class WordGroup extends Entity {
-  final Id folderId;
+  final EntityId folderId;
 
   final DateTime created;
   final DateTime modified;
@@ -27,7 +27,7 @@ class WordGroup extends Entity {
   });
 
   WordGroup copyWith({
-    Id? folderId,
+    EntityId? folderId,
     DateTime? modified,
     String? name,
     LanguageInfo? origin,

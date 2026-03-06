@@ -1,8 +1,8 @@
 import 'package:open_words/core/data/entities/entity.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 
 class Word extends Entity {
-  final Id groupId;
+  final EntityId groupId;
 
   final String origin;
   final String translation;

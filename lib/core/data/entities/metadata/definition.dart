@@ -1,8 +1,8 @@
 import 'package:open_words/core/data/entities/entity.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 
 class Definition extends Entity {
-  final Id meaningId;
+  final EntityId meaningId;
 
   final String value;
   final String example;
@@ -14,7 +14,12 @@ class Definition extends Entity {
     required this.example,
   });
 
-  Definition copyWith({Id? id, Id? meaningId, String? value, String? example}) {
+  Definition copyWith({
+    EntityId? id,
+    EntityId? meaningId,
+    String? value,
+    String? example,
+  }) {
     return Definition(
       id: id ?? this.id,
       meaningId: meaningId ?? this.meaningId,

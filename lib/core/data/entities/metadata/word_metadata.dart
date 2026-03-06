@@ -1,5 +1,5 @@
 import 'package:open_words/core/data/entities/entity.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/metadata/meaning.dart';
 import 'package:open_words/core/data/entities/metadata/phonetic.dart';
 
@@ -21,7 +21,7 @@ class WordMetadata extends Entity {
   });
   const WordMetadata.empty()
     : this(
-        id: const Id.empty(),
+        id: const EntityId.empty(),
         word: '',
         etymology: '',
         phonetics: const [],

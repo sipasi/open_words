@@ -16,7 +16,7 @@ class ExplorerState {
 
   final ExplorerLoadStatus loadStatus;
 
-  Id get exploredId => exploredFolder?.id ?? const Id.empty();
+  EntityId get exploredId => exploredFolder?.id ?? const EntityId.empty();
   String get exploredName => exploredFolder?.name ?? 'Home';
 
   bool get isEmpty => folders.isEmpty && groups.isEmpty;

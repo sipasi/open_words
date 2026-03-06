@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/word/word.dart';
 import 'package:open_words/core/data/entities/word/word_group.dart';
 import 'package:open_words/core/data/repository/word_group_repository.dart';
@@ -31,7 +31,7 @@ class WordGroupDetailCubit extends Cubit<WordGroupDetailState> {
     emit(state.copyWith(words: words, loadingState: LoadingState.loaded));
   }
 
-  Future deleteAt(Id id, int index) async {
+  Future deleteAt(EntityId id, int index) async {
     final words = state.words.toList();
 
     emit(state.copyWith(words: words..removeAt(index)));

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/features/explorer/_main_screen/bloc/explorer_bloc.dart';
 import 'package:open_words/features/explorer/entity_editor/explorer_entity_editor.dart';
 import 'package:open_words/shared/constants/hero_tag_constants.dart';
@@ -28,7 +28,7 @@ class ExplorerFab extends StatelessWidget {
     );
   }
 
-  Id _getParentFolderId(BuildContext context) {
+  EntityId _getParentFolderId(BuildContext context) {
     final bloc = context.read<ExplorerBloc>();
 
     return bloc.state.exploredId;

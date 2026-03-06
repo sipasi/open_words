@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:open_words/core/data/entities/id.dart';
+import 'package:open_words/core/data/entities/entity_id.dart';
 import 'package:open_words/core/data/entities/metadata/definition.dart';
 import 'package:open_words/core/data/entities/metadata/meaning.dart';
 import 'package:open_words/core/data/entities/metadata/phonetic.dart';
@@ -19,20 +19,20 @@ class WordMetadataLoadingView extends StatelessWidget {
 
   WordMetadata _create() {
     return const WordMetadata(
-      id: Id.empty(),
+      id: EntityId.empty(),
       word: 'advice',
       etymology:
           'from Old French avis, based on Latin ad ‘to’ + visum, past participle of videre ‘to see’. The original sense was ‘way of looking at something, judgement’, hence later ‘an opinion given’',
       phonetics: [
         Phonetic(
-          id: Id.empty(),
-          metadataId: Id.empty(),
+          id: EntityId.empty(),
+          metadataId: EntityId.empty(),
           value: '/ədˈvaɪs/',
           audio: '',
         ),
         Phonetic(
-          id: Id.empty(),
-          metadataId: Id.empty(),
+          id: EntityId.empty(),
+          metadataId: EntityId.empty(),
           value: '/ædˈvaɪs/',
           audio:
               'https://api.dictionaryapi.dev/media/pronunciations/en/advice-us.mp3',
@@ -40,27 +40,27 @@ class WordMetadataLoadingView extends StatelessWidget {
       ],
       meanings: [
         Meaning(
-          id: Id.empty(),
-          metadataId: Id.empty(),
+          id: EntityId.empty(),
+          metadataId: EntityId.empty(),
           partOfSpeech: 'noun',
           definitions: [
             Definition(
-              id: Id.empty(),
-              meaningId: Id.empty(),
+              id: EntityId.empty(),
+              meaningId: EntityId.empty(),
               value: 'An opinion offered in an effort to be helpful.',
               example:
                   'She was offered various piece of advice on what to do with her new-found wealth.',
             ),
 
             Definition(
-              id: Id.empty(),
-              meaningId: Id.empty(),
+              id: EntityId.empty(),
+              meaningId: EntityId.empty(),
               value: 'Deliberate consideration; knowledge.',
               example: '',
             ),
             Definition(
-              id: Id.empty(),
-              meaningId: Id.empty(),
+              id: EntityId.empty(),
+              meaningId: EntityId.empty(),
               value:
                   '(commonly in plural) Information or news given; intelligence',
               example: 'late advices from France',
@@ -70,28 +70,28 @@ class WordMetadataLoadingView extends StatelessWidget {
           antonyms: [],
         ),
         Meaning(
-          id: Id.empty(),
-          metadataId: Id.empty(),
+          id: EntityId.empty(),
+          metadataId: EntityId.empty(),
           partOfSpeech: 'adv',
           definitions: [
             Definition(
-              id: Id.empty(),
-              meaningId: Id.empty(),
+              id: EntityId.empty(),
+              meaningId: EntityId.empty(),
               value:
                   'In language about financial transactions executed by formal documents, an advisory document.',
               example:
                   'An advice of an incoming settlement payment order may be given to an off-line receiving bank.',
             ),
             Definition(
-              id: Id.empty(),
-              meaningId: Id.empty(),
+              id: EntityId.empty(),
+              meaningId: EntityId.empty(),
               value:
                   'In commercial language, information communicated by letter; used chiefly in reference to drafts or bills of exchange',
               example: 'a letter of advice',
             ),
             Definition(
-              id: Id.empty(),
-              meaningId: Id.empty(),
+              id: EntityId.empty(),
+              meaningId: EntityId.empty(),
               value:
                   'A communication providing information, such as how an uncertain area of law might apply to possible future actions',
               example:
