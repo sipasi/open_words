@@ -1,8 +1,9 @@
 import 'package:flutter/foundation.dart';
 
 sealed class EnvironmentConfig {
-  static final EnvironmentFlag showDatabaseInfo = ._hasBool(
+  static const EnvironmentFlag showDatabaseInfo = ._hasBool(
     'show-database-info',
+    .hasEnvironment('show-database-info'),
   );
 
   static const EnvironmentConfigFluent has = EnvironmentConfigFluent(true);
@@ -15,17 +16,16 @@ final class EnvironmentConfigFluent {
   const EnvironmentConfigFluent(this.expected);
 
   bool get showDatabaseInfo =>
-      EnvironmentConfig.showDatabaseInfo._has == expected;
+      EnvironmentConfig.showDatabaseInfo.has == expected;
 }
 
 final class EnvironmentFlag {
   final String name;
-  final bool _has;
+  final bool has;
 
-  bool get has => _has;
-  bool get hasNot => !_has;
+  bool get hasNot => !has;
 
-  EnvironmentFlag._hasBool(this.name) : _has = .fromEnvironment(name);
+  const EnvironmentFlag._hasBool(this.name, this.has);
 }
 
 extension BoolOrDebugExt on bool {
